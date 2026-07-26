@@ -12,3 +12,6 @@ Thumbs.db
 # 临时文件
 *.tmp
 *.bak
+
+# WorkBuddy 工作区元数据
+.workbuddy/
