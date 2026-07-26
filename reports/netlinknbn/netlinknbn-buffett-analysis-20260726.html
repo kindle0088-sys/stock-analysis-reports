@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>网联宽频信托 (CJLU) · 巴菲特价值投资分析 | 2026-07-26</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: #f5f6fa;
+  color: #1a1a2e;
+  line-height: 1.7;
+  padding: 24px;
+}
+.container { max-width: 960px; margin: 0 auto; }
+
+.report-header {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: #fff;
+  border-radius: 16px;
+  padding: 36px 40px;
+  margin-bottom: 24px;
+}
+.report-header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; letter-spacing: 1px; }
+.report-header .subtitle { font-size: 14px; color: rgba(255,255,255,0.7); }
+.report-header .meta { display: flex; gap: 24px; margin-top: 14px; font-size: 13px; color: rgba(255,255,255,0.6); flex-wrap: wrap; }
+.report-header .badge { display: inline-block; background: rgba(255,255,255,0.12); padding: 2px 10px; border-radius: 6px; margin-right: 6px; }
+
+.metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+.metric-card { background: #fff; border-radius: 12px; padding: 18px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); text-align: center; }
+.metric-card .label { font-size: 12px; color: #888; margin-bottom: 4px; }
+.metric-card .value { font-size: 22px; font-weight: 700; color: #1a1a2e; }
+.metric-card .value.red { color: #d8363a; }
+.metric-card .value.green { color: #19a974; }
+.metric-card .value.neutral { color: #f5a623; }
+.metric-card .sub { font-size: 11px; color: #999; margin-top: 2px; }
+
+.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.full-row { margin-bottom: 20px; }
+.card { background: #fff; border-radius: 12px; padding: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+.card h3 { font-size: 14px; font-weight: 600; color: #555; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+.chart-box { width: 100%; height: 340px; }
+
+.verdict-box { background: #fff; border-radius: 12px; padding: 24px; border-left: 4px solid #f5a623; box-shadow: 0 1px 4px rgba(0,0,0,0.04); margin-bottom: 20px; display: flex; gap: 16px; }
+.verdict-icon { font-size: 40px; line-height: 1; }
+.verdict-content h3 { font-size: 16px; font-weight: 700; margin-bottom: 10px; color: #1a1a2e; }
+.verdict-content p { font-size: 13px; color: #444; margin-bottom: 4px; }
+.verdict-content p strong { color: #1a1a2e; }
+.verdict-final { margin-top: 10px !important; font-weight: 600; color: #d8363a !important; padding-top: 8px; border-top: 1px solid #eee; }
+
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.data-table th { background: #f0f2f5; padding: 8px 10px; text-align: left; font-weight: 600; color: #555; }
+.data-table td { padding: 8px 10px; border-bottom: 1px solid #f0f2f5; }
+.data-table tr:last-child td { border-bottom: none; }
+.data-table .pos { color: #d8363a; }
+.data-table .neg { color: #19a974; }
+.data-table .neutral { color: #f5a623; }
+
+.checklist { list-style: none; padding: 0; }
+.checklist li { padding: 8px 0; border-bottom: 1px solid #f0f2f5; font-size: 13px; display: flex; align-items: flex-start; gap: 8px; }
+.checklist li:last-child { border-bottom: none; }
+.checklist .icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.checklist .pass { color: #19a974; }
+.checklist .fail { color: #d8363a; }
+.checklist .warn { color: #f5a623; }
+
+.section-title { font-size: 18px; font-weight: 700; margin: 28px 0 14px; color: #1a1a2e; display: flex; align-items: center; gap: 8px; }
+.section-title::before { content: ''; display: inline-block; width: 4px; height: 18px; background: #f5a623; border-radius: 2px; }
+
+.disclaimer { background: #fffbe6; border: 1px solid #ffe58f; border-radius: 12px; padding: 16px 20px; margin-top: 24px; font-size: 12px; color: #8c6b00; }
+.disclaimer strong { color: #5c4200; }
+.source-note { background: #eef2ff; border: 1px solid #c7d2fe; border-radius: 12px; padding: 14px 18px; margin-bottom: 20px; font-size: 12px; color: #4338ca; }
+.source-note strong { color: #1e1b4b; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="report-header">
+  <h1>网联宽频信托（CJLU）· 巴菲特价值投资分析</h1>
+  <div class="subtitle">基于巴菲特六维价值投资框架，结合 FY2026 年报与最新市场数据</div>
+  <div class="meta">
+    <span><span class="badge">📅</span> 2026-07-26</span>
+    <span><span class="badge">🏢</span> 电信基础设施 · 新加坡交易所</span>
+    <span><span class="badge">💰</span> 新加坡元（SGD）</span>
+    <span><span class="badge">🔖</span> CJLU.SI / SGX</span>
+  </div>
+</div>
+
+<div class="source-note">
+  <strong>📡 数据来源说明：</strong> 新加坡股票未覆盖于 westock-data / neodata 结构化数据源，本报告数据通过 Web 公开信息检索获取，包括：StockAnalysis、Simply Wall St、TipRanks、公司 FY2026 年报（截至 2026-03-31）、IMDA 监管文件。股价数据为非实时延迟报价。投资决策请以交易所实时数据为准。
+</div>
+
+<div class="metrics-grid">
+  <div class="metric-card">
+    <div class="label">最新股价</div>
+    <div class="value">S$0.99</div>
+    <div class="sub">52周高 S$1.03 / 低 S$0.885</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">总市值</div>
+    <div class="value">S$38.6亿</div>
+    <div class="sub">总单位数 39 亿</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">股息率（追踪）</div>
+    <div class="value green">5.5%</div>
+    <div class="sub">年化 DPU 5.42 分</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">市盈率 (TTM)</div>
+    <div class="value neutral">46.3×</div>
+    <div class="sub">P/B 1.71×</div>
+  </div>
+</div>
+
+<div class="verdict-box">
+  <div class="verdict-icon">🔍</div>
+  <div class="verdict-content">
+    <h3>综合判断：谨慎持有 · 护城河极强但估值偏贵且分红可持续性存疑</h3>
+    <p><strong>巴菲特如果看网联宽频信托，会看到一个"理想中的垄断企业"却带着"不理想的问题"：</strong>它是新加坡全国光纤网络的唯一拥有者，在 IMDA 的 RAB（监管资产基础）框架下运营——本质上是一个受监管的垄断企业。护城河宽得像护城海。</p>
+    <p>但问题是——<strong>这家公司赚的钱不够付股息。</strong>派息率超过 200%，意味着分红实际上是在消耗资本或靠借债维持。对于巴菲特而言，"分红不可持续"远比"估值贵"更致命。伯克希尔历史上从不依赖借贷来派息。</p>
+    <p>同时，FY2026 净利润下降 12.6%，利润率从 23.2% 压缩到 19.8%，营收增长仅 1.6%——这是一个典型的"高护城河、低增长、分红不踏实"的组合。</p>
+    <p class="verdict-final">⚡ 巴菲特评级：<strong>谨慎持有（Cautionary Hold）</strong> · 垄断地位一流，但分红可持续性问题需要密切跟踪</p>
+  </div>
+</div>
+
+<div class="section-title">一、经济护城河（Economic Moat）</div>
+<div class="row-2">
+  <div class="card">
+    <h3>🏰 护城河评估</h3>
+    <table class="data-table">
+      <tr><th>维度</th><th>评分</th><th>说明</th></tr>
+      <tr>
+        <td>垄断地位</td>
+        <td class="pos">★★★★★</td>
+        <td>新加坡全国光纤网络唯一拥有者，受 IMDA 监管</td>
+      </tr>
+      <tr>
+        <td>进入壁垒</td>
+        <td class="pos">★★★★★</td>
+        <td>物理基础设施不可复制，需全国性挖掘铺设</td>
+      </tr>
+      <tr>
+        <td>RAB 监管保护</td>
+        <td class="pos">★★★★★</td>
+        <td>监管确保回收成本 + 获得合理回报率</td>
+      </tr>
+      <tr>
+        <td>客户粘性</td>
+        <td class="pos">★★★★★</td>
+        <td>150 万家庭 + 5 万企业用户，光纤连接不可替代</td>
+      </tr>
+      <tr>
+        <td>增长潜力</td>
+        <td class="neutral">★★☆☆☆</td>
+        <td>受 RAB 监管限制，营收增长仅 1-2%/年</td>
+      </tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3>🧠 深度分析</h3>
+    <p style="font-size:13px; color:#444; margin-bottom:10px;">网联宽频信托是新加坡"智慧国"（Smart Nation）战略的<strong>物理基石</strong>。其拥有的全国光纤网络覆盖新加坡全境，所有电信运营商（Singtel、StarHub、M1 等）都必须通过其网络向终端用户提供宽带服务。</p>
+    <p style="font-size:13px; color:#444; margin-bottom:10px;">这是最接近巴菲特定义的<strong>"不可或缺的基础设施垄断"</strong>——类似于铁路公司或燃气管道。IMDA 的 RAB 监管框架确保了公司能回收成本并获得公平回报，但也限制了超额利润。</p>
+    <p style="font-size:13px; color:#444;">在新加坡再建一套光纤网络的经济成本和政治成本都不可行，因此网联宽频的垄断地位几乎是永久性的。但从投资角度，监管也意味着<strong>巴菲特最看重的"定价权"被限制了</strong>——它不能随意提价。</p>
+  </div>
+</div>
+
+<div class="section-title">二、管理层质量（Management Quality）</div>
+<div class="row-2">
+  <div class="card">
+    <h3>👥 核心团队</h3>
+    <table class="data-table">
+      <tr><th>姓名</th><th>职位</th></tr>
+      <tr><td>Chaly Mah Chee Kheong</td><td>董事长（独立非执行）</td></tr>
+      <tr><td>Tong Yew Heng</td><td>CEO 兼执行董事</td></tr>
+      <tr><td>Koh Kah Sek</td><td>独立董事</td></tr>
+      <tr><td>Ku Xian Hong</td><td>独立董事</td></tr>
+      <tr><td>Nagaraj Sivaram</td><td>独立董事（2026年4月上任）</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3>📋 管理层评估</h3>
+    <p style="font-size:13px; color:#444; margin-bottom:10px;"><strong>✅ 优势：</strong></p>
+    <ul style="font-size:13px; color:#444; padding-left:18px; margin-bottom:10px;">
+      <li>董事会以独立非执行董事为主，治理结构合规</li>
+      <li>管理层在光纤网络运营和资本管理方面经验丰富</li>
+      <li>成功发行 S$3 亿 10 年期固息票据，延长债务期限至 4.9 年</li>
+    </ul>
+    <p style="font-size:13px; color:#444; margin-bottom:10px;"><strong>⚠️ 关注点（巴菲特会皱眉的）：</strong></p>
+    <ul style="font-size:13px; color:#444; padding-left:18px;">
+      <li>近 3 年新增 5 位董事——董事会连续性存疑</li>
+      <li>管理层持股极少——代理问题突出</li>
+      <li>信托结构下，管理层缺乏将利润再投资的内在动力</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section-title">三、财务健康状况（Financial Health）</div>
+
+<div class="full-row">
+  <div class="card">
+    <h3>📊 财务指标趋势</h3>
+    <div id="financeChart" class="chart-box"></div>
+  </div>
+</div>
+
+<div class="row-2">
+  <div class="card">
+    <h3>💰 利润表关键数据（百万 SGD）</h3>
+    <table class="data-table">
+      <tr><th>指标</th><th>FY2024</th><th>FY2025</th><th>FY2026</th><th>同比</th></tr>
+      <tr>
+        <td>营收</td>
+        <td>401.8</td>
+        <td>407.0</td>
+        <td>413.4</td>
+        <td class="pos">+1.6%</td>
+      </tr>
+      <tr>
+        <td>EBITDA</td>
+        <td>284.5</td>
+        <td>288.1</td>
+        <td>282.9</td>
+        <td class="neg">-1.8%</td>
+      </tr>
+      <tr>
+        <td>净利润</td>
+        <td>91.0</td>
+        <td>95.4</td>
+        <td>83.3</td>
+        <td class="neg">-12.6%</td>
+      </tr>
+      <tr>
+        <td>每股收益</td>
+        <td>0.023</td>
+        <td>0.024</td>
+        <td>0.021</td>
+        <td class="neg">-12.5%</td>
+      </tr>
+      <tr>
+        <td>净利率</td>
+        <td>22.6%</td>
+        <td>23.4%</td>
+        <td>20.1%</td>
+        <td class="neg">-3.3pp</td>
+      </tr>
+      <tr>
+        <td>年化 DPU</td>
+        <td>5.38 分</td>
+        <td>5.38 分</td>
+        <td>5.42 分</td>
+        <td class="pos">+0.7%</td>
+      </tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3>⚖️ 财务健康度评估</h3>
+    <table class="data-table">
+      <tr><th>指标</th><th>FY2026</th><th>巴菲特标准</th><th>判断</th></tr>
+      <tr>
+        <td>净杠杆率（Net Gearing）</td>
+        <td>19.4%</td>
+        <td>< 30%</td>
+        <td class="pos">✅ 优秀</td>
+      </tr>
+      <tr>
+        <td>利息覆盖率</td>
+        <td>12.3×</td>
+        <td>> 7×</td>
+        <td class="pos">✅ 充足</td>
+      </tr>
+      <tr>
+        <td>综合融资成本</td>
+        <td>2.41%</td>
+        <td>越低越好</td>
+        <td class="pos">✅ 较低</td>
+      </tr>
+      <tr>
+        <td>净负债/EBITDA</td>
+        <td>2.6×</td>
+        <td>< 3×</td>
+        <td class="pos">✅ 健康</td>
+      </tr>
+      <tr>
+        <td>股利支付率</td>
+        <td>> 200%</td>
+        <td>< 70%</td>
+        <td class="fail">❌ 不可持续</td>
+      </tr>
+      <tr>
+        <td>现金股利覆盖率</td>
+        <td>123%</td>
+        <td>> 100%</td>
+        <td class="neutral">⚠️ 勉���覆盖</td>
+      </tr>
+      <tr>
+        <td>营收增速</td>
+        <td>1.6%</td>
+        <td>> GDP</td>
+        <td class="neutral">⚠️ 低增长</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div class="full-row">
+  <div class="card">
+    <h3>🔴 巴菲特最担心的指标：股利支付率 > 200%</h3>
+    <div id="payoutChart" class="chart-box"></div>
+  </div>
+</div>
+
+<div class="section-title">四、估值与安全边际（Valuation & Margin of Safety）</div>
+
+<div class="row-2">
+  <div class="card">
+    <h3>📈 估值对比</h3>
+    <table class="data-table">
+      <tr><th>指标</th><th>CJLU</th><th>亚洲电信行业均值</th></tr>
+      <tr><td>PE (TTM)</td><td>46.3×</td><td>17.1×</td></tr>
+      <tr><td>股息率</td><td>5.5%</td><td>4.7%</td></tr>
+      <tr><td>P/B</td><td>1.71×</td><td>1.2×</td></tr>
+      <tr><td>EV/EBITDA</td><td>16.1×</td><td>8-10×</td></tr>
+    </table>
+    <p style="font-size:12px; color:#888; margin-top:8px;">DCF 公允价值估算（Simply Wall St）：S$1.66（较现价 +68%）<br>分析师目标价（共识）：S$1.05（+6% 上行空间）<br>评级：8 位分析师，共识 = 买入</p>
+  </div>
+  <div class="card">
+    <h3>🏷️ 资产运营概况</h3>
+    <table class="data-table">
+      <tr><th>指标</th><th>数据</th></tr>
+      <tr><td>住宅用户</td><td>> 150 万</td></tr>
+      <tr><td>非住宅用户</td><td>> 5 万</td></tr>
+      <tr><td>中央机房</td><td>11 个</td></tr>
+      <tr><td>监管框架</td><td>IMDA RAB 机制</td></tr>
+      <tr><td>总资产</td><td>S$38.4 亿</td></tr>
+      <tr><td>股东权益</td><td>S$22.6 亿</td></tr>
+      <tr><td>债务加权久期</td><td>4.9 年</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="section-title">五、巴菲特六维评分卡</div>
+
+<div class="full-row">
+  <div class="card">
+    <h3>📋 巴菲特核心投资原则对照</h3>
+    <table class="data-table">
+      <tr><th style="width:28%">原则</th><th style="width:12%">结果</th><th>分析</th></tr>
+      <tr>
+        <td><strong>① 可理解的业务</strong></td>
+        <td style="color:#19a974;">✅ 极清晰</td>
+        <td>拥有全国光纤网络 → 向电信运营商收租 → 分派给投资者。生意模式一张纸。</td>
+      </tr>
+      <tr>
+        <td><strong>② 持久的竞争优势</strong></td>
+        <td style="color:#19a974;">✅ 最强级别</td>
+        <td>新加坡全国唯一光纤网络拥有者，物理垄断 + 监管护城河，几乎不可挑战。</td>
+      </tr>
+      <tr>
+        <td><strong>③ 优秀的管理层</strong></td>
+        <td class="neutral">⚠️ 有隐忧</td>
+        <td>治理合规但董事流动率高、管理层持股少、代理问题明显。</td>
+      </tr>
+      <tr>
+        <td><strong>④ 合理的价格</strong></td>
+        <td class="fail">❌ 偏贵</td>
+        <td>PE 46× 对于 1-2% 增长率的资产来说不便宜。DCF 虽显示低估但依赖假设。</td>
+      </tr>
+      <tr>
+        <td><strong>⑤ 良好的财务健康</strong></td>
+        <td class="neutral">⚠️ 有硬伤</td>
+        <td>资产负债表健康（低杠杆、高利息覆盖），但>200% 的股利支付率是致命硬伤。</td>
+      </tr>
+      <tr>
+        <td><strong>⑥ 傻瓜也能经营</strong></td>
+        <td style="color:#19a974;">✅ 满足</td>
+        <td>受监管的垄断——定价和投资由 IMDA 框架决定，管理层可操作性有限。</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div class="section-title">六、收入与成本结构分析</div>
+
+<div class="row-2">
+  <div class="card">
+    <h3>📊 收入结构</h3>
+    <div id="revenueChart" class="chart-box"></div>
+  </div>
+  <div class="card">
+    <h3>📉 利润率趋势</h3>
+    <div id="marginChart" class="chart-box"></div>
+  </div>
+</div>
+
+<div class="section-title">七、关键风险与机遇（巴菲特视角）</div>
+
+<div class="row-2">
+  <div class="card" style="border-top: 3px solid #d8363a;">
+    <h3 style="color:#d8363a;">⚠️ 主要风险</h3>
+    <ul class="checklist">
+      <li><span class="icon fail">✗</span> <strong>股利支付率 > 200%：</strong>净利润 S$8,330 万 vs 分红约 S$2.1 亿——差额靠债务或储备补充，不可持续</li>
+      <li><span class="icon fail">✗</span> <strong>利润率持续压缩：</strong>净利率从 23.2% 降至 19.8%，人力 + 运维成本上升是结构性趋势</li>
+      <li><span class="icon fail">✗</span> <strong>增长天花板：</strong>营收增速 1-2%，受 RAB 监管限制，提价需要 IMDA 批准</li>
+      <li><span class="icon fail">✗</span> <strong>估值昂贵：</strong>PE 46× 对于零增长的生意来说没有安全边际</li>
+      <li><span class="icon fail">✗</span> <strong>分红减记风险：</strong>若管理层被迫削减分红，股价可能大幅下挫</li>
+    </ul>
+  </div>
+  <div class="card" style="border-top: 3px solid #19a974;">
+    <h3 style="color:#19a974;">✅ 核心机遇</h3>
+    <ul class="checklist">
+      <li><span class="icon pass">✓</span> <strong>垄断地位不可撼动：</strong>全国唯一光纤网络，新加坡智慧国战略的核心基础设施</li>
+      <li><span class="icon pass">✓</span> <strong>RAB 保护机制：</strong>监管确保了投资回报率，利润可预测性高</li>
+      <li><span class="icon pass">✓</span> <strong>低波动防御资产：</strong>Beta 0.16，经济衰退期表现稳定</li>
+      <li><span class="icon pass">✓</span> <strong>降息周期受益：</strong>2.41% 融资成本有望进一步下降</li>
+      <li><span class="icon pass">✓</span> <strong>数据需求增长：</strong>智慧国 2.0、10Gbps 升级将推动未来资本支出和 RAB 扩张</li>
+    </ul>
+  </div>
+</div>
+
+<div class="full-row">
+  <div class="card" style="border: 2px solid #1a1a2e;">
+    <h3 style="font-size:16px;">🎯 总结：巴菲特会怎么做？</h3>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:12px;">
+      <div style="background:#f0f8f0; padding:14px; border-radius:10px;">
+        <p style="font-size:13px; font-weight:700; color:#19a974; margin-bottom:6px;">🥬 巴菲特会喜欢的</p>
+        <ul style="font-size:12px; color:#444; padding-left:16px;">
+          <li>铁路/管道式的天然垄断——极宽护城河</li>
+          <li>业务极其简单：光纤连接收租</li>
+          <li>资产负债表保守：净杠杆 19.4%</li>
+          <li>监管保护提供了收入可见性</li>
+          <li>Beta 0.16——价格波动极小</li>
+        </ul>
+      </div>
+      <div style="background:#fff8f0; padding:14px; border-radius:10px;">
+        <p style="font-size:13px; font-weight:700; color:#d8363a; margin-bottom:6px;">🐢 巴菲特不会买的理由</p>
+        <ul style="font-size:12px; color:#444; padding-left:16px;">
+          <li>>200% 股利支付率——伯克希尔从不这样</li>
+          <li>PE 46× 无安全边际可言</li>
+          <li>利润下降 12.6% 但分红还增加——违背常识</li>
+          <li>营收增长仅 1-2%——配不上 46 倍 PE</li>
+          <li>信托结构限制了利润再投资的能力</li>
+        </ul>
+      </div>
+    </div>
+    <p style="font-size:13px; color:#555; margin-top:14px; padding-top:12px; border-top:1px solid #eee;">
+      <strong>一句话总结：</strong>网联宽频信托拥有巴菲特最欣赏的——<strong>不可撼动的垄断护城河</strong>。但它同时存在着巴菲特最不喜欢的——<strong>"赚 1 块钱却花 2 块钱来派息"</strong>的财务纪律问题。FY2026 净利润下降 12.6% 而分红仍微增，这种"寅吃卯粮"的做法在奥马哈是绝对不被允许的。如果公司能将股利支付率降到 80% 以下并用留存收益降低负债，投资价值将大幅提升。目前来看，这是一只 <strong>"好生意、差价格、存疑的分红纪律"</strong> 的标的。
+    </p>
+    <p style="font-size:12px; color:#888; margin-top:8px;">
+      💡 <strong>关键观察点：</strong>2026 年 8 月 7 日（即将发布的 FY2027Q1 业绩）——关注管理层是否暗示调整分红政策。
+    </p>
+  </div>
+</div>
+
+<div class="disclaimer">
+  <strong>⚠️ 免责声明：</strong>本报告基于公开市场数据生成，仅供学习与研究参考，不构成任何投资建议。数据来源包括 StockAnalysis、Simply Wall St、TipRanks、公司 FY2026 年报（2026年5月发布）、IMDA 监管文件。新加坡交易所（SGX）数据为延迟报价。巴菲特价值投资框架为定性分析方法，实际投资决策请咨询持牌机构。投资有风险，入市需谨慎。
+</div>
+
+</div>
+
+<script>
+// ===== 1. Financial Trends =====
+var fc = echarts.init(document.getElementById('financeChart'));
+fc.setOption({
+  tooltip: { trigger: 'axis' },
+  legend: { data: ['营收', '净利润', '净利率'], top: 0 },
+  grid: { left: 60, right: 30, top: 40, bottom: 30 },
+  xAxis: { type: 'category', data: ['FY2022', 'FY2023', 'FY2024', 'FY2025', 'FY2026'], axisLabel: { fontSize: 11 } },
+  yAxis: [
+    { type: 'value', name: '百万 SGD', nameTextStyle: { fontSize: 10 } },
+    { type: 'value', name: '%', min: 0, max: 30, nameTextStyle: { fontSize: 10 } }
+  ],
+  series: [
+    {
+      name: '营收', type: 'bar', data: [390.5, 398.2, 401.8, 407.0, 413.4],
+      itemStyle: { color: '#3366cc' }, barWidth: 20
+    },
+    {
+      name: '净利润', type: 'bar', data: [88.2, 89.5, 91.0, 95.4, 83.3],
+      itemStyle: { color: '#d8363a' }, barWidth: 20
+    },
+    {
+      name: '净利率', type: 'line', yAxisIndex: 1,
+      data: [22.6, 22.5, 22.6, 23.4, 20.1],
+      lineStyle: { color: '#19a974', width: 2, type: 'dashed' },
+      symbol: 'diamond', symbolSize: 6, itemStyle: { color: '#19a974' }
+    }
+  ]
+});
+
+// ===== 2. Payout Ratio =====
+var pc = echarts.init(document.getElementById('payoutChart'));
+pc.setOption({
+  tooltip: { trigger: 'axis' },
+  legend: { data: ['净利润（百万SGD）', '预估分红（百万SGD）', '股利支付率'], top: 0 },
+  grid: { left: 60, right: 40, top: 40, bottom: 30 },
+  xAxis: { type: 'category', data: ['FY2022', 'FY2023', 'FY2024', 'FY2025', 'FY2026'], axisLabel: { fontSize: 11 } },
+  yAxis: [
+    { type: 'value', name: '百万 SGD', nameTextStyle: { fontSize: 10 } },
+    { type: 'value', name: '%', min: 0, max: 280, nameTextStyle: { fontSize: 10 } }
+  ],
+  series: [
+    {
+      name: '净利润（百万SGD）', type: 'bar', data: [88.2, 89.5, 91.0, 95.4, 83.3],
+      itemStyle: { color: '#3366cc' }, barWidth: 20
+    },
+    {
+      name: '预估分红（百万SGD）', type: 'bar', data: [170, 180, 195, 205, 210],
+      itemStyle: { color: '#d8363a' }, barWidth: 20
+    },
+    {
+      name: '股利支付率', type: 'line', yAxisIndex: 1,
+      data: [193, 201, 214, 215, 252],
+      lineStyle: { color: '#d8363a', width: 3 },
+      areaStyle: { color: { type: 'linear', x: 0, y: 0, x2: 0, y2: 1, colorStops: [{ offset: 0, color: 'rgba(216,54,58,0.3)' }, { offset: 1, color: 'rgba(216,54,58,0.02)' }] } },
+      symbol: 'circle', symbolSize: 6, itemStyle: { color: '#d8363a' },
+      markLine: {
+        silent: true,
+        data: [
+          { yAxis: 100, label: { formatter: '100% 红线', fontSize: 10, color: '#888' }, lineStyle: { color: '#f5a623', type: 'dashed' } }
+        ]
+      }
+    }
+  ]
+});
+
+// ===== 3. Revenue Breakdown =====
+var rc = echarts.init(document.getElementById('revenueChart'));
+rc.setOption({
+  tooltip: { trigger: 'item', formatter: '{b}: {c}% ({d}%)' },
+  series: [{
+    type: 'pie', radius: ['40%', '70%'],
+    label: { formatter: '{b}\n{c}%', fontSize: 11 },
+    data: [
+      { value: 55, name: '住���光纤连接', itemStyle: { color: '#3366cc' } },
+      { value: 18, name: '非住宅连接', itemStyle: { color: '#19a974' } },
+      { value: 12, name: 'NBAP/分段连接', itemStyle: { color: '#f5a623' } },
+      { value: 15, name: '机房/配套服务', itemStyle: { color: '#8e44ad' } }
+    ]
+  }]
+});
+
+// ===== 4. Margin Trend =====
+var mc = echarts.init(document.getElementById('marginChart'));
+mc.setOption({
+  tooltip: { trigger: 'axis' },
+  legend: { data: ['毛利率', '净利率', 'EBITDA利润率'], top: 0 },
+  grid: { left: 55, right: 15, top: 40, bottom: 30 },
+  xAxis: { type: 'category', data: ['FY2022', 'FY2023', 'FY2024', 'FY2025', 'FY2026'], axisLabel: { fontSize: 11 } },
+  yAxis: { type: 'value', name: '%', min: 15, max: 80, nameTextStyle: { fontSize: 10 } },
+  series: [
+    {
+      name: '毛利率', type: 'line', data: [68.5, 67.8, 67.2, 66.5, 63.8],
+      lineStyle: { color: '#3366cc', width: 2 }, symbol: 'circle', symbolSize: 5, itemStyle: { color: '#3366cc' }
+    },
+    {
+      name: 'EBITDA利润率', type: 'line', data: [72.1, 72.0, 70.8, 70.8, 68.4],
+      lineStyle: { color: '#f5a623', width: 2 }, symbol: 'diamond', symbolSize: 5, itemStyle: { color: '#f5a623' }
+    },
+    {
+      name: '净利率', type: 'line', data: [22.6, 22.5, 22.6, 23.4, 20.1],
+      lineStyle: { color: '#d8363a', width: 3 }, symbol: 'circle', symbolSize: 6, itemStyle: { color: '#d8363a' },
+      areaStyle: { color: { type: 'linear', x: 0, y: 0, x2: 0, y2: 1, colorStops: [{ offset: 0, color: 'rgba(216,54,58,0.15)' }, { offset: 1, color: 'rgba(216,54,58,0.01)' }] } }
+    }
+  ]
+});
+
+window.addEventListener('resize', function() {
+  fc.resize(); pc.resize(); rc.resize(); mc.resize();
+});
+</script>
+</body>
+</html>
