@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>公司巴菲特式分析报告</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: #f5f6fa;
+  color: #1a1a2e;
+  line-height: 1.7;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 48px 24px;
+  flex: 1;
+}
+h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 8px;
+}
+.subtitle {
+  font-size: 15px;
+  color: #666;
+  margin-bottom: 36px;
+}
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px 24px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  transition: box-shadow 0.2s, transform 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+  color: inherit;
+}
+.card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+}
+.card-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+.card-info h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.card-info .date {
+  font-size: 13px;
+  color: #888;
+}
+.card-arrow {
+  color: #bbb;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.footer {
+  text-align: center;
+  padding: 24px;
+  font-size: 13px;
+  color: #999;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>📊 公司巴菲特式分析报告</h1>
+  <p class="subtitle">基于巴菲特价值投资框架，对上市公司进行系统性的财务与业务分析</p>
+
+  <div class="card-list">
+    <a class="card" href="reports/alibaba/alibaba-buffett-analysis-20260726.html">
+      <div class="card-left">
+        <div class="card-icon" style="background:#e74c3c;">阿</div>
+        <div class="card-info">
+          <h3>阿里巴巴 Alibaba</h3>
+          <span class="date">2026-07-26</span>
+        </div>
+      </div>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card" href="reports/ing/ing-buffett-analysis-20260726.html">
+      <div class="card-left">
+        <div class="card-icon" style="background:#2e86de;">ING</div>
+        <div class="card-info">
+          <h3>ING</h3>
+          <span class="date">2026-07-26</span>
+        </div>
+      </div>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card" href="reports/tencent/tencent-buffett-analysis-20260726.html">
+      <div class="card-left">
+        <div class="card-icon" style="background:#10ac84;">腾</div>
+        <div class="card-info">
+          <h3>腾讯 Tencent</h3>
+          <span class="date">2026-07-26</span>
+        </div>
+      </div>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card" href="reports/xiaomi/xiaomi-buffett-analysis-20260726.html">
+      <div class="card-left">
+        <div class="card-icon" style="background:#f39c12;">小</div>
+        <div class="card-info">
+          <h3>小米 Xiaomi</h3>
+          <span class="date">2026-07-26</span>
+        </div>
+      </div>
+      <span class="card-arrow">→</span>
+    </a>
+  </div>
+</div>
+<div class="footer">Stock Analysis Reports · Updated 2026-07-26</div>
+</body>
+</html>
