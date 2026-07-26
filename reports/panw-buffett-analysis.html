@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>巴菲特价值投资分析 · Palo Alto Networks (PANW)</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0b1120; color: #e2e8f0; font-family: -apple-system, 'Segoe UI', 'PingFang SC', 'Noto Sans SC', 'Microsoft YaHei', sans-serif; line-height: 1.8; padding: 0; }
+  
+  /* Hero */
+  .hero { background: linear-gradient(135deg, #0b1120 0%, #1a2744 50%, #0b1120 100%); padding: 60px 20px 50px; text-align: center; border-bottom: 1px solid #1e3a5f; }
+  .hero h1 { font-size: 2.4rem; color: #fbbf24; letter-spacing: 2px; margin-bottom: 8px; }
+  .hero .ticker { display: inline-block; background: #2563eb; color: #fff; padding: 4px 16px; border-radius: 20px; font-size: 0.95rem; font-weight: 600; letter-spacing: 1px; margin-bottom: 12px; }
+  .hero .sub { color: #94a3b8; font-size: 1rem; margin-top: 6px; }
+  .hero .quote-box { display: flex; justify-content: center; gap: 40px; margin-top: 24px; flex-wrap: wrap; }
+  .hero .q-item { text-align: center; }
+  .hero .q-item .num { font-size: 2rem; font-weight: 700; color: #60a5fa; }
+  .hero .q-item .num.red { color: #ef4444; }
+  .hero .q-item .num.green { color: #22c55e; }
+  .hero .q-item .label { font-size: 0.82rem; color: #94a3b8; margin-top: 2px; }
+  
+  .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+  
+  /* Buffett quote */
+  .buffett-quote { background: linear-gradient(135deg, #1e293b, #0f172a); border-left: 4px solid #fbbf24; padding: 20px 24px; margin: 30px 0; border-radius: 0 8px 8px 0; font-style: italic; color: #cbd5e1; font-size: 1.05rem; }
+  .buffett-quote .attr { display: block; text-align: right; color: #fbbf24; font-style: normal; font-size: 0.88rem; margin-top: 8px; }
+
+  /* Sections */
+  section { padding: 40px 0; border-bottom: 1px solid #1e293b; }
+  section:last-child { border-bottom: none; }
+  
+  h2 { font-size: 1.6rem; color: #fbbf24; margin-bottom: 24px; padding-bottom: 10px; border-bottom: 2px solid #2563eb; display: flex; align-items: center; gap: 10px; }
+  h2 .icon { font-size: 1.4rem; }
+  h3 { font-size: 1.2rem; color: #93c5fd; margin-top: 24px; margin-bottom: 12px; }
+  h4 { color: #a5b4fc; margin-top: 16px; margin-bottom: 8px; font-size: 1.02rem; }
+  
+  p { margin-bottom: 14px; color: #cbd5e1; }
+  ul, ol { padding-left: 24px; margin-bottom: 16px; }
+  li { margin-bottom: 8px; color: #cbd5e1; }
+  
+  /* Verdict badges */
+  .verdict { display: inline-block; padding: 3px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; margin-right: 6px; }
+  .verdict.pass { background: #064e3b; color: #6ee7b7; }
+  .verdict.fail { background: #450a0a; color: #fca5a5; }
+  .verdict.warn { background: #422006; color: #fcd34d; }
+  .verdict.neutral { background: #1e3a5f; color: #93c5fd; }
+  
+  /* Cards */
+  .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+  .card { background: #1e293b; border-radius: 10px; padding: 20px; border: 1px solid #334155; }
+  .card h4 { color: #fbbf24; margin-top: 0; font-size: 1rem; }
+  .card .big-num { font-size: 2rem; font-weight: 700; color: #60a5fa; margin: 6px 0 2px; }
+  .card .big-num.green { color: #22c55e; }
+  .card .big-num.red { color: #ef4444; }
+  .card .desc { font-size: 0.85rem; color: #94a3b8; }
+  
+  /* Table */
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.9rem; }
+  th, td { border: 1px solid #334155; padding: 10px 14px; text-align: right; }
+  th { background: #1e293b; color: #fbbf24; font-weight: 600; text-align: center; }
+  td:first-child, th:first-child { text-align: left; }
+  td { background: #0f172a; }
+  tr:hover td { background: #1a2744; }
+  .num-green { color: #22c55e; }
+  .num-red { color: #ef4444; }
+  .num-yellow { color: #facc15; }
+  
+  /* Score card */
+  .score-section { background: #1e293b; border-radius: 12px; padding: 24px; margin: 20px 0; }
+  .score-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #334155; }
+  .score-row:last-child { border-bottom: none; }
+  .score-row .label { color: #cbd5e1; font-weight: 500; }
+  .score-row .stars { color: #fbbf24; letter-spacing: 2px; }
+  .score-row .stars.empty { color: #334155; }
+  
+  /* Total score */
+  .total-score { text-align: center; padding: 30px; margin: 24px 0; }
+  .total-score .score-circle { width: 120px; height: 120px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 2.6rem; font-weight: 800; margin-bottom: 12px; }
+  .total-score .score-circle.high { background: linear-gradient(135deg, #064e3b, #065f46); color: #6ee7b7; border: 3px solid #10b981; }
+  .total-score .score-circle.medium { background: linear-gradient(135deg, #422006, #78350f); color: #fcd34d; border: 3px solid #f59e0b; }
+  .total-score .score-circle.low { background: linear-gradient(135deg, #450a0a, #7f1d1d); color: #fca5a5; border: 3px solid #ef4444; }
+  .total-score .verdict-text { font-size: 1.2rem; font-weight: 600; color: #e2e8f0; }
+  
+  /* Footer */
+  .footer { text-align: center; padding: 30px 20px; color: #64748b; font-size: 0.82rem; }
+  .footer a { color: #60a5fa; text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+  
+  .disclaimer { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.82rem; color: #94a3b8; }
+  
+  .highlight-box { background: #0f172a; border-left: 4px solid #60a5fa; padding: 14px 18px; border-radius: 6px; margin: 16px 0; font-size: 0.95rem; }
+  .highlight-box strong { color: #fbbf24; }
+  
+  .summary-bar { display: flex; gap: 12px; flex-wrap: wrap; margin: 16px 0; }
+  .summary-tag { background: #1e293b; border: 1px solid #334155; padding: 8px 14px; border-radius: 8px; font-size: 0.88rem; }
+  .summary-tag .label { color: #94a3b8; display: block; font-size: 0.75rem; }
+  .summary-tag .value { color: #e2e8f0; font-weight: 600; }
+  
+  @media (max-width: 640px) { .card-grid { grid-template-columns: 1fr; } .hero .quote-box { gap: 20px; } }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="ticker">NASDAQ: PANW</span>
+  <h1>Palo Alto Networks · 巴菲特价值投资分析</h1>
+  <p class="sub">基于巴菲特"护城河+安全边际"框架的深度研判 · 数据截至 2026-07-24</p>
+  <div class="quote-box">
+    <div class="q-item">
+      <div class="num red">$323.79</div>
+      <div class="label">最新股价</div>
+    </div>
+    <div class="q-item">
+      <div class="num" style="color:#fbbf24;">$2,639亿</div>
+      <div class="label">总市值</div>
+    </div>
+    <div class="q-item">
+      <div class="num green">281.56</div>
+      <div class="label">PE (TTM)</div>
+    </div>
+    <div class="q-item">
+      <div class="num" style="color:#fbbf24;">9.54</div>
+      <div class="label">PB</div>
+    </div>
+    <div class="q-item">
+      <div class="num green">+75.78%</div>
+      <div class="label">YTD 涨幅</div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- EXECUTIVE SUMMARY -->
+<section>
+  <h2><span class="icon">📋</span> 执行摘要</h2>
+  <div class="buffett-quote">
+    "It's far better to buy a wonderful company at a fair price than a fair company at a wonderful price."
+    <span class="attr">— Warren Buffett</span>
+  </div>
+  
+  <p><strong>Palo Alto Networks（PANW）</strong>是全球领先的网络安全平台供应商，总部位于加利福尼亚州圣克拉拉，服务超过 80,000 家企业客户，其中包括全球 2000 强中 75% 以上的企业。公司覆盖网络安全、云安全和安全运营三大核心领域，旗下拥有 Prisma Cloud、Cortex XSIAM、下一代防火墙（NGFW）等明星产品线。</p>
+  
+  <div class="summary-bar">
+    <div class="summary-tag"><span class="label">护城河评级</span><span class="value" style="color:#6ee7b7;">Wide（宽阔）</span></div>
+    <div class="summary-tag"><span class="label">盈利能力</span><span class="value" style="color:#fcd34d;">改善中</span></div>
+    <div class="summary-tag"><span class="label">财务健康</span><span class="value" style="color:#6ee7b7;">优秀</span></div>
+    <div class="summary-tag"><span class="label">估值水平</span><span class="value" style="color:#fca5a5;">昂贵</span></div>
+    <div class="summary-tag"><span class="label">管理质量</span><span class="value" style="color:#6ee7b7;">良好</span></div>
+  </div>
+
+  <div class="total-score">
+    <div class="score-circle medium">6.5</div>
+    <div class="verdict-text">总体评价：⭐⭐⭐⭐⭐⭐☆☆☆☆ &nbsp; 6.5/10</div>
+    <p style="color:#94a3b8; margin-top:8px; font-size:0.9rem;">公司质地一流，护城河宽阔，财务极其健康，但当前估值远超巴菲特的"合理价格"范畴</p>
+  </div>
+</section>
+
+<!-- COMPANY OVERVIEW -->
+<section>
+  <h2><span class="icon">🏢</span> 公司概况</h2>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>公司名称</h4>
+      <div class="big-num" style="font-size:1.2rem;">Palo Alto Networks, Inc.</div>
+      <div class="desc">派拓网络</div>
+    </div>
+    <div class="card">
+      <h4>上市日期</h4>
+      <div class="big-num" style="font-size:1.2rem;">2012-07-20</div>
+      <div class="desc">纳斯达克上市</div>
+    </div>
+    <div class="card">
+      <h4>CEO</h4>
+      <div class="big-num" style="font-size:1.2rem;">Nikesh Arora</div>
+      <div class="desc">2018年上任，前 Google 业务高管</div>
+    </div>
+    <div class="card">
+      <h4>总部</h4>
+      <div class="big-num" style="font-size:1.2rem;">Santa Clara, CA</div>
+      <div class="desc">美国加利福尼亚州</div>
+    </div>
+  </div>
+
+  <h3>业务板块（FY2025）</h3>
+  <table>
+    <tr><th>业务线</th><th>收入（亿美元）</th><th>占比</th></tr>
+    <tr><td>订阅服务（Subscription）</td><td>49.74</td><td>53.9%</td></tr>
+    <tr><td>技术支持（Support）</td><td>24.45</td><td>26.5%</td></tr>
+    <tr><td>网络安全产品（Product）</td><td>18.02</td><td>19.5%</td></tr>
+  </table>
+  <p>订阅+支持合计占比超过 <strong>80%</strong>，说明收入具有高度可预见性和经常性——这一点符合巴菲特的偏好。</p>
+
+  <h3>地域分布（FY2025）</h3>
+  <table>
+    <tr><th>区域</th><th>收入（亿美元）</th><th>占比</th></tr>
+    <tr><td>美洲</td><td>57.86</td><td>62.7%</td></tr>
+    <tr><td>欧洲、中东、非洲（EMEA）</td><td>19.17</td><td>20.8%</td></tr>
+    <tr><td>亚太及日本</td><td>10.99</td><td>11.9%</td></tr>
+    <tr><td>其他美洲</td><td>4.19</td><td>4.5%</td></tr>
+  </table>
+</section>
+
+<!-- ECONOMIC MOAT -->
+<section>
+  <h2><span class="icon">🏰</span> 护城河分析</h2>
+
+  <div class="buffett-quote">
+    "The most important thing to me is figuring out how big a moat there is around the business. What I love, of course, is a big castle and a big moat with piranhas and crocodiles."
+    <span class="attr">— Warren Buffett</span>
+  </div>
+
+  <div style="display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap;">
+    <span class="verdict pass">✅ Morningstar: Wide Moat</span>
+    <span class="verdict pass">✅ 客户转换成本极高</span>
+    <span class="verdict pass">✅ 平台锁定效应</span>
+    <span class="verdict pass">✅ 数据网络效应</span>
+    <span class="verdict pass">✅ 品牌认知度极强</span>
+  </div>
+
+  <h3>转换成本（核心护城河）</h3>
+  <p>PANW 的网络安全平台深度嵌入企业客户的 IT 基础设施，从防火墙到云安全到安全运营，各个模块之间高度集成。一旦客户部署了 PANW 的完整平台（包括 Prisma Cloud、Cortex XSIAM、下一代防火墙），迁移到竞品的代价极高——不仅涉及重新部署的技术成本，更关键的是安全运营中断的 <strong>业务风险</strong>。这形成了巴菲特最看重的"转换成本"型护城河。</p>
+  <div class="highlight-box">
+    <strong>关键数据：</strong>PANW 已进入所有 <strong>财富 100 强</strong> 和超过 <strong>75% 的全球 2000 强企业</strong>，NGS ARR（下一代安全年经常性收入）达 <strong>$59 亿</strong>，同比增长 29%，反映出客户持续的增购和续约。
+  </div>
+
+  <h3>网络效应</h3>
+  <p>PANW 在全球拥有 85,000+ 客户，其安全平台汇集了来自大量客户的威胁情报数据。客户越多，威胁数据越丰富，AI 模型的检测精度越高，从而形成正反馈循环。这种数据网络效应是竞争对手难以复制的。</p>
+
+  <h3>平台化战略</h3>
+  <p>当前网络安全行业正从"点解决方案"向"统一平台"转型（vendor consolidation），PANW 是这一趋势的最大受益者。客户采购 PANW 的模块越多，锁定效应越强。公司已从防火墙提供商转型为涵盖网络安全、云安全、安全运营、身份安全（收购 CyberArk）和可观测性（收购 Chronosphere）的综合安全平台。</p>
+
+  <h3>护城河评分</h3>
+  <div class="score-section">
+    <div class="score-row"><span class="label">转换成本</span><span class="stars">★★★★★</span></div>
+    <div class="score-row"><span class="label">网络效应</span><span class="stars">★★★★☆</span></div>
+    <div class="score-row"><span class="label">无形资产（品牌/专利）</span><span class="stars">★★★★☆</span></div>
+    <div class="score-row"><span class="label">成本优势</span><span class="stars">★★★☆☆</span></div>
+    <div class="score-row"><span class="label">规模效应</span><span class="stars">★★★★☆</span></div>
+  </div>
+</section>
+
+<!-- FINANCIAL ANALYSIS -->
+<section>
+  <h2><span class="icon">📊</span> 财务分析</h2>
+
+  <div class="buffett-quote">
+    "You should invest in a business that even a fool can run, because someday a fool will."
+    <span class="attr">— Warren Buffett</span>
+  </div>
+
+  <h3>收入与利润趋势（年度）</h3>
+  <table>
+    <tr>
+      <th>财年（截至12月）</th>
+      <th>收入（百万美元）</th>
+      <th>同比增长</th>
+      <th>净利润（百万美元）</th>
+      <th>净利率</th>
+      <th>毛利率</th>
+      <th>经营性现金流</th>
+    </tr>
+    <tr>
+      <td>FY2021</td>
+      <td>4,256</td>
+      <td>+25%</td>
+      <td class="num-red">-499</td>
+      <td class="num-red">-11.7%</td>
+      <td>70.1%</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>FY2022</td>
+      <td>5,502</td>
+      <td>+29%</td>
+      <td class="num-red">-267</td>
+      <td class="num-red">-4.9%</td>
+      <td>68.2%</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>FY2023</td>
+      <td>6,893</td>
+      <td>+25%</td>
+      <td class="num-green">440</td>
+      <td class="num-green">6.4%</td>
+      <td>66.3%</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>FY2024</td>
+      <td>8,028</td>
+      <td>+16%</td>
+      <td class="num-green">2,578</td>
+      <td class="num-green">32.1%</td>
+      <td>68.8%</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>FY2025</td>
+      <td>9,222</td>
+      <td>+15%</td>
+      <td class="num-green">1,134</td>
+      <td>12.3%</td>
+      <td>68.2%</td>
+      <td class="num-green">3,716</td>
+    </tr>
+  </table>
+  <p style="font-size:0.85rem; color:#94a3b8;">※ FY2024 净利润受一次性递延税项收益（约 -$15.9 亿所得税费用）影响大幅高估，正常化净利润约 $9.9 亿。</p>
+
+  <div class="highlight-box">
+    <strong>巴菲特视角：</strong>收入从 FY2021 的 $43 亿增长到 FY2025 的 $92 亿，4 年翻了��倍多，复合增长率约 21%。但公司在 FY2023 才首次实现 GAAP 盈利，此前的亏损不符合巴菲特对"持续稳定盈利能力"的要求。不过 <strong>经营性现金流（CFO）</strong> 在 FY2025 达到 $37.2 亿，FCF 达 $34.7 亿（FCF 利润率 37.6%），说明实际现金生成能力非常强。
+  </div>
+
+  <h3>季度盈利趋势（近期）</h3>
+  <table>
+    <tr><th>季度</th><th>收入（百万）</th><th>净利润（百万）</th><th>EPS（稀释）</th><th>毛利率</th><th>净利率</th></tr>
+    <tr><td>FY2025 Q1 (Mar 2025)</td><td>2,139</td><td>351</td><td>$0.50</td><td>74.1%</td><td>16.4%</td></tr>
+    <tr><td>FY2025 Q2 (Jun 2025)</td><td>2,257</td><td>267</td><td>$0.38</td><td>73.5%</td><td>11.8%</td></tr>
+    <tr><td>FY2025 Q3 (Sep 2025)</td><td>2,289</td><td>262</td><td>$0.37</td><td>72.9%</td><td>11.5%</td></tr>
+    <tr><td>FY2025 Q4 (Dec 2025)</td><td>2,536</td><td>254</td><td>$0.36</td><td>73.2%</td><td>10.0%</td></tr>
+    <tr><td>FY2026 Q1 (Mar 2026)</td><td>2,474</td><td>334</td><td>$0.47</td><td>74.2%</td><td>13.5%</td></tr>
+    <tr><td>FY2026 Q2 (Jun 2026)</td><td>2,594</td><td>432</td><td>$0.61</td><td>73.6%</td><td>16.7%</td></tr>
+  </table>
+
+  <h3>自由现金流分析</h3>
+  <table>
+    <tr><th>指标</th><th>FY2025</th><th>FY2026 H1</th></tr>
+    <tr><td>经营活动现金流</td><td>$3,716M</td><td>$2,325M</td></tr>
+    <tr><td>资本支出</td><td>$246M</td><td>$254M</td></tr>
+    <tr><td>自由现金流</td><td>$3,470M</td><td>$2,071M</td></tr>
+    <tr><td>FCF 利润率</td><td>37.6%</td><td>~40.9%</td></tr>
+    <tr><td>FCF 对市值比</td><td>7.6x</td><td>—</td></tr>
+  </table>
+  <p>FCF 利润率接近 38%，管理层的目标是 FY2028 达到 <strong>40%+</strong>——这个数字在科技公司中属于顶尖水平，巴菲特会欣赏这种现金生成能力。</p>
+</section>
+
+<!-- BALANCE SHEET -->
+<section>
+  <h2><span class="icon">🏦</span> 资产负债分析</h2>
+
+  <div class="buffett-quote">
+    "I've seen more people fail because of liquor and leverage — leverage being borrowed money."
+    <span class="attr">— Warren Buffett</span>
+  </div>
+
+  <div style="display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap;">
+    <span class="verdict pass">✅ 净现金状态</span>
+    <span class="verdict pass">✅ 长期负债极低</span>
+    <span class="verdict pass">✅ 无短期借款</span>
+    <span class="verdict neutral">⚠️ 流动比率 0.99</span>
+    <span class="verdict pass">✅ 无形资产较高（行业特性）</span>
+  </div>
+
+  <h3>最新资产负债表摘要（2026-06-30）</h3>
+  <div class="card-grid">
+    <div class="card">
+      <h4>现金及短期投资</h4>
+      <div class="big-num green">$45.4亿</div>
+      <div class="desc">充裕的现金储备</div>
+    </div>
+    <div class="card">
+      <h4>长期债务</h4>
+      <div class="big-num" style="color:#fca5a5;">$3.72亿</div>
+      <div class="desc">极低的债务水平</div>
+    </div>
+    <div class="card">
+      <h4>股东权益</h4>
+      <div class="big-num">$93.9亿</div>
+      <div class="desc">净资产</div>
+    </div>
+    <div class="card">
+      <h4>净现金</h4>
+      <div class="big-num green">$41.7亿</div>
+      <div class="desc">现金 - 总债务的净头寸</div>
+    </div>
+  </div>
+
+  <table>
+    <tr><th>指标</th><th>2026-06-30</th><th>2025-12-31</th><th>趋势</th></tr>
+    <tr><td>总资产</td><td>$249.8亿</td><td>$235.8亿</td><td class="num-green">↑ 增长</td></tr>
+    <tr><td>总负债</td><td>$155.9亿</td><td>$157.5亿</td><td class="num-green">↓ 略降</td></tr>
+    <tr><td>股东权益</td><td>$93.9亿</td><td>$78.2亿</td><td class="num-green">↑ 增长</td></tr>
+    <tr><td>资产负债率</td><td>62.4%</td><td>66.8%</td><td class="num-green">↓ 改善</td></tr>
+    <tr><td>流动比率</td><td>0.99</td><td>0.89</td><td class="num-green">↑ 改善</td></tr>
+    <tr><td>ROE</td><td>16.3%</td><td>17.5%</td><td>→ 稳定</td></tr>
+    <tr><td>ROA</td><td>5.6%</td><td>5.2%</td><td class="num-green">↑ 提升</td></tr>
+    <tr><td>每股净资产（BPS）</td><td>$13.36</td><td>$11.71</td><td class="num-green">↑ 增长</td></tr>
+    <tr><td>有形每股净资产</td><td>$1.73</td><td>$3.74</td><td class="num-red">↓ 变动</td></tr>
+  </table>
+
+  <div class="highlight-box">
+    <strong>巴菲特视角：</strong>净现金超过 $40 亿，长期债务仅 $3.7 亿——这是巴菲特最钟爱的"净现金"公司类型。公司在杠杆几乎为零的情况下实现了 16%+ 的 ROE，说明真本事而非杠杆驱动回报。滚动负债（如递延收入）是 SaaS 业务的正常特征，不是财务风险。
+  </div>
+</section>
+
+<!-- MANAGEMENT -->
+<section>
+  <h2><span class="icon">👔</span> 管理层评估</h2>
+
+  <div class="buffett-quote">
+    "When a management with a reputation for brilliance tackles a business with a reputation for poor fundamental economics, it is the reputation of the business that remains intact."
+    <span class="attr">— Warren Buffett</span>
+  </div>
+
+  <h3>CEO: Nikesh Arora（2018 年至今）</h3>
+  <ul>
+    <li>前 Google 高级副总裁兼首席业务官，曾在软银集团担任总裁</li>
+    <li>2018 年接任后主导了 PANW 从"防火墙公司"到"网络安全平台公司"的战略转型</li>
+    <li>推动平台化战略（Platformization），NGS ARR 从 FY2020 的约 $10 亿增长�� FY2025 �� $59 亿</li>
+    <li>近期主导了 CyberArk（身份安全，~$250 亿）和 Chronosphere（可观测性）等重要收购</li>
+    <li>管理层的目标：FY2028 FCF 利润率 40%+，FY2030 NGS ARR 达 $200 亿</li>
+  </ul>
+
+  <div class="highlight-box">
+    <strong>巴菲特视角：</strong>Arora 展示了出色的资本配置能力和战略眼光。从 Firewall 到 Platform 的转型证明了他作为"经理人"的能力。他制定的 NGS ARR 和 FCF 利润率目标既进取又现实——体现了巴菲特欣赏的"理性资本配置"风格。不过近期密集收购（三周内完成三项收购）带来的整合风险是管理层能力面临的真正考验。
+  </div>
+</section>
+
+<!-- VALUATION -->
+<section>
+  <h2><span class="icon">💰</span> 估值分析</h2>
+
+  <div class="buffett-quote">
+    "Price is what you pay. Value is what you get."
+    <span class="attr">— Warren Buffett</span>
+  </div>
+
+  <div style="display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap;">
+    <span class="verdict fail">❌ PE 281x 极度昂贵</span>
+    <span class="verdict fail">❌ PS 28.6x 偏高</span>
+    <span class="verdict warn">⚠️ PFCF 76x 偏高</span>
+    <span class="verdict neutral">➡️ PB 9.5x 偏高</span>
+    <span class="verdict pass">✅ 但高增长正在消化估值</span>
+  </div>
+
+  <h3>核心估值指标</h3>
+  <table>
+    <tr><th>指标</th><th>数值</th><th>评价</th></tr>
+    <tr><td>PE（TTM，GAAP）</td><td>281.6x</td><td class="num-red">极度昂贵</td></tr>
+    <tr><td>正常化 PE（调整后）</td><td>~115x</td><td class="num-red">昂贵</td></tr>
+    <tr><td>PS（TTM）</td><td>28.6x</td><td class="num-red">偏高</td></tr>
+    <tr><td>PB</td><td>9.5x</td><td class="num-yellow">偏高</td></tr>
+    <tr><td>PFCF（市值/FCF）</td><td>~76x</td><td class="num-yellow">偏高</td></tr>
+    <tr><td>EV/EBITDA</td><td>~100x</td><td class="num-red">偏高</td></tr>
+    <tr><td>PEG 比率（假设 Fwd EPS 增长 25%）</td><td>~4.6x</td><td class="num-yellow">偏高（PEG>1 即为贵）</td></tr>
+  </table>
+
+  <h3>Morningstar 估值</h3>
+  <ul>
+    <li><strong>公允价值估计：</strong>$225/股（2026 年 1 月数据）</li>
+    <li><strong>评级：</strong>4 星（低�� 17%）</li>
+    <li><strong>Morningstar 估值对应 EV/Sales 约 15x</strong></li>
+    <li><strong>当前股价 $323.79</strong> 距离 Morningstar 公允价值 $225 溢价约 <strong style="color:#ef4444;">+44%</strong></li>
+    <li>Morningstar 认为 PANW 在未来 5 年可实现 <strong>13%</strong> 的收入复合增长</li>
+  </ul>
+
+  <div class="highlight-box">
+    <strong>巴菲特视角：</strong>这是 PANW 作为 Buffett 投资标的的最大矛盾点。以 281x PE 和 76x PFCF 买入一只股票，与巴菲特"以合理价格买入优秀公司"的原则严重冲突。即使采用正常化盈利（~$10-12 亿净利润），PE 仍在 110-130x 范围。即便考虑到强劲的 FCF 生成能力，76x PFCF 也意味着需要 76 年的 FCF 才能收回投资——远远超出巴菲特可接受的范围。可以判断：<strong>巴菲特会欣赏这家公司，但不会在当前价位买入。</strong>
+  </div>
+</section>
+
+<!-- BUFFETT CHECKLIST -->
+<section>
+  <h2><span class="icon">✅</span> 巴菲特七项核心原则评估</h2>
+
+  <table>
+    <tr><th style="width:35%;">原则</th><th style="width:15%;">评分</th><th>说明</th></tr>
+    <tr>
+      <td><strong>1. 可理解的业务</strong></td>
+      <td><span class="verdict warn">⚠️ 6/10</span></td>
+      <td>网络安全商业模式不难理解（订阅收费，保护企业安全），但技术细节复杂。巴菲特一向避开"看不懂的科技公司"，但 PANW 的业务逻辑（销售安全产品给企业客户）比许多科技公司更直观。</td>
+    </tr>
+    <tr>
+      <td><strong>2. 持久竞争优势（护城河）</strong></td>
+      <td><span class="verdict pass">✅ 9/10</span></td>
+      <td>宽阔的护城河——高转换成本、数据网络效应、品牌认知。Morningstar 也给予 Wide Moat 评级。这是巴菲特最喜欢的特质之一。</td>
+    </tr>
+    <tr>
+      <td><strong>3. 长期可持续的盈利能力</strong></td>
+      <td><span class="verdict warn">⚠️ 6/10</span></td>
+      <td>FY2023 才首次实现 GAAP 盈利，此前的亏损历史对巴菲特来说是减分项。好消息是盈利能力正在加速改善，FCF 已经非常强劲。</td>
+    </tr>
+    <tr>
+      <td><strong>4. 高 ROE（且低负债驱动）</strong></td>
+      <td><span class="verdict neutral">➡️ 7/10</span></td>
+      <td>当前 ROE 16.3%，处于良好水平且提升中。关键是几乎没有使用杠杆就实现了这个 ROE——这是真正的经营效率。</td>
+    </tr>
+    <tr>
+      <td><strong>5. 保守的财务结构</strong></td>
+      <td><span class="verdict pass">✅ 9/10</span></td>
+      <td>净现金 $41.7 亿，长期债务仅 $3.7 亿。资产负债结构极其保守——这是一个重要加分项。</td>
+    </tr>
+    <tr>
+      <td><strong>6. 优秀的管理层</strong></td>
+      <td><span class="verdict pass">✅ 8/10</span></td>
+      <td>Nikesh Arora 表现优秀，战略清晰，资本配置理性。但近期大规模收购带来了执行风险，需持续观察。</td>
+    </tr>
+    <tr>
+      <td><strong>7. 合理的买入价格</strong></td>
+      <td><span class="verdict fail">❌ 2/10</span></td>
+      <td>当前是最大短板。PE 281x、PFCF 76x，远超巴菲特的安全边际要求。即使考虑高增长，PEG 仍高达 4.6x。</td>
+    </tr>
+  </table>
+
+  <div class="total-score">
+    <div class="score-circle medium">6.5 / 10</div>
+    <div class="verdict-text">综合结论：<strong style="color:#fcd34d;">优秀公司 + 昂贵价格</strong></div>
+    <p style="color:#94a3b8; margin-top:8px; font-size:0.9rem;">
+      "公司"得分：8.2/10 — "价格"得分：2/10
+    </p>
+    <p style="color:#cbd5e1; font-size:0.95rem; margin-top:12px;">
+      如果 PANW 股价回落至 Morningstar 公允价值 $225（或更低），则"价格"得分显著提升，整体评级可达 8/10。
+      建议列为首选关注列表，等待合适的安全边际出现。
+    </p>
+  </div>
+</section>
+
+<!-- RISK FACTORS -->
+<section>
+  <h2><span class="icon">⚠️</span> 风险因素</h2>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4 style="color:#fca5a5;">整合风险</h4>
+      <p style="font-size:0.88rem; margin-bottom:0;">三周内完成 CyberArk（$250亿）+ Chronosphere 两项重大收购，整合复杂度极高，可能分散管理精力、影响利润率。</p>
+    </div>
+    <div class="card">
+      <h4 style="color:#fca5a5;">竞争风险</h4>
+      <p style="font-size:0.88rem; margin-bottom:0;">云巨头（AWS、Azure、GCP）提供原生安全方案；CrowdStrike、Zscaler、Fortinet 等竞品也在推进平台化战略。</p>
+    </div>
+    <div class="card">
+      <h4 style="color:#fca5a5;">技术颠覆风险</h4>
+      <p style="font-size:0.88rem; margin-bottom:0;">AI 安全是一个快速演变的领域，新兴创业公司可能凭借 AI Native 架构在特定模块实现突破。</p>
+    </div>
+    <div class="card">
+      <h4 style="color:#fca5a5;">估值风险</h4>
+      <p style="font-size:0.88rem; margin-bottom:0;">当前 PE 281x 没有给任何失误留下容错空间。一旦增长放缓或利润率不及预期，股价可能大幅回调。</p>
+    </div>
+    <div class="card">
+      <h4 style="color:#fca5a5;">宏观经济风险</h4>
+      <p style="font-size:0.88rem; margin-bottom:0;">企业 IT 支出放缓可能影响新客户获取速度和现有客户的增购节奏。</p>
+    </div>
+    <div class="card">
+      <h4 style="color:#fca5a5;">网络安全事件风险</h4>
+      <p style="font-size:0.88rem; margin-bottom:0;">作为安全公司，一旦自身系统被攻破或发生重大安全事件，将对品牌声誉造成毁灭性打击。</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONCLUSION -->
+<section>
+  <h2><span class="icon">🎯</span> 最终结论</h2>
+
+  <div style="background: linear-gradient(135deg, #1e293b, #0f172a); border: 1px solid #334155; border-radius: 12px; padding: 28px; margin: 20px 0;">
+    <h3 style="color:#fbbf24; margin-top:0;">巴迪·巴菲特式诊断</h3>
+    
+    <p><strong>公司质地：一流 ✅</strong></p>
+    <p>PANW 拥有宽阔的护城河、优秀的管理层、极其健康的资产负债表和惊人的现金生成能力。它就是网络安全界的"可口可乐"——一家你愿意"永远持有"的公司。平台化战略正在加深其竞争壁垒，AI 和安全需求的增长为其提供了强劲的顺风。</p>
+    
+    <p><strong>买入时机：需等待 ❌</strong></p>
+    <p>当前 $323.79 的股价对应 PE 281x、PFCF 76x，远远超出巴菲特的"合理价格"定义。以安全边际之父本杰明·格雷厄姆的标准来看，这里几乎没有安全边际。</p>
+
+    <div class="buffett-quote" style="margin:16px 0;">
+      "The stock market is a device for transferring money from the impatient to the patient."
+      <span class="attr">— Warren Buffett</span>
+    </div>
+
+    <p><strong>操作建议：</strong></p>
+    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+      <span class="verdict pass">✅ 密切关注</span>
+      <span class="verdict warn">⚠️ 列入重点关注名单</span>
+      <span class="verdict neutral">➡️ 等待回调至 $225-250 区间</span>
+      <span class="verdict fail">❌ 当前非买入时机</span>
+    </div>
+    
+    <p style="margin-top:16px; color:#cbd5e1;">
+      <strong>理想买入区间：</strong>$200-$250（对应 FCF 倍数 ~45-60x，PE ~80-100x）。<br>
+      如果市场出现系统性回调或 PANW 因收购整合问题出现暂时性下跌，那将是一个值得认真考虑的买入机会。
+    </p>
+  </div>
+</section>
+
+<div class="disclaimer">
+  <strong>免责声明：</strong>本报告仅供信息参考和教育用途，不构成任何投资建议。所有数据来源于公开市场信息，可能存在延迟。投资有风险，决策需谨慎。巴菲特价值投资框架是长期投资理念，不保证在任何市场条件下都能获得正回报。
+</div>
+
+<div class="footer">
+  报告由 巴迪（🐾 WorkBuddy）自动生成 · 数据来源：腾讯自选股 / Morningstar · 基于巴菲特价值投资框架 · 2026-07-26
+</div>
+
+</div><!-- /container -->
+
+</body>
+</html>
