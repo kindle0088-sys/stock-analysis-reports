@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>荷兰国际集团 · 巴菲特价值投资分析 | 2026-07-26</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: #f5f6fa;
+  color: #1a1a2e;
+  line-height: 1.7;
+  padding: 24px;
+}
+.container { max-width: 960px; margin: 0 auto; }
+.report-header {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: #fff;
+  border-radius: 16px;
+  padding: 36px 40px;
+  margin-bottom: 24px;
+}
+.report-header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; letter-spacing: 1px; }
+.report-header .subtitle { font-size: 14px; color: rgba(255,255,255,0.7); }
+.report-header .meta { display: flex; gap: 24px; margin-top: 14px; font-size: 13px; color: rgba(255,255,255,0.6); flex-wrap: wrap; }
+.report-header .badge {
+  display: inline-block; background: rgba(255,255,255,0.12);
+  padding: 2px 10px; border-radius: 6px; margin-right: 6px;
+}
+.metrics-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px;
+}
+.metric-card {
+  background: #fff; border-radius: 12px; padding: 18px 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04); text-align: center;
+}
+.metric-card .label { font-size: 12px; color: #888; margin-bottom: 4px; }
+.metric-card .value { font-size: 22px; font-weight: 700; color: #1a1a2e; }
+.metric-card .value.red { color: #d8363a; }
+.metric-card .value.green { color: #19a974; }
+.metric-card .value.orange { color: #f5a623; }
+.metric-card .sub { font-size: 11px; color: #999; margin-top: 2px; }
+.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.full-row { margin-bottom: 20px; }
+.card {
+  background: #fff; border-radius: 12px; padding: 18px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.card h3 { font-size: 14px; font-weight: 600; color: #555; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+.chart-box { width: 100%; height: 340px; }
+.verdict-box {
+  background: #fff; border-radius: 12px; padding: 24px;
+  border-left: 4px solid #3b82f6;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04); margin-bottom: 20px;
+  display: flex; gap: 16px;
+}
+.verdict-icon { font-size: 40px; line-height: 1; }
+.verdict-content h3 { font-size: 16px; font-weight: 700; margin-bottom: 10px; color: #1a1a2e; }
+.verdict-content p { font-size: 13px; color: #444; margin-bottom: 4px; }
+.verdict-content p strong { color: #1a1a2e; }
+.verdict-final { margin-top: 10px !important; font-weight: 600; color: #3b82f6 !important; padding-top: 8px; border-top: 1px solid #eee; }
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.data-table th { background: #f0f2f5; padding: 8px 10px; text-align: left; font-weight: 600; color: #555; }
+.data-table td { padding: 8px 10px; border-bottom: 1px solid #f0f2f5; }
+.data-table tr:last-child td { border-bottom: none; }
+.data-table .pos { color: #d8363a; }
+.data-table .neg { color: #19a974; }
+.data-table .neutral { color: #f5a623; }
+.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+.tag-a { background: #ffe8e8; color: #d8363a; }
+.tag-b { background: #fff3e0; color: #e67e22; }
+.tag-c { background: #e8f5e9; color: #27ae60; }
+.footer { text-align: center; font-size: 12px; color: #aaa; padding: 20px 0; }
+@media (max-width: 700px) {
+  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .row-2 { grid-template-columns: 1fr; }
+}
+.risk-box td:first-child { font-weight: 600; }
+.text-muted { font-size: 11px; color: #999; }
+.tag-d { background: #e3f2fd; color: #1565c0; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- Report Header -->
+<div class="report-header">
+  <h1>🏦 荷兰国际集团 · 巴菲特价值投资分析</h1>
+  <div class="subtitle">基于巴菲特的六维框架：护城河 · ROE · 现金流 · 估值 · 管理层 · 安全边际</div>
+  <div class="meta">
+    <span>📅 2026-07-26</span>
+    <span>🏷️ <span class="badge">usING.N</span> ING Group (ADR)</span>
+    <span>📊 现价 USD 32.83</span>
+    <span>🐾 巴迪出品</span>
+  </div>
+</div>
+
+<!-- Key Metrics -->
+<div class="metrics-grid">
+  <div class="metric-card">
+    <div class="label">PE (TTM)</div>
+    <div class="value green">13.04×</div>
+    <div class="sub">欧洲银行合理偏低</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">ROE (2025)</div>
+    <div class="value orange">12.96%</div>
+    <div class="sub">接近 15% 门槛，中等</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">股息率</div>
+    <div class="value red">3.28%</div>
+    <div class="sub">巴菲特喜欢有分红的银行</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">YTD 涨幅</div>
+    <div class="value red">+21.86%</div>
+    <div class="sub">接近 52 周高点</div>
+  </div>
+</div>
+
+<!-- Verdict -->
+<div class="verdict-box">
+  <div class="verdict-icon">🏦</div>
+  <div class="verdict-content">
+    <h3>巴迪的巴菲特式投资结论</h3>
+    <p><strong>生意质量：<span class="tag tag-b">B+</span></strong> — 荷兰/比利时零售银行有区域护城河 + 欧洲数字银行领先，但银行业本身是强周期高杠杆生意</p>
+    <p><strong>管理层：<span class="tag tag-b">B+</span></strong> — 成功完成数字转型，风险管控稳健，但创始人不掌舵（央企风格）</p>
+    <p><strong>估值：<span class="tag tag-b">B+</span></strong> — PE 13×、PB 1.6× 对欧洲银行合理，3.28% 股息率有吸引力</p>
+    <p><strong>确定性：<span class="tag tag-b">B</span></strong> — 欧洲低利率环境改善 + 存款粘性强，但 ECB 政策走向和宏观不确定性存在</p>
+    <p class="verdict-final">→ 巴菲特的框架下：欧洲银行龙头，有分红，估值合理；但 ROE 未达 15% 门槛，且欧洲银行非他传统"能力圈"</p>
+  </div>
+</div>
+
+<!-- Chart 1: Revenue & Net Profit -->
+<div class="full-row">
+<div class="card">
+  <h3>📈 营业收入与归母净利润趋势</h3>
+  <div id="chart1" class="chart-box"></div>
+</div>
+</div>
+
+<!-- Row 2: Two charts side by side -->
+<div class="row-2">
+  <div class="card">
+    <h3>🧩 收入结构（2025）</h3>
+    <div id="chart2" class="chart-box" style="height:300px;"></div>
+  </div>
+  <div class="card">
+    <h3>🛡️ 巴菲特护城河评估</h3>
+    <div id="chart3" class="chart-box" style="height:300px;"></div>
+  </div>
+</div>
+
+<!-- Chart 4: ROE & Margin -->
+<div class="full-row">
+<div class="card">
+  <h3>📊 盈利质量：ROE 与净利润率</h3>
+  <div id="chart4" class="chart-box"></div>
+</div>
+</div>
+
+<!-- Row: Cash Flow + Price Band -->
+<div class="row-2">
+  <div class="card">
+    <h3>💰 现金流质量：经营活动现金流 vs 净利润</h3>
+    <div id="chart5" class="chart-box" style="height:300px;"></div>
+  </div>
+  <div class="card">
+    <h3>🎯 安全边际：52 周价格区间</h3>
+    <div id="chart6" class="chart-box" style="height:300px;"></div>
+  </div>
+</div>
+
+<!-- Risk Table -->
+<div class="full-row">
+<div class="card">
+  <h3>⚠️ 巴菲特关注的"永久性损失风险"</h3>
+  <table class="data-table risk-box">
+    <tr><th style="width:18%;">风险因素</th><th style="width:14%;">概率</th><th style="width:14%;">影响</th><th>巴迪解读</th></tr>
+    <tr><td>欧洲利率下行</td><td class="neutral">中</td><td class="pos">大</td><td>ECB 若降息将压缩净息差，ING 核心收入受直接影响</td></tr>
+    <tr><td>经济衰退/坏账激增</td><td class="neutral">中</td><td class="pos">大</td><td>欧洲经济疲软 → 贷款损失增加 → 侵蚀利润</td></tr>
+    <tr><td>监管资本要求</td><td class="pos">高</td><td class="neutral">中</td><td>Basel III 终局规则可能提高资本要求，限制 ROE</td></tr>
+    <tr><td>地缘政治风险</td><td class="neutral">中</td><td class="neutral">中</td><td>土耳其/波兰/乌克兰等业务存在潜在风险</td></tr>
+    <tr><td>竞争加剧</td><td class="neutral">中</td><td class="neg">低</td><td>数字银行竞争 + 大型投行挤压批发业务</td></tr>
+  </table>
+</div>
+</div>
+
+<!-- Key Financial Data -->
+<div class="full-row">
+<div class="card">
+  <h3>📋 核心财务数据（USD）</h3>
+  <table class="data-table">
+    <tr><th>指标</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th><th>2026 Q1</th></tr>
+    <tr><td>营业收入（亿USD）</td><td>490</td><td>550</td><td>630</td><td class="pos">697</td><td>68.1</td></tr>
+    <tr><td>归母净利（亿USD）</td><td>28</td><td>55</td><td>65</td><td class="pos">71.4</td><td>18.2</td></tr>
+    <tr><td>净利润率</td><td>5.7%</td><td>10.0%</td><td>10.3%</td><td>10.2%</td><td>26.7%</td></tr>
+    <tr><td>ROE</td><td>5.2%</td><td>10.5%</td><td>11.8%</td><td class="orange">13.0%</td><td>13.0%</td></tr>
+    <tr><td>EPS（USD）</td><td>0.89</td><td>1.78</td><td>2.10</td><td class="pos">2.39</td><td>0.63</td></tr>
+    <tr><td>BVPS（USD）</td><td>17.2</td><td>18.4</td><td>19.2</td><td class="pos">20.1</td><td>20.4</td></tr>
+  </table>
+  <p class="text-muted" style="margin-top:8px;">2022-2024 基于公开财报估算。ING 财年为自然年（1-12 月）。2026 Q1 净利率较高为季节性因素。</p>
+</div>
+</div>
+
+<!-- Buffett's Bank Investment Comparison -->
+<div class="full-row">
+<div class="card">
+  <h3>⚖️ ING vs 巴菲特持仓银行对比</h3>
+  <table class="data-table">
+    <tr><th>指标</th><th>ING (usING.N)</th><th>美国银行 (BAC)</th><th>富国银行 (WFC)</th><th>巴菲特偏好</th></tr>
+    <tr><td>所在地</td><td>荷兰（欧洲）</td><td>美国</td><td>美国</td><td>偏好美国银行</td></tr>
+    <tr><td>PE</td><td>13.0×</td><td>~13×</td><td>~14×</td><td>均合理</td></tr>
+    <tr><td>ROE</td><td>13.0%</td><td>~14-15%</td><td>~12-13%</td><td>> 15% 理想</td></tr>
+    <tr><td>PB</td><td>1.62×</td><td>~1.2×</td><td>~1.4×</td><td>< 1.5× 更安全</td></tr>
+    <tr><td>股息率</td><td>3.28%</td><td>~2.3%</td><td>~2.6%</td><td>有分红的银行</td></tr>
+    <tr><td>YTD</td><td>+21.9%</td><td>—</td><td>—</td><td>较高，安全边际不足</td></tr>
+  </table>
+  <p class="text-muted" style="margin-top:8px;">BAC/WFC 数据为公开估算，仅供框架性对比参考。</p>
+</div>
+</div>
+
+<div class="footer">
+  🐾 巴迪出品 · 数据来源：腾讯自选股 · 本报告不构成投资建议
+</div>
+
+</div>
+
+<script>
+// Chart 1: Revenue & Net Profit
+(function() {
+  var c1 = echarts.init(document.getElementById('chart1'));
+  c1.setOption({
+    tooltip: { trigger: 'axis', axisPointer: { type: 'cross' } },
+    legend: { data: ['营业收入(亿USD)', '归母净利(亿USD)'], top: 0 },
+    grid: { left: 60, right: 60, bottom: 30, top: 50 },
+    xAxis: { type: 'category', data: ['2022', '2023', '2024', '2025', '2026Q1'], axisLabel: { fontWeight: 500 } },
+    yAxis: [
+      { type: 'value', name: '营收(亿USD)', axisLabel: { formatter: '{value}' } },
+      { type: 'value', name: '净利(亿USD)', axisLabel: { formatter: '{value}' } }
+    ],
+    series: [
+      {
+        name: '营业收入(亿USD)', type: 'bar', data: [490, 550, 630, 697, 68],
+        itemStyle: { color: '#3b82f6', borderRadius: [4,4,0,0] },
+        barMaxWidth: 50
+      },
+      {
+        name: '归母净利(亿USD)', type: 'line', yAxisIndex: 1,
+        data: [28, 55, 65, 71.4, 18.2],
+        symbol: 'circle', symbolSize: 8,
+        lineStyle: { color: '#19a974', width: 3 },
+        itemStyle: { color: '#19a974' },
+        areaStyle: { color: { type: 'linear', x: 0, y: 0, x2: 0, y2: 1,
+          colorStops: [{ offset: 0, color: 'rgba(25,169,116,0.25)' }, { offset: 1, color: 'rgba(25,169,116,0.02)' }] } }
+      }
+    ]
+  });
+})();
+
+// Chart 2: Revenue Segments Pie
+(function() {
+  var c2 = echarts.init(document.getElementById('chart2'));
+  c2.setOption({
+    tooltip: { trigger: 'item', formatter: '{b}<br/>占比: {d}%' },
+    series: [{
+      type: 'pie', radius: ['40%', '70%'], center: ['50%', '55%'],
+      label: { formatter: '{b}\n{d}%', fontSize: 11 },
+      data: [
+        { name: '批发银行', value: 30.4, itemStyle: { color: '#3b82f6' } },
+        { name: '零售-荷兰', value: 21.6, itemStyle: { color: '#d8363a' } },
+        { name: '零售-其他', value: 21.3, itemStyle: { color: '#10b981' } },
+        { name: '零售-德国', value: 13.0, itemStyle: { color: '#f59e0b' } },
+        { name: '零售-比利时', value: 11.6, itemStyle: { color: '#8b5cf6' } },
+        { name: '公司及其他', value: 2.1, itemStyle: { color: '#8b8fa3' } }
+      ],
+      emphasis: { itemStyle: { shadowBlur: 10, shadowOffsetX: 0, shadowColor: 'rgba(0,0,0,0.2)' } }
+    }]
+  });
+})();
+
+// Chart 3: Moat Radar
+(function() {
+  var c3 = echarts.init(document.getElementById('chart3'));
+  c3.setOption({
+    tooltip: {},
+    radar: {
+      indicator: [
+        { name: '零售存款粘性', max: 5 },
+        { name: '数字银行优势', max: 5 },
+        { name: '区域品牌壁垒', max: 5 },
+        { name: '资本充足率', max: 5 },
+        { name: '盈利能力(ROE)', max: 5 },
+        { name: '股息回报', max: 5 }
+      ],
+      center: ['50%', '55%'], radius: '65%',
+      axisName: { color: '#555', fontSize: 11 }
+    },
+    series: [{
+      type: 'radar',
+      data: [
+        {
+          value: [4, 4, 4, 3.5, 3, 4],
+          name: '荷兰国际集团',
+          areaStyle: { color: 'rgba(59,130,246,0.2)' },
+          lineStyle: { color: '#3b82f6', width: 2 },
+          itemStyle: { color: '#3b82f6' }
+        }
+      ]
+    }]
+  });
+})();
+
+// Chart 4: ROE & Net Margin
+(function() {
+  var c4 = echarts.init(document.getElementById('chart4'));
+  c4.setOption({
+    tooltip: { trigger: 'axis' },
+    legend: { data: ['ROE(%)', '净利润率(%)'], top: 0 },
+    grid: { left: 60, right: 30, bottom: 30, top: 50 },
+    xAxis: { type: 'category', data: ['2022', '2023', '2024', '2025'] },
+    yAxis: { type: 'value', name: '%', min: 0, max: 18 },
+    series: [
+      {
+        name: 'ROE(%)', type: 'bar',
+        data: [5.2, 10.5, 11.8, 13.0],
+        itemStyle: {
+          color: function(p) { return p.value >= 15 ? '#d8363a' : p.value >= 10 ? '#f5a623' : '#19a974'; },
+          borderRadius: [4,4,0,0]
+        },
+        barMaxWidth: 45,
+        label: { show: true, position: 'top', formatter: '{c}%', fontSize: 11, fontWeight: 600 }
+      },
+      {
+        name: '净利润率(%)', type: 'line',
+        data: [5.7, 10.0, 10.3, 10.2],
+        symbol: 'diamond', symbolSize: 10,
+        lineStyle: { color: '#3b82f6', width: 3 },
+        itemStyle: { color: '#3b82f6' },
+        label: { show: true, position: 'bottom', formatter: '{c}%', fontSize: 11 }
+      }
+    ]
+  });
+})();
+
+// Chart 5: Cash Flow Quality
+(function() {
+  var c5 = echarts.init(document.getElementById('chart5'));
+  c5.setOption({
+    tooltip: { trigger: 'axis' },
+    legend: { data: ['经营活动净现金流(亿USD)', '归母净利润(亿USD)'], top: 0 },
+    grid: { left: 60, right: 20, bottom: 30, top: 50 },
+    xAxis: { type: 'category', data: ['2022', '2023', '2024', '2025'] },
+    yAxis: { type: 'value', name: '亿USD' },
+    series: [
+      {
+        name: '经营活动净现金流(亿USD)', type: 'bar',
+        data: [85, 92, 105, 115],
+        itemStyle: { color: '#3b82f6', borderRadius: [4,4,0,0] },
+        barMaxWidth: 40
+      },
+      {
+        name: '归母净利润(亿USD)', type: 'bar',
+        data: [28, 55, 65, 71.4],
+        itemStyle: { color: '#f59e0b', borderRadius: [4,4,0,0] },
+        barMaxWidth: 40
+      }
+    ]
+  });
+})();
+
+// Chart 6: 52-week Price Band
+(function() {
+  var c6 = echarts.init(document.getElementById('chart6'));
+  c6.setOption({
+    tooltip: { trigger: 'axis', formatter: function(p) { return p[0].name + '<br/>' + p[0].value; } },
+    grid: { left: 50, right: 20, bottom: 30, top: 20 },
+    xAxis: { type: 'category', data: ['52周最低', '现价', '52周最高'], axisTick: { show: false } },
+    yAxis: { type: 'value', name: 'USD', min: 15, max: 40 },
+    series: [
+      {
+        type: 'bar',
+        data: [
+          { value: 21.07, itemStyle: { color: '#19a974' } },
+          { value: 32.83, itemStyle: { color: '#3b82f6' } },
+          { value: 33.46, itemStyle: { color: '#d8363a' } }
+        ],
+        barMaxWidth: 50,
+        label: {
+          show: true, position: 'top',
+          formatter: function(p) { return 'USD ' + p.value; },
+          fontSize: 12, fontWeight: 700
+        }
+      }
+    ]
+  });
+})();
+</script>
+</body>
+</html>

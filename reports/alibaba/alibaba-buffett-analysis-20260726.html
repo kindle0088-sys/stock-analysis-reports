@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>阿里巴巴 · 巴菲特价值投资分析 | 2026-07-26</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: #f5f6fa;
+  color: #1a1a2e;
+  line-height: 1.7;
+  padding: 24px;
+}
+.container { max-width: 960px; margin: 0 auto; }
+
+/* Report header */
+.report-header {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: #fff;
+  border-radius: 16px;
+  padding: 36px 40px;
+  margin-bottom: 24px;
+}
+.report-header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; letter-spacing: 1px; }
+.report-header .subtitle { font-size: 14px; color: rgba(255,255,255,0.7); }
+.report-header .meta { display: flex; gap: 24px; margin-top: 14px; font-size: 13px; color: rgba(255,255,255,0.6); flex-wrap: wrap; }
+.report-header .badge {
+  display: inline-block; background: rgba(255,255,255,0.12);
+  padding: 2px 10px; border-radius: 6px; margin-right: 6px;
+}
+
+/* Key Metrics Grid */
+.metrics-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px;
+}
+.metric-card {
+  background: #fff; border-radius: 12px; padding: 18px 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04); text-align: center;
+}
+.metric-card .label { font-size: 12px; color: #888; margin-bottom: 4px; }
+.metric-card .value { font-size: 22px; font-weight: 700; color: #1a1a2e; }
+.metric-card .value.red { color: #d8363a; }
+.metric-card .value.green { color: #19a974; }
+.metric-card .value.orange { color: #f5a623; }
+.metric-card .sub { font-size: 11px; color: #999; margin-top: 2px; }
+
+/* Row for half-width */
+.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.full-row { margin-bottom: 20px; }
+.card {
+  background: #fff; border-radius: 12px; padding: 18px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.card h3 { font-size: 14px; font-weight: 600; color: #555; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+.chart-box { width: 100%; height: 340px; }
+
+/* Verdict Box */
+.verdict-box {
+  background: #fff; border-radius: 12px; padding: 24px;
+  border-left: 4px solid #f5a623;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04); margin-bottom: 20px;
+  display: flex; gap: 16px;
+}
+.verdict-icon { font-size: 40px; line-height: 1; }
+.verdict-content h3 { font-size: 16px; font-weight: 700; margin-bottom: 10px; color: #1a1a2e; }
+.verdict-content p { font-size: 13px; color: #444; margin-bottom: 4px; }
+.verdict-content p strong { color: #1a1a2e; }
+.verdict-final { margin-top: 10px !important; font-weight: 600; color: #f5a623 !important; padding-top: 8px; border-top: 1px solid #eee; }
+
+/* Comparison verdict box - for the vs Tencent section */
+.verdict-box-compare {
+  background: #fff; border-radius: 12px; padding: 24px;
+  border-left: 4px solid #d8363a;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04); margin-bottom: 20px;
+  display: flex; gap: 16px;
+}
+
+/* Table */
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.data-table th { background: #f0f2f5; padding: 8px 10px; text-align: left; font-weight: 600; color: #555; }
+.data-table td { padding: 8px 10px; border-bottom: 1px solid #f0f2f5; }
+.data-table tr:last-child td { border-bottom: none; }
+.data-table .pos { color: #d8363a; }
+.data-table .neg { color: #19a974; }
+.data-table .neutral { color: #f5a623; }
+
+/* Tags */
+.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+.tag-a { background: #ffe8e8; color: #d8363a; }
+.tag-b { background: #fff3e0; color: #e67e22; }
+.tag-c { background: #e8f5e9; color: #27ae60; }
+
+/* Footer */
+.footer { text-align: center; font-size: 12px; color: #aaa; padding: 20px 0; }
+
+/* Responsive */
+@media (max-width: 700px) {
+  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .row-2 { grid-template-columns: 1fr; }
+}
+
+/* Risk table */
+.risk-box td:first-child { font-weight: 600; }
+
+/* Utility */
+.text-muted { font-size: 11px; color: #999; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- Report Header -->
+<div class="report-header">
+  <h1>📄 阿里巴巴 · 巴菲特价值投资分析</h1>
+  <div class="subtitle">基于巴菲特的六维框架：护城河 · ROE · 现金流 · 估值 · 管理层 · 安全边际</div>
+  <div class="meta">
+    <span>📅 2026-07-26</span>
+    <span>🏷️ <span class="badge">hk09988</span> 阿里巴巴 (港股)</span>
+    <span>📊 现价 HKD 110.0</span>
+    <span>🐾 巴迪出品</span>
+  </div>
+</div>
+
+<!-- Key Metrics -->
+<div class="metrics-grid">
+  <div class="metric-card">
+    <div class="label">PE (TTM)</div>
+    <div class="value orange">17.59×</div>
+    <div class="sub">历史低位，但利润下滑中</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">ROE (FY2026)</div>
+    <div class="value green">10.22%</div>
+    <div class="sub">低于巴菲特 15% 门槛</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">PB</div>
+    <div class="value red">1.76×</div>
+    <div class="sub">接近清算估值</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">利润增速 (YoY)</div>
+    <div class="value green">-16.8%</div>
+    <div class="sub">盈利能力承压</div>
+  </div>
+</div>
+
+<!-- Verdict -->
+<div class="verdict-box">
+  <div class="verdict-icon">🤔</div>
+  <div class="verdict-content">
+    <h3>巴迪的巴菲特式投资结论</h3>
+    <p><strong>生意质量：<span class="tag tag-b">B</span></strong> — 护城河仍在但被侵蚀，ROE 未达巴菲特门槛</p>
+    <p><strong>管理层：<span class="tag tag-c">B-</span></strong> — 创始人已离场，战略方向频繁调整</p>
+    <p><strong>估值：<span class="tag tag-b">B</span></strong> — PB 1.76× 极度低估，但 PE 17.6× 因利润下行而不便宜</p>
+    <p><strong>确定性：<span class="tag tag-c">C+</span></strong> — 竞争恶化 + 利润下滑 + 重组不确定性</p>
+    <p class="verdict-final">→ 巴菲特的框架下大概率跳过——不是阿里没价值，而是"护城河在变浅 + 利润下行的困境反转"不在他的能力圈内</p>
+  </div>
+</div>
+
+<!-- Chart 1: Revenue & Profit Trend -->
+<div class="full-row">
+<div class="card">
+  <h3>📈 营业收入与归母净利润趋势（财年，截至 3 月）</h3>
+  <div id="chart1" class="chart-box"></div>
+</div>
+</div>
+
+<!-- Row 2: Two charts side by side -->
+<div class="row-2">
+  <div class="card">
+    <h3>🧩 收入结构（FY2026）</h3>
+    <div id="chart2" class="chart-box" style="height:300px;"></div>
+  </div>
+  <div class="card">
+    <h3>🛡️ 巴菲特护城河评估</h3>
+    <div id="chart3" class="chart-box" style="height:300px;"></div>
+  </div>
+</div>
+
+<!-- Chart 4: ROE & Margin -->
+<div class="full-row">
+<div class="card">
+  <h3>📊 盈利质量：ROE 与经营利润率</h3>
+  <div id="chart4" class="chart-box"></div>
+</div>
+</div>
+
+<!-- Row: Cash Flow + Price Band -->
+<div class="row-2">
+  <div class="card">
+    <h3>💰 现金流质量：经营现金流 vs 净利润</h3>
+    <div id="chart5" class="chart-box" style="height:300px;"></div>
+  </div>
+  <div class="card">
+    <h3>🎯 安全边际：52 周价格区间</h3>
+    <div id="chart6" class="chart-box" style="height:300px;"></div>
+  </div>
+</div>
+
+<!-- Risk Table -->
+<div class="full-row">
+<div class="card">
+  <h3>⚠️ 巴菲特关注的"永久性损失风险"</h3>
+  <table class="data-table risk-box">
+    <tr><th style="width:18%;">风险因素</th><th style="width:14%;">概率</th><th style="width:14%;">影响</th><th>巴迪解读</th></tr>
+    <tr><td>电商竞争加剧</td><td class="pos">高</td><td class="pos">大</td><td>拼多多抢下沉市场，抖音切冲动消费，淘宝核心份额被蚕食</td></tr>
+    <tr><td>监管政策变化</td><td class="neutral">中</td><td class="pos">大</td><td>反垄断/数据安全/金融监管等长期不确定性</td></tr>
+    <tr><td>中美地缘政治</td><td class="neutral">中</td><td class="neutral">中</td><td>云计算芯片供应、跨境业务受潜在影响</td></tr>
+    <tr><td>利润持续承压</td><td class="pos">高</td><td class="neutral">中</td><td>商誉减值 + 高研发投入 + 竞争性定价 → 利润修复不确定</td></tr>
+    <tr><td>战略方向不明</td><td class="neutral">中</td><td class="neutral">中</td><td>分拆→不拆→再重组，组织架构频繁变动增加不确定性</td></tr>
+  </table>
+</div>
+</div>
+
+<!-- Key Financial Data -->
+<div class="full-row">
+<div class="card">
+  <h3>📋 核心财务数据（财年截至 3 月 31 日）</h3>
+  <table class="data-table">
+    <tr><th>指标（亿HKD）</th><th>FY2023</th><th>FY2024</th><th>FY2025</th><th>FY2026</th><th>FY2027 Q1*</th></tr>
+    <tr><td>营业收入</td><td>9,400</td><td>10,200</td><td>10,800</td><td class="orange">11,600</td><td>2,800</td></tr>
+    <tr><td>归母净利</td><td>710</td><td>860</td><td>1,220</td><td class="green">1,020</td><td>230</td></tr>
+    <tr><td>毛利率</td><td>39.5%</td><td>39.8%</td><td>40.2%</td><td>39.8%</td><td>39.5%</td></tr>
+    <tr><td>经营利润率</td><td>6.2%</td><td>7.8%</td><td>8.5%</td><td class="green">4.9%</td><td>5.2%</td></tr>
+    <tr><td>加权 ROE</td><td>15.2%</td><td>14.8%</td><td>13.5%</td><td class="green">10.2%</td><td>2.4% *</td></tr>
+    <tr><td>经营现金流</td><td>1,120</td><td>1,080</td><td>1,320</td><td class="orange">940</td><td>210</td></tr>
+  </table>
+  <p class="text-muted" style="margin-top:8px;">* FY2027 Q1 为自然季度（截至 2026 年 6 月），ROE 为单季值。FY2023-2025 数据基于公开财务资料估算。</p>
+</div>
+</div>
+
+<!-- Comparison with Tencent -->
+<div class="verdict-box-compare">
+  <div class="verdict-icon">⚖️</div>
+  <div class="verdict-content">
+    <h3>阿里 vs 腾讯：巴菲特会怎么选？</h3>
+    <p><strong>腾讯（hk00700）：</strong></p>
+    <p>✅ 护城河更深（社交网络效应极难复制）</p>
+    <p>✅ ROE 21% > 15% 门槛，利润 +18.8% 持续增长</p>
+    <p>✅ 马化腾创始人掌舵，大规模回购，理性资本配置</p>
+    <p>⚠️ 估值 PE 14.8× 已处于历史低位</p>
+    <p style="margin-top:6px;"><strong>阿里巴巴（hk09988）：</strong></p>
+    <p>❌ 护城河在变浅（拼多多/抖音两面夹击）</p>
+    <p>❌ ROE 10% < 15% 门槛，利润 -16.8% 倒退</p>
+    <p>❌ 创始人已离场，管理层在重组期</p>
+    <p>✅ PB 1.76× 极度低估，接近清算价值</p>
+    <p style="margin-top:10px;font-weight:600;color:#d8363a;">→ 巴菲特框架下：腾讯能进观察清单，阿里大概率跳过</p>
+  </div>
+</div>
+
+<div class="footer">
+  🐾 巴迪出品 · 数据来源：腾讯自选股 · 本报告不构成投资建议
+</div>
+
+</div>
+
+<script>
+// Chart 1: Revenue & Net Profit
+(function() {
+  var c1 = echarts.init(document.getElementById('chart1'));
+  c1.setOption({
+    tooltip: { trigger: 'axis', axisPointer: { type: 'cross' } },
+    legend: { data: ['营业收入(亿HKD)', '归母净利(亿HKD)'], top: 0 },
+    grid: { left: 60, right: 60, bottom: 30, top: 50 },
+    xAxis: { type: 'category', data: ['FY2023', 'FY2024', 'FY2025', 'FY2026', 'FY2027Q1*'], axisLabel: { fontWeight: 500 } },
+    yAxis: [
+      { type: 'value', name: '营收(亿HKD)', axisLabel: { formatter: '{value}' } },
+      { type: 'value', name: '净利(亿HKD)', axisLabel: { formatter: '{value}' } }
+    ],
+    series: [
+      {
+        name: '营业收入(亿HKD)', type: 'bar', data: [9400, 10200, 10800, 11600, 2800],
+        itemStyle: { color: '#3b82f6', borderRadius: [4,4,0,0] },
+        barMaxWidth: 50
+      },
+      {
+        name: '归母净利(亿HKD)', type: 'line', yAxisIndex: 1,
+        data: [710, 860, 1220, 1020, 230],
+        symbol: 'circle', symbolSize: 8,
+        lineStyle: { color: '#f5a623', width: 3 },
+        itemStyle: { color: '#f5a623' },
+        areaStyle: { color: { type: 'linear', x: 0, y: 0, x2: 0, y2: 1,
+          colorStops: [{ offset: 0, color: 'rgba(245,166,35,0.25)' }, { offset: 1, color: 'rgba(245,166,35,0.02)' }] } }
+      }
+    ]
+  });
+})();
+
+// Chart 2: Revenue Segments Pie
+(function() {
+  var c2 = echarts.init(document.getElementById('chart2'));
+  c2.setOption({
+    tooltip: { trigger: 'item', formatter: '{b}<br/>占比: {d}%<br/>金额: {c} 亿HKD' },
+    series: [{
+      type: 'pie', radius: ['40%', '70%'], center: ['50%', '55%'],
+      label: { formatter: '{b}\n{d}%', fontSize: 11 },
+      data: [
+        { name: '淘天集团(电商)', value: 5100, itemStyle: { color: '#d8363a' } },
+        { name: '云计算', value: 2100, itemStyle: { color: '#3b82f6' } },
+        { name: '国际电商', value: 1500, itemStyle: { color: '#10b981' } },
+        { name: '菜鸟物流', value: 1100, itemStyle: { color: '#f59e0b' } },
+        { name: '本地生活', value: 950, itemStyle: { color: '#8b5cf6' } },
+        { name: '其他', value: 850, itemStyle: { color: '#8b8fa3' } }
+      ],
+      emphasis: { itemStyle: { shadowBlur: 10, shadowOffsetX: 0, shadowColor: 'rgba(0,0,0,0.2)' } }
+    }]
+  });
+})();
+
+// Chart 3: Moat Radar
+(function() {
+  var c3 = echarts.init(document.getElementById('chart3'));
+  c3.setOption({
+    tooltip: {},
+    radar: {
+      indicator: [
+        { name: '电商网络效应', max: 5 },
+        { name: '云规模优势', max: 5 },
+        { name: '物流基础设施', max: 5 },
+        { name: '品牌认知', max: 5 },
+        { name: '现金流质量', max: 5 },
+        { name: '管理层配置', max: 5 }
+      ],
+      center: ['50%', '55%'], radius: '65%',
+      axisName: { color: '#555', fontSize: 11 }
+    },
+    series: [{
+      type: 'radar',
+      data: [
+        {
+          value: [3.5, 4, 3.5, 3, 3, 2.5],
+          name: '阿里巴巴',
+          areaStyle: { color: 'rgba(245,166,35,0.2)' },
+          lineStyle: { color: '#f5a623', width: 2 },
+          itemStyle: { color: '#f5a623' }
+        }
+      ]
+    }]
+  });
+})();
+
+// Chart 4: ROE & Operating Margin
+(function() {
+  var c4 = echarts.init(document.getElementById('chart4'));
+  c4.setOption({
+    tooltip: { trigger: 'axis' },
+    legend: { data: ['加权 ROE(%)', '经营利润率(%)'], top: 0 },
+    grid: { left: 60, right: 30, bottom: 30, top: 50 },
+    xAxis: { type: 'category', data: ['FY2023', 'FY2024', 'FY2025', 'FY2026'] },
+    yAxis: { type: 'value', name: '%', min: 0, max: 20 },
+    series: [
+      {
+        name: '加权 ROE(%)', type: 'bar',
+        data: [15.2, 14.8, 13.5, 10.2],
+        itemStyle: {
+          color: function(p) { return p.value >= 15 ? '#d8363a' : '#f5a623'; },
+          borderRadius: [4,4,0,0]
+        },
+        barMaxWidth: 45,
+        label: { show: true, position: 'top', formatter: '{c}%', fontSize: 11, fontWeight: 600 }
+      },
+      {
+        name: '经营利润率(%)', type: 'line',
+        data: [6.2, 7.8, 8.5, 4.9],
+        symbol: 'diamond', symbolSize: 10,
+        lineStyle: { color: '#10b981', width: 3 },
+        itemStyle: { color: '#10b981' },
+        label: { show: true, position: 'bottom', formatter: '{c}%', fontSize: 11 }
+      }
+    ]
+  });
+})();
+
+// Chart 5: Cash Flow Quality
+(function() {
+  var c5 = echarts.init(document.getElementById('chart5'));
+  c5.setOption({
+    tooltip: { trigger: 'axis' },
+    legend: { data: ['经营现金流(亿HKD)', '归母净利润(亿HKD)'], top: 0 },
+    grid: { left: 60, right: 20, bottom: 30, top: 50 },
+    xAxis: { type: 'category', data: ['FY2023', 'FY2024', 'FY2025', 'FY2026'] },
+    yAxis: { type: 'value', name: '亿HKD' },
+    series: [
+      {
+        name: '经营现金流(亿HKD)', type: 'bar',
+        data: [1120, 1080, 1320, 940],
+        itemStyle: { color: '#3b82f6', borderRadius: [4,4,0,0] },
+        barMaxWidth: 40
+      },
+      {
+        name: '归母净利润(亿HKD)', type: 'bar',
+        data: [710, 860, 1220, 1020],
+        itemStyle: { color: '#f59e0b', borderRadius: [4,4,0,0] },
+        barMaxWidth: 40
+      }
+    ]
+  });
+})();
+
+// Chart 6: 52-week Price Band
+(function() {
+  var c6 = echarts.init(document.getElementById('chart6'));
+  c6.setOption({
+    tooltip: { trigger: 'axis', formatter: function(p) { return p[0].name + '<br/>' + p[0].value; } },
+    grid: { left: 50, right: 20, bottom: 30, top: 20 },
+    xAxis: { type: 'category', data: ['52周最低', '现价', '52周最高'], axisTick: { show: false } },
+    yAxis: { type: 'value', name: 'HKD', min: 50, max: 220 },
+    series: [
+      {
+        type: 'bar',
+        data: [
+          { value: 88.7, itemStyle: { color: '#19a974' } },
+          { value: 110.0, itemStyle: { color: '#3b82f6' } },
+          { value: 185.2, itemStyle: { color: '#d8363a' } }
+        ],
+        barMaxWidth: 50,
+        label: {
+          show: true, position: 'top',
+          formatter: function(p) { return 'HKD ' + p.value; },
+          fontSize: 12, fontWeight: 700
+        }
+      }
+    ]
+  });
+})();
+</script>
+</body>
+</html>
