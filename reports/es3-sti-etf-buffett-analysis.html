@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>巴菲特价值投资分析 · STI ETF (ES3)</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0b1120; color: #e2e8f0; font-family: -apple-system, 'Segoe UI', 'PingFang SC', 'Noto Sans SC', 'Microsoft YaHei', sans-serif; line-height: 1.8; padding: 0; }
+  
+  .hero { background: linear-gradient(135deg, #0b1120 0%, #1a2744 50%, #0b1120 100%); padding: 60px 20px 50px; text-align: center; border-bottom: 1px solid #1e3a5f; }
+  .hero h1 { font-size: 2.4rem; color: #fbbf24; letter-spacing: 2px; margin-bottom: 8px; }
+  .hero .ticker { display: inline-block; background: #2563eb; color: #fff; padding: 4px 16px; border-radius: 20px; font-size: 0.95rem; font-weight: 600; letter-spacing: 1px; margin-bottom: 12px; }
+  .hero .sub { color: #94a3b8; font-size: 1rem; margin-top: 6px; }
+  .hero .quote-box { display: flex; justify-content: center; gap: 40px; margin-top: 24px; flex-wrap: wrap; }
+  .hero .q-item { text-align: center; }
+  .hero .q-item .num { font-size: 2rem; font-weight: 700; color: #60a5fa; }
+  .hero .q-item .num.green { color: #22c55e; }
+  .hero .q-item .num.yellow { color: #facc15; }
+  .hero .q-item .label { font-size: 0.82rem; color: #94a3b8; margin-top: 2px; }
+
+  .flag-bg { display: inline-block; margin-right: 6px; }
+  
+  .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+  
+  .buffett-quote { background: linear-gradient(135deg, #1e293b, #0f172a); border-left: 4px solid #fbbf24; padding: 20px 24px; margin: 30px 0; border-radius: 0 8px 8px 0; font-style: italic; color: #cbd5e1; font-size: 1.05rem; }
+  .buffett-quote .attr { display: block; text-align: right; color: #fbbf24; font-style: normal; font-size: 0.88rem; margin-top: 8px; }
+
+  section { padding: 40px 0; border-bottom: 1px solid #1e293b; }
+  section:last-child { border-bottom: none; }
+  
+  h2 { font-size: 1.6rem; color: #fbbf24; margin-bottom: 24px; padding-bottom: 10px; border-bottom: 2px solid #2563eb; display: flex; align-items: center; gap: 10px; }
+  h2 .icon { font-size: 1.4rem; }
+  h3 { font-size: 1.2rem; color: #93c5fd; margin-top: 24px; margin-bottom: 12px; }
+  h4 { color: #a5b4fc; margin-top: 16px; margin-bottom: 8px; font-size: 1.02rem; }
+  
+  p { margin-bottom: 14px; color: #cbd5e1; }
+  ul, ol { padding-left: 24px; margin-bottom: 16px; }
+  li { margin-bottom: 8px; color: #cbd5e1; }
+  
+  .verdict { display: inline-block; padding: 3px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; margin-right: 6px; margin-bottom: 4px; }
+  .verdict.pass { background: #064e3b; color: #6ee7b7; }
+  .verdict.fail { background: #450a0a; color: #fca5a5; }
+  .verdict.warn { background: #422006; color: #fcd34d; }
+  .verdict.neutral { background: #1e3a5f; color: #93c5fd; }
+  
+  .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+  .card { background: #1e293b; border-radius: 10px; padding: 20px; border: 1px solid #334155; }
+  .card h4 { color: #fbbf24; margin-top: 0; font-size: 1rem; }
+  .card .big-num { font-size: 2rem; font-weight: 700; color: #60a5fa; margin: 6px 0 2px; }
+  .card .big-num.green { color: #22c55e; }
+  .card .big-num.red { color: #ef4444; }
+  .card .desc { font-size: 0.85rem; color: #94a3b8; }
+
+  .card-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin: 16px 0; }
+  
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.9rem; }
+  th, td { border: 1px solid #334155; padding: 10px 14px; text-align: right; }
+  th { background: #1e293b; color: #fbbf24; font-weight: 600; text-align: center; }
+  td:first-child, th:first-child { text-align: left; }
+  td { background: #0f172a; }
+  tr:hover td { background: #1a2744; }
+  .num-green { color: #22c55e; }
+  .num-red { color: #ef4444; }
+  .num-yellow { color: #facc15; }
+  
+  .score-section { background: #1e293b; border-radius: 12px; padding: 24px; margin: 20px 0; }
+  .score-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #334155; }
+  .score-row:last-child { border-bottom: none; }
+  .score-row .label { color: #cbd5e1; font-weight: 500; }
+  .score-row .stars { color: #fbbf24; letter-spacing: 2px; }
+  
+  .total-score { text-align: center; padding: 30px; margin: 24px 0; }
+  .total-score .score-circle { width: 120px; height: 120px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 2.6rem; font-weight: 800; margin-bottom: 12px; }
+  .total-score .score-circle.high { background: linear-gradient(135deg, #064e3b, #065f46); color: #6ee7b7; border: 3px solid #10b981; }
+  .total-score .score-circle.medium { background: linear-gradient(135deg, #422006, #78350f); color: #fcd34d; border: 3px solid #f59e0b; }
+  .total-score .score-circle.low { background: linear-gradient(135deg, #450a0a, #7f1d1d); color: #fca5a5; border: 3px solid #ef4444; }
+  .total-score .verdict-text { font-size: 1.2rem; font-weight: 600; color: #e2e8f0; }
+  
+  .highlight-box { background: #0f172a; border-left: 4px solid #60a5fa; padding: 14px 18px; border-radius: 6px; margin: 16px 0; font-size: 0.95rem; }
+  .highlight-box strong { color: #fbbf24; }
+
+  .buffett-index-badge { background: linear-gradient(135deg, #1e293b, #0f172a); border: 1px solid #fbbf24; border-radius: 12px; padding: 20px; margin: 20px 0; text-align: center; }
+  .buffett-index-badge h3 { color: #fbbf24; margin-top: 0; font-size: 1.3rem; }
+  .buffett-index-badge p { color: #cbd5e1; max-width: 700px; margin: 8px auto 0; }
+
+  .summary-bar { display: flex; gap: 12px; flex-wrap: wrap; margin: 16px 0; }
+  .summary-tag { background: #1e293b; border: 1px solid #334155; padding: 8px 14px; border-radius: 8px; font-size: 0.88rem; }
+  .summary-tag .label { color: #94a3b8; display: block; font-size: 0.75rem; }
+  .summary-tag .value { color: #e2e8f0; font-weight: 600; }
+
+  .disclaimer { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.82rem; color: #94a3b8; }
+  .footer { text-align: center; padding: 30px 20px; color: #64748b; font-size: 0.82rem; }
+  
+  .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+  .pros-cons .box { padding: 16px; border-radius: 8px; }
+  .pros-cons .pros { background: #064e3b; border: 1px solid #10b981; }
+  .pros-cons .cons { background: #450a0a; border: 1px solid #ef4444; }
+  .pros-cons .box h4 { margin-top: 0; margin-bottom: 8px; }
+  
+  @media (max-width: 640px) { .card-grid, .card-3, .pros-cons { grid-template-columns: 1fr; } .hero .quote-box { gap: 20px; } }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="ticker">SGX: ES3</span>
+  <h1>STI ETF · 巴菲特价值投资分析</h1>
+  <p class="sub">SPDR Straits Times Index ETF — 追踪新加坡海峡时报指数的 ETF · 数据截至 2026-07-24</p>
+  <div class="quote-box">
+    <div class="q-item">
+      <div class="num green">SGD 5.66</div>
+      <div class="label">最新价格</div>
+    </div>
+    <div class="q-item">
+      <div class="num" style="color:#fbbf24;">SGD 35.5亿</div>
+      <div class="label">资产管理规模 (AUM)</div>
+    </div>
+    <div class="q-item">
+      <div class="num green">3.3%</div>
+      <div class="label">股息率 (TTM)</div>
+    </div>
+    <div class="q-item">
+      <div class="num" style="color:#fbbf24;">0.28%</div>
+      <div class="label">费率 (TER)</div>
+    </div>
+    <div class="q-item">
+      <div class="num green">16.71</div>
+      <div class="label">成份股加权 PE</div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- EXECUTIVE SUMMARY -->
+<section>
+  <h2><span class="icon">📋</span> 执行摘要</h2>
+
+  <div class="buffett-quote">
+    "A low-cost index fund is the most sensible equity investment for the great majority of investors."
+    <span class="attr">— Warren Buffett, 2014 Berkshire Hathaway Annual Letter</span>
+  </div>
+
+  <p><strong>SPDR Straits Times Index ETF (ES3)</strong> 是新加坡交易所最老牌、流动性最强的 ETF，追踪由新加坡交易所 30 家最大上市公司组成的海峡时报指数（STI）。基金管理人为 State Street Global Advisors Singapore（道富环球），自 2002 年上市以来已有 24 年历史。</p>
+
+  <p>ES3 是巴菲特最推崇的"低成本指数基金"在新加坡市场的典型代表——管理费仅 0.28%，覆盖新加坡最优质的 30 家蓝筹公司，并且持续 20 年以上稳定派息。对于希望获得新加坡市场 Beta 收益的投资者来说，这几乎是不可绕过的选择。</p>
+
+  <div class="summary-bar">
+    <div class="summary-tag"><span class="label">成立时间</span><span class="value">2002 年（24 年）</span></div>
+    <div class="summary-tag"><span class="label">费用率</span><span class="value" style="color:#6ee7b7;">0.28% 偏低</span></div>
+    <div class="summary-tag"><span class="label">股息率</span><span class="value" style="color:#6ee7b7;">~3.3% 良好</span></div>
+    <div class="summary-tag"><span class="label">10年年化回报</span><span class="value" style="color:#6ee7b7;">~10.1%</span></div>
+    <div class="summary-tag"><span class="label">成份股集中度</span><span class="value" style="color:#fca5a5;">三大银行占 50%</span></div>
+  </div>
+
+  <div class="total-score">
+    <div class="score-circle high">8.2</div>
+    <div class="verdict-text">总体评价：⭐⭐⭐⭐⭐⭐⭐⭐☆☆ &nbsp; 8.2/10</div>
+    <p style="color:#94a3b8; margin-top:8px; font-size:0.9rem;">
+      符合巴菲特"低成本指数基金"投资哲学，是新加坡投资者参与本地蓝筹市场的理想工具。银行集中度是主要风险。
+    </p>
+  </div>
+</section>
+
+<!-- FUND OVERVIEW -->
+<section>
+  <h2><span class="icon">📌</span> 基金概况</h2>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>基金名称</h4>
+      <div class="big-num" style="font-size:1.1rem;">SPDR® Straits Times Index ETF</div>
+      <div class="desc">道富 SPDR 海峡时报指数 ETF</div>
+    </div>
+    <div class="card">
+      <h4>交易代码</h4>
+      <div class="big-num" style="font-size:1.8rem;">ES3</div>
+      <div class="desc">SGX 新加坡交易所</div>
+    </div>
+    <div class="card">
+      <h4>成立日期</h4>
+      <div class="big-num" style="font-size:1.1rem;">2002-04-17</div>
+      <div class="desc">超过 24 年历史</div>
+    </div>
+    <div class="card">
+      <h4>基金管理人</h4>
+      <div class="big-num" style="font-size:1.1rem;">State Street Global Advisors</div>
+      <div class="desc">道富环球投资管理</div>
+    </div>
+    <div class="card">
+      <h4>基准指数</h4>
+      <div class="big-num" style="font-size:1.1rem;">FTSE Straits Times Index</div>
+      <div class="desc">海峡时报指数（STI）</div>
+    </div>
+    <div class="card">
+      <h4>复制方式</h4>
+      <div class="big-num" style="font-size:1.1rem;">完全复制</div>
+      <div class="desc">Full Replication</div>
+    </div>
+    <div class="card">
+      <h4>派息频率</h4>
+      <div class="big-num" style="font-size:1.1rem;">每半年一次</div>
+      <div class="desc">Semi-Annual</div>
+    </div>
+    <div class="card">
+      <h4>基础货币</h4>
+      <div class="big-num" style="font-size:1.1rem;">SGD</div>
+      <div class="desc">新加坡元</div>
+    </div>
+  </div>
+</section>
+
+<!-- BUFFETT'S INDEX PHILOSOPHY -->
+<section>
+  <h2><span class="icon">🧠</span> 巴菲特为什么推崇指数基金？</h2>
+
+  <div class="buffett-index-badge">
+    <h3>🏆 巴菲特的百万美元赌约</h3>
+    <p>2007 年，巴菲特以 50 万美元打赌：一只低成本的标普 500 指数基金在 10 年内的回报将超过一篮子对冲基金。到 2017 年到期时，指数基金累计回报 <strong>+125.8%</strong>，而对冲基金组合仅 <strong>+36.3%</strong>。巴菲特完胜。</p>
+  </div>
+
+  <div class="buffett-quote">
+    "The best thing for the ordinary investor is to buy a low-cost index fund that tracks the market. ... Just buy a cheap index fund and keep buying it."
+    <span class="attr">— Warren Buffett</span>
+  </div>
+
+  <h3>巴菲特指数基金投资的六大原则</h3>
+  <table>
+    <tr><th>原则</th><th>ES3 符合度</th><th>说明</th></tr>
+    <tr>
+      <td><strong>1. 低成本</strong></td>
+      <td><span class="verdict pass">✅ 0.28%</span></td>
+      <td>费用率 0.28%，低于全球 ETF 平均水平的 0.5-0.7%。</td>
+    </tr>
+    <tr>
+      <td><strong>2. 广泛分散</strong></td>
+      <td><span class="verdict neutral">⚠️ 部分</span></td>
+      <td>覆盖 30 只新加坡蓝筹股，��行业集中于金融（55%+）。</td>
+    </tr>
+    <tr>
+      <td><strong>3. 长期持有</strong></td>
+      <td><span class="verdict pass">✅ 适合</span></td>
+      <td>24 年历史证明，10 年年化回报约 10%，适��买入持有。</td>
+    </tr>
+    <tr>
+      <td><strong>4. 被动管理</strong></td>
+      <td><span class="verdict pass">✅ 完全</span></td>
+      <td>完全复制 STI 指数，无主动管理风险。</td>
+    </tr>
+    <tr>
+      <td><strong>5. 不择时</strong></td>
+      <td><span class="verdict pass">✅ 关键</span></td>
+      <td>巴菲特建议"定期定额持续买入"，ES3 完美适用。</td>
+    </tr>
+    <tr>
+      <td><strong>6. 股息再投资</strong></td>
+      <td><span class="verdict pass">✅ 3.3%</span></td>
+      <td>每半年派息，可手动再投资，实现复利增长。</td>
+    </tr>
+  </table>
+
+  <div class="highlight-box">
+    <strong>关键在于费用：</strong>即使 0.28% 和 0.10% 之间只差 0.18 个百分点，在 30 年的复利效应下，最终收益差距可达 <strong>8-10%</strong>。巴菲特常说："回报来自你省下的费用。"ES3 的费用率在新加坡 ETF 中处于合理水平，但仍有下降空间（竞品 G3B 已降至 0.25%）。
+  </div>
+</section>
+
+<!-- COMPOSITION & MOAT -->
+<section>
+  <h2><span class="icon">🏗️</span> 成份股与行业分析</h2>
+
+  <h3>前十大持仓</h3>
+  <table>
+    <tr><th>排名</th><th>成份股</th><th>代码</th><th>权重</th><th>行业</th></tr>
+    <tr><td>1</td><td>星展银行 DBS Group Holdings</td><td>D05</td><td>25.2%</td><td>🏦 金融</td></tr>
+    <tr><td>2</td><td>华侨银行 OCBC Bank</td><td>O39</td><td>15.1%</td><td>🏦 金融</td></tr>
+    <tr><td>3</td><td>大华银行 United Overseas Bank</td><td>U11</td><td>10.1%</td><td>🏦 金融</td></tr>
+    <tr><td>4</td><td>新加坡电信 Singtel</td><td>Z74</td><td>8.1%</td><td>📡 电信</td></tr>
+    <tr><td>5</td><td>怡和控股 Jardine Matheson</td><td>J36</td><td>4.0%</td><td>🏢 综合企业</td></tr>
+    <tr><td>6</td><td>吉宝 Keppel Ltd</td><td>BN4</td><td>3.8%</td><td>⚙️ 工业</td></tr>
+    <tr><td>7</td><td>新科工程 ST Engineering</td><td>S63</td><td>3.7%</td><td>⚙️ 工业</td></tr>
+    <tr><td>8</td><td>新加坡交易所 SGX</td><td>S68</td><td>3.4%</td><td>🏦 金融</td></tr>
+    <tr><td>9</td><td>凯德综合商业信托 CICT</td><td>C38U</td><td>3.1%</td><td>🏠 房地产</td></tr>
+    <tr><td>10</td><td>香港置地 Hongkong Land</td><td>H78</td><td>2.5%</td><td>🏠 房地产</td></tr>
+  </table>
+  <p style="font-size:0.85rem; color:#94a3b8;">来源：SSGA/FTSE Russell，数据截至 2026 年 3 月</p>
+
+  <h3>行业分布</h3>
+  <table>
+    <tr><th>行业</th><th>占比</th><th>说明</th></tr>
+    <tr><td>金融（银行 + 金融服务）</td><td style="color:#fbbf24; font-weight:700;">~55%</td><td>DBS, OCBC, UOB, SGX 为主</td></tr>
+    <tr><td>房地产（REITs + 开发商）</td><td>~15%</td><td>CICT, Mapletree, Frasers 等</td></tr>
+    <tr><td>工业与工程</td><td>~12%</td><td>Keppel, ST Engineering, Seatrium 等</td></tr>
+    <tr><td>电信</td><td>~8%</td><td>Singtel</td></tr>
+    <tr><td>消费与零售</td><td>~6%</td><td>DFI Retail, Jardine, ThaiBev, Wilmar</td></tr>
+    <tr><td>交通与酒店</td><td>~2%</td><td>新加坡航空, 云顶新加坡</td></tr>
+    <tr><td>科技</td><td style="color:#fca5a5;">&lt; 1%</td><td>Venture Corp</td></tr>
+  </table>
+
+  <div class="highlight-box">
+    <strong>巴菲特视角：</strong>三大银行累计占比超过 <strong>50%</strong>——这既是新加坡作为全球金融中心的结构性特征，也是 ES3 最大的集中度风险。如果新加坡银行业遭遇系统性冲击，ES3 将承受巨大压力。但换个角度看：这三家银行都有超过 50 年的历史，资本充足率远超国际标准，是亚太地区最稳健的银行之一。巴菲特本人也是银行股的长期持有者（如 Wells Fargo、Bank of America）。
+  </div>
+</section>
+
+<!-- PERFORMANCE -->
+<section>
+  <h2><span class="icon">📈</span> 长期表现分析</h2>
+
+  <h3>各期回报（截至 2026-05-31）</h3>
+  <table>
+    <tr><th>周期</th><th>ES3 基金</th><th>STI 指数</th><th>追踪误差</th></tr>
+    <tr><td>YTD 2026</td><td class="num-green">+10.46%</td><td class="num-green">+10.85%</td><td>-0.39%</td></tr>
+    <tr><td>1 年</td><td class="num-green">+34.01%</td><td class="num-green">+35.26%</td><td>-1.25%</td></tr>
+    <tr><td>3 年（年化）</td><td class="num-green">+21.86%</td><td class="num-green">+22.76%</td><td>-0.90%</td></tr>
+    <tr><td>5 年（年化）</td><td class="num-green">+14.26%</td><td class="num-green">+14.96%</td><td>-0.70%</td></tr>
+    <tr><td>10 年（年化）</td><td class="num-green">+10.05%</td><td class="num-green">+10.64%</td><td>-0.59%</td></tr>
+    <tr><td>成立以来（年化）</td><td class="num-green">+8.12%</td><td class="num-green">+8.31%</td><td>-0.19%</td></tr>
+  </table>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>10 年总回报（含股息再投资）</h4>
+      <div class="big-num green">+162%</div>
+      <div class="desc">S$10,000 → ~S$26,200</div>
+    </div>
+    <div class="card">
+      <h4>月定投效果（S$500/月×10年）</h4>
+      <div class="big-num green">S$115,000</div>
+      <div class="desc">投入 S$60,000，收益 S$55,000</div>
+    </div>
+    <div class="card">
+      <h4>追踪误差（10年）</h4>
+      <div class="big-num" style="color:#facc15;">1.27%</div>
+      <div class="desc">与指数高度一致</div>
+    </div>
+    <div class="card">
+      <h4>相关性（R²）</h4>
+      <div class="big-num green">0.99</div>
+      <div class="desc">近乎完美追踪</div>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <strong>复利的力量：</strong>S$10,000 在 10 年前买入 ES3（含股息再投资），今日价值 S$26,200——年化回报约 <strong>10.1%</strong>。这正是巴菲特所说的"时间的玫瑰"。如果你每月定投 S$500，10 年后资产可达 S$115,000，其中近一半是收益。不需要选股、不需要择时，只需要坚持。
+  </div>
+</section>
+
+<!-- DIVIDEND -->
+<section>
+  <h2><span class="icon">💵</span> 股息分析</h2>
+
+  <table>
+    <tr><th>除息日</th><th>每股派息（SGD）</th><th>年化股息率</th></tr>
+    <tr><td>2026-02-11</td><td>0.085</td><td rowspan="2" style="vertical-align:middle; color:#22c55e; font-weight:700;">~3.3%</td></tr>
+    <tr><td>2025-08-12</td><td>0.089</td></tr>
+    <tr><td>2025-02-12</td><td>0.085</td><td rowspan="2" style="vertical-align:middle; color:#22c55e; font-weight:700;">~3.4%</td></tr>
+    <tr><td>2024-08-13</td><td>0.089</td></tr>
+    <tr><td>2024-02-13</td><td>0.069</td><td rowspan="2" style="vertical-align:middle; color:#facc15; font-weight:700;">~2.8%</td></tr>
+    <tr><td>2023-08-11</td><td>0.073</td></tr>
+  </table>
+
+  <p>ES3 每年分两次派息（通常在 2 月和 8 月），近年的年化股息率稳定在 <strong>3.0-3.5%</strong> 区间，主要来源于成份股的分红（尤其是三大银行的高股息贡献）。</p>
+
+  <div class="highlight-box">
+    <strong>巴菲特视角：</strong>股息是长期投资回报的重要组成部分。ES3 超过 3% 的股息率加上约 7% 的资本增值（10 年年化约 10%），构成了巴菲特所说的"合理回报组合"。股息再投资是复利的关键引擎。
+  </div>
+</section>
+
+<!-- FEE COMPARISON -->
+<section>
+  <h2><span class="icon">🔍</span> 费用对比：ES3 vs G3B</h2>
+
+  <p>新加坡追踪 STI 的 ETF 主要有两只：</p>
+
+  <table>
+    <tr><th>指标</th><th>ES3（道富）</th><th>G3B（Amova）</th></tr>
+    <tr><td>基金管理人</td><td>State Street Global Advisors</td><td>Amova Asset Management</td></tr>
+    <tr><td>成立时间</td><td>2002 年</td><td>2009 年</td></tr>
+    <tr><td>AUM</td><td>SGD ~35.5 亿</td><td>SGD ~13 亿</td></tr>
+    <tr><td>管理费</td><td>最高 0.30%</td><td>0.09%</td></tr>
+    <tr><td>总费用率（TER）</td><td>0.28%</td><td>0.25%（上限）</td></tr>
+    <tr><td>流动性</td><td>⭐ 最优</td><td>⭐ 良好</td></tr>
+    <tr><td>买卖价差</td><td>最窄</td><td>略宽</td></tr>
+  </table>
+
+  <div class="highlight-box">
+    <strong>选择建议：</strong>如果投资金额较大（> S$50,000），G3B 更低的 TER（0.25% vs 0.28%）在长期能节省可观的费用。如果追求最佳流动性和最小的买卖价差（尤其小额定投），ES3 的深度流动性更优。巴菲特会建议选费用最低的那只。
+  </div>
+</section>
+
+<!-- ESG / QUALITY -->
+<section>
+  <h2><span class="icon">🛡️</span> 成份股质量评估</h2>
+
+  <h3>成份股加权估值指标</h3>
+  <div class="card-3">
+    <div class="card">
+      <h4>市盈率（PE）</h4>
+      <div class="big-num">16.71x</div>
+      <div class="desc">合理水平</div>
+    </div>
+    <div class="card">
+      <h4>市净率（PB）</h4>
+      <div class="big-num">1.66x</div>
+      <div class="desc">合理偏低</div>
+    </div>
+    <div class="card">
+      <h4>价格/现金流</h4>
+      <div class="big-num">11.60x</div>
+      <div class="desc">良好</div>
+    </div>
+  </div>
+
+  <p>STI 的 30 只成份股以大盘蓝筹为主，加权平均市值约 <strong>SGD 882 亿</strong>。成份股多为新加坡各行业的龙头企业，基本面扎实。三大银行（DBS、OCBC、UOB）的资本充足率均超过 14%，远高于国际监管要求（Basel III 要求的 10.5%），不良贷款率持续保持在较低水平。</p>
+
+  <p style="margin-top:12px;"><strong>STI 的独特优势：科技含量低（&lt;1%）</strong>——在 2022 年科技股大跌时，STI 仅下跌约 8%，远好于纳斯达克（-33%）和标普 500（-19%）。这使 ES3 成为科技重仓投资者的极佳分散化工具。</p>
+</section>
+
+<!-- RISKS -->
+<section>
+  <h2><span class="icon">⚠️</span> 风险因素</h2>
+
+  <div class="pros-cons">
+    <div class="box pros">
+      <h4 style="color:#6ee7b7;">✅ 优势</h4>
+      <ul style="margin:0; padding-left:18px;">
+        <li>24 年历史，穿越多个市场周期</li>
+        <li>AUM 最高，流动性最好</li>
+        <li>费用合理（0.28% TER）</li>
+        <li>追踪误差极小（1.27%）</li>
+        <li>稳定派息（3.0-3.5%）</li>
+        <li>低科技含量，天然分散化</li>
+        <li>CPF OA / SRS 可用</li>
+      </ul>
+    </div>
+    <div class="box cons">
+      <h4 style="color:#fca5a5;">⚠️ 风险</h4>
+      <ul style="margin:0; padding-left:18px;">
+        <li>银行集中度 >50%</li>
+        <li>新加坡市场规模较小</li>
+        <li>利率敏感度高</li>
+        <li>科技仓位不足 1%，错失增长</li>
+        <li>费用率仍有下降空间</li>
+        <li>流动性受限于 SGX 规模</li>
+        <li>无积累份额（需手动再投）</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- BUFFETT CHECKLIST -->
+<section>
+  <h2><span class="icon">✅</span> 巴菲特指数基金投资原则评估</h2>
+
+  <table>
+    <tr><th style="width:35%;">原则</th><th style="width:15%;">评分</th><th>说明</th></tr>
+    <tr>
+      <td><strong>1. 极低成本</strong></td>
+      <td><span class="verdict warn">⚠️ 7/10</span></td>
+      <td>0.28% 在新加坡 ETF 中属于合理水平，但与巴菲特推崇的 Vanguard S&P 500（0.03%）相比仍有差距。竞品 G3B 的 0.25% 更优。</td>
+    </tr>
+    <tr>
+      <td><strong>2. 广泛分散</strong></td>
+      <td><span class="verdict warn">⚠️ 6/10</span></td>
+      <td>30 只成份股在"数量"上不算多，且行业集中于金融（55%+）。但也正是这种集中让它成为科技股投资者的有效分散工具。</td>
+    </tr>
+    <tr>
+      <td><strong>3. 长期持���</strong></td>
+      <td><span class="verdict pass">✅ 9/10</span></td>
+      <td>完美契合"买入并持有"哲学。10 年年化 10% 的回报证明了长期持有的价值。</td>
+    </tr>
+    <tr>
+      <td><strong>4. 被动管理</strong></td>
+      <td><span class="verdict pass">✅ 10/10</span></td>
+      <td>完全被动，完全复制 STI 指数，无主动管理风险，R² = 0.99。</td>
+    </tr>
+    <tr>
+      <td><strong>5. 不择时</strong></td>
+      <td><span class="verdict pass">✅ 9/10</span></td>
+      <td>适合 DCA（定期定额），月投 S$500 在 10 年间可产生约 S$55,000 收益。</td>
+    </tr>
+    <tr>
+      <td><strong>6. 股息再投资</strong></td>
+      <td><span class="verdict neutral">➡️ 7/10</span></td>
+      <td>分派份额（ES3）需手动再投资；G3B 有积累份额（GAB）可实现自动复投。</td>
+    </tr>
+    <tr>
+      <td><strong>7. 可理解的业务</strong></td>
+      <td><span class="verdict pass">✅ 10/10</span></td>
+      <td>指数基金是所有投资品种中最容易理解的——买新加坡前 30 大蓝筹。</td>
+    </tr>
+  </table>
+
+  <div class="total-score">
+    <div class="score-circle high">8.2 / 10</div>
+    <div class="verdict-text">综合结论：<strong style="color:#6ee7b7;">符合巴菲特指数基金投资哲学</strong></div>
+    <p style="color:#94a3b8; margin-top:8px; font-size:0.9rem;">
+      ES3 完美反映了巴菲特"低成本指数基金是最好的投资"这一理念。
+      对于希望获得新加坡市场 Beta 收益、重视稳定股息、偏好蓝筹股的长期投资者而言，这是一个优秀的核心配置工具。
+      建议通过定期定额方式持续投入，将股息再投资，长期持有。
+    </p>
+  </div>
+</section>
+
+<!-- BUFFETT VS STI ETF -->
+<section>
+  <h2><span class="icon">🎯</span> 如果巴菲特投资 ES3</h2>
+
+  <div style="background: linear-gradient(135deg, #1e293b, #0f172a); border: 1px solid #334155; border-radius: 12px; padding: 28px; margin: 20px 0;">
+    <h3 style="color:#fbbf24; margin-top:0;">巴迪·巴菲特式诊断 🐾</h3>
+
+    <p><strong>他会买吗？会的，但有前提。</strong></p>
+
+    <p>巴菲特多次公开表示，对于没有时间或能力做个股研究的普通投资者，"低成本的指数基金是最好的选择"。他一再强调："不要试图在股市里找圣杯，买指数基金，然后继续你的人生。"</p>
+
+    <p>对于居住在新加坡的投资者而言，ES3 提供了一个简单、透明、低成本的方式来参与新加坡经济增长。如果巴菲特住在新加坡，他大概率会说：</p>
+
+    <div class="buffett-quote" style="margin:16px 0;">
+      "Put 90% of your Singapore equity allocation in a low-cost STI ETF and 10% in Singapore government bonds. Then go back to work and forget about it."
+    </div>
+
+    <p><strong>投资策略建议：</strong></p>
+    <ul>
+      <li><strong>核心仓位：</strong> ES3 作为新加坡股票仓位的核心配置，占比 50-70%</li>
+      <li><strong>定投方式：</strong> 每月固定金额买入，无视市场波动</li>
+      <li><strong>股息处理：</strong> 将每半年的股息手动再投资（或选择 G3B 的分派份额或 GAB 积累份额）</li>
+      <li><strong>全球分散：</strong> 搭配全球指数基金（如 S&P 500 ETF）以分散单一市场风险</li>
+      <li><strong>持有期限：</strong> 至少 10 年以上</li>
+    </ul>
+
+    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
+      <span class="verdict pass">✅ 建议买入</span>
+      <span class="verdict pass">✅ 适合定投</span>
+      <span class="verdict neutral">➡️ 搭配全球指数更佳</span>
+      <span class="verdict warn">⚠️ 注意银行集中度</span>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section>
+  <h2><span class="icon">🌏</span> STI ETF vs S&P 500 ETF</h2>
+
+  <table>
+    <tr><th>指标</th><th>ES3 (STI)</th><th>VOO (S&P 500)</th></tr>
+    <tr><td>市场</td><td>新加坡（30 只大盘股）</td><td>美国（500 只大盘股）</td></tr>
+    <tr><td>费用率</td><td>0.28%</td><td>0.03%</td></tr>
+    <tr><td>10 年年化回报</td><td>~10.1%</td><td>~13%</td></tr>
+    <tr><td>行业集中度</td><td>金融 55%+</td><td>科技 30%+</td></tr>
+    <tr><td>股息率</td><td>~3.3%</td><td>~1.3%</td></tr>
+    <tr><td>PE 估值</td><td>16.7x</td><td>~22x</td></tr>
+    <tr><td>货币</td><td>SGD</td><td>USD</td></tr>
+    <tr><td>分散化程度</td><td>行业集中，市场小</td><td>行业分散，全球影响力</td></tr>
+  </table>
+
+  <div class="highlight-box">
+    <strong>巴菲特视角：</strong>他推荐 S&P 500 指数基金给美国投资者。对于新加坡投资者，ES3 是对本地市场的合理补充。最理性的做法是：<strong>建立"全球指数（如 VWRA）+ 本地指数（ES3）"的双核心组合</strong>。巴菲特曾说过："多元化是对无知的保护。如果你知道自己在做什么，你不需要多元化。"但对于绝大部分投资者，全球多元配置才是最稳妥的选择。
+  </div>
+</section>
+
+<!-- CONCLUSION -->
+<section>
+  <h2><span class="icon">🎯</span> 最终结论</h2>
+
+  <div style="background: linear-gradient(135deg, #1e293b, #0f172a); border: 1px solid #334155; border-radius: 12px; padding: 28px; margin: 20px 0;">
+    <p><strong>ES3 是一款高质量的指数投资工具，完全符合巴菲特的投资哲学。</strong></p>
+
+    <p>它的核心优势——<strong>低费用、高透明度、稳定派息、长期增长</strong>——正是巴菲特反复向普通投资者推荐指数基金的原因。STI 在 2026 年 2 月历史性突破 5,000 点，反映了新加坡市场的基本面改善和投资者信心恢复。</p>
+
+    <p>但 ES3 并非银弹。其约 50% 的银行集中度意味着它不是"广泛分散"的指数。对于已经持有大量科技股的投资者来说，ES3 的低科技含量反而成为分散化的优点。对于希望获取全球增长敞口的投资者，ES3 应作为组合的一部分而非全部。</p>
+
+    <div class="buffett-quote" style="margin:16px 0;">
+      "The best way to own common stocks is through an index fund that charges minimal fees. That is the most nearly foolproof investment."
+      <span class="attr">— Warren Buffett, 2007</span>
+    </div>
+
+    <p><strong>操作建议：</strong></p>
+    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+      <span class="verdict pass">✅ 适合长期定投</span>
+      <span class="verdict pass">✅ 适合作为核心配置</span>
+      <span class="verdict warn">⚠️ 搭配全球指数基金</span>
+      <span class="verdict neutral">➡️ G3B 费率略优（0.25%）</span>
+    </div>
+
+    <p style="margin-top:16px; color:#cbd5e1;">
+      简而言之：<strong>ES3 是巴菲���理念在新加坡的最佳实践案例之一。</strong>买入、持有、股息再投资、继续生活——这正是"奥马哈先知"推崇的投资之道。
+    </p>
+  </div>
+</section>
+
+<div class="disclaimer">
+  <strong>免责声明：</strong>本报告仅供信息参考和教育用途，不构成任何投资建议。所有数据来源于公开市场信息，可能存在延迟。投资有风险，决策需谨慎。巴菲特价值投资框架是长期投资理念，不保证在任何市场条件下都能获得正回报。
+</div>
+
+<div class="footer">
+  报告由 巴迪（🐾 WorkBuddy）自动生成 · 数据来源：SSGA / SGX / FTSE Russell / FSMOne · 基于巴菲特价值投资框架 · 2026-07-26
+</div>
+
+</div><!-- /container -->
+
+</body>
+</html>
