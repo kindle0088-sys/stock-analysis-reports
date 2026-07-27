@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>新加坡房地产投资分析 · Dunearn House</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0b1120; color: #e2e8f0; font-family: -apple-system, 'Segoe UI', 'PingFang SC', 'Noto Sans SC', 'Microsoft YaHei', sans-serif; line-height: 1.8; padding: 0; }
+
+  .hero { background: linear-gradient(135deg, #0b1120 0%, #1a3a5c 50%, #0b1120 100%); padding: 60px 20px 50px; text-align: center; border-bottom: 1px solid #1e3a5f; }
+  .hero h1 { font-size: 2.2rem; color: #fbbf24; letter-spacing: 2px; margin-bottom: 4px; }
+  .hero .tag { display: inline-block; background: #2563eb; color: #fff; padding: 4px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; margin-bottom: 10px; }
+  .hero .tag.ccr { background: #7c3aed; }
+  .hero .sub { color: #94a3b8; font-size: 0.95rem; margin-top: 4px; }
+  .hero .stats { display: flex; justify-content: center; gap: 32px; margin-top: 24px; flex-wrap: wrap; }
+  .hero .s-item { text-align: center; }
+  .hero .s-item .num { font-size: 1.8rem; font-weight: 700; color: #fbbf24; }
+  .hero .s-item .num.green { color: #22c55e; }
+  .hero .s-item .num.blue { color: #60a5fa; }
+  .hero .s-item .label { font-size: 0.8rem; color: #94a3b8; margin-top: 2px; }
+
+  .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+
+  section { padding: 36px 0; border-bottom: 1px solid #1e293b; }
+  section:last-child { border-bottom: none; }
+
+  h2 { font-size: 1.5rem; color: #fbbf24; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 2px solid #2563eb; display: flex; align-items: center; gap: 10px; }
+  h2 .icon { font-size: 1.3rem; }
+  h3 { font-size: 1.15rem; color: #93c5fd; margin-top: 20px; margin-bottom: 10px; }
+  h4 { color: #a5b4fc; margin-top: 14px; margin-bottom: 6px; font-size: 1rem; }
+
+  p { margin-bottom: 12px; color: #cbd5e1; }
+  ul, ol { padding-left: 24px; margin-bottom: 14px; }
+  li { margin-bottom: 6px; color: #cbd5e1; }
+
+  .verdict { display: inline-block; padding: 3px 12px; border-radius: 20px; font-size: 0.82rem; font-weight: 600; margin-right: 5px; margin-bottom: 4px; }
+  .verdict.pass { background: #064e3b; color: #6ee7b7; }
+  .verdict.fail { background: #450a0a; color: #fca5a5; }
+  .verdict.warn { background: #422006; color: #fcd34d; }
+  .verdict.neutral { background: #1e3a5f; color: #93c5fd; }
+
+  .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 14px 0; }
+  .card { background: #1e293b; border-radius: 10px; padding: 18px; border: 1px solid #334155; }
+  .card h4 { color: #fbbf24; margin-top: 0; font-size: 0.95rem; }
+  .card .big-num { font-size: 1.6rem; font-weight: 700; color: #60a5fa; margin: 4px 0 2px; }
+  .card .big-num.green { color: #22c55e; }
+  .card .big-num.red { color: #ef4444; }
+  .card .big-num.yellow { color: #facc15; }
+  .card .desc { font-size: 0.82rem; color: #94a3b8; }
+
+  table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 0.88rem; }
+  th, td { border: 1px solid #334155; padding: 8px 12px; text-align: right; }
+  th { background: #1e293b; color: #fbbf24; font-weight: 600; text-align: center; }
+  td:first-child, th:first-child { text-align: left; }
+  td { background: #0f172a; }
+  tr:hover td { background: #1a2744; }
+  .num-green { color: #22c55e; }
+  .num-red { color: #ef4444; }
+
+  .score-section { background: #1e293b; border-radius: 12px; padding: 20px; margin: 16px 0; }
+  .score-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #334155; }
+  .score-row:last-child { border-bottom: none; }
+  .score-row .label { color: #cbd5e1; font-weight: 500; }
+  .score-row .stars { color: #fbbf24; letter-spacing: 2px; }
+
+  .total-score { text-align: center; padding: 24px; margin: 20px 0; }
+  .total-score .score-circle { width: 100px; height: 100px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 2.2rem; font-weight: 800; margin-bottom: 10px; }
+  .total-score .score-circle.high { background: linear-gradient(135deg, #064e3b, #065f46); color: #6ee7b7; border: 3px solid #10b981; }
+  .total-score .score-circle.medium { background: linear-gradient(135deg, #422006, #78350f); color: #fcd34d; border: 3px solid #f59e0b; }
+  .total-score .verdict-text { font-size: 1.1rem; font-weight: 600; color: #e2e8f0; }
+
+  .highlight-box { background: #0f172a; border-left: 4px solid #60a5fa; padding: 12px 16px; border-radius: 6px; margin: 14px 0; font-size: 0.92rem; }
+  .highlight-box strong { color: #fbbf24; }
+  .highlight-box.gold { border-left-color: #fbbf24; }
+  .highlight-box.green { border-left-color: #22c55e; }
+  .highlight-box.red { border-left-color: #ef4444; }
+
+  .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 14px 0; }
+  .pros-cons .box { padding: 14px; border-radius: 8px; }
+  .pros-cons .pros { background: #064e3b; border: 1px solid #10b981; }
+  .pros-cons .cons { background: #450a0a; border: 1px solid #ef4444; }
+  .pros-cons .box h4 { margin-top: 0; margin-bottom: 6px; }
+
+  .summary-bar { display: flex; gap: 10px; flex-wrap: wrap; margin: 14px 0; }
+  .summary-tag { background: #1e293b; border: 1px solid #334155; padding: 6px 12px; border-radius: 8px; font-size: 0.85rem; }
+  .summary-tag .label { color: #94a3b8; display: block; font-size: 0.72rem; }
+  .summary-tag .value { color: #e2e8f0; font-weight: 600; }
+
+  .disclaimer { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 14px 18px; margin: 16px 0; font-size: 0.8rem; color: #94a3b8; }
+  .footer { text-align: center; padding: 24px 20px; color: #64748b; font-size: 0.8rem; }
+
+  @media (max-width: 640px) { .card-grid, .pros-cons { grid-template-columns: 1fr; } .hero .stats { gap: 16px; } }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="tag ccr">🏠 私人公寓 · CCR</span>
+  <h1>Dunearn House · 新加坡房地产投资分析</h1>
+  <p class="sub">760 Dunearn Road, District 11 — 99年地契 · ~2030年TOP · 380单位 · 即刻销售中</p>
+  <div class="stats">
+    <div class="s-item">
+      <div class="num blue">S$2,799</div>
+      <div class="label">起步价 psf（2房）</div>
+    </div>
+    <div class="s-item">
+      <div class="num green">55%</div>
+      <div class="label">首个周末售出率</div>
+    </div>
+    <div class="s-item">
+      <div class="num blue">3.5%</div>
+      <div class="label">参考租金收益率</div>
+    </div>
+    <div class="s-item">
+      <div class="num" style="color:#fbbf24;">380</div>
+      <div class="label">总单位数</div>
+    </div>
+    <div class="s-item">
+      <div class="num green">9</div>
+      <div class="label">土地竞标者数</div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- EXECUTIVE SUMMARY -->
+<section>
+  <h2><span class="icon">📋</span> 执行摘要</h2>
+
+  <p><strong>Dunearn House</strong> 是新加坡武吉知马马城（Bukit Timah Turf City）全新规划区内的首个私人公寓项目，由星狮地产（Frasers Property）、积水住宅（Sekisui House）和中建地产（CSC Land Group）联合开发。项目位于第11邮区核心中央区（CCR），共380个单位，户型涵盖2房至4房优质+书房共10种布局。</p>
+
+  <p>2026年7月25日正式开卖的首个周末即售出55%（208套），以低于分析师预期的起步价（2房S$2,799 psf）引爆市场关注。项目最大的亮点在于：<strong>以"先发者"身份进入武吉知马马城这个占地176公顷的全新规划区</strong>，且相邻地块的地价已比本项目高出15%，为早期买家提供了明确的安全垫。</p>
+
+  <div class="summary-bar">
+    <div class="summary-tag"><span class="label">地段评分</span><span class="value" style="color:#6ee7b7;">9/10 卓越</span></div>
+    <div class="summary-tag"><span class="label">租金回报</span><span class="value" style="color:#facc15;">6/10 中等</span></div>
+    <div class="summary-tag"><span class="label">增值潜力</span><span class="value" style="color:#6ee7b7;">8/10 优秀</span></div>
+    <div class="summary-tag"><span class="label">开发商</span><span class="value" style="color:#6ee7b7;">9/10 顶级</span></div>
+    <div class="summary-tag"><span class="label">持有成本</span><span class="value" style="color:#facc15;">6/10 中等偏高</span></div>
+    <div class="summary-tag"><span class="label">退出流动性</span><span class="value" style="color:#facc15;">7/10 良好</span></div>
+  </div>
+
+  <div class="total-score">
+    <div class="score-circle high">7.5 / 10</div>
+    <div class="verdict-text">综合评分：<strong style="color:#6ee7b7;">✅ 推荐 — 长线增��型投资/自住</strong></div>
+    <p style="color:#94a3b8; margin-top:6px; font-size:0.88rem;">
+      Dunearn House 是进入武吉知马马城全新规划区的黄金门票——地价安全垫厚、定价低于预期、开发商阵容顶级。
+      适合相信"地段稀缺性+区域转型"长线逻辑的买家，但对追求即时高租金回报的投资者吸引力有限。
+    </p>
+  </div>
+</section>
+
+<!-- PROJECT OVERVIEW -->
+<section>
+  <h2><span class="icon">🏗️</span> 项目概览</h2>
+
+  <table>
+    <tr><th style="width:30%;">项目</th><th>详细信息</th></tr>
+    <tr><td><strong>项目名称</strong></td><td>Dunearn House</td></tr>
+    <tr><td><strong>开发商</strong></td><td>星狮地产 (Frasers Property) · 积水住宅 (Sekisui House) · 中建地产 (CSC Land Group)</td></tr>
+    <tr><td><strong>地址</strong></td><td>760 Dunearn Road, Singapore 289920</td></tr>
+    <tr><td><strong>区域/邮区</strong></td><td>核心中央区 (CCR) · 第11邮区 (D11)</td></tr>
+    <tr><td><strong>地契年限</strong></td><td>99年（从2025年9月30日起）</td></tr>
+    <tr><td><strong>总单位数</strong></td><td>380套（5栋楼：2栋19层 + 3栋10层）</td></tr>
+    <tr><td><strong>户型范围</strong></td><td>2房 ~ 4房优质+书房（10种布局）</td></tr>
+    <tr><td><strong>面积范围</strong></td><td>527 sqft ~ 1,378 sqft</td></tr>
+    <tr><td><strong>预计 TOP</strong></td><td>~2030年</td></tr>
+    <tr><td><strong>土地价格</strong></td><td>S$4.9145亿 (~S$1,410 psf ppr)</td></tr>
+    <tr><td><strong>销售状态</strong></td><td><span class="num-green">已售55% (208/380套)</span></td></tr>
+    <tr><td><strong>开盘日</strong></td><td>2026年7月25日</td></tr>
+    <tr><td><strong>建筑师</strong></td><td>Ong & Ong Pte Ltd</td></tr>
+  </table>
+
+  <h3>户型分布</h3>
+  <table>
+    <tr><th>户型</th><th>套数</th><th>占比</th><th>面积 (sqft)</th><th>起步价</th><th>起步psf</th></tr>
+    <tr><td>2房</td><td>40</td><td>10.5%</td><td>527</td><td>S$1.475M</td><td class="num-green">S$2,799</td></tr>
+    <tr><td>2房 优质</td><td>77</td><td>20.3%</td><td>614</td><td>待询</td><td>—</td></tr>
+    <tr><td>2房 + 书房</td><td>59</td><td>15.5%</td><td>657-678</td><td>待询</td><td>—</td></tr>
+    <tr><td style="color:#94a3b8;">小计 2房</td><td style="color:#94a3b8;"><strong>176</strong></td><td style="color:#94a3b8;"><strong>46.3%</strong></td><td style="color:#94a3b8;">527-678</td><td style="color:#94a3b8;"></td><td style="color:#94a3b8;"></td></tr>
+    <tr><td>3房</td><td>20</td><td>5.3%</td><td>872</td><td>S$2.597M</td><td>S$2,978</td></tr>
+    <tr><td>3房 + Flexi</td><td>20</td><td>5.3%</td><td>936</td><td>待询</td><td>—</td></tr>
+    <tr><td>3房 + 书房</td><td>20</td><td>5.3%</td><td>947-969</td><td>待询</td><td>—</td></tr>
+    <tr><td>3房 优质</td><td>36</td><td>9.5%</td><td>1,001</td><td>待询</td><td>—</td></tr>
+    <tr><td style="color:#94a3b8;">小计 3房</td><td style="color:#94a3b8;"><strong>96</strong></td><td style="color:#94a3b8;"><strong>25.3%</strong></td><td style="color:#94a3b8;">872-1,001</td><td style="color:#94a3b8;"></td><td style="color:#94a3b8;"></td></tr>
+    <tr><td>4房</td><td>36</td><td>9.5%</td><td>1,184</td><td>S$3.588M</td><td>S$3,030</td></tr>
+    <tr><td>4房 优质</td><td>36</td><td>9.5%</td><td>1,302-1,313</td><td>待询</td><td>—</td></tr>
+    <tr><td>4房 优质+书房</td><td>36</td><td>9.5%</td><td>1,378</td><td>待询</td><td>—</td></tr>
+    <tr><td style="color:#94a3b8;">小计 4房</td><td style="color:#94a3b8;"><strong>108</strong></td><td style="color:#94a3b8;"><strong>28.4%</strong></td><td style="color:#94a3b8;">1,184-1,378</td><td style="color:#94a3b8;"></td><td style="color:#94a3b8;"></td></tr>
+    <tr><td><strong>总计</strong></td><td><strong>380</strong></td><td><strong>100%</strong></td><td><strong>527-1,378</strong></td><td><strong>S$1.475M起</strong></td><td><strong>S$2,799起</strong></td></tr>
+  </table>
+
+  <div class="highlight-box gold">
+    <strong>定价策略分析：</strong>2房起步价S$2,799 psf 低于所有分析师预测（CBRE预测S$2,900-3,000 psf，SRI预测S$2,910-3,100 psf），开发商采取了"低开高走"的定价策略。相邻地块由永泰控股以S$1,625 psf ppr中标（比本项目地价高15%），预示着未来该地块开盘价将达~S$3,200 psf，为Dunearn House��期买家创造估值安全垫。📈
+  </div>
+</section>
+
+<!-- 1. LOCATION -->
+<section>
+  <h2><span class="icon">📍</span> 1. 地段分析</h2>
+  <div class="score-row" style="display:flex; justify-content:space-between; background:#1e293b; padding:10px 16px; border-radius:8px; margin-bottom:14px;">
+    <span style="color:#cbd5e1; font-weight:600;">地段评分</span>
+    <span style="color:#fbbf24; letter-spacing:2px;">⭐⭐⭐⭐⭐⭐⭐⭐⭐☆ 9/10</span>
+  </div>
+
+  <h3>交通连接</h3>
+  <table>
+    <tr><th>交通方式</th><th>距离</th><th>用时</th><th>评价</th></tr>
+    <tr><td>第六道地铁站 (DT7)</td><td>~450m</td><td>步行4分钟</td><td class="num-green">便捷，有遮盖连道</td></tr>
+    <tr><td>马城地铁站 (CRL·规划中)</td><td>规划区内</td><td>预计2030s通车</td><td class="num-yellow">未来双地铁优势</td></tr>
+    <tr><td>PIE高速公路入口</td><td>~4分钟车程</td><td>—</td><td class="num-green">驾车便利</td></tr>
+    <tr><td>乌节路</td><td>~10分钟车程</td><td>—</td><td class="num-green">CCR核心商圈辐射</td></tr>
+    <tr><td>荷兰村</td><td>~5分钟车程</td><td>—</td><td class="num-green">餐饮娱乐便利</td></tr>
+  </table>
+
+  <h3>名校资源（Dunearn House 核心卖点之一）</h3>
+  <table>
+    <tr><th>学校</th><th>距离</th><th>备注</th></tr>
+    <tr><td>南洋女子中学 (Nanyang Girls' High)</td><td>~1.0 km</td><td class="num-green">新加坡顶尖中学</td></tr>
+    <tr><td>国家初级学院 (NJC)</td><td>~1.2 km</td><td class="num-green">顶尖初级学院</td></tr>
+    <tr><td>美以美女校 (MGS)</td><td>~1.2 km</td><td class="num-green">小学+中学</td></tr>
+    <tr><td>莱佛士女子小学 (RGPS)</td><td>~1.4 km</td><td class="num-green">著名小学</td></tr>
+    <tr><td>法国小学 (La Petite Ecole)</td><td>~0.4 km</td><td class="num-green">国际学校</td></tr>
+    <tr><td>华中国际学校</td><td>~1.1 km</td><td class="num-green">国际学校</td></tr>
+  </table>
+
+  <h3>马城规划区（Bukit Timah Turf City）</h3>
+  <p>武吉知马马城占地176公顷，是新加坡核心地带最后一个大型可开发地块。规划包括：</p>
+  <ul>
+    <li><strong>5,000+ 套新住宅</strong>（多个地块分批推出）</li>
+    <li><strong>20公顷公园绿地</strong>，结合生态走廊</li>
+    <li><strong>新的商���中心</strong>（零售、餐饮、超市）</li>
+    <li><strong>新的学校</strong>（规划中）</li>
+    <li><strong>跨岛线马城地铁站</strong>（CRL2，预计2030s开通）</li>
+  </ul>
+
+  <div class="highlight-box gold">
+    <strong>地段小结：</strong>D11核心中央区（CCR）+ 第六道MRT步行4分钟 + 名校环绕 + 即将崛起的马城新社区——Dunearn House 的地段综合评分极高。作为该规划区的首个项目，相当于"买在区域起飞的前夜"。但需注意：马城规划区的配套完善需要时间，短期内的生活便利性不如成熟社区。
+  </div>
+</section>
+
+<!-- 2. RENTAL YIELD -->
+<section>
+  <h2><span class="icon">💵</span> 2. 租金回报分析</h2>
+  <div class="score-row" style="display:flex; justify-content:space-between; background:#1e293b; padding:10px 16px; border-radius:8px; margin-bottom:14px;">
+    <span style="color:#cbd5e1; font-weight:600;">租金回报评分</span>
+    <span style="color:#fbbf24; letter-spacing:2px;">⭐⭐⭐⭐⭐⭐☆☆☆☆ 6/10</span>
+  </div>
+
+  <h3>参考租金水平（邻近 Fourth Avenue Residences）</h3>
+  <table>
+    <tr><th>项目</th><th>户型</th><th>面积 (sqft)</th><th>月租金 (SGD)</th><th>租金 psf/月</th></tr>
+    <tr><td>Fourth Avenue Residences</td><td>2房</td><td>~550-650</td><td>$4,000 - $4,500</td><td>~$7.20</td></tr>
+    <tr><td>Fourth Avenue Residences</td><td>3房</td><td>~800-1,000</td><td>$5,500 - $6,500</td><td>~$7.00</td></tr>
+  </table>
+
+  <h3>租金回报率估算</h3>
+  <table>
+    <tr><th>户型</th><th>购买成本（起步价）</th><th>预估月租金</th><th>年租金收入</th><th>毛收益率</th></tr>
+    <tr><td>2房（起步）</td><td>$1,475,000</td><td>$4,200</td><td>$50,400</td><td class="num-green">3.42%</td></tr>
+    <tr><td>3房（起步）</td><td>$2,597,000</td><td>$6,000</td><td>$72,000</td><td class="num-green">2.77%</td></tr>
+    <tr><td>4房（起步）</td><td>$3,588,000</td><td>$8,000</td><td>$96,000</td><td class="num-green">2.68%</td></tr>
+  </table>
+
+  <div class="highlight-box">
+    <strong>租金回报分析：</strong>以起步价计算2房可达3.42%毛收益率，参考Fourth Avenue Residences的3.5%历史均值。但Dunearn House��定价已超过Fourth Avenue Residences的转售价范围（S$2,126-2,850 psf），意味着开盘买家的名义收益率低于3.5%的参考水平。扣除物业费（预计$400-600/月）、物业税（CCR较高，约AV的10%+）、火险和所得税后，<strong>净收益率约2.0-2.5%</strong>——在CCR项目中属于可接受但不算突出的水平。
+  </div>
+
+  <div class="highlight-box red">
+    <strong>⚠️ 投资者注意：</strong>2房单位占比高达46%（176套），未来交付后这些单位将在同一时间进入出租市场，可能面临较大的竞争压力，对租金水平形成压制。
+  </div>
+</section>
+
+<!-- 3. CAPITAL APPRECIATION -->
+<section>
+  <h2><span class="icon">📈</span> 3. 资本增值潜力</h2>
+  <div class="score-row" style="display:flex; justify-content:space-between; background:#1e293b; padding:10px 16px; border-radius:8px; margin-bottom:14px;">
+    <span style="color:#cbd5e1; font-weight:600;">增值潜力评分</span>
+    <span style="color:#fbbf24; letter-spacing:2px;">⭐⭐⭐⭐⭐⭐⭐⭐☆☆ 8/10</span>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>📈 增值利好因素</h4>
+      <ul style="margin:0; padding-left:18px; font-size:0.88rem;">
+        <li>马城规划区首个项目，"先发者"优势</li>
+        <li>相邻地块地价高15%（S$1,625 vs S$1,410 psf ppr）</li>
+        <li>CCR 新盘供应稀缺——2026年仅768套</li>
+        <li>176公顷大型规划区将推高整体估值</li>
+        <li>跨岛线马城站（CRL）开通预期</li>
+        <li>武吉知马地段本身具有抗跌性</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>📉 不利因素</h4>
+      <ul style="margin:0; padding-left:18px; font-size:0.88rem;">
+        <li>99年地契逐年递减（2025年起）</li>
+        <li>规划区兑现周期长（5-10年+）</li>
+        <li>后续地块上市将带来竞争供应</li>
+        <li>项目定价已高于周边转售项目</li>
+        <li>宏观经济和利率不确定性</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>地价安全垫分析</h3>
+  <table>
+    <tr><th>地块</th><th>得标者</th><th>地价 (psf ppr)</th><th>vs Dunearn House</th><th>预估开盘价</th></tr>
+    <tr><td><strong>Dunearn House</strong></td><td>Frasers/Sekisui/CSC</td><td><strong>S$1,410</strong></td><td>—</td><td>已开盘 S$2,799起</td></tr>
+    <tr><td>相邻地块</td><td>永泰控股 (Wing Tai) + Metro</td><td>S$1,625</td><td class="num-green">+15%</td><td>~S$3,200</td></tr>
+  </table>
+
+  <div class="highlight-box gold">
+    <strong>增值潜力核心判断：</strong>Dunearn House 最大的增值催化剂来自马城规划区的整体兑现。想象一个类比——如果Dunearn House是"丹戎禺（Tanjong Rhu）的第一个盘"，那么随着整个片区建成，第一批买家享受的资本增值通常是最丰厚的。相邻地块高出15%的地价是一个重要的信号：<strong>后续竞拍者愿意付更高成本，说明专业玩家对这片区的长期价值有共识。</strong>但需要时间——5年+的持有周期是释放这个增值潜力的前提。
+  </div>
+</section>
+
+<!-- 4. DEVELOPER -->
+<section>
+  <h2><span class="icon">🏗️</span> 4. 开发商信誉</h2>
+  <div class="score-row" style="display:flex; justify-content:space-between; background:#1e293b; padding:10px 16px; border-radius:8px; margin-bottom:14px;">
+    <span style="color:#cbd5e1; font-weight:600;">开发商评分</span>
+    <span style="color:#fbbf24; letter-spacing:2px;">⭐⭐⭐⭐⭐⭐⭐⭐⭐☆ 9/10</span>
+  </div>
+
+  <table>
+    <tr><th>开发商</th><th>背景</th><th>代表作</th><th>评价</th></tr>
+    <tr><td><strong>星狮地产 (Frasers Property)</strong></td><td>新加坡上市开发商，新加坡/澳洲/欧洲均有布局</td><td>Riviere、Parc Life、Waterway Woodlands</td><td class="num-green">Tier 1，产品力强</td></tr>
+    <tr><td><strong>积水住宅 (Sekisui House)</strong></td><td>日本最大住宅开发商之一，拥有70+年历史</td><td>The Atelier、The M、多个高端项目</td><td class="num-green">日本品质，口碑卓越</td></tr>
+    <tr><td><strong>中建地产 (CSC Land Group)</strong></td><td>中国建筑集团旗下房地产开发平台</td><td>多个大型住宅和商业项目</td><td class="num-green">财务实力雄厚</td></tr>
+  </table>
+
+  <p>三家开发商的联合体堪称"黄金组合"——Frasers负责本地市场经验与产品设计，Sekisui House提供日本精益建造品质，CSC Land注入资本实力。三大巨头联手竞标马城首个地块（吸引9份标书的历史级抢地），体现了对片区价值的强烈信心。</p>
+</section>
+
+<!-- 5. HOLDING COSTS -->
+<section>
+  <h2><span class="icon">⚖️</span> 5. 持有成本分析</h2>
+  <div class="score-row" style="display:flex; justify-content:space-between; background:#1e293b; padding:10px 16px; border-radius:8px; margin-bottom:14px;">
+    <span style="color:#cbd5e1; font-weight:600;">持有成本评分</span>
+    <span style="color:#fbbf24; letter-spacing:2px;">⭐⭐⭐⭐⭐⭐☆☆☆☆ 6/10</span>
+  </div>
+
+  <h3>持有成本明细（以典型2房单位为例）</h3>
+  <table>
+    <tr><th>费用项目</th><th>估算金额</th><th>说明</th></tr>
+    <tr><td>物业费 (MCST)</td><td>~$400-550/月</td><td>新项目CCR标准，设施维护费用较高</td></tr>
+    <tr><td>物业税 (自住)</td><td>~$2,000-4,000/年</td><td>CCR自住税率基于较高AV估值</td></tr>
+    <tr><td>物业税 (出租)</td><td>~$6,000-10,000/年</td><td>非���住税率10-20%累进</td></tr>
+    <tr><td>房贷利息（假设首套LTV 75%，3.5%利率）</td><td>~$3,200-3,800/月</td><td>取决于具体贷款方案</td></tr>
+    <tr><td>火险</td><td>~$300-500/年</td><td>通常含在MCST</td></tr>
+    <tr><td>BSD（买方印花税）</td><td>~$47,000-54,000</td><td>$1.475M-1.7M房价范围</td></tr>
+  </table>
+
+  <div class="highlight-box">
+    <strong>持有成本小结：</strong>CCR项目的持有成本天然较高——高价=高房贷、高物业税、高BSD。$1.475M起步的2房意��着月供$3,200+（假设75%贷款），对现金流有较高要求。出租的物业税按非自住税率计算，将显著侵蚀租金回报。整体而言，Dunearn House的持有成本在CCR项目中属于正常水平，但比OCR/RCR项目高出不少。适合有一定资金实力的买家。
+  </div>
+</section>
+
+<!-- 6. EXIT LIQUIDITY -->
+<section>
+  <h2><span class="icon">💰</span> 6. 退出流动性</h2>
+  <div class="score-row" style="display:flex; justify-content:space-between; background:#1e293b; padding:10px 16px; border-radius:8px; margin-bottom:14px;">
+    <span style="color:#cbd5e1; font-weight:600;">流动性评分</span>
+    <span style="color:#fbbf24; letter-spacing:2px;">⭐⭐⭐⭐⭐⭐⭐☆☆☆ 7/10</span>
+  </div>
+
+  <h3>交易活跃度分析</h3>
+  <table>
+    <tr><th>指标</th><th>数据</th><th>评价</th></tr>
+    <tr><td>首周售出率</td><td>55% (208/380套)</td><td class="num-green">远超市场预期</td></tr>
+    <tr><td>土地竞标热度</td><td>9份标书（CCR 2018年来最多）</td><td class="num-green">机构信心强烈</td></tr>
+    <tr><td>2房占比</td><td>46% (176套)</td><td class="num-yellow">未来转售/出租竞争可能较大</td></tr>
+    <tr><td>买家池</td><td>SC/PR/外国人均可购买（CCR私人公寓）</td><td class="num-green">无限制</td></tr>
+    <tr><td>SSD窗口</td><td>持满3年后0% SSD</td><td class="num-green">3年以上退出无惩罚</td></tr>
+    <tr><td>可对比转售数据</td><td>无（马城首个项目）</td><td class="num-yellow">价格发现需时间</td></tr>
+  </table>
+
+  <div class="highlight-box gold">
+    <strong>流动性分析：</strong>首周末55%的售出率证明了市场对Dunearn House的高度认可。作为CCR私人公寓，买家池不受限（SC/PR/外国人均可），这一点优于EC。但2房单位占比近半意味着TOP后转售和出租时会有较多同质竞争。另外，项目本身没有同区转售历史可参考，前几年的转售价格将取决于马城规划区的整体推进进度。
+  </div>
+</section>
+
+<!-- 7. LEVERAGE & RISK -->
+<section>
+  <h2><span class="icon">🔐</span> 7. 杠杆与风险</h2>
+  <div class="score-row" style="display:flex; justify-content:space-between; background:#1e293b; padding:10px 16px; border-radius:8px; margin-bottom:14px;">
+    <span style="color:#cbd5e1; font-weight:600;">风险控制评分</span>
+    <span style="color:#fbbf24; letter-spacing:2px;">⭐⭐⭐⭐⭐⭐☆☆☆☆ 6/10</span>
+  </div>
+
+  <h3>房贷与政策</h3>
+  <table>
+    <tr><th>参数</th><th>限制</th><th>影响</th></tr>
+    <tr><td>LTV上限（首套房）</td><td>75%</td><td class="num-green">首付至少25%</td></tr>
+    <tr><td>TDSR</td><td>总负债月供 ≤ 55% 月入</td><td class="num-yellow">高房价下更严格</td></tr>
+    <tr><td>ABSD（SC首套）</td><td>0%</td><td class="num-green">SC首套免额外印花税</td></tr>
+    <tr><td>ABSD（外国人）</td><td>60%</td><td class="num-red">外国人购买成本极高</td></tr>
+    <tr><td>SSD（持满3年以上）</td><td>0%</td><td class="num-green">中期持有无惩罚</td></tr>
+    <tr><td>BSD（$1.475M起）</td><td>约 $47,000</td><td class="num-yellow">一次性费用可观</td></tr>
+  </table>
+
+  <h3>主要风险评估</h3>
+  <div class="pros-cons">
+    <div class="box pros">
+      <h4 style="color:#6ee7b7;">✅ 低风险因素</h4>
+      <ul style="margin:0; padding-left:18px;">
+        <li>三强开发商联合体，交付风险低</li>
+        <li>SC首套无ABSD</li>
+        <li>紧邻第六道现有MRT</li>
+        <li>CCR地段抗跌性强</li>
+        <li>地价安全垫明确</li>
+      </ul>
+    </div>
+    <div class="box cons">
+      <h4 style="color:#fca5a5;">⚠️ 高风险因素</h4>
+      <ul style="margin:0; padding-left:18px;">
+        <li>新规划区执行兑现风险</li>
+        <li>TOP 约2030年（等待期~4年）</li>
+        <li>CRL马城站预计2030s才通车</li>
+        <li>高房价 = 高利率敏感性</li>
+        <li>大户型psf高于周边转售项目</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="highlight-box red">
+    <strong>风险提示：</strong>Dunearn House 的投资逻辑高度依赖"马城规划区的成功兑现"。虽然规划蓝图宏大、且第一幅地块的热烈竞标说明开发商有信心，但规划区从蓝图到成熟社区通常需要10年以上的时间。买家需要对这个时间跨度有心理准备——这更像一个<strong>5-10年的长线持有标的</strong>，而不是短期套利机会。
+  </div>
+</section>
+
+<!-- FINAL SCORECARD -->
+<section>
+  <h2><span class="icon">✅</span> 综合评分卡</h2>
+
+  <table>
+    <tr><th style="width:5%;">权重</th><th style="width:30%;">维度</th><th style="width:12%;">评分</th><th>核心观点</th></tr>
+    <tr>
+      <td style="text-align:center;">20%</td>
+      <td><strong>📍 地段</strong></td>
+      <td style="text-align:center;"><span class="verdict pass">9/10</span></td>
+      <td>D11 CCR核心区，第六道MRT步行4分���，名校环绕，马城规划区龙头项目。</td>
+    </tr>
+    <tr>
+      <td style="text-align:center;">15%</td>
+      <td><strong>💵 租金回报</strong></td>
+      <td style="text-align:center;"><span class="verdict warn">6/10</span></td>
+      <td>毛收益率2.7-3.4%，净收益率约2.0-2.5%。2房供应过剩或压制租金。</td>
+    </tr>
+    <tr>
+      <td style="text-align:center;">20%</td>
+      <td><strong>📈 增值潜力</strong></td>
+      <td style="text-align:center;"><span class="verdict pass">8/10</span></td>
+      <td>先发者优势+地价安全垫15%+CCR稀缺性+马城转型红利。需5年+持有周期。</td>
+    </tr>
+    <tr>
+      <td style="text-align:center;">10%</td>
+      <td><strong>🏗️ 开发商</strong></td>
+      <td style="text-align:center;"><span class="verdict pass">9/10</span></td>
+      <td>Frasers+Sekisui+CSC黄金组合，顶级信誉和交付能力。</td>
+    </tr>
+    <tr>
+      <td style="text-align:center;">10%</td>
+      <td><strong>⚖️ 持有成本</strong></td>
+      <td style="text-align:center;"><span class="verdict warn">6/10</span></td>
+      <td>CCR高价位带来高房贷、高物业税、高BSD。现金流压力较大。</td>
+    </tr>
+    <tr>
+      <td style="text-align:center;">15%</td>
+      <td><strong>💰 退出流动性</strong></td>
+      <td style="text-align:center;"><span class="verdict warn">7/10</span></td>
+      <td>首周55%售出率证明需求强劲。2房同质化是转售隐患。</td>
+    </tr>
+    <tr>
+      <td style="text-align:center;">10%</td>
+      <td><strong>🔐 风险控制</strong></td>
+      <td style="text-align:center;"><span class="verdict warn">6/10</span></td>
+      <td>规划区兑现周期长、TOP约2030年、利率敏感度高。</td>
+    </tr>
+  </table>
+
+  <div class="total-score">
+    <div class="score-circle high">7.5 / 10</div>
+    <div class="verdict-text">综合评级：<strong style="color:#6ee7b7;">✅ 推荐 — 适合长线价值投资者</strong></div>
+    <p style="color:#94a3b8; margin-top:6px; font-size:0.88rem;">加权评分 = (9×20% + 6×15% + 8×20% + 9×10% + 6×10% + 7×15% + 6×10%) = <strong>7.45 → 7.5 / 10</strong></p>
+  </div>
+</section>
+
+<!-- CONCLUSION -->
+<section>
+  <h2><span class="icon">🎯</span> 最终结论</h2>
+
+  <div style="background: linear-gradient(135deg, #1e293b, #0f172a); border: 1px solid #334155; border-radius: 12px; padding: 24px; margin: 16px 0;">
+    <h3 style="color:#fbbf24; margin-top:0;">巴迪·房产投资诊断 🐾</h3>
+
+    <p><strong>Dunearn House 是2026年新加坡新盘中"长线增值型"的第一梯队选择。</strong></p>
+
+    <p style="margin-top:12px;"><strong>🔹 自住买家（尤其家庭）：</strong>⭐⭐⭐⭐⭐</p>
+    <ul>
+      <li>CCR D11黄金地段，未来10-15年将变身成熟社区</li>
+      <li>名校云集——南洋女中、MGS、RGPS都是顶尖学府</li>
+      <li>步行到第六道MRT 4分钟，通勤核心商业区便利</li>
+      <li>项目定位中高端，3房4房户型设计合理</li>
+      <li>⚠️ 但需要接受：规划区成熟配套需要时间兑现（3-5年）</li>
+    </ul>
+
+    <p style="margin-top:12px;"><strong>🔹 长线投资者（5-10年持有）：</strong>⭐⭐⭐⭐☆</p>
+    <ul>
+      <li>核心逻辑：地价安全垫（相邻地块+15%）+ 规划区兑现红利</li>
+      <li>2房起步$1.475M，是进入CCR新盘的最低门槛</li>
+      <li>CCR私人公寓无买家池限制，流动性优于EC</li>
+      <li>租金回报一般（净2.0-2.5%），需做好现金流规划</li>
+      <li><strong>最大催化剂：</strong>马城规划区的整体兑现 + CRL马城站通车</li>
+    </ul>
+
+    <p style="margin-top:12px;"><strong>🔸 短线投机者（3年内套现）：</strong>⭐⭐☆☆☆</p>
+    <ul>
+      <li>SSD在3年内出售需缴4-12%税，侵蚀利润</li>
+      <li>规划区红利需要时间释放，短期缺乏催化剂</li>
+      <li>建议：不要用短线思维买入这个项目</li>
+    </ul>
+
+    <div class="highlight-box gold" style="margin-top:14px;">
+      <strong>一句话总结：</strong>Dunearn House 是一张进入武吉知马马城这个"未来核心社区"的<strong>首班车票</strong>——地价安全垫明确、开发商阵容顶级、地段稀缺性毋庸置疑。但它不是快进快出的标的。如果你认同新加坡CCR核心土地的长期稀缺价值，愿意给马城规划区5-10年的兑现时间，这将是一笔值得下注的投资。🐾
+    </div>
+  </div>
+</section>
+
+<div class="disclaimer">
+  <strong>免责声明：</strong>本报告仅供信息参考和教育用途，不构成任何房产购买或投资建议。所有数据来源于 WhichCondo、EdgeProp、99.co、URA REALIS、ERA 等公开渠道，可能存在延迟。房产市场受利率、政府政策（ABSD/SSD/TDSR）、经济周期等多重因素影响。交易前请咨询持牌房产中介和律师。
+</div>
+
+<div class="footer">
+  报告由 巴迪（🐾 WorkBuddy）自动生成 · 数据来源：WhichCondo / EdgeProp / 99.co / URA / ERA · 房产投资七维框架 · 2026-07-27
+</div>
+
+</div><!-- /container -->
+
+</body>
+</html>
