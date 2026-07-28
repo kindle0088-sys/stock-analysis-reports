@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>创业板 ETF 多维度深度对比</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+  :root {
+    --page-bg: #0f172a; --card-bg: #1e293b; --text-main: #e2e8f0; --text-dim: #94a3b8;
+    --border-color: #334155; --accent: #38bdf8; --red: #ef4444; --green: #22c55e;
+    --header-start: #0c4a6e; --header-end: #0369a1;
+    --rank-1: #fbbf24; --rank-2: #a78bfa; --rank-3: #f97316;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    background: var(--page-bg); color: var(--text-main); line-height: 1.6; padding: 24px 16px;
+  }
+  .wrapper { max-width: 1100px; margin: 0 auto; }
+  .page-header {
+    background: linear-gradient(135deg, var(--header-start) 0%, var(--header-end) 100%);
+    border-radius: 12px; padding: 24px; margin-bottom: 16px;
+  }
+  .page-header h1 { font-size: 1.4rem; font-weight: 700; }
+  .page-header .subtitle { opacity: 0.85; font-size: 0.85rem; margin-top: 6px; }
+  
+  .summary-box {
+    background: var(--card-bg); border: 1px solid var(--border-color); border-left: 4px solid var(--accent);
+    border-radius: 10px; padding: 16px 18px; margin-bottom: 16px;
+  }
+  .summary-box h2 { font-size: 0.95rem; color: var(--accent); margin-bottom: 8px; }
+  .summary-box ul { padding-left: 1.1em; font-size: 0.9rem; }
+  .summary-box li { margin: 4px 0; }
+  
+  .section-title {
+    font-size: 1.05rem; font-weight: 600; margin: 28px 0 12px;
+    padding-bottom: 6px; border-bottom: 2px solid var(--accent); color: var(--accent);
+  }
+  .group-title {
+    font-size: 0.95rem; font-weight: 600; margin: 20px 0 10px;
+    padding: 8px 12px; background: #1e3a5f; border-radius: 6px; color: #7dd3fc;
+  }
+  
+  .info-card {
+    background: var(--card-bg); border: 1px solid var(--border-color);
+    border-radius: 10px; padding: 16px 18px; margin-bottom: 12px;
+  }
+  .info-card.pad-0 { padding: 0; overflow-x: auto; }
+  
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--border-color); }
+  th { color: var(--text-dim); font-weight: 500; background: #0f172a; }
+  td.highlight { font-weight: 600; }
+  td.rank1 { color: var(--rank-1); font-weight: 700; }
+  td.rank2 { color: var(--rank-2); font-weight: 600; }
+  td.rank3 { color: var(--rank-3); font-weight: 600; }
+  
+  .chart-container { width: 100%; height: 380px; }
+  
+  .review-card {
+    background: var(--card-bg); border: 1px solid var(--border-color);
+    border-radius: 10px; padding: 16px 18px; margin-bottom: 10px;
+    border-left: 3px solid var(--accent);
+  }
+  .review-card h4 { font-size: 0.95rem; margin-bottom: 6px; }
+  .review-card .tag {
+    display: inline-block; font-size: 0.75rem; padding: 2px 8px; border-radius: 4px;
+    margin-right: 4px; background: #1e3a5f; color: #7dd3fc;
+  }
+  .review-card .tag.gold { background: #78350f; color: #fbbf24; }
+  .review-card p { font-size: 0.85rem; color: #cbd5e1; margin-top: 6px; }
+  
+  .badge { display: inline-block; font-size: 0.7rem; padding: 1px 6px; border-radius: 3px; margin-left: 4px; }
+  .badge.best { background: #14532d; color: #4ade80; }
+  .badge.cheap { background: #1e3a5f; color: #38bdf8; }
+  
+  .rise { color: var(--red); } .fall { color: var(--green); }
+  
+  .page-footer {
+    margin-top: 28px; padding-top: 12px; border-top: 1px solid var(--border-color);
+    color: var(--text-dim); font-size: 0.75rem; text-align: center;
+  }
+  
+  .score-bar { display: inline-block; height: 6px; border-radius: 3px; background: #334155; }
+  .score-fill { display: block; height: 6px; border-radius: 3px; background: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+<div class="page-header">
+  <h1>创业板 ETF 多维度深度对比</h1>
+  <div class="subtitle">涉及 8 只创业板宽基 ETF · 数据截至：2026-07-27（收盘价）</div>
+</div>
+
+<!-- ===== 核心发现 ===== -->
+<div class="summary-box">
+  <h2>核心发现</h2>
+  <ul>
+    <li><strong>创业板指组（跟踪 sz399006）：</strong>5 只 ETF 持仓结构高度一致（完全复制），差异主要来自规模、流动性和费率。易方达 159915 以 601 亿规模遥遥领先，流动性和综合评分最高。</li>
+    <li><strong>创业板 50 组（跟踪 sz399673）：</strong>前 10 大持仓占比超 80%，弹性更大但风险也更集中。华安 159949（234 亿）是唯一有规模效应的创业板 50 ETF。</li>
+    <li><strong>今年以来表现：</strong>所有 ETF 近 1 月均回撤约 15%，但 YTD 仍录得 6-8% 正收益，近 1 年涨幅 42-56%。</li>
+    <li><strong>费率分化：</strong>华安 159949 综合费率 0.60%（管理费 0.50%+托管 0.10%），其他 7 只均为 0.20%，费率差距可达 3 倍。</li>
+  </ul>
+</div>
+
+<!-- ===== 第一组：创业板指 ETF ===== -->
+<div class="group-title">第一组 · 创业板指 ETF（跟踪 sz399006 创业板指）</div>
+
+<h2 class="section-title">(A) 关键指标一览</h2>
+<div class="info-card pad-0">
+<table>
+  <thead>
+    <tr>
+      <th>代码</th><th>名称</th><th>规模(亿元)</th><th>管理费+托管</th>
+      <th>近1月</th><th>近3月</th><th>YTD</th><th>近1年</th><th>近3年</th>
+      <th>年化波动</th><th>1年最大回撤</th><th>日均成交(亿)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>sz159915</td><td>创业板ETF易方达</td>
+      <td class="rank1">601</td><td>0.15+0.05</td>
+      <td class="fall">-14.8%</td><td class="rise">+0.3%</td><td class="rise">+6.9%</td>
+      <td class="rise">+49.8%</td><td class="rise">+64.8%</td>
+      <td>36.9%</td><td>-21.2%</td><td class="rank1">67.4</td>
+    </tr>
+    <tr>
+      <td>sz159952</td><td>创业板ETF广发</td>
+      <td>103</td><td>0.15+0.05</td>
+      <td class="fall">-14.8%</td><td class="rise">-</td><td class="rise">+6.5%</td>
+      <td class="rise">+48.3%</td><td class="rise">+64.4%</td>
+      <td>36.95%</td><td>-21.5%</td><td class="rank2">9.9</td>
+    </tr>
+    <tr>
+      <td>sz159977</td><td>创业板ETF天弘</td>
+      <td>63</td><td>0.15+0.05</td>
+      <td class="fall">-15.0%</td><td class="fall">-0.5%</td><td class="rise">+6.3%</td>
+      <td class="rise">+48.4%</td><td class="rise">+63.4%</td>
+      <td>35.7%</td><td class="rank1">-21.0%</td><td>2.6</td>
+    </tr>
+    <tr>
+      <td>sz159957</td><td>创业板ETF华夏</td>
+      <td>27</td><td>0.15+0.05</td>
+      <td class="fall">-14.9%</td><td class="rise">+0.2%</td><td class="rise">+6.5%</td>
+      <td class="rise">+48.7%</td><td class="rank1">+65.0%</td>
+      <td>36.5%</td><td>-21.1%</td><td>2.6</td>
+    </tr>
+    <tr>
+      <td>sz159971</td><td>创业板ETF富国</td>
+      <td>19</td><td>0.15+0.05</td>
+      <td class="fall">-14.5%</td><td class="rise">+0.6%</td><td>+6.4%</td>
+      <td class="rise">+48.2%</td><td class="rise">+63.4%</td>
+      <td>49.0%</td><td>-25.0%</td><td>1.7</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2 class="section-title">(B) 前十大重仓股对比</h2>
+<div class="info-card pad-0">
+<table>
+  <thead><tr><th>排名</th><th>159915 易方达</th><th>159952 广发</th><th>159977 天弘</th><th>159957 华夏</th><th>159971 富国</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>宁德时代 16.4%</td><td>宁德时代 17.0%</td><td>宁德时代 16.9%</td><td>宁德时代 16.7%</td><td>宁德时代 17.3%</td></tr>
+    <tr><td>2</td><td>中际旭创 14.9%</td><td>中际旭创 14.5%</td><td>中际旭创 14.4%</td><td>中际旭创 13.7%</td><td>中际旭创 12.9%</td></tr>
+    <tr><td>3</td><td>新易盛 9.5%</td><td>新易盛 9.2%</td><td>新易盛 9.2%</td><td>新易盛 10.4%</td><td>新易盛 9.8%</td></tr>
+    <tr><td>4</td><td>东方财富 4.1%</td><td>东方财富 4.1%</td><td>东方财富 4.1%</td><td>东方财富 4.0%</td><td>东方财富 4.2%</td></tr>
+    <tr><td>5</td><td>阳光电源 2.9%</td><td>阳光电源 2.8%</td><td>阳光电源 2.8%</td><td>长川科技 2.6%</td><td>阳光电源 2.8%</td></tr>
+    <tr><td>6</td><td>胜宏科技 2.6%</td><td>胜宏科技 2.6%</td><td>胜宏科技 2.5%</td><td>阳光电源 2.5%</td><td>天孚通信 2.5%</td></tr>
+    <tr><td>7</td><td>长川科技 2.6%</td><td>长川科技 2.5%</td><td>长川科技 2.5%</td><td>三环集团 2.2%</td><td>长川科技 2.5%</td></tr>
+    <tr><td>8</td><td>天孚通信 2.3%</td><td>天孚通信 2.3%</td><td>天孚通信 2.2%</td><td>胜宏科技 2.0%</td><td>三环集团 2.1%</td></tr>
+    <tr><td>9</td><td>汇川技术 2.0%</td><td>汇川技术 2.0%</td><td>汇川技术 2.0%</td><td>汇川技术 1.8%</td><td>汇川技术 2.0%</td></tr>
+    <tr><td>10</td><td>三环集团 2.0%</td><td>三环集团 2.0%</td><td>三环集团 1.9%</td><td>天孚通信 1.8%</td><td>胜宏科技 1.9%</td></tr>
+    <tr><td>前10占比</td><td><strong>59.3%</strong></td><td><strong>58.3%</strong></td><td><strong>58.2%</strong></td><td><strong>57.2%</strong></td><td><strong>57.3%</strong></td></tr>
+  </tbody>
+</table>
+</div>
+<div class="info-card" style="font-size:0.8rem;color:var(--text-dim);">持仓数据来自最新季报，非实时PCF。5只ETF均完全复制创业板指，持仓高度一致，差异主要来自微调时机和尾差。</div>
+
+<h2 class="section-title">(C) 多周期回报对比</h2>
+<div class="info-card"><div id="returnChartCy" class="chart-container"></div></div>
+
+<h2 class="section-title">(D) 7维能力雷达图</h2>
+<div class="info-card"><div id="radarCy" class="chart-container"></div></div>
+
+<h2 class="section-title">(E) 综合评分排名</h2>
+<div class="info-card pad-0">
+<table>
+  <thead><tr><th>排名</th><th>代码</th><th>名称</th><th>总分</th><th>规模</th><th>流动性</th><th>费率</th><th>收益</th><th>风险</th><th>成熟度</th><th>分散度</th></tr></thead>
+  <tbody>
+    <tr><td class="rank1">🥇 1</td><td>sz159915</td><td>创业板ETF易方达</td><td class="rank1">7.80</td><td>10.0</td><td>10.0</td><td>5.0</td><td>9.3</td><td>9.4</td><td>8.8</td><td>1.0</td></tr>
+    <tr><td class="rank2">🥈 2</td><td>sz159957</td><td>创业板ETF华夏</td><td class="rank2">5.51</td><td>1.1</td><td>1.1</td><td>5.0</td><td>6.9</td><td>9.6</td><td>3.6</td><td>10.0</td></tr>
+    <tr><td class="rank3">🥉 3</td><td>sz159952</td><td>创业板ETF广发</td><td class="rank3">4.29</td><td>2.3</td><td>2.1</td><td>5.0</td><td>4.0</td><td>9.1</td><td>6.8</td><td>1.9</td></tr>
+    <tr><td>4</td><td>sz159977</td><td>创业板ETF天弘</td><td>3.37</td><td>1.7</td><td>1.1</td><td>5.0</td><td>1.7</td><td>10.0</td><td>1.0</td><td>3.4</td></tr>
+    <tr><td>5</td><td>sz159971</td><td>创业板ETF富国</td><td>2.84</td><td>1.0</td><td>1.0</td><td>5.0</td><td>1.0</td><td>1.0</td><td>3.2</td><td>9.2</td></tr>
+  </tbody>
+</table>
+</div>
+<div class="info-card" style="font-size:0.8rem;color:var(--text-dim);">评分权重：规模15% / 流动性15% / 费率10% / 收益(1年+3年各半)20% / 风险(回撤+波动各半)15% / 成熟度(年限+基金经理经验各半)10% / 分散度15%。每项1-10分，同组内归一化。</div>
+
+<h2 class="section-title">(F) 各 ETF 逐一点评</h2>
+
+<div class="review-card" style="border-left-color:#fbbf24;">
+  <h4>🥇 创业板ETF易方达 (sz159915) <span class="tag gold">综合最佳</span><span class="tag">规模王</span></h4>
+  <p><strong>评分：7.80</strong> — 601 亿规模是第二名广发的近 6 倍，日均成交 67 亿，流动性碾压同级。管理费仅 0.15%+托管 0.05%，成立 14.9 年、基金经理经验 9-10 年，成熟度无可挑剔。近 1 年回报 49.8%、3 年 64.8%，收益端表现稳健。唯一的弱项是前 10 大持仓占比 59.3%（创业板指集中度使然，非基金个体问题）。<strong>如果你只买一只创业板宽基，就是它了。</strong></p>
+</div>
+
+<div class="review-card" style="border-left-color:#a78bfa;">
+  <h4>🥈 创业板ETF华夏 (sz159957) <span class="tag gold">分散度最佳</span></h4>
+  <p><strong>评分：5.51</strong> — 规模仅 27 亿、日均成交 2.6 亿，流动性不如易方达，但综合评分排第二得益于两点：前 10 大持仓占比 68.95%（同组最低，持股更分散），以及近 3 年回报 65.0% 排名第一。基金经理严筱娴管理经验 5 年，属于中生代。适合看重持仓分散度的投资者。</p>
+</div>
+
+<div class="review-card" style="border-left-color:#f97316;">
+  <h4>🥉 创业板ETF广发 (sz159952) <span class="tag">流动性亚军</span></h4>
+  <p><strong>评分：4.29</strong> — 规模 103 亿排第二，日均成交近 10 亿，是剔除易方达后流动性最好的选择。管理费同样 0.20% 低廉，基金经理刘杰经验 12 年为同组最长，运作稳健。收益端近 1 年 48.3% 略低于均值，但差距在 1-2% 以内。适合需要一定流动性但又不想追最大规模的投资者。</p>
+</div>
+
+<div class="review-card">
+  <h4>创业ETF天弘 (sz159977) <span class="tag">风险最低</span></h4>
+  <p><strong>评分：3.37</strong> — 规模 63 亿居中，但日均成交仅 2.6 亿（和华夏类似偏低）。年化波动率 35.7% 为全组最低，1 年最大回撤 -21.0% 也是全组最小，风险控制方面表现突出。但基金经理洪明华任职仅 1 年，经验较少。适合保守型投资者。</p>
+</div>
+
+<div class="review-card">
+  <h4>创业板ETF富国 (sz159971) <span class="tag">高性价比</span></h4>
+  <p><strong>评分：2.84</strong> — 规模 19 亿为全组最小，日均成交 1.7 亿流动性偏弱。年化波动率 49% 异常偏高且 1 年最大回撤 -25% 最深，可能与数据计算或跟踪误差有关。但基金经理曹璐迪经验 6 年，费率和持仓与其他一致。规模小导致打分偏低，实际跟踪效果差异不大。</p>
+</div>
+
+<!-- ===== 第二组：创业板50 ETF ===== -->
+<div class="group-title" style="margin-top:36px;">第二组 · 创业板50 ETF（跟踪 sz399673 创业板50）</div>
+
+<h2 class="section-title">(A) 关键指标一览</h2>
+<div class="info-card pad-0">
+<table>
+  <thead>
+    <tr><th>代码</th><th>名称</th><th>规模(亿元)</th><th>管理费+托管</th><th>近1月</th><th>YTD</th><th>近1年</th><th>近3年</th><th>年化波动</th><th>1年最大回撤</th><th>日均成交(亿)</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>sz159949</td><td>创业板50ETF华安</td>
+      <td class="rank1">234</td><td>0.50+0.10</td>
+      <td class="fall">-15.4%</td><td class="rise">+6.5%</td><td class="rise">+56.0%</td><td class="rise">+79.9%</td><td>40.2%</td><td>-22.5%</td><td class="rank1">26.5</td>
+    </tr>
+    <tr>
+      <td>sz159369</td><td>创业板50ETF易方达</td>
+      <td>5</td><td>0.15+0.05</td>
+      <td class="fall">-15.0%</td><td class="rise">+8.0%</td><td class="rise">+42.0%</td><td class="rise">+42.0%</td><td>37.7%</td><td>-21.7%</td><td>0.26</td>
+    </tr>
+    <tr>
+      <td>sz159371</td><td>创业板50ETF富国</td>
+      <td>3</td><td>0.15+0.05</td>
+      <td class="fall">-15.1%</td><td class="rise">+7.0%</td><td class="rise">+56.5%</td><td class="rise">+72.1%</td><td>38.6%</td><td>-22.3%</td><td>0.06</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2 class="section-title">(B) 前十大重仓股对比</h2>
+<div class="info-card pad-0">
+<table>
+  <thead><tr><th>排名</th><th>159949 华安</th><th>159369 易方达</th><th>159371 富国</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>宁德时代 20.7%</td><td>宁德时代 18.8%</td><td>宁德时代 19.7%</td></tr>
+    <tr><td>2</td><td>中际旭创 18.9%</td><td>中际旭创 14.7%</td><td>中际旭创 18.0%</td></tr>
+    <tr><td>3</td><td>新易盛 11.4%</td><td>新易盛 13.3%</td><td>新易盛 12.3%</td></tr>
+    <tr><td>4</td><td>东方财富 5.0%</td><td>东方财富 5.3%</td><td>东方财富 4.9%</td></tr>
+    <tr><td>5</td><td>长川科技 3.6%</td><td>胜宏科技 3.2%</td><td>阳光电源 3.3%</td></tr>
+    <tr><td>6</td><td>阳光电源 3.4%</td><td>阳光电源 3.2%</td><td>胜宏科技 2.6%</td></tr>
+    <tr><td>7</td><td>胜宏科技 2.8%</td><td>天孚通信 2.9%</td><td>长川科技 2.6%</td></tr>
+    <tr><td>8</td><td>汇川技术 2.5%</td><td>三环集团 2.8%</td><td>三环集团 2.6%</td></tr>
+    <tr><td>9</td><td>天孚通信 2.4%</td><td>江波龙 2.6%</td><td>汇川技术 2.4%</td></tr>
+    <tr><td>10</td><td>三环集团 2.4%</td><td>汇川技术 2.5%</td><td>天孚通信 2.3%</td></tr>
+    <tr><td>前10占比</td><td><strong>73.1%</strong></td><td><strong>68.9%</strong></td><td><strong>70.7%</strong></td></tr>
+  </tbody>
+</table>
+</div>
+<div class="info-card" style="font-size:0.8rem;color:var(--text-dim);">创业板50仅选50只成份股，前10大占比更高（71-86%），宁德时代+中际旭创+新易盛三只合计已超45%，集中度风险显著高于创业板指。</div>
+
+<h2 class="section-title">(C) 多周期回报 & 雷达</h2>
+<div class="info-card"><div id="returnChartCy50" class="chart-container"></div></div>
+<div class="info-card"><div id="radarCy50" class="chart-container"></div></div>
+
+<h2 class="section-title">(D) 综合评分排名</h2>
+<div class="info-card pad-0">
+<table>
+  <thead><tr><th>排名</th><th>代码</th><th>名称</th><th>总分</th><th>规模</th><th>流动性</th><th>费率</th><th>收益</th><th>风险</th><th>成熟度</th><th>分散度</th></tr></thead>
+  <tbody>
+    <tr><td class="rank1">🥇 1</td><td>sz159949</td><td>创业板50ETF华安</td><td class="rank1">6.37</td><td>10.0</td><td>10.0</td><td>1.0</td><td>9.9</td><td>1.0</td><td>10.0</td><td>1.0</td></tr>
+    <tr><td class="rank2">🥈 2</td><td>sz159371</td><td>创业板50ETF富国</td><td class="rank2">5.36</td><td>1.0</td><td>1.0</td><td>10.0</td><td>9.1</td><td>5.0</td><td>1.8</td><td>8.8</td></tr>
+    <tr><td class="rank3">🥉 3</td><td>sz159369</td><td>创业板50ETF易方达</td><td class="rank3">4.62</td><td>1.1</td><td>1.1</td><td>10.0</td><td>1.0</td><td>10.0</td><td>1.0</td><td>10.0</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 class="section-title">(E) 各 ETF 逐一点评</h2>
+
+<div class="review-card" style="border-left-color:#fbbf24;">
+  <h4>🥇 创业板50ETF华安 (sz159949) <span class="tag gold">创业板50首选</span></h4>
+  <p><strong>评分：6.37</strong> — 规模 234 亿在创业板50中一骑绝尘，日均成交 26.5 亿流动性极佳。基金经理许之彦从业 19 年，是业内最资深的指数基金经理之一。近 1 年回报 56%、3 年 80%，弹性突出。但综合费率 0.60%（管理费 0.50%，是同组其他基金的 3 倍），且前 10 大持仓占比达 87%，集中度风险最高。<strong>适合看好创业板核心资产、对费率不敏感的投资者。</strong></p>
+</div>
+
+<div class="review-card">
+  <h4>🥈 创业板50ETF富国 (sz159371) <span class="tag">费率最低</span><span class="tag">收益突出</span></h4>
+  <p><strong>评分：5.36</strong> — 2025年1月成立的次新 ETF，规模仅 3 亿。最大优势是费率仅 0.20%（华安的 1/3），近 1 年回报 56.5% 甚至略超华安。但日均成交仅 550 万，大额买卖冲击成本高。适合长期持有型小额买入。</p>
+</div>
+
+<div class="review-card">
+  <h4>🥉 创业板50ETF易方达 (sz159369) <span class="tag">费率最低</span><span class="tag">次新</span></h4>
+  <p><strong>评分：4.62</strong> — 2025年8月成立的次新 ETF，规模 5 亿。费率 0.20%，持仓分散度稍好于同级。但成立不到 1 年数据有限，近 1 年回报 42% 低于同组，基金经理经验 2 年。还需时间观察。</p>
+</div>
+
+<!-- ===== 总结对照 ===== -->
+<h2 class="section-title">(G) 创业板指 vs 创业板50 横向对比</h2>
+<div class="info-card pad-0">
+<table>
+  <thead><tr><th>对比维度</th><th>创业板指 (创业板ETF)</th><th>创业板50</th></tr></thead>
+  <tbody>
+    <tr><td>成份股数量</td><td>100 只</td><td>50 只</td></tr>
+    <tr><td>前3大集中度</td><td>宁德 16%+中际 14%+新易盛 10%≈40%</td><td>宁德 20%+中际 19%+新易盛 11%≈50%</td></tr>
+    <tr><td>近1年回报</td><td>+48~50%</td><td>+56%</td></tr>
+    <tr><td>近3年回报</td><td>+63~65%</td><td>+72~80%</td></tr>
+    <tr><td>年化波动</td><td>36~37%</td><td>38~40%</td></tr>
+    <tr><td>代表ETF</td><td>易方达159915 (601亿/0.20%)</td><td>华安159949 (234亿/0.60%)</td></tr>
+    <tr><td>适合场景</td><td>宽基配置、定投底仓</td><td>看好头部集中、进攻型配置</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="page-footer">
+  <p>以上分析基于公开数据整理，仅供参考，不构成投资建议。基金过往业绩不代表未来表现。</p>
+  <p>持仓/PCF数据日期：2026年二季度季报 · 行情与净值日期：2026-07-27</p>
+  <p>数据来源：腾讯自选股 Westock 数据接口</p>
+</div>
+</div>
+
+<script>
+if (typeof echarts === 'undefined') {
+  document.querySelectorAll('.chart-container').forEach(function(el) {
+    el.innerHTML = '<div style="padding:20px;color:#ef4444;font-size:13px">图表库未加载，请检查网络。</div>';
+  });
+} else {
+  // (C) 创业板指 - 多周期回报
+  echarts.init(document.getElementById('returnChartCy')).setOption({
+    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+    legend: { data: ['近1年','近3年','YTD'], textStyle: { color: '#94a3b8' } },
+    xAxis: { type: 'category', data: ['易方达915','广发952','天弘977','华夏957','富国971'], axisLabel: { color: '#94a3b8' } },
+    yAxis: { type: 'value', name: '%', nameTextStyle: { color: '#94a3b8' }, axisLabel: { color: '#94a3b8' } },
+    grid: { bottom: 40 },
+    series: [
+      { name: '近1年', type: 'bar', data: [49.79, 48.29, 48.37, 48.67, 48.18], itemStyle: { color: '#3b82f6' } },
+      { name: '近3年', type: 'bar', data: [64.77, 64.35, 63.43, 65.01, 63.38], itemStyle: { color: '#8b5cf6' } },
+      { name: 'YTD', type: 'bar', data: [6.92, 6.52, 6.31, 6.54, 6.38], itemStyle: { color: '#22c55e' } }
+    ]
+  });
+
+  // (D) 创业板指 - 7维雷达
+  echarts.init(document.getElementById('radarCy')).setOption({
+    legend: { data: ['易方达915','广发952','天弘977','华夏957','富国971'], textStyle: { color: '#94a3b8' }, bottom: 0 },
+    radar: {
+      indicator: [
+        { name: '规模', max: 10 }, { name: '流动性', max: 10 }, { name: '费率(反向)', max: 10 },
+        { name: '收益', max: 10 }, { name: '风险(反向)', max: 10 }, { name: '成熟度', max: 10 }, { name: '分散度', max: 10 }
+      ],
+      axisName: { color: '#94a3b8' },
+      splitArea: { areaStyle: { color: ['rgba(56,189,248,0.02)','rgba(56,189,248,0.04)'] } }
+    },
+    series: [{
+      type: 'radar', symbol: 'none', lineStyle: { width: 1.5 },
+      data: [
+        { name: '易方达915', value: [10.0, 10.0, 5.0, 9.3, 9.4, 8.8, 1.0], lineStyle: { color: '#fbbf24' }, areaStyle: { color: 'rgba(251,191,36,0.15)' } },
+        { name: '广发952', value: [2.3, 2.1, 5.0, 4.0, 9.1, 6.8, 1.9], lineStyle: { color: '#f97316' }, areaStyle: { color: 'rgba(249,115,22,0.15)' } },
+        { name: '天弘977', value: [1.7, 1.1, 5.0, 1.7, 10.0, 1.0, 3.4], lineStyle: { color: '#22c55e' }, areaStyle: { color: 'rgba(34,197,94,0.15)' } },
+        { name: '华夏957', value: [1.1, 1.1, 5.0, 6.9, 9.6, 3.6, 10.0], lineStyle: { color: '#a78bfa' }, areaStyle: { color: 'rgba(167,139,250,0.15)' } },
+        { name: '富国971', value: [1.0, 1.0, 5.0, 1.0, 1.0, 3.2, 9.2], lineStyle: { color: '#38bdf8' }, areaStyle: { color: 'rgba(56,189,248,0.15)' } }
+      ]
+    }]
+  });
+
+  // 创业板50 - 多周期回报
+  echarts.init(document.getElementById('returnChartCy50')).setOption({
+    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+    legend: { data: ['近1年','近3年','YTD'], textStyle: { color: '#94a3b8' } },
+    xAxis: { type: 'category', data: ['华安949','易方达369','富国371'], axisLabel: { color: '#94a3b8' } },
+    yAxis: { type: 'value', name: '%', nameTextStyle: { color: '#94a3b8' }, axisLabel: { color: '#94a3b8' } },
+    grid: { bottom: 40 },
+    series: [
+      { name: '近1年', type: 'bar', data: [56.03, 42.02, 56.49], itemStyle: { color: '#3b82f6' } },
+      { name: '近3年', type: 'bar', data: [79.94, 42.02, 72.05], itemStyle: { color: '#8b5cf6' } },
+      { name: 'YTD', type: 'bar', data: [6.51, 7.99, 7.04], itemStyle: { color: '#22c55e' } }
+    ]
+  });
+
+  // 创业板50 - 7维雷达
+  echarts.init(document.getElementById('radarCy50')).setOption({
+    legend: { data: ['华安949','易方达369','富国371'], textStyle: { color: '#94a3b8' }, bottom: 0 },
+    radar: {
+      indicator: [
+        { name: '规模', max: 10 }, { name: '流动性', max: 10 }, { name: '费率(反向)', max: 10 },
+        { name: '收益', max: 10 }, { name: '风险(反向)', max: 10 }, { name: '成熟度', max: 10 }, { name: '分散度', max: 10 }
+      ],
+      axisName: { color: '#94a3b8' },
+      splitArea: { areaStyle: { color: ['rgba(56,189,248,0.02)','rgba(56,189,248,0.04)'] } }
+    },
+    series: [{
+      type: 'radar', symbol: 'none', lineStyle: { width: 1.5 },
+      data: [
+        { name: '华安949', value: [10.0, 10.0, 1.0, 9.9, 1.0, 10.0, 1.0], lineStyle: { color: '#fbbf24' }, areaStyle: { color: 'rgba(251,191,36,0.15)' } },
+        { name: '易方达369', value: [1.1, 1.1, 10.0, 1.0, 10.0, 1.0, 10.0], lineStyle: { color: '#22c55e' }, areaStyle: { color: 'rgba(34,197,94,0.15)' } },
+        { name: '富国371', value: [1.0, 1.0, 10.0, 9.1, 5.0, 1.8, 8.8], lineStyle: { color: '#a78bfa' }, areaStyle: { color: 'rgba(167,139,250,0.15)' } }
+      ]
+    }]
+  });
+}
+</script>
+</body>
+</html>
