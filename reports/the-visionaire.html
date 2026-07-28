@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Visionaire — 新加坡 EC 投资研报</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;background:#0b1120;color:#e2e8f0;line-height:1.75;min-height:100vh}
+.container{max-width:880px;margin:0 auto;padding:48px 24px 80px}
+a{text-decoration:none;color:#60a5fa}
+/* Hero */
+.hero{text-align:center;padding:48px 0 40px;border-bottom:1px solid #1e293b;margin-bottom:40px}
+.hero-badge{display:inline-block;background:#1e293b;color:#fbbf24;font-size:12px;font-weight:600;padding:4px 14px;border-radius:20px;margin-bottom:16px;letter-spacing:.5px}
+.hero h1{font-size:36px;font-weight:800;color:#fff;margin-bottom:8px}
+.hero .address{color:#94a3b8;font-size:15px;margin-bottom:20px}
+.kpi-row{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-top:20px}
+.kpi{background:#1e293b;border-radius:12px;padding:16px 24px;text-align:center;min-width:140px}
+.kpi .val{font-size:26px;font-weight:700;color:#fbbf24}
+.kpi .lbl{font-size:12px;color:#94a3b8;margin-top:4px}
+/* Sections */
+section{margin-bottom:48px}
+.section-title{font-size:22px;font-weight:700;color:#fbbf24;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.highlight-box{background:linear-gradient(135deg,#1e293b 0%,#0f172a 100%);border-left:4px solid #fbbf24;border-radius:0 12px 12px 0;padding:20px 24px;margin:20px 0}
+.verdict{background:linear-gradient(135deg,#065f46 0%,#064e3b 100%);border-radius:12px;padding:24px 28px;margin:24px 0}
+.verdict.warn{background:linear-gradient(135deg,#7c2d12 0%,#662410 100%)}
+.summary-box{background:#1e293b;border-radius:12px;padding:24px 28px;margin:20px 0}
+/* Tables */
+table{width:100%;border-collapse:collapse;margin:16px 0}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid #1e293b;font-size:14px}
+th{color:#fbbf24;font-weight:600;background:#0f172a}
+td{color:#cbd5e1}
+.num-green{color:#22c55e;font-weight:600}
+.num-red{color:#ef4444;font-weight:600}
+/* Score cards */
+.score-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;margin:20px 0}
+.score-card{background:#1e293b;border-radius:12px;padding:20px;position:relative;overflow:hidden}
+.score-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:#fbbf24}
+.score-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.score-name{font-weight:600;font-size:15px;color:#f1f5f9}
+.score-badge{font-size:20px;font-weight:700;color:#fbbf24}
+.score-bar-bg{height:8px;background:#334155;border-radius:4px;margin-top:8px;overflow:hidden}
+.score-bar{height:100%;border-radius:4px;transition:width .6s ease}
+.bar-high{background:linear-gradient(90deg,#22c55e,#4ade80)}
+.bar-mid{background:linear-gradient(90deg,#eab308,#facc15)}
+.bar-low{background:linear-gradient(90deg,#ef4444,#f87171)}
+.score-desc{font-size:13px;color:#94a3b8;margin-top:8px;line-height:1.6}
+/* Pricing chart data */
+.price-table{margin:16px 0}
+.timeline{position:relative;padding-left:24px;margin:20px 0}
+.timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:#334155}
+.tl-item{position:relative;padding:12px 0 12px 20px}
+.tl-item::before{content:'';position:absolute;left:-20px;top:16px;width:10px;height:10px;border-radius:50%;background:#fbbf24;border:2px solid #0b1120}
+.tl-year{font-weight:700;color:#fbbf24;font-size:15px}
+.tl-detail{color:#94a3b8;font-size:13px;margin-top:2px}
+/* Footer */
+footer{text-align:center;color:#475569;font-size:12px;padding:32px 0 0;border-top:1px solid #1e293b;margin-top:40px;line-height:1.8}
+.disclaimer{font-style:italic;color:#64748b;font-size:12px;text-align:center;margin:24px 0 0;padding:16px;background:#1e293b;border-radius:8px}
+ul.check-list{list-style:none;padding:0}
+ul.check-list li{padding:4px 0;font-size:14px;color:#cbd5e1}
+ul.check-list li::before{content:'✓ ';color:#22c55e;font-weight:700}
+ul.check-list li.nag::before{content:'✗ ';color:#ef4444}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- Hero -->
+<div class="hero">
+  <span class="hero-badge">EXCUTIVE CONDOMINIUM · 已私有化</span>
+  <h1>The Visionaire</h1>
+  <p class="address">📍 170 Canberra Drive, Singapore 768002 &nbsp;|&nbsp; D27 Sembawang · OCR</p>
+  <div class="kpi-row">
+    <div class="kpi"><div class="val">$1,471</div><div class="lbl">当前均价 PSF</div></div>
+    <div class="kpi"><div class="val">3.4%</div><div class="lbl">租金收益率</div></div>
+    <div class="kpi"><div class="val">+46.3%</div><div class="lbl">2021–2026 增值</div></div>
+    <div class="kpi"><div class="val">99 年</div><div class="lbl">地契（2015 年起）</div></div>
+    <div class="kpi"><div class="val">632</div><div class="lbl">总单位数</div></div>
+    <div class="kpi"><div class="val">2018</div><div class="lbl">TOP</div></div>
+  </div>
+</div>
+
+<!-- Executive Summary -->
+<section>
+  <div class="section-title">📋 执行摘要</div>
+  <div class="summary-box">
+    <p style="color:#f1f5f9;font-size:15px;">The Visionaire 是青建地产在新加坡打造的首个智能家居 EC 项目，位于北部森巴旺 Canberra 核心区，步行 6 分钟即达 Canberra MRT。自 2018 年竣工以来，该项目经历了从 $980 psf 到 $1,471 psf 的显著增值（5 年 +46.3%），租金收益率稳定在 3.3%–3.5% 区间。</p>
+    <br>
+    <p style="color:#f1f5f9;font-size:15px;"><strong style="color:#fbbf24;">综合评分：<span class="num-green">7.4 / 10</span> — 可考虑</strong></p>
+    <br>
+    <p style="color:#f1f5f9;font-size:15px;">项目整体基本面良好：地段成熟、增值记录优秀、开发商信誉可靠。主要扣分项在于持有成本偏高（物业费）、EC 地契年限折价加速（2015 年起算，距今剩 88 年），以及近期 PSF 较历史高点回调约 8.5%。对于自住买家而言，该区域配套升级（Bukit Canberra、Sembawang North 新镇建设）带来中期利好；对于投资者，需注意 SSRM 限制下买家池相对有限。</p>
+  </div>
+</section>
+
+<!-- Dimension Scores -->
+<section>
+  <div class="section-title">⭐ 七维评分卡</div>
+  <div class="score-grid">
+
+    <!-- 1. Location -->
+    <div class="score-card">
+      <div class="score-header">
+        <span class="score-name">📍 地段 (Location)</span>
+        <span class="score-badge">7.5 / 10</span>
+      </div>
+      <div class="score-bar-bg"><div class="score-bar bar-mid" style="width:75%"></div></div>
+      <p class="score-desc">Canberra MRT NS6 步行 6 分钟，Yishun NS13 / Sembawang NS11 也可达。周边有 Canberra Plaza、Sun Plaza、Sembawang Shopping Centre 三大商场，Bukit Canberra 综合社区 hub 已全面开放（体育场馆、医疗中心、小贩中心）。学区含 Sembawang Primary School、MOE Kindergarten @ Sembawang 等。属于 OCR 中较成熟地段，但有潜力被升级为 semi-mature。距 CBD 约 20 分钟车程。</p>
+    </div>
+
+    <!-- 2. Rental Yield -->
+    <div class="score-card">
+      <div class="score-header">
+        <span class="score-name">💵 租金回报 (Rental Yield)</span>
+        <span class="score-badge">5.5 / 10</span>
+      </div>
+      <div class="score-bar-bg"><div class="score-bar bar-mid" style="width:55%"></div></div>
+      <p class="score-desc">毛租金收益率约 3.3%–3.5%（2BR 约 $3,500–$4,200/mo，3BR 约 $4,000–$5,000/mo）。扣除 MCST 管理费（预估每月 $400–$600）、物业税及空置期后，净回报率降至约 2.5%–2.8%。在当前利率环境下属于中等偏低水平——低于 4% 门槛线，但考虑到项目的增值记录，租金回报不是其核心亮点。</p>
+    </div>
+
+    <!-- 3. Capital Appreciation -->
+    <div class="score-card">
+      <div class="score-header">
+        <span class="score-name">📈 资本增值潜力</span>
+        <span class="score-badge">8.0 / 10</span>
+      </div>
+      <div class="score-bar-bg"><div class="score-bar bar-high" style="width:80%"></div></div>
+      <p class="score-desc"><strong>这是本项目的最强维度。</strong>2021-Q1 至 2026-Q2 期间，PSF 从 ~$980 升至 ~$1,519，累计增幅 46.3%，年化复合增长率约 8.0%。与同类 EC 相比表现领先：The Brownstone (+41%)、The Criterion (+48%)。District 27 大盘同期上涨 +12.1%，Visionaire 远超区域均幅。</p>
+      <br>
+      <p class="score-desc">中期催化剂：<br>① Bukit Canberra 全面开业（已完成）<br>② Sembawang Shipyard 2026-2028 迁往 Tuas → 释放 53ha 海滨土地，规划 8,000 BTO + 2,000 私人住宅<br>③ Sembawang North 新镇建设（已列为政府优先项目）<br>④ 遮荫连道直通 Sembawang MRT（预计 2026 年底完工）<br>⑤ 东区新一所小学计划（2029）</p>
+    </div>
+
+    <!-- 4. Developer -->
+    <div class="score-card">
+      <div class="score-header">
+        <span class="score-name">🏗️ 开发商信誉</span>
+        <span class="score-badge">7.5 / 10</span>
+      </div>
+      <div class="score-bar-bg"><div class="score-bar bar-mid" style="width:75%"></div></div>
+      <p class="score-desc">青建地产（Qingjian Realty）成立于 2008 年，是中国香港上市公司 CNQC International（港交所 01240）旗下子公司的东南亚总部。连续多年获 BCI Asia Top 10 Developer 大奖，BCA Green Mark Award、FIABCI Singapore Property Award 常客。<br><br>代表作包括 JadeScape、Forett at Bukit Timah（永久地契）、Le Quest、Parc Canberra、Altura EC 等，交付记录整体正面，大部分按时竣工。缺陷维修团队响应速度受到住客好评。部分买家反馈装修建材品牌偏中端（非奢华级别），这在 EC 价位段属正常预期。</p>
+    </div>
+
+    <!-- 5. Holding Costs -->
+    <div class="score-card">
+      <div class="score-header">
+        <span class="score-name">⚖️ 持有成本</span>
+        <span class="score-badge">5.5 / 10</span>
+      </div>
+      <div class="score-bar-bg"><div class="score-bar bar-mid" style="width:55%"></div></div>
+      <p class="score-desc">MCST 管理费估计 $400–$600/月（大型设施：恒温泳池、健身房、卡拉 OK、儿童游乐区、50m 标准泳池、lazy river 等 resort-grade 设施管理成本较高）。物业税方面，若为自住首套房且 AV ≤ $8,000/年则税率 0%——大多数中小户型可满足。房贷利率敏感性需关注 SORA 走势：按贷款上限 TDSR 55% 计算，月入 $8,000 者可负担最高约 $180 万贷款。总体持有成本中等偏高，但在 EC 类别中合理范围。</p>
+    </div>
+
+    <!-- 6. Exit Liquidity -->
+    <div class="score-card">
+      <div class="score-header">
+        <span class="score-name">💰 退出流动性</span>
+        <span class="score-badge">7.0 / 10</span>
+      </div>
+      <div class="score-bar-bg"><div class="score-bar bar-mid" style="width:70%"></div></div>
+      <p class="score-desc">过去一年 URA 交易量约 51 宗，活跃度较好。买家构成：SC 94%、PR 6%、外国人 0%。虽然已通过私有化解除 EC 出售对象限制（原 MOP 后可售予 SC/PR，实际业主以 SC 为主），但 EC 出身的项目在大额户型（4BR > $150 万价位段）的二手买家池仍然相对狭窄。近 6-8 个月成交周期约 3-5 个月，议价空间约 2-4%。对比同区 The Watergardens at Canberra ($1,487 psf)，Visionaire 流动性略低但差距不大。</p>
+    </div>
+
+    <!-- 7. Risk -->
+    <div class="score-card">
+      <div class="score-header">
+        <span class="score-name">🔐 风险控制</span>
+        <span class="score-badge">7.0 / 10</span>
+      </div>
+      <div class="score-bar-bg"><div class="score-bar bar-mid" style="width:70%"></div></div>
+      <p class="score-desc">优势：SSD 已过（购入满 3 年免 SSD 印花税），政策锁定期基本解除。99 年地契从 2015 年起算，剩余约 88 年——融资窗口尚未逼近，不影响中期买卖。LCV（租赁契约价值）折价在 99 年期内每年约 0.1%-0.15%，对长期资本增值有一定拖累。<br><br>风险因素：<br>• SORA 走高→房贷月供增加，影响买方承接力<br>• ABSD 对外国人 60% → 国际买家池极小<br>• EC 属性 vs 纯私宅：大户型流动性受限<br>• 近期 PSF 从历史高点（$1,683 psf Apr 2026）回调约 8.5%，短期情绪偏弱</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- Price Timeline -->
+<section>
+  <div class="section-title">📊 价格走势时间线</div>
+  <div class="highlight-box">
+    <p style="color:#f1f5f9;"><strong>关键节点：</strong>从 2017 年开盘低谷一路攀升至 2026 年 4 月历史高点 $1,683 psf，随后小幅回撤约 8.5%。五年间（2021–2026）累计涨 46.3%。</p>
+  </div>
+  <div class="timeline">
+    <div class="tl-item"><span class="tl-year">2017-03</span><br><span class="tl-detail">历史最低价：$715 psf（1,152 sqft 单位）</span></div>
+    <div class="tl-item"><span class="tl-year">2018-06</span><br><span class="tl-detail">项目竣工 TOP；开盘价约 $980 psf</span></div>
+    <div class="tl-item"><span class="tl-year">2021-Q1</span><br><span class="tl-detail">$986 psf（5 年期起点）</span></div>
+    <div class="tl-item"><span class="tl-year">2024</span><br><span class="tl-detail">$1,371 psf，同比 +3.9%</span></div>
+    <div class="tl-item"><span class="tl-year">2025</span><br><span class="tl-detail">$1,453 psf，同比 +5.9%</span></div>
+    <div class="tl-item"><span class="tl-year">2026-04</span><br><span class="tl-detail">🏆 历史新高 $1,683 psf（1,141 sqft 单位）</span></div>
+    <div class="tl-item"><span class="tl-year">2026-07</span><br><span class="tl-detail">现价 $1,471 psf，距高点回调 -8.5%</span></div>
+  </div>
+  <table class="price-table">
+    <tr><th>户型</th><th>销量 (笔)</th><th>均价 PSF</th><th>平均总价</th></tr>
+    <tr><td>2 BR</td><td>61</td><td>$1,392</td><td>$1,146,270</td></tr>
+    <tr><td>3 BR</td><td>219</td><td>$1,359</td><td>$1,443,796</td></tr>
+    <tr><td>4 BR</td><td>1</td><td>$1,317</td><td>$1,900,000</td></tr>
+  </table>
+</section>
+
+<!-- Comparable Projects -->
+<section>
+  <div class="section-title">🏘️ 区域可比项目对比</div>
+  <table>
+    <tr><th>项目</th><th>类型</th><th>地契</th><th>TOP</th><th>均价 PSF</th><th>收益</th></tr>
+    <tr><td><strong>The Visionaire</strong></td><td>EC</td><td>99 年</td><td>2018</td><td class="num-green">$1,471</td><td>3.4%</td></tr>
+    <tr><td>The Watergardens @ Canberra</td><td>私宅</td><td>99 年</td><td>2021</td><td>$1,487</td><td>-</td></tr>
+    <tr><td>North Gaia</td><td>EC</td><td>99 年</td><td>2022</td><td>$1,312</td><td>-</td></tr>
+    <tr><td>The Brownstone</td><td>EC</td><td>99 年</td><td>2016</td><td>$1,503</td><td>-</td></tr>
+    <tr><td>The Criterion</td><td>私宅</td><td>99 年</td><td>2021</td><td>$1,377</td><td>-</td></tr>
+    <tr><td>Canberra Crescent Residences</td><td>私宅</td><td>永久</td><td>2025</td><td>$1,988</td><td>-</td></tr>
+  </table>
+</section>
+
+<!-- Area Development -->
+<section>
+  <div class="section-title">🌆 区域发展规划</div>
+  <div class="highlight-box">
+    <p style="color:#f1f5f9;"><strong>Sembawang North 新镇：</strong>URA 规划 53ha 用地，将提供约 10,000 套住房（8,000 BTO + 2,000 私宅），是未来 5-10 年区域最大催化剂。</p>
+  </div>
+  <ul class="check-list">
+    <li>Bukit Canberra 综合社区 hub — 已全面开放（体育、医疗、教育、商业一站式）</li>
+    <li>Sembawang Shipyard 迁往 Tuas — 2026 起逐步释放海滨土地用于混合开发</li>
+    <li>Sembawang Beacon BTO（775 单位）— 首批 SWT 项目，预计 3 年内建成</li>
+    <li>Sembawang Road 新 EC 地块（~265 单位）— 2026 管线，供应回归</li>
+    <li>遮荫连道直达 Sembawang MRT — 预计 2026 年底完工</li>
+    <li>East Canberra 新一所小学 — 目标 2029 落成</li>
+    <li>1,000 个学前教育学位将于近两年内新增</li>
+    <li>Woodlands Regional Centre 持续扩张 — 带动整个北部经济区</li>
+  </ul>
+</section>
+
+<!-- 合规说明 -->
+<section>
+  <div class="section-title">📜 购买须知</div>
+  <div class="summary-box">
+    <p style="color:#f1f5f9;font-size:14px;"><strong style="color:#fbbf24;">私有化状态：</strong>该项目已处于 MOP 期内（2018 TOP，旧规则 5 年 MOP），早于 MOP 要求。</p>
+  </div>
+  <table>
+    <tr><th>事项</th><th>详情</th></tr>
+    <tr><td>适用规则</td><td>旧规则 EC（2018 TOP — MOP 5 年已过）</td></tr>
+    <tr><td>MOP</td><td>✅ 已满（2023 年已结束）</td></tr>
+    <tr><td>整间出租</td><td>✅ MOP 后即可合法出租</td></tr>
+    <tr><td>出售对象</td><td>✅ 所有人（含外国人、实体/信托）— 视为私宅</td></tr>
+    <tr><td>MSR vs TDSR</td><td>已转用 TDSR 规则（55% 月收入上限）</td></tr>
+    <tr><td>收入上限</td><td>✅ 无 HDB 收入上限约束（已脱离 EC 阶段）</td></tr>
+    <tr><td>ABSD</td><td>SC 首套 0% / 第二套 20% / 第三套+ 30%；外国人 60%</td></tr>
+    <tr><td>SSD</td><td>持有满 3 年免 SSD — ✅ 本项目已满足</td></tr>
+    <tr><td>LTV 上限</td><td>银行房贷首套 75%（浮动/固定同等）</td></tr>
+  </table>
+</section>
+
+<!-- 风险提示 -->
+<section>
+  <div class="section-title">⚠️ 关键风险点</div>
+  <table>
+    <tr><th>风险维度</th><th>说明</th><th>严重度</th></tr>
+    <tr><td>价格回调</td><td>距 2026-04 历史高点回撤 8.5%，短期市场可能仍在调整</td><td class="num-red">中</td></tr>
+    <tr><td>地契折旧</td><td>99 年地从 2015 年起算，每年 LCV 折价约 0.1%-0.15%，20 年后折价效应将加速显现</td><td class="num-red">中</td></tr>
+    <tr><td>利率敏感</td><td>SORA 高企推高按揭成本，大总价盘受影响更明显</td><td class="num-red">中</td></tr>
+    <tr><td>物业管理</td><td>住客反馈公共区域清洁和维护问题——落叶堆积、泳池维护不足，MCST 管理效能需提升</td><td class="num-red">中</td></tr>
+    <tr><td>供应回归</td><td>Sembawang Road 新 EC + GLS 私宅地块即将推出，短期增加供应压力</td><td class="num-green">低</td></tr>
+    <tr><td>国际买家池小</td><td>外国人买 EC 背景资产面临 60% ABSD → 流动性依赖本地买家</td><td class="num-red">中</td></tr>
+  </table>
+</section>
+
+<!-- Final Verdict -->
+<section>
+  <div class="section-title">🎯 最终结论</div>
+  <div class="verdict">
+    <p style="font-size:20px;font-weight:700;color:#fff;margin-bottom:12px;">综合评分：<span style="color:#fbbf24;">7.4 / 10</span> — 可考虑</p>
+    <p style="color:#d1fae5;font-size:15px;">The Visionaire 是一个<strong>稳健型 EC 资产</strong>，核心优势在于<strong>卓越的历史增值记录</strong>和<strong>持续的区域发展催化</strong>。Bukit Canberra 的全面运作加上 Sembawang North 新镇的崛起，使该地段成为新加坡北部最具增长确定性的区域之一。</p>
+  </div>
+
+  <div style="margin-top:24px;">
+    <h3 style="color:#fbbf24;font-size:17px;margin-bottom:12px;">💡 场景化建议</h3>
+
+    <div style="background:#1e293b;border-radius:10px;padding:18px 22px;margin-bottom:14px;">
+      <p style="font-weight:700;color:#22c55e;margin-bottom:6px;">🏠 自住家庭 — 推荐</p>
+      <p style="color:#cbd5e1;font-size:14px;">Canberra 区域配套完善且仍在持续升级。MRT 近在咫尺、商场学校触手可及、Bukit Canberra 一站式解决生活需求。智能家居系统经过多年验证仍运行良好。适合对居住品质有要求、预算 $110 万 – $150 万的家庭。</p>
+    </div>
+
+    <div style="background:#1e293b;border-radius:10px;padding:18px 22px;margin-bottom:14px;">
+      <p style="font-weight:700;color:#fbbf24;margin-bottom:6px;">📈 中长期投资者（3-7 年）— 可考虑</p>
+      <p style="color:#cbd5e1;font-size:14px;">Sembawang 转型故事刚刚展开。Shipyard 搬迁、Sembawang North 新镇落地、Woodlands Regional Centre 扩容——三大催化剂叠加，有望推动未来 5 年进一步增值。但需要注意当前正处于价格回调后的盘整期，择时很重要。3BR 中户型（$140-150 万）流动性最佳，是最优介入点。</p>
+    </div>
+
+    <div style="background:#1e293b;border-radius:10px;padding:18px 22px;margin-bottom:14px;">
+      <p style="font-weight:700;color:#ef4444;margin-bottom:6px;">⚡ 短期投机 — 不推荐</p>
+      <p style="color:#cbd5e1;font-size:14px;">当前 PSF 距高点回调 8.5%，短期市场情绪偏弱。SSD 虽已过（3 年），但 EC 属性+大总价导致快速变现能力不如 CCR RCR 私宅。短炒意义不大。</p>
+    </div>
+  </div>
+</section>
+
+<!-- Disclaimer -->
+<div class="disclaimer">
+  ⚠️ <strong>免责声明：</strong>本报告仅为个人研究参考之用，不构成任何投资建议、要约或招揽。所有数据来源于 EdgeProp、99.co、ShiokNest、URA REALIS 等公开渠道，可能存在滞后或偏差。作者不对报告的准确性、完整性承担任何责任。购房决策前请咨询持牌房产经纪人、贷款经纪及税务顾问。
+</div>
+
+</div>
+</body>
+</html>
