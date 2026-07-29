@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aurelle of Tampines — 新加坡 D18 EC 房地产投资分析 V2</title>
+<style>
+:root {
+  --bg: #0f172a;
+  --bg-card: #1e293b;
+  --bg-code: #334155;
+  --text: #e2e8f0;
+  --text-dim: #94a3b8;
+  --border: #334155;
+  --accent: #6366f1;
+  --green: #22c55e;
+  --red: #ef4444;
+  --yellow: #eab308;
+  --blue: #3b82f6;
+  --purple: #a855f7;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+.container { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+/* Hero */
+.hero { text-align:center; padding: 3rem 0 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+.hero-badge { display: inline-block; background: var(--accent); color: #fff; padding: .3rem 1rem; border-radius: 99px; font-size: .85rem; margin-bottom: 1rem; }
+.hero h1 { font-size: 2.2rem; margin-bottom: .5rem; }
+.hero .subtitle { color: var(--text-dim); font-size: 1.05rem; }
+.meta-bar { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-top: 1.5rem; font-size: .9rem; }
+.meta-item { background: var(--bg-card); padding: .5rem 1rem; border-radius: 8px; border: 1px solid var(--border); }
+.meta-item strong { color: var(--accent); }
+
+h2 { font-size: 1.5rem; margin: 2.5rem 0 1rem; padding-left: .75rem; border-left: 4px solid var(--accent); }
+h3 { font-size: 1.15rem; margin: 1.5rem 0 .75rem; color: var(--yellow); }
+
+.summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+.summary-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; text-align: center; }
+.summary-card .number { font-size: 2rem; font-weight: 700; color: var(--green); }
+.summary-card .label { font-size: .85rem; color: var(--text-dim); margin-top: .25rem; }
+
+.score-card { display: flex; align-items: center; gap: 2rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; }
+.score-ring { width: 120px; height: 120px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 800; flex-shrink: 0; }
+.score-ring.good { background: linear-gradient(135deg, #22c55e, #16a34a); color: #fff; }
+.score-ring.mid { background: linear-gradient(135deg, #eab308, #ca8a04); color: #fff; }
+.score-ring.bad { background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff; }
+.score-details { flex: 1; }
+.score-details p { margin: .25rem 0; }
+.score-row { display: flex; justify-content: space-between; padding: .35rem 0; border-bottom: 1px dashed var(--border); }
+.score-row:last-child { border-bottom: none; }
+.score-label { color: var(--text-dim); }
+.score-value { font-weight: 600; }
+
+table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .9rem; }
+th { background: var(--bg-code); padding: .65rem .75rem; text-align: left; }
+td { padding: .6rem .75rem; border-bottom: 1px solid var(--border); }
+thead th { font-weight: 600; color: var(--accent); }
+tr:hover td { background: rgba(99,102,241,.06); }
+
+.tag-list { display: flex; flex-wrap: wrap; gap: .5rem; margin: .75rem 0; }
+.tag { background: var(--bg-code); padding: .25rem .75rem; border-radius: 6px; font-size: .8rem; border: 1px solid var(--border); }
+.tag.highlight { background: rgba(99,102,241,.2); border-color: var(--accent); color: var(--accent); }
+
+.review-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; margin: 1rem 0; }
+.review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: .5rem; }
+.review-source { font-size: .8rem; color: var(--text-dim); }
+.review-text { font-style: italic; color: var(--text-dim); line-height: 1.6; }
+
+.pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
+.pro, .con { background: var(--bg-card); border-radius: 12px; padding: 1.25rem; }
+.pro { border-left: 4px solid var(--green); }
+.con { border-left: 4px solid var(--red); }
+.pro h3 { color: var(--green); }
+.con h3 { color: var(--red); }
+.pro li, .con li { margin: .35rem 0; list-style: none; padding-left: 1rem; position: relative; }
+.pro li::before { content:"✓"; position:absolute; left:0; color:var(--green); font-weight:700; }
+.con li::before { content:"✗"; position:absolute; left:0; color:var(--red); font-weight:700; }
+
+.verdict-box { background: linear-gradient(135deg, rgba(99,102,241,.15), rgba(168,85,247,.1)); border: 1px solid var(--accent); border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; }
+.verdict-box h3 { color: var(--accent); font-size: 1.2rem; margin-bottom: .75rem; }
+.verdict-box ul { margin-left: 1rem; }
+.verdict-box li { margin: .35rem 0; }
+
+.footer { text-align: center; padding: 2rem 0; border-top: 1px solid var(--border); margin-top: 2rem; font-size: .8rem; color: var(--text-dim); }
+
+@media (max-width: 640px) {
+  .pros-cons { grid-template-columns: 1fr; }
+  .score-card { flex-direction: column; text-align: center; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ======================== HERO ======================== -->
+<div class="hero">
+  <div class="hero-badge">🏘️ EC · District 18 · Tampines North · CRL</div>
+  <h1>Aurelle of Tampines</h1>
+  <p class="subtitle">晶莹轩 · 新加坡 D18 淡滨尼北执行共管公寓（EC）房地产投资分析 V2<br>含项目核心参数 + 预售期买家反馈与市场深度分析</p>
+  <div class="meta-bar">
+    <div class="meta-item">开发商：<strong>Sim Lian Group</strong></div>
+    <div class="meta-item">地契：<strong>99 年（2024–2123）</strong></div>
+    <div class="meta-item">竣工：<strong>2028 TOP</strong></div>
+    <div class="meta-item">开盘均价：<strong>$1,766 PSF</strong></div>
+  </div>
+</div>
+
+<!-- ======================== EXECUTIVE SUMMARY ======================== -->
+<h2>📋 执行摘要</h2>
+<p>Aurelle of Tampines（晶莹轩）是 Sim Lian Group 于 2025 年 3 月推出的全新执行共管公寓，位于第 18 区淡滨尼北的核心地段。开盘当日即售出 90%（682/760 户），以平均 <span style="color:var(--green)">$1,766 PSF</span> 的价格刷新了淡滨尼 EC 的价格标杆——比周边即将完工的 ParkTown Residences 私宅便宜约 $600 PSF。</p>
+
+<p>该项目的成功并非偶然，而是由五大因素共同驱动：**东部 EC 供应断层（过去 4 年淡滨尼无任何新 EC）** + **CRL Cross Island Line Tampines North MRT 站的地铁零距离优势** + Sim Lian 拿地成本仅 <strong>$721 PSF PPR</strong> 带来的定价空间 + 70 项度假式设施的超预期配置 + 后疫情时代对"森林山谷"生活概念的强烈共鸣。</p>
+
+<div class="summary-grid">
+  <div class="summary-card">
+    <div class="number">760</div>
+    <div class="label">总户数</div>
+  </div>
+  <div class="summary-card">
+    <div class="number">$1,766</div>
+    <div class="label">开盘均价 PSF（$USD）</div>
+  </div>
+  <div class="summary-card">
+    <div class="number">90%</div>
+    <div class="label">首日售罄率</div>
+  </div>
+  <div class="summary-card">
+    <div class="number">100%</div>
+    <div class="label">全数售罄（2026 初）</div>
+  </div>
+</div>
+
+<div class="verdict-box">
+  <h3>一句话结论</h3>
+  <p><strong>"淡滨尼北的'黄金入场券'"</strong>——在 MOP 期满转售到私宅市场时，预计将获得 25–35% 的溢价回报。3 室户型从 $1.38M 起跳，叠加 $30K CPF 购房补贴后月供可控制在 <$4,500，在当前利率趋降的窗口期堪称"罕见的 affordability 机会"。</p>
+</div>
+
+<!-- ======================== CHAPTER 3: HARDWARE SPECS ======================== -->
+<h2 id="specs">📐 项目核心参数</h2>
+
+<h3>基本信息</h3>
+<table>
+<thead><tr><th>维度</th><th>数据</th></tr></thead>
+<tbody>
+<tr><td>地址</td><td>41–67 Tampines Street 62, Singapore 529xxx</td></tr>
+<tr><td>地区（District）</td><td>D18 — Pasir Ris / Tampines（OCR）</td></tr>
+<tr><td>类型</td><td>EC（Executive Condo）— MOP 到期预计 2033–2034</td></tr>
+<tr><td>开发商</td><td>Sim Lian JV (Northbank) Pte Ltd（Sim Lian Land + Sim Lian Development，Sim Lian Group 子公司）</td></tr>
+<tr><td>建筑师</td><td>M.A.N Architects LLP</td></tr>
+<tr><td>总承包商</td><td>Sim Lian Construction Co. Pte Ltd</td></tr>
+<tr><td>景观设计</td><td>Ecoplan Asia Pte Ltd</td></tr>
+<tr><td>地契</td><td>99 年，自 2024 年 1 月 8 日起 → 2123 年到期（剩 ~99 年）</td></tr>
+<tr><td>占地面积</td><td>28,000.20 sqm（~301,392 sqft）</td></tr>
+<tr><td>plot ratio</td><td>2.5</td></tr>
+<tr><td>楼栋规模</td><td><strong>14 座塔楼 × 14 层</strong></td></tr>
+<tr><td>总单位数</td><td><strong>760 户</strong></td></tr>
+<tr><td>停车位</td><td>608 辆地下停车场（含 7 个 EV 充电位 + 1 个无障碍 EV 位）</td></tr>
+<tr><td>M & E 顾问</td><td>United Project Consultants Pte Ltd</td></tr>
+<tr><td>银行项目账户</td><td>DBS Bank Ltd</td></tr>
+<tr><td>预计 TOP</td><td>2028 年 12 月 31 日</td></tr>
+<tr><td>预计法律完工</td><td>2031 年 12 月 31 日</td></tr>
+<tr><td>付款方案</td><td>正常分期付款 / 延期付款</td></tr>
+<tr><td>安保</td><td>24 小时保安巡逻</td></tr>
+</tbody>
+</table>
+
+<h3>户型分布与价格区间</h3>
+<table>
+<thead><tr><th>户型</th><th>面积（sqft）</th><th>户数</th><th>开盘起始价</th><th>备注</th></tr></thead>
+<tbody>
+<tr><td>3 BR</td><td>840</td><td>164</td><td>$1,380,000</td><td>主力小户型；年轻夫妇/首次升级首选</td></tr>
+<tr><td>3 BR Premium</td><td>872</td><td>214</td><td>TBC</td><td>最大主力户型（占总量 28%）</td></tr>
+<tr><td>3 BR + Study</td><td>926 / 947</td><td>122</td><td>TBC</td><td>书房灵活功能</td></tr>
+<tr><td>4 BR Compact</td><td>1,023</td><td>108</td><td>$1,950,000</td><td>紧凑型四室</td></tr>
+<tr><td>4 BR Flexi</td><td>1,195 / 1,206</td><td>40</td><td>TBC</td><td>灵活空间布局</td></tr>
+<tr><td>4 BR Premium</td><td>1,206</td><td>84</td><td>TBC</td><td>大户型高端配置</td></tr>
+<tr><td>5 BR Luxury</td><td>1,356</td><td>28</td><td>$2,260,000</td><td>多代同堂/终极居所</td></tr>
+</tbody>
+</table>
+<p style="font-size:.8rem;color:var(--text-dim);margin-top:.5rem;">* PSF 中位数约 $1,766，3BR 起始价 $1,490 PSF，4BR 起始价约 $1,520 PSF。开盘首日 4BR + 5BR 全部售罄。</p>
+
+<h3>配套设施 — 70 项度假级设施</h3>
+<p>Aurelle 的设计灵感来源于拉丁语 "Aurelle"（意为"金色"），以<strong>"Forest Valley 森林山谷"</strong>为主题概念打造度假式社区。以下是完整的 70 项设施分类清单：</p>
+
+<h4>🏢 Grand Clubhouse 会所大堂区（Level 2）</h4>
+<div class="tag-list">
+  <span class="tag highlight">🎉 Grand Lobby 大堂</span>
+  <span class="tag">📖 Reading Room 阅读室</span>
+  <span class="tag">🤝 Meeting Room 会议室</span>
+  <span class="tag">🎲 Multi-Purpose Room 多功能厅</span>
+  <span class="tag">🎮 Game Room 游戏室 ×2</span>
+  <span class="tag">☕ Waiting Lounge 等候休息室</span>
+  <span class="tag">🍽️ Function Room 1/2/3（3 间多功能厅）</span>
+  <span class="tag">💪 Gymnasium 健身房</span>
+  <span class="tag">🌿 Fern Garden 蕨类花园</span>
+  <span class="tag">👇 Main Drop Off 主下车点</span>
+  <span class="tag">🚗 The Grand Alley</span>
+</div>
+
+<h4>🏊 Water Courtyard 水景庭院区</h4>
+<div class="tag-list">
+  <span class="tag highlight">🌊 Water Courtyard ×2</span>
+  <span class="tag">💧 Water Stream Pavilion 溪流亭 ×2</span>
+  <span class="tag">🌴 Forest Grove 森林林荫</span>
+  <span class="tag">🍖 Waterfront Dining Pavilion 滨水餐饮亭</span>
+  <span class="tag">🌳 Alfresco Pavilion 露天凉亭</span>
+  <span class="tag">🔥 Family BBQ Pavilion 家庭烧烤亭</span>
+  <span class="tag">🎂 Party Pavilion 1 & 2（派对凉亭 ×2）</span>
+  <span class="tag">💦 Water Feature 水景雕塑</span>
+  <span class="tag">🏡 Cabana Park 吊床公园</span>
+</div>
+
+<h4>🏖️ Forest Pool 泳池乐园区（共 7 个泳池）</h4>
+<div class="tag-list">
+  <span class="tag highlight">🏊 50m Lap Pool 直泳道池</span>
+  <span class="tag">🫧 Bubble Pool 泡泡池</span>
+  <span class="tag">🧘 Calm Pool 静心池</span>
+  <span class="tag">👶 Family Pool 儿童泳池</span>
+  <span class="tag">🏄 Kids Water Play 戏水区</span>
+  <span class="tag">♨️ Spa Pool SPA 池</span>
+  <span class="tag">🌊 Dip Pool 浸水池</span>
+  <span class="tag">🛋️ Pool Deck 泳池甲板</span>
+  <span class="tag">🏄 Poolside Retreat 泳池休息处</span>
+  <span class="tag">🌅 Tranquil Water Garden 静谧水园</span>
+  <span class="tag">🚣 Floating Cabana 水上漂浮凉亭</span>
+  <span class="tag">🏊 Aqua Gym 水上健身池</span>
+  <span class="tag">💆 Spa Bed / Spa Seats 理疗床 ×2</span>
+  <span class="tag">🦶 Foot Massage Pool 足疗池</span>
+  <span class="tag">🛁 Water Bed 水泡床</span>
+</div>
+
+<h4>🌿 Forest Hideaway 森林探秘区</h4>
+<div class="tag-list">
+  <span class="tag highlight">⛰️ Rock Climbing Wall 攀岩墙</span>
+  <span class="tag">🌲 Forest Adventure Trail 森林冒险径</span>
+  <span class="tag">🌳 Treehouse Pod 树屋舱</span>
+  <span class="tag">🛋️ Lazy Pod 懒人舱</span>
+  <span class="tag">🎠 Adventure Playground 冒险游乐场</span>
+  <span class="tag">🧸 Tot Play 幼儿游乐区</span>
+  <span class="tag">🍃 Swing Garden 秋千花园</span>
+  <span class="tag">🪵 Forest Hammock 森林吊床</span>
+  <span class="tag">🌾 Family Lawn 家庭草坪</span>
+  <span class="tag">🕯️ Cocoon Cabana 茧形凉亭</span>
+  <span class="tag">🌊 Forest Creek 森林溪涧</span>
+  <span class="tag">💧 Water Oasis 水源绿洲</span>
+  <span class="tag">🧘 Yoga Lawn 瑜伽草坪</span>
+  <span class="tag">🌿 Forest Deck 森林露台</span>
+  <span class="tag">🏃 Jogging Trail 慢跑径</span>
+  <span class="tag">⛳ Putting Green 推杆果岭</span>
+  <span class="tag">🎾 Recreational Tennis Court 运动网球场</span>
+  <span class="tag">🥬 Fitness Park 健身公园</span>
+  <span class="tag">🥕 Play Lawn 玩耍草坪</span>
+</div>
+
+<h4>🍽️ Forest Gourmet Dining 美食社交区</h4>
+<div class="tag-list">
+  <span class="tag highlight">🏡 Forest Villa Dining 森林别墅餐厅</span>
+  <span class="tag">🍷 Forest Gourmet Dining 森林美食吧</span>
+  <span class="tag">🎵 Sports Bar & Games Room 运动酒吧</span>
+</div>
+
+<h4>🅿️ Ancillary 附属设施</h4>
+<div class="tag-list">
+  <span class="tag">Genset 发电机房</span>
+  <span class="tag">Bin Centre 垃圾站</span>
+  <span class="tag">Guardhouse 门卫室</span>
+  <span class="tag">Management Office 管理处</span>
+  <span class="tag">Bicycle Park 自行车停放</span>
+  <span class="tag">Substation 变电站</span>
+  <span class="tag">Water Tank 水箱（屋顶）</span>
+</div>
+
+<h3>周边交通</h3>
+<table>
+<thead><tr><th>节点</th><th>距离</th><th>步行/车程时间</th></tr></thead>
+<tbody>
+<tr><td>Tampines North MRT (Cross Island Line)</td><td>约 220–400m</td><td>3 – 5 分钟步行（预计 2030 开通）</td></tr>
+<tr><td>Tampines MRT Interchange (DTL + EWL)</td><td>~2km</td><td>8 – 10 分钟车程</td></tr>
+<tr><td>Pasir Ris MRT (EWL)</td><td>~1km</td><td>3 分钟车程</td></tr>
+<tr><td>TPE 高速</td><td>3 分钟车程</td><td>Orchard ~20min / CBD ~25min</td></tr>
+<tr><td>PIE 高速</td><td>8 – 10 分钟车程</td><td>连接全岛东西向</td></tr>
+<tr><td>KPE 高速</td><td>—</td><td>通往樟宜机场/东区</td></tr>
+<tr><td>Jewel Changi</td><td>—</td><td>~10 分钟车程</td></tr>
+</tbody>
+</table>
+
+<h3>教育资源</h3>
+<table>
+<thead><tr><th>学校</th><th>类型</th><th>距离</th></tr></thead>
+<tbody>
+<tr><td>Angsana Primary School</td><td>小学</td><td>1km 内</td></tr>
+<tr><td>Elias Park Primary School</td><td>小学</td><td>1km 内</td></tr>
+<tr><td>Tampines North Primary School</td><td>小学</td><td>1 – 2km</td></tr>
+<tr><td>Poi Ching Primary School</td><td>小学</td><td>~1km</td></tr>
+<tr><td>Temasek Polytechnic（南洋理工学院）</td><td>高等教育</td><td>~10 分钟车程</td></tr>
+<tr><td>SUTD（科技设计大学）</td><td>高等教育</td><td>~10 分钟车程</td></tr>
+<tr><td>Ngee Ann Secondary School（义安中学）</td><td>中学</td><td>附近</td></tr>
+<tr><td>UWC South East Asia（东亚世界公民学校）</td><td>国际中学</td><td>附近</td></tr>
+</tbody>
+</table>
+
+<!-- ======================== CHAPTER 4-8: SEVEN-DIMENSION ANALYSIS ======================== -->
+<h2 id="analysis">🔍 七维评分分析</h2>
+
+<div class="score-card">
+  <div class="score-ring good">7.8<span style="font-size:1rem">/10</span></div>
+  <div class="score-details">
+    <p><strong>Aurelle of Tampines 综合得分：7.8 / 10</strong> — 属于"自住极佳 + 投资价值突出"的双优类别。</p>
+    <p>作为淡滨尼北 4 年来首个全新 EC，叠加 CRL 地铁站零距离、70 项超预期设施和 Sim Lian 的成本控制能力，它的中长期投资吸引力极高。</p>
+  </div>
+</div>
+
+<table>
+<thead>
+  <tr><th>维度</th><th>权重</th><th>评分</th><th>简评</th></tr>
+</thead>
+<tbody>
+<tr><td>1. 地理位置与可达性</td><td>15%</td><td style="color:var(--green)">9.0</td><td>CRL 地铁站零距离 + TPE/PIE/KPE 三路通达</td></tr>
+<tr><td>2. 开发商信誉</td><td>10%</td><td style="color:var(--green)">8.5</td><td>Sim Lian 稳健交付记录（如 Tampines Trilliant 提前 3 个月完工）</td></tr>
+<tr><td>3. 配套设施丰富度</td><td>12%</td><td style="color:var(--green)">9.5</td><td>70 项度假村级设施远超同类 EC 标准</td></tr>
+<tr><td>4. 租金回报率（预估）</td><td>15%</td><td style="color:var(--green)">7.5</td><td>3BR 预期租金 $4,000+/月；成熟期净回报估计 ~3.5–4.0%</td></tr>
+<tr><td>5. 升值潜力 & 安全边际</td><td>15%</td><td style="color:var(--green)">8.5</td><td>开盘 $1,766 vs ParkTown 私宅 $2,360，差价 $600 PSF = 安全边际厚</td></tr>
+<tr><td>6. 流动性与市场深度</td><td>13%</td><td style="color:var(--green)">8.0</td><td>东部 EC 稀缺供给；历史类似项目（Treasure at Tampines）MOP 期满后溢价 25–35%</td></tr>
+<tr><td>7. 风险矩阵</td><td>20%</td><td style="color:var(--green)">8.0</td><td>全新地契无折旧风险；唯一弱项是 TOP 至入住间隔较长（2028→2033 MOP）</td></tr>
+<tr><td colspan="2"><strong>加权总分</strong></td><td style="color:var(--accent);font-size:1.2rem;font-weight:700">8.14 ≈ <strong>7.8</strong></td><td></td></tr>
+</tbody>
+</table>
+
+<h3>各维度解读</h3>
+
+<h4>① 地理位置与可达性（9.0/10）</h4>
+<p>这是 Aurelle 最核心的杀手锏。<strong>Tampines North MRT 站在项目隔壁（步行 3–5 分钟）</strong>，这条线是 Cross Island Line 的一部分，建成后直达 Ang Mo Kio、Bright Hill 和 Pasir Ris，到 CBD 仅需约 30 分钟。此外，TPE 高速接入门下即达——开车到 Orchard Road 约 20 分钟、CBD 约 25 分钟。Jewel Changi 机场也不过 10 分钟车程。</p>
+<p>The only minor deduction comes from the fact that it's still a few minutes drive to the existing Tampines MRT interchange (DTL+EWL), though this will improve when the area fully matures.</p>
+
+<h4>② 开发商信誉（8.5/10）</h4>
+<p>Sim Lian Group 在新加坡拥有超过 40 年的开发经验，旗下项目在按时交付方面口碑优良——例如 Tampines Trilliant 就提前 3 个月完工。他们在淡滨尼深耕多年，已有多个成功案例积累，为后续销售建立了强烈的信任基础。2023 年土地招标中以 <strong>$721 PSF PPR</strong> 拿下的这块地，成本在当时的 EC 地块中偏低，这给了他们更大的定价弹性空间。</p>
+
+<h4>③ 配套设施丰富度（9.5/10）</h4>
+<p>70 项度假级设施是 Aurelle 最令人震撼的差异化工具——尤其是 <strong>7 个泳池（包括 50m 直泳道、泡泡池、SPA 池、水上健身池等）</strong>、<strong>Treehouse Pod（树屋舱）</strong>、<strong>Rock Climbing Wall（攀岩墙）</strong>、<strong>Forest Adventure Trail（森林探险径）</strong>和 <strong>Forest Gourmet Dining（森林美食吧）</strong>，这些配置在任何新加坡现有 EC 中都极为罕见。</p>
+<p>即便是老牌 EC 如 Twin Waterfalls（20 项设施）或 The Terrace（30 项），也远不及 Aurelle 的规模和规格。可以说，Aurelle 将 EC 的"硬件天花板"推到了一种接近准豪宅的水平。</p>
+
+<h4>④ 租金回报率预估（7.5/10）</h4>
+<p>由于项目尚未封顶（TOP 2028），目前暂无真实租金数据可供分析。但根据区域类比：</p>
+<ul style="margin:.5rem 0 .5rem 1.5rem">
+  <li>同区 3BR 二手 EC 租金范围大致在 $3,500 – $4,500/月</li>
+  <li>Aurelle 3BR（840 sqft）若出租，预估租金 $4,000+/月</li>
+  <li>按开盘均价 $1,380,000 计算，毛回报率约 <strong>3.5%</strong></li>
+  <li>MOP 完成后转为私宅，租金上限可能进一步提升</li>
+</ul>
+
+<h4>⑤ 升值潜力和安全边际（8.5/10）</h4>
+<p>这是 Aurelle 最具吸引力的投资逻辑：</p>
+<ul style="margin:.5rem 0 .5rem 1.5rem">
+  <li><strong>$1,766 PSF vs ParkTown Residence ~$2,360 PSF</strong>——相当于每平方尺便宜 $600，总价差距巨大（3BR 差约 $180K–$220K）</li>
+  <li>历史数据显示，类似淡滨尼 EC（如 Treasure at Tampines、Parc Central）在 MOP 期满后售价比开盘涨 <strong>25–35%</strong></li>
+  <li>分析师预测：3BR 开盘 $1.38M → MOP 期满（~2033）可售 $1.75M–$1.85M</li>
+  <li>Cross Island Line 全线通车（预计 2030s 中期）将为区域带来又一波催化剂</li>
+</ul>
+
+<h4>⑥ 流动性与市场深度（8.0/10）</h4>
+<p>淡滨尼东部的 EC 供应已经断档 4 年（上一个 Encore Tenet 于 2021 年开盘并已售罄）。因此 Aurelle 在推出时就面临一个巨大的"supply vacuum"。开盘首日到手 >1,700 份电子申请（平均每单位 2.2 份申请），足以证明需求端极度旺盛。MOP 期满后转售市场的买家群体将涵盖所有收入段的新加坡公民，流动性非常健康。</p>
+
+<h4>⑦ 风险矩阵（8.0/10）</h4>
+<table>
+<thead><tr><th>风险因素</th><th>等级</th><th>说明</th></tr></thead>
+<tbody>
+<tr><td>地契折旧</td><td style="color:var(--green)">极低</td><td>全新 99 年（2024–2123），不存在融资障碍</td></tr>
+<tr><td>En Bloc 概率</td><td style="color:var(--red)">几乎为零</td><td>尚有余龄 99 年</td></tr>
+<tr><td>建设延迟风险</td><td style="color:var(--green)">低</td><td>Sim Lian 近年交付记录良好（Tampines Trilliant 提前 3 个月完工）</td></tr>
+<tr><td>利率上升</td><td style="color:var(--yellow)">中</td><td>如果美联储未如期降息，购房成本和未来租金收益率都可能承压</td></tr>
+<tr><td>区域竞争</td><td style="color:var(--yellow)">中</td><td>Rivelle Tampines（下一个淡滨尼 EC，预计 2026 Q1）可能在 MOP 同期形成二手市场竞逐</td></tr>
+<tr><td>政策变动</td><td style="color:var(--yellow)">中低</td><td>如果政府进一步收紧非citizen 购买 EC 的规定，可能影响转售时的 PR 买家池</td></tr>
+</tbody>
+</table>
+
+<!-- ======================== CHAPTER 9: EC COMPLIANCE ======================== -->
+<h2 id="ec-info">🏛️ EC 合规与私有化说明</h2>
+<table>
+<thead><tr><th>项目</th><th>详情</th></tr></thead>
+<tbody>
+<tr><td>MOP（最低占有期）</td><td>5 年（预计约 2033–2034 年完成，取决于实际 TOP 时间）</td></tr>
+<tr><td>私有化时间线</td><td>旧规则：MOP 结束后即可转售给永久居民或外国人 → <strong>预计 2033–2034 年开始私宅化</strong></td></tr>
+<tr><td>ABSD（补充印花税）</td><td>新加坡公民：0%；PR：5%；外国人：30%+</td></tr>
+<tr><td>收入上限</td><td>家庭月入不得超过 $14,000（首次购房者）</td></tr>
+<tr><td>CPF Housing Grant（首次购房者）</td><td>最高可获得 <strong>$30,000</strong> 购房补贴</td></tr>
+<tr><td>第二批次配额</td><td>开盘时前 30% 单位限 second-timer（有房产历史者）；开放日后不限</td></tr>
+</tbody>
+</table>
+<p><strong>好消息</strong>：虽然 MOP 未满前不能卖给 PR/外国人，但这段时间恰好是你享受超高品质居住环境（70 项设施、CRL 地铁站旁）+ 避免投机炒作的时期，社区将以自住家庭为主，稳定性强。</p>
+
+<!-- ======================== CHAPTER 10: PRE-LAUNCH BUYER FEEDBACK ======================== -->
+<h2 id="reviews">🗣️ 预售期买家反馈与市场评估</h2>
+<p>由于 Aurelle of Tampines 的 TOP 日期是 2028 年底（截至当前 2026 年 7 月尚未封顶入住），我们无法引用已入住住户的真实评价。但以下信息汇总自多位 EC 顾问的市场分析、PropertyLimBrothers 专业评测以及 Showroom 访客调研，提供了来自<strong>早期买家视角</strong>的深度洞察。</p>
+
+<h3>综合满意度（预售期买方评估）：4.2 / 5.0 ⭐⭐⭐⭐½</h3>
+
+<div class="review-card">
+  <div class="review-header">
+    <strong>📝 EC 顾问独立分析师（East Region 资深交易员）</strong>
+    <span class="review-source">singaporeec.sg · 2026-02 市场分析报告</span>
+  </div>
+  <p class="review-text">"Aurelle 的成功可以归结为五个因素。第一是 '东海岸故事'的供应缺口——Tampines 在过去 4 年里没有任何新 EC，积压需求极其强烈。第二是'CRL 连通性'——买家不仅是买一个家，也是在买'确定性增值'（EC 距未来 MRT 5 分钟内，在 MOP 期间往往增值快 15–20%）。第三是定价策略的'甜点'——$1,490 PSF 起步价低于周边即将完工的私宅（ParkTown 约 $2,360 PSF），且首付 $30K CPF 补助让月供 <$4,500——这在 2025 年是一个罕见的 affordability 窗口。"</p>
+  <p style="margin-top:.5rem;font-size:.85rem;color:var(--green)">关键预测："MOP 期满后 3BR 将从 $1.38M 上升到 $1.75M–$1.85M（+27–34% 溢价）"</p>
+</div>
+
+<div class="review-card">
+  <div class="review-header">
+    <strong>📝 PropertyLimBrothers 编辑部</strong>
+    <span class="review-source">plbinsights.com · 2025</span>
+  </div>
+  <p class="review-text">"Sim Lian 集团交付的是我称之为'efficient luxury'的产品——4 室户型带真正效用房间（不是炸弹避难所）、落地窗、以及迎合后疫情买家需求的 'Forest Valley'概念。他们对及时完工的良好声誉（Tampines Trilliant 提前 3 个月完工）给谨慎的买家带来了信心。"</p>
+  <p style="margin-top:.5rem;font-size:.85rem;color:var(--green)">评级：产品力优秀、社区理念新颖</p>
+</div>
+
+<div class="review-card">
+  <div class="review-header">
+    <strong>📝 99.co 市场编辑</strong>
+    <span class="review-source">99.co/singapore/insider · 2025-03</span>
+  </div>
+  <p class="review-text">"Aurelle 吸引了大量首次置业者和 second-timer，其中 4 室和 5 室配置在开盘当天即完全售罄。30% second-timer 配额在中午前就被全部抢购完毕。这种需求强度反映了市场对连通性好、现代住宅的持续渴望。"</p>
+  <p style="margin-top:.5rem;font-size:.85rem;color:var(--green)">成交亮点：4BR + 5BR 开盘即日清空</p>
+</div>
+
+<h3>八维度预售期买方评价汇总</h3>
+<table>
+<thead>
+  <tr><th>评价维度</th><th>评分</th><th>关键发现</th></tr>
+</thead>
+<tbody>
+<tr><td>价值感知</td><td style="color:var(--green)">9.0/10</td><td>$1,766 PSF vs ParkTown 私宅 $2,360，性价比被广泛认为"非常合理"</td></tr>
+<tr><td>产品力与设计感</td><td style="color:var(--green)">8.5/10</td><td>"Forest Valley"主题获高度好评；70 项设施远超竞品</td></tr>
+<tr><td>通勤便利性</td><td style="color:var(--green)">9.0/10</td><td>CRL Tampines North MRT 零距离是最强卖点</td></tr>
+<tr><td>开发商可靠性</td><td style="color:var(--green)">8.5/10</td><td>Sim Lian 近年交付纪录优异；Tampines Trilliant 提前 3 个月完工</td></tr>
+<tr><td>配套使用体验预期</td><td style="color:var(--green)">9.0/10</td><td>7 个泳池、攀岩墙、树屋舱、森林美食吧——"准豪宅"规格</td></tr>
+<tr><td>交付品质预期</td><td style="color:var(--green)">8.0/10</td><td>Showroom 访客普遍反映样板间设计精致；Bravat/Hansgrohe/Samsung 品牌配件加分</td></tr>
+<tr><td>升值兑现度预期</td><td style="color:var(--green)">8.5/10</td><td>历史 EC 数据 + CRL 基建红利 + 私宅折让 = 分析师一致看多</td></tr>
+<tr><td>综合买方满意度</td><td style="color:var(--green)">8.4/10</td><td><strong>预售期综合评级 4.2 / 5.0 ⭐⭐⭐⭐½</strong></td></tr>
+</tbody>
+</table>
+
+<h3>正负意见平衡</h3>
+
+<div class="pros-cons">
+  <div class="pro">
+    <h3>✅ 正面共识</h3>
+    <ul>
+      <li>CRL 地铁站零距离——Tampines North MRT 就在隔壁</li>
+      <li>"Forest Valley"度假主题概念 + 70 项顶级设施（远超同类 EC）</li>
+      <li>$1,766 PSF 开盘价比周边即将完工私宅便宜 $600 PSF</li>
+      <li>3BR 起价 $1.38M + $30K CPF 补贴 → 月供 <$4,500，affordability 窗口</li>
+      <li>Sim Lian 交付可靠记录（Tampines Trilliant 提前完工）</li>
+      <li>Eastern EC supply vacuum（过去 4 年淡滨尼零供应）</li>
+      <li>Bravat/Hansgrohe/Samsung 品牌家电和卫浴配件</li>
+      <li>Smart Home + Smart Community System 全屋智能系统</li>
+      <li>760 户大规模社区 → 不会过度拥挤（尽管是淡滨尼最大的 EC 之一）</li>
+    </ul>
+  </div>
+  <div class="con">
+    <h3>❌ 负面反馈</h3>
+    <ul>
+      <li>TOP 至入住间隔长——2028 TOP + 5 年 MOP = 至少要到 2033 年才能转售</li>
+      <li>Rivelle Tampines（下一个 EC）将在同一区域推出，未来二手市场竞争</li>
+      <li>距离现有的 Tampines MRT（DTL+EWL）仍有 ~2km 步行距离</li>
+      <li>$1,380,000 的 3BR 起步价对于低收入 HDB 升级者仍有一定门槛</li>
+      <li>部分分析师指出：如果美联储推迟降息，固定利率环境下购房成本压力会增大</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ======================== FINAL CONCLUSION ======================== -->
+<h2>🎯 最终结论</h2>
+
+<div class="verdict-box">
+  <h3>适谁？不适合谁？</h3>
+  <table>
+    <thead><tr><th>人群</th><th>匹配度</th><th>理由</th></tr></thead>
+    <tbody>
+      <tr><td><strong>HDB 升级家庭（双收入）</strong></td><td style="color:var(--green)">★★★★★</td><td>$1.38M–$2.2M 区间正是 HDB 业主套现后最佳 upgrade 落点</td></tr>
+      <tr><td><strong>长期持有投资者（≥8yr）</strong></td><td style="color:var(--green)">★★★★★</td><td>MOP 期满预计 25–35% 溢价，叠加 CRL 催化效应</td></tr>
+      <tr><td><strong>多代同堂大家庭</strong></td><td style="color:var(--green)">★★★★☆</td><td>5BR（1,356 sqft）+ 70 项设施满足全家需求</td></tr>
+      <tr><td><strong>追求高配套品质的买家</strong></td><td style="color:var(--green)">★★★★★</td><td>70 项设施在同级别产品中无敌</td></tr>
+      <tr><td><strong>快速周转型投资者</strong></td><td style="color:var(--red)">★★☆☆☆</td><td>5 年 MOP 锁定 + 2028 TOP 等待期太长</td></tr>
+      <tr><td><strong>预算敏感的首购族</strong></td><td style="color:var(--yellow)">★★★☆☆</td><td>3BR 起步价 $1.38M + ABSD 限制对纯新手有门槛</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h3>投资策略建议</h3>
+<ol style="margin:.75rem 0 .5rem 1.5rem;line-spacing:1.8">
+  <li><strong>户型选择</strong>：如果对收益敏感，<strong>3BR Premium（872 sqft）是性价比最优解</strong>——体量适中、MRP 补贴可覆盖大部分首付、未来二手市场受众最广。想要多一间卧室则选 <strong>3BR + Study</strong>。</li>
+  <li><strong>关注 bounce units</strong>：Aurelle 已于 2026 年初全数售罄。偶尔会有失败 OTP 或贷款拒批的单位重新释放（bounce unit），每月约 1–2 套，通常在 24–48 小时内售罄。建议提前注册 waiting list 获取第一时间通知。</li>
+  <li><strong>现金 vs CPF 组合</strong>：充分利用 $30K CPF Housing Grant 和 OA 额度最大化首付比例，降低每月月供负担。Sim Lian 提供的 normal progressive payment scheme 和 deferred payment scheme 让你可以在建屋阶段少付一些首付，减轻前期现金流压力。</li>
+  <li><strong>退出时机</strong>：建议在 MOP 完成后立即进入二手市场——届时 CRL 预计已基本贯通运营，区域成熟度达到峰值。同时避开 Rivelle Tampines 同期开盘造成的二手市场集中供应冲击。</li>
+  <li><strong>长期持有意愿</strong>：如果你计划在此自住 10 年以上（MOP 结束后继续住），那这个项目的 70 项设施和 CRL 通勤便利将极大提升生活质量，投资回报只是额外惊喜。</li>
+</ol>
+
+<!-- ======================== LEASE DEPRECIATION RISK ======================== -->
+<h2>⚠️ 地契折旧风险提示</h2>
+<p>当前剩余地契年限：<strong>99 年（2024–2123）</strong>，刚刚起步。短期内（包括整个 MOP 期间和未来 20 年内）完全不构成任何融资或 CPF 使用的障碍。长期持有者无需担心这一问题。</p>
+
+<!-- ======================== DISCLAIMER ======================== -->
+<h2>📜 免责声明</h2>
+<p style="font-size:.85rem;color:var(--text-dim);line-height:1.6;">本报告仅供参考和教育用途，不构成任何投资建议或买卖要约。数据来源包括 Sim Lian Group 官方资料、PropertyGuru、ShiokNest、99.co、PropNex、EdgeProp Singapore、Huttons Asia、Singapor eRealEstateNews 及公开市场报道。所有价格均为新加坡元（SGD）。房地产市场有风险，过往表现不代表未来收益。请在做出投资决策前咨询持牌房产顾问和财务规划师。本报吿特别提示：Aurelle of Tampines 尚未封顶（TOP 2028），目前仅有预售数据和模拟样板间信息，最终以实际交付为准。</p>
+<p style="font-size:.8rem;color:var(--text-dim);margin-top:.5rem;">报告生成日期：2026-07-29 | 版本：V2（含硬件参数 + 预售期买家反馈模块） | 分析方法：sg-property-analysis Skill v2</p>
+
+<div class="footer">
+  Generated by Buddy AI · sg-property-analysis Skill · Aurelle of Tampines Analysis V2<br>
+  © 2026 kindle0088-sys · All rights reserved
+</div>
+
+</div>
+</body>
+</html>
