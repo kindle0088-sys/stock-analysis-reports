@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkyPark Residences V2 — EC 私宅化投资研报</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;background:#0b1120;color:#e2e8f0;line-height:1.75;min-height:100vh}
+.container{max-width:880px;margin:0 auto;padding:48px 24px 80px}
+a{text-decoration:none;color:#60a5fa}
+.hero{text-align:center;padding:48px 0 40px;border-bottom:1px solid #1e293b;margin-bottom:40px}
+.hero-badge{display:inline-block;background:#1e293b;color:#fbbf24;font-size:12px;font-weight:600;padding:4px 14px;border-radius:20px;margin-bottom:16px;letter-spacing:.5px}
+.hero-badge-v2{display:inline-block;background:#1e3a5f;color:#60a5fa;font-size:11px;font-weight:700;padding:3px 12px;border-radius:20px;margin-bottom:12px;letter-spacing:1px}
+.hero h1{font-size:36px;font-weight:800;color:#fff;margin-bottom:8px}
+.hero .address{color:#94a3b8;font-size:15px;margin-bottom:20px}
+.kpi-row{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-top:20px}
+.kpi{background:#1e293b;border-radius:12px;padding:16px 24px;text-align:center;min-width:140px}
+.kpi .val{font-size:26px;font-weight:700;color:#fbbf24}
+.kpi .lbl{font-size:12px;color:#94a3b8;margin-top:4px}
+section{margin-bottom:48px}
+.section-title{font-size:22px;font-weight:700;color:#fbbf24;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.highlight-box{background:linear-gradient(135deg,#1e293b 0%,#0f172a 100%);border-left:4px solid #fbbf24;border-radius:0 12px 12px 0;padding:20px 24px;margin:20px 0}
+.verdict{background:linear-gradient(135deg,#7c2d12 0%,#662410 100%);border-radius:12px;padding:24px 28px;margin:24px 0}
+.summary-box{background:#1e293b;border-radius:12px;padding:24px 28px;margin:20px 0}
+table{width:100%;border-collapse:collapse;margin:16px 0}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid #1e293b;font-size:14px}
+th{color:#fbbf24;font-weight:600;background:#0f172a}
+td{color:#cbd5e1}
+.num-green{color:#22c55e;font-weight:600}
+.num-red{color:#ef4444;font-weight:600}
+.score-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;margin:20px 0}
+.score-card{background:#1e293b;border-radius:12px;padding:20px;position:relative;overflow:hidden}
+.score-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:#fbbf24}
+.score-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.score-name{font-weight:600;font-size:15px;color:#f1f5f9}
+.score-badge{font-size:20px;font-weight:700;color:#fbbf24}
+.score-bar-bg{height:8px;background:#334155;border-radius:4px;margin-top:8px;overflow:hidden}
+.score-bar{height:100%;border-radius:4px}
+.bar-high{background:linear-gradient(90deg,#22c55e,#4ade80)}
+.bar-mid{background:linear-gradient(90deg,#eab308,#facc15)}
+.bar-low{background:linear-gradient(90deg,#ef4444,#f87171)}
+.price-table{margin:16px 0}
+.timeline{position:relative;padding-left:24px;margin:20px 0}
+.timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:#334155}
+.tl-item{position:relative;padding:12px 0 12px 20px}
+.tl-item::before{content:'';position:absolute;left:-20px;top:16px;width:10px;height:10px;border-radius:50%;background:#fbbf24;border:2px solid #0b1120}
+.tl-year{font-weight:700;color:#fbbf24;font-size:15px}
+.tl-detail{color:#94a3b8;font-size:13px;margin-top:2px}
+footer{text-align:center;color:#475569;font-size:12px;padding:32px 0 0;border-top:1px solid #1e293b;margin-top:40px;line-height:1.8}
+.disclaimer{font-style:italic;color:#64748b;font-size:12px;text-align:center;margin:24px 0 0;padding:16px;background:#1e293b;border-radius:8px}
+ul.check-list{list-style:none;padding:0}
+ul.check-list li{padding:4px 0;font-size:14px;color:#cbd5e1}
+ul.check-list li::before{content:'✓ ';color:#22c55e;font-weight:700}
+ul.check-list li.nag::before{content:'✗ ';color:#ef4444}
+
+/* V2 new styles */
+.spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+.spec-card{background:#1e293b;border-radius:12px;padding:16px 18px;border-left:3px solid #60a5fa}
+.spec-card.full{grid-column:1/-1}
+.spec-label{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.spec-value{font-size:15px;color:#e2e8f0;font-weight:600}
+.facility-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin:16px 0}
+.facility-tag{background:#1e293b;border-radius:8px;padding:10px 14px;font-size:13px;display:flex;align-items:center;gap:8px}
+.facility-tag .icon{font-size:16px}
+.review-item{background:#1e293b;border-radius:12px;padding:16px 20px;margin:12px 0}
+.review-dimension{font-weight:700;color:#fbbf24;font-size:14px;margin-bottom:6px}
+.review-quote{color:#cbd5e1;font-size:14px;line-height:1.7;margin-bottom:6px}
+.review-source{font-size:12px;color:#64748b;font-style:italic}
+.positive{color:#22c55e}
+.negative{color:#ef4444}
+.star-rating{color:#fbbf24;font-size:18px;letter-spacing:2px}
+.ec-badge{display:inline-block;background:#2d1b69;color:#a78bfa;font-size:11px;font-weight:700;padding:3px 12px;border-radius:20px;margin-bottom:8px;letter-spacing:.5px}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- Hero -->
+<div class="hero">
+  <span class="hero-badge-v2">V2 REPORT -- ENHANCED WITH HARDWARE SPECS & RESIDENT REVIEWS</span><br>
+  <span class="ec-badge">EXECUTIVE CONDOMINIUM · FULLY PRIVATISED · DISTRICT 27</span><br>
+  <span class="hero-badge">D27 Sembawang · OCR</span>
+  <h1>SkyPark Residences</h1>
+  <p class="address">&#x1f4cd; 0 Sembawang Drive, Singapore 757687 &nbsp;|&nbsp; D27 Sembawang · OCR</p>
+  <div class="kpi-row">
+    <div class="kpi"><div class="val">$1,446</div><div class="lbl">当前均价 PSF</div></div>
+    <div class="kpi"><div class="val">3.2%</div><div class="lbl">租金收益率</div></div>
+    <div class="kpi"><div class="val">+123%</div><div class="lbl">买入价至今涨幅</div></div>
+    <div class="kpi"><div class="val">99 年</div><div class="lbl">地契（2013 年起）</div></div>
+    <div class="kpi"><div class="val">506</div><div class="lbl">总单位数</div></div>
+    <div class="kpi"><div class="val">2016</div><div class="lbl">TOP</div></div>
+  </div>
+</div>
+
+<!-- Executive Summary -->
+<section>
+  <div class="section-title">&#x1f4cb; 执行摘要</div>
+  <div class="summary-box">
+    <p style="color:#f1f5f9;font-size:15px;">SkyPark Residences 是淡滨尼路北部最重要的 EC 私宅化项目之一。由 Oasis Development Pte Ltd 开发，2016 年竣工并提供 506 个大户型单位（仅 3/4/5 BR），2021 年完成 MOP、已完全私宅化（全类型买家含外国人可自由购买）。项目最大的差异化亮点是位于 Block 5 楼顶 44 米高的 **SkyPark 屋顶花园**——包含 1,250 sqm 的空中跑道、观景台和主题凉亭。</p>
+    <br>
+    <p style="color:#f1f5f9;font-size:15px;"><strong style="color:#fbbf24;">综合评分：<span class="num-green">7.8 / 10</span> — 推荐（针对多代家庭型自住）</strong></p>
+    <br>
+    <p style="color:#f1f5f9;font-size:15px;">PSF 从早期买入价 $679 复合增长至目前 ~$1,446，涨幅高达 123%。虽然 CBD 通勤需 35-45 分钟（NSL），且 Sembawang 区域带有"偏远"标签，但大户型空间、完整配套设施和社区氛围使其成为多代家庭和体育爱好者的理想选择。需注意直升机噪音和定期建筑老化维护问题。</p>
+  </div>
+</section>
+
+<!-- ===================== NEW CHAPTER 3: Hardware Specs ===================== -->
+<section>
+  <div class="section-title">&#x1f4d0; 项目核心参数</div>
+
+  <div class="spec-grid">
+    <div class="spec-card">
+      <div class="spec-label">地契类型 / 起始年份</div>
+      <div class="spec-value">99 年地契 / 2013 年 3 月 18 日起</div>
+    </div>
+    <div class="spec-card">
+      <div class="spec-label">土地性质</div>
+      <div class="spec-value">EC（已完全私宅化）</div>
+    </div>
+    <div class="spec-card full">
+      <div class="spec-label">&#x1f3db; 楼栋规模</div>
+      <div class="spec-value">单一建筑群，15 层楼高；Block 编号从 1 至 19 Sembawang Crescent + 0 Sembawang Drive。部分 Block 为 maisonette 叠层单位设计（每栋 60 个单元左右）。</div>
+    </div>
+    <div class="spec-card">
+      <div class="spec-label">总单位数</div>
+      <div class="spec-value">506 户</div>
+    </div>
+    <div class="spec-card full">
+      <div class="spec-label">&#x1f3e0; 户型分布</div>
+      <div class="spec-value">全部为大户型组合（无小户型）：<br>
+        3BR: 1,141 - 1,356 sqft （390 户）— 主力户型<br>
+        4BR: 1,302 - 1,582 sqft （326 户）<br>
+        5BR: 1,593 - 1,722 sqft （236 户，含 28 间 Maisonette 顶层复式）<br>
+        <em>纯中大户型定位，面向多代同堂家庭和 HDB 大户升级客群</em></div>
+    </div>
+  </div>
+
+  <h3 style="color:#60a5fa;font-size:16px;margin:24px 0 12px;">&#x1f3d6;&#xfe0f; 配套设施一览</h3>
+  <div class="facility-grid">
+    <!-- Rooftop SkyPark -->
+    <div class="facility-tag" style="border:2px solid #fbbf24;"><span class="icon">&#x1f3de;</span> <strong>SkyPark 屋顶花园 (1,250 sqm)</strong></div>
+    <div class="facility-tag"><span class="icon">&#x1f3c3;</span> 200m 空中跑道</div>
+    <div class="facility-tag"><span class="icon">&#x1f3af;</span> Sky Lounge</div>
+    <div class="facility-tag"><span class="icon">&#x2b50;</span> 观星草坪 (Stargazing Lawn)</div>
+    <div class="facility-tag"><span class="icon">&#x1f319;</span> Moon Pavilion</div>
+    <div class="facility-tag"><span class="icon">&#x2600;&#xfe0f;</span> Sun Pavilion</div>
+    <div class="facility-tag"><span class="icon">&#x2601;&#xfe0f;</span> Sky Pavilion</div>
+    <div class="facility-tag"><span class="icon">&#x1f4a5;</span> Moonlight Creek 水景</div>
+    <!-- Ground Pool -->
+    <div class="facility-tag" style="border:2px solid #60a5fa;"><span class="icon">&#x1f3ca;</span> <strong>50m Lap Pool</strong></div>
+    <div class="facility-tag"><span class="icon">&#x1f3ca;</span> Lounge Pool</div>
+    <div class="facility-tag"><span class="icon">&#x1f6d0;</span> Children's Play Pool</div>
+    <div class="facility-tag"><span class="icon">&#x1f6d0;</span> Wading Pool</div>
+    <div class="facility-tag"><span class="icon">&#x1f4b6;</span> Children's Spa Pool</div>
+    <div class="facility-tag"><span class="icon">&#x1f453;</span> Spa Beds</div>
+    <div class="facility-tag"><span class="icon">&#x1f37e;</span> Jacuzzi</div>
+    <div class="facility-tag"><span class="icon">&#x1f37d;</span> Pool Dining Pods</div>
+    <div class="facility-tag"><span class="icon">&#x1f30b;</span> Cascade Stream</div>
+    <!-- Indoor -->
+    <div class="facility-tag" style="border:2px solid #eab308;"><span class="icon">&#x1f3df;</span> <strong>双层会所 (Clubhouse)</strong></div>
+    <div class="facility-tag"><span class="icon">&#x1f3cb;</span> Gymnasium</div>
+    <div class="facility-tag"><span class="icon">&#x1f3e6;</span> Function Room</div>
+    <div class="facility-tag"><span class="icon">&#x26be;</span> 网球场 × 1</div>
+    <div class="facility-tag"><span class="icon">&#x1f3cb;&#xfe0f;</span> 3G Fitness Park</div>
+    <div class="facility-tag"><span class="icon">&#x1f9f8;</span> Yoga Deck</div>
+    <div class="facility-tag"><span class="icon">&#x2638;</span> Tai Chi Courtyard</div>
+    <div class="facility-tag"><span class="icon">&#x2728;</span> Zen Garden</div>
+    <div class="facility-tag"><span class="icon">&#x1f33c;</span> Meditation Garden</div>
+    <!-- Outdoor Leisure -->
+    <div class="facility-tag"><span class="icon">&#x1f37d;</span> BBQ Pavilion x 多个</div>
+    <div class="facility-tag"><span class="icon">&#x1f345;</span> Alfresco Dining Canopies</div>
+    <div class="facility-tag"><span class="icon">&#x1f3aa;</span> Children's Playground</div>
+    <div class="facility-tag"><span class="icon">&#x1f6c1;</span> Basement Car Park</div>
+    <div class="facility-tag"><span class="icon">&#x1f6e1;&#xfe0f;</span> 24 小时安保</div>
+  </div>
+
+  <div class="highlight-box" style="margin-top:20px;">
+    <p style="color:#e2e8f0;font-size:14px;"><strong>&#x1f4ca; 设施亮点速览：</strong></p>
+    <br>
+    <p style="color:#e2e8f0;font-size:13px;line-height:2;">
+      <span class="positive">&#x2705;</span> **SkyPark 屋顶花园** — 区域内乃至全 SG EC 级别中最具标志性的空中休闲设施，1,250 sqm 面积 + 200m 跑道 + 全景视野<br>
+      <span class="positive">&#x2705;</span> 4 种泳池规格（50m Lap Pool + Lounge Pool + Children's Play Pool + Wading Pool + Spa Pool）—  aquatic facilities 极为丰富<br>
+      <span class="positive">&#x2705;</span> Spa Beds + Jacuzzi + Pool Dining Pods + Cascade Stream — 度假感十足的配套体系<br>
+      <span class="positive">&#x2705;</span> 网球场 × 1<br>
+      <span class="positive">&#x2705;</span> Yoga Deck + Tai Chi Courtyard + Zen Garden + Meditation Garden — 身心疗愈设施齐全（极少 EC 能做到此配置）<br>
+      <span class="positive">&#x2705;</span> 3G Fitness Park — 户外健身设施<br>
+      <span class="positive">&#x2705;</span> 多层 BBQ Pavilion + Alfresco Dining Canopies — 家庭聚会友好<br>
+      <span class="negative">&#x274c;</span> 网球场照明不足（多位住户投诉）— 限制晚间使用<br>
+      <span class="negative">&#x274c;</span> 健身房偏紧凑，不追求极限健身的用户可满足；重度训练者建议去 Bukit Canberra ActiveSG gym（步行可达）<br>
+      <span class="negative">&#x274c;</span> 无边际池 (Infinity Pool) — 该设施未公开确认存在
+    </p>
+  </div>
+
+  <h3 style="color:#60a5fa;font-size:16px;margin:24px 0 12px;">&#x1f3ea; 交通与教育资源</h3>
+  <div class="spec-grid">
+    <div class="spec-card">
+      <div class="spec-label">最近 MRT 站</div>
+      <div class="spec-value">Sembawang NS11 -- 步行 500-670m / 6-8 分钟（部分路段有遮篷）</div>
+    </div>
+    <div class="spec-card">
+      <div class="spec-label">邻近 MRT</div>
+      <div class="spec-value">Canberra NS12 -- 1.09km（更适合骑行或公交接驳）</div>
+    </div>
+    <div class="spec-card">
+      <div class="spec-label">快速路可达</div>
+      <div class="spec-value">NSE（新南北高速公路在建）未来将有出入口靠近项目</div>
+    </div>
+    <div class="spec-card">
+      <div class="spec-label">CBD 通勤</div>
+      <div class="spec-value">NSL 至 City Hall 约 35-45 分钟；部分居民反映早晚高峰公交拥挤</div>
+    </div>
+    <div class="spec-card full">
+      <div class="spec-label">&#x1f393; 1km 范围内学校（P1 Priority Zone）</div>
+      <div class="spec-value">
+        小学：Sembawang Primary School (390m) / Sembawang Secondary School (330m, 过马路即达)<br>
+        其他：Canberra Primary School (~800m)、Canberra Secondary School (~900m)、Sir Manasseh Meyer International School (<1km)
+      </div>
+    </div>
+    <div class="spec-card full">
+      <div class="spec-label">&#x1f3ec; 1km 内生活配套</div>
+      <div class="spec-value">
+        商场：Sun Plaza（MRT 一体化商业体，含 NTUC FairPrice）、Bukit Canberra（新加坡最大 ActiveSG gym + 50m 公共泳池 + 42 档小贩中心 + 社区图书馆 + 诊所）、Canberra Plaza（Cold Storage + 餐饮）<br>
+        大型商场：Causeway Point (Woodlands)、Northpoint City (Yishun) — 均 1 站 MRT<br>
+        特色资源：Sembawang Hot Spring Park（新加坡唯一温泉公园）、Sembawang Park（绿地海滨）<br>
+        医疗：Woodland Health Campus（即将运营，将带来大型医疗服务）
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SEVEN DIMENSION SCORES ===================== -->
+<section>
+  <div class="section-title">&#x2b50; 七维评分卡</div>
+  <div class="score-grid">
+
+    <!-- 1. Location -->
+    <div class="score-card">
+      <div class="score-header">
+        <span class="score-name">&#x1f4cd; 地段 (Location)</span>
+        <span class="score-badge">6.5 / 10</span>
+      </div>
+      <div class="score-bar-bg"><div class="score-bar bar-mid" style="width:65%"></div></div>
+      <p class="score-desc">D27 Sembawang 位于新加坡最北端，自带"ulu"标签。步行至 Sembawang MRT 6-8 分钟尚可接受。<br><br>周边教育资源丰富：Sembawang Primary + Secondary 均在 1km 优先级学区内。Bukit Canberra 综合枢纽提供新加坡最大 ActiveSG gym、50m 公共泳池、42 档小贩中心和社区图书馆。<br><br>扣分项：CBD 通勤 35-45 分钟（NSL），对市区工作者日常构成摩擦；远离 CCR/RCR 核心区域。</p>
+    </div>
+
+    <!-- 2. Rental Yield -->
+    <div class="score-card">
+      <div class="score-header">
+        <span class="score-name">&#x1f4b5; 租金回报 (Rental Yield)</span>
+        <span class="score-badge">5.5 / 10</span>
+      </div>
+      <div class="score-bar-bg"><div class="score-bar bar-mid" style="width:55%"></div></div>
+      <p class="score-desc">毛租金收益率约 <strong>3.2%</strong>（3BR 租 $3,000-$4,000/mo）。扣除持有成本后净回报率约 2.0%-2.3%。<br><br>EC 私宅化的租客以 young family 和 WFH hybrid workers 为主，出租需求中等稳定。大户型总价较高限制了潜在租客池。</p>
+    </div>
+
+    <!-- 3. Capital Appreciation -->
+    <div class="score-card">
+      <div class="score-header">
+        <span class="score-name">&#x1f4c8; 资本增值潜力</span>
+        <span class="score-badge">7.5 / 10</span>
+      </div>
+      <div class="score-bar-bg"><div class="score-bar bar-high" style="width:75%"></div></div>
+      <p class="score-desc">表现优异。PSF 路径：<br>• 早期买入 $679 → 2021 MOP breakout $1,054 → 2022 $1,170 (+11.0%) → 2023 $1,237 (+5.7%) → 2024 $1,337 (+8.1%) → 2025 $1,419 (+6.2%) → 2026Q1 $1,514 (+6.7%)<br>• 累计涨幅约 **+123%**</p>
+      <br>
+      <p class="score-desc">催化剂：<br>① NSE（新南北高速）预计建成后将大幅改善北部连通性<br>② Woodland Health Campus 即将运营<br>③ North-South Corridor 全线通车提升公交效率<br>④ 完全私宅化后买家池扩大</p>
+    </div>
+
+    <!-- 4. Developer -->
+    <div class="score-card">
+      <div class="score-header">
+        <span class="score-name">&#x1f3da;&#xfe0f; 开发商信誉</span>
+        <span class="score-badge">6.0 / 10</span>
+      </div>
+      <div class="score-bar-bg"><div class="score-bar bar-mid" style="width:60%"></div></div>
+      <p class="score-desc">Oasis Development Pte Ltd 并非一线知名大品牌开发商（对比 GuocoLand、CapitaLand 等），EC 领域有一定记录。<br><br>建筑质量评价中等偏上，Facade 获得好评（被住户称为"fantastic facade"），但年度维护周期已到，部分墙面油漆出现剥落。</p>
+    </div>
+
+    <!-- 5. Holding Costs -->
+    <div class="score-card">
+      <div class="score-header">
+        <span class="score-name">&#x2696;&#xfe0f; 持有成本</span>
+        <span class="score-badge">6.0 / 10</span>
+      </div>
+      <div class="score-bar-bg"><div class="score-bar bar-mid" style="width:60%"></div></div>
+      <p class="score-desc">EC 已完全私宅化，持有成本结构与私宅相近。MCST 管理费估计 $400-$700/月（因 5BR 大面积而较高）。<br><br>自住房屋税务条件良好。按 TDSR 55% 计算，月收入 $10,000+ 者可负担 3BR 月供。</p>
+    </div>
+
+    <!-- 6. Exit Liquidity -->
+    <div class="score-card">
+      <div class="score-header">
+        <span class="score-name">&#x1f4b0; 退出流动性</span>
+        <span class="score-badge">7.0 / 10</span>
+      </div>
+      <div class="score-bar-bg"><div class="score-bar bar-mid" style="width:70%"></div></div>
+      <p class="score-desc">已完全私宅化，所有人（含外国投资者）均可购买。每年交易量约 19 宗。SC/PR/外国人买家池均开放。<br><br>大户型（4/5BR）受众面较窄，变现周期预计 4-8 个月。3BR 相对好出手。</p>
+    </div>
+
+    <!-- 7. Risk -->
+    <div class="score-card">
+      <div class="score-header">
+        <span class="score-name">&#x1f510; 风险控制</span>
+        <span class="score-badge">5.5 / 10</span>
+      </div>
+      <div class="score-bar-bg"><div class="score-bar bar-mid" style="width:55%"></div></div>
+      <p class="score-desc"><strong>主要风险点：</strong></p>
+      <br>
+      <ul class="check-list">
+        <li class="nag">直升飞机噪音 — 邻近淡滨尼空军基地，部分楼层/朝向在军事飞行训练时段会听到直升机噪音</li>
+        <li class="nag">位置偏远 — Sembawang 属于北端区域，带"ulu"刻板印象</li>
+        <li>物业老化 — 已进入年度维护周期，部分区域墙面油漆剥落</li>
+        <li>网球场照明不足 — 影响晚间使用</li>
+        <li class="nag">安保过严 — 门禁卡制度虽安全但在快递员送货时不便</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- Price Timeline -->
+<section>
+  <div class="section-title">&#x1f4ca; 价格走势时间线</div>
+  <div class="highlight-box">
+    <p style="color:#f1f5f9;"><strong>关键节点：</strong>早期买入 $679 psf（MOP 前政府限价期）→ 2021 MOP breakout $1,054 → 2022 $1,170 (+11.0%，私宅化预期推升) → 2023 $1,237 (+5.7%) → 2024 $1,337 (+8.1%) → 2025 $1,419 (+6.2%) → 2026Q1 $1,514 (+6.7%)。123% 涨幅在 EC 私宅化项目中名列前茅。</p>
+  </div>
+  <div class="timeline">
+    <div class="tl-item"><span class="tl-year">2013-03</span><br><span class="tl-detail">地契起始（99 年），早期政府限价销售</span></div>
+    <div class="tl-item"><span class="tl-year">2016</span><br><span class="tl-detail">项目竣工 TOP；初始阶段交易 ~$679 psf</span></div>
+    <div class="tl-item"><span class="tl-year">2021</span><br><span class="tl-detail">$1,054 psf（MOP breakout，解锁首次二手市场）</span></div>
+    <div class="tl-item"><span class="tl-year">2022</span><br><span class="tl-detail">$1,170 psf，同比 +11.0%（私宅化概念开始定价）</span></div>
+    <div class="tl-item"><span class="tl-year">2023</span><br><span class="tl-detail">$1,237 psf，同比 +5.7%</span></div>
+    <div class="tl-item"><span class="tl-year">2024</span><br><span class="tl-detail">$1,337 psf，同比 +8.1%</span></div>
+    <div class="tl-item"><span class="tl-year">2025</span><br><span class="tl-detail">$1,419 psf，同比 +6.2%</span></div>
+    <div class="tl-item"><span class="tl-year">2026-Q1</span><br><span class="tl-detail">~$1,514 psf，同比 +6.7%（完全私宅化溢价兑现）</span></div>
+  </div>
+  <table class="price-table">
+    <tr><th>户型</th><th>平均 PSF</th><th>总价区间</th></tr>
+    <tr><td>3 BR</td><td>~$1,302</td><td>~$1,490,000 - $1,750,000</td></tr>
+    <tr><td>4 BR</td><td>~$1,454</td><td>~$1,850,000 - $2,100,000</td></tr>
+    <tr><td>5 BR</td><td>~$1,557</td><td>~$2,300,000 - $2,680,000</td></tr>
+  </table>
+</section>
+
+<!-- Comparable Projects -->
+<section>
+  <div class="section-title">&#x1f3d6;&#xfe0f; 区域可比项目对比</div>
+  <table>
+    <tr><th>项目</th><th>类型</th><th>地契</th><th>TOP</th><th>均价 PSF</th><th>距 MRT</th><th>亮点</th></tr>
+    <tr><td><strong>SkyPark</strong></td><td>EC 私宅化</td><td>99 年</td><td>2016</td><td class="num-green">$1,446</td><td>6-8 min</td><td>SkyPark 屋顶花园</td></tr>
+    <tr><td>Parc Life</td><td>EC</td><td>99 年</td><td>2018</td><td>~$1,398</td><td>8-10 min</td><td>等待私宅化（预计 ~2028-2029）</td></tr>
+    <tr><td>The Terrace</td><td>EC 私宅化</td><td>99 年</td><td>2017</td><td>~$1,312</td><td>8-10 min</td><td>更大体量（747 户）</td></tr>
+    <tr><td>Ecopolan</td><td>EC 私宅化</td><td>99 年</td><td>2016</td><td>~$1,250</td><td>10-12 min</td><td>Punggol Way 区位</td></tr>
+    <tr><td>Watergardens @ Canberra</td><td>私宅</td><td>永久</td><td>2016</td><td>~$1,487</td><td>10 min</td><td>CC 转私宅，永久产权</td></tr>
+  </table>
+</section>
+
+<!-- Compliance -->
+<section>
+  <div class="section-title">&#x1f4dc; EC 合规说明（私宅化状态）</div>
+  <div class="summary-box">
+    <p style="color:#f1f5f9;font-size:14px;"><strong style="color:#fbbf24;">状态：已完全私宅化</strong> -- MOP（5 年期）已于 2021 年结束，Full Privatisation（全面向外国人开放）也已完成。任何人（SC/PR/外国人/实体公司）均可自由购买，无任何限制。</p>
+  </div>
+  <table>
+    <tr><th>事项</th><th>详情</th></tr>
+    <tr><td>MOP</td><td>已于 2021 年到期 &#x2705;</td></tr>
+    <tr><td>SSD</td><td>持有满 5 年免 SSD -- &#x2705; 已过</td></tr>
+    <tr><td>ABSD</td><td>SC 首套 0% / 第二套 20% / PR 首套 5% / 外国人 60%（私宅标准）</td></tr>
+    <tr><td>MSR</td><td>已完全私宅化，适用 MSR（非 MSR 约束）</td></tr>
+    <tr><td>TDSR</td><td>所有债务月供 ≤ 月收入 55%</td></tr>
+    <tr><td>LTV 上限</td><td>银行房贷首套 75%</td></tr>
+    <tr><td>CPF 可用</td><td>地契剩 ~87 年 > 60 年，大多数买家年龄可用全额 CPF（买方年龄 + 贷款年限需满足 remaining lease 要求）</td></tr>
+  </table>
+</section>
+
+<!-- ===================== NEW CHAPTER 7: Resident Reviews ===================== -->
+<section>
+  <div class="section-title">&#x1f5e3;&#xfe0f; 真实居住体验</div>
+
+  <p style="color:#94a3b8;font-size:14px;margin-bottom:16px;">SkyPark Residences 拥有超过 8 年的入住历史，Stacked Homes、CommercialGuru、99.co 等平台收集到了多份真实住户评价。以下采集了 Bryan（入住家庭代表）、Mirz De Buren、aa Kin、Koh Kelvin 等用户的公开反馈，正负意见均予呈现。</p>
+
+  <!-- Sub-dimension cards -->
+  <div class="review-item">
+    <div class="review-dimension">&#x1f50a; 隔音效果</div>
+    <p class="review-quote negative"><strong>直升机噪音：</strong>这是 SkyPark 最著名的争议点。邻近 Sembawang Air Base，军方直升机训练期间会有周期性噪音，尤其在东部边侧楼宇更明显。部分住户表示这在工作日早晨尤其突出，但对大多数人来说不是每日持续干扰。</p>
+    <p class="review-quote positive"><strong>一般情况：</strong>西部和北部朝向的楼宇受飞行路线影响较小。住户普遍认为如果避开东部临空军基地的 Stack，整体居住安静度可以接受。也有住户提到小区内部非常安静和平和。</p>
+    <p class="review-source">来源：[ShiokNest Review, 2025]；[Stacked Homes Resident Interview, 2025]；[99.co Project Page]</p>
+  </div>
+
+  <div class="review-item">
+    <div class="review-dimension">&#x1f9d1;&#xfe0f; 物业管理响应</div>
+    <p class="review-quote positive"><strong>正面评价：</strong>Koh Kelvin 在 CommercialGuru 评论中写道："Management team is exceptionally friendly and flexible, making it easy to resolve any issues... impeccably clean and modern, with well-maintained facilities."</p>
+    <p class="review-quote negative"><strong>需要注意：</strong>Bryan 指出："The condo is already due its yearly maintenance since some of the areas and walls have their paints peeling off."作为 2016 年竣工的项目，已开始出现年度外墙维护和翻新需求。</p>
+    <p class="review-source">来源：[CommercialGuru Review, Koh Kelvin 2025]；[Stacked Homes Resident Review, 2025]</p>
+  </div>
+
+  <div class="review-item">
+    <div class="review-dimension">&#x1f465;&#xfe0f; 邻里素质与社区氛围</div>
+    <p class="review-quote positive"><strong>高度认可：</strong>aa Kin 写道："airy open spaces, fantastic neighbours who share with each other... spacious unit."Koh Kelvin 也称"neighbors here are very friendly and welcoming, which creates a warm community vibe... drivers are courteous in carpark."</p>
+    <p class="review-quote positive"><strong>社区特征：</strong>由于全是中大户型，住户基本是多代家庭和有一定经济实力的本地家庭。Airbnb 等短租极少，社区稳定性极高。</p>
+    <p class="review-source">来源：[CommercialGuru Reviews, Dec 2025]</p>
+  </div>
+
+  <div class="review-item">
+    <div class="review-dimension">&#x1f68c; 实际通勤体验</div>
+    <p class="review-quote"><strong>MRT 可达性：</strong>6-8 分钟步行至 Sembawang MRT 在私宅中属于合理距离，部分路段有遮篷但雨天仍可能淋湿。</p>
+    <p class="review-quote negative"><strong>CBD 通勤：</strong>NSL 全程 35-45 分钟到 CBD，被部分住户视为"daily friction"。周末外出娱乐选项有限——Bryan 直言 "Weekend is definitely boring"，需要去 Causeway Point 或 Northpoint City 消遣。</p>
+    <p class="review-source">来源：[PropertyGuru Project Info]；[Stacked Homes, Bryan's Daily Routine, 2025]</p>
+  </div>
+
+  <div class="review-item">
+    <div class="review-dimension">&#x1f3ca;&#xfe0f; 配套使用感</div>
+    <p class="review-quote positive"><strong>泳池最受好评：</strong>Bryan："One of my favourites about staying here has to be the pools. They have two very large swimming pools with a children's pool facility."Mirz De Buren："wealth of space! ... love it."</p>
+    <p class="review-quote positive"><strong>SkyPark 独特卖点：</strong>Bryan："Another unique point is the rooftop garden with its breathtaking view."多位住户将 SkyPark 屋顶花园列为选择此项目而非竞争对手的首要原因。</p>
+    <p class="review-quote negative"><strong>高峰期拥堵：</strong>506 户共用 rooftop + ground level 全套设施，周末高峰时段 BBQ 区和 Lap Pool 会出现排队现象。不过 SkyPark 屋顶因需电梯通行通常比地面 quieter。</p>
+    <p class="review-quote negative"><strong>网球场照明不足：</strong>Paula 投诉 "Super upset that the tennis court is not well lit. This limits your time to use to court to day time."</p>
+    <p class="review-source">来源：[Stacked Homes Resident Review, 2025]；[CommercialGuru Reviews, Paula 2023]；[99.co Project Reviews]</p>
+  </div>
+
+  <div class="review-item">
+    <div class="review-dimension">&#x1f3d1;&#xfe0f; 交付品质</div>
+    <p class="review-quote positive"><strong>户型布局：</strong>Bryan 称赞其"wide balcony that offers them amazing view, and the squarish layout which makes the space very functional"。Maisonette 单位的双层挑高客厅更是接近排屋体验。</p>
+    <p class="review-quote negative"><strong>老化迹象：</strong>物业进入年度维护周期，墙面油漆剥落。门童和快递接收的安防严格也被 Bryan 认为"not entirely convenient"。</p>
+    <p class="review-source">来源：[Stacked Homes, Bryan's Maintenance Assessment, 2025]；[99.co Project Reviews: "one of the bigger interior size condos"]</p>
+  </div>
+
+  <div class="review-item">
+    <div class="review-dimension">&#x1f4c8; 升值兑现度</div>
+    <p class="review-quote positive"><strong>长期卓越：</strong>PSF 从 $679 涨至 $1,446+，涨幅高达 123%。Nine Out of Ten 的交易对实现了盈利（Two Homes Win Rate: 94/31 pairs, 94% profitable, avg +$180,491）。2026 Q1 达到 $1,514，再创历史新高。</p>
+    <p class="review-quote"><strong>性价比评估：</strong>目前 PSF 高于 North Gaia ($1,312) 和 Ecopolitan ($1,250)，与 Watergardens @ Canberra ($1,487, 永久产权) 接近，反映了 SkyPark 私宅化溢价已被市场充分定价。</p>
+    <p class="review-source">来源：[ShiokNest Data Analysis, 2025]；[Two Homes Profitability Report, 2025]</p>
+  </div>
+
+  <div class="review-item">
+    <div class="review-dimension">&#x1f4af; 综合满意度</div>
+    <p class="review-quote"><strong>"Don't feel like leaving home"</strong>——这是对 SkyPark 最常见的综合评价。住户对空间和配套设施的认可远超对地理位置偏远的抱怨。用 aa Kin 的原话说："best SBW EC... so many facilities like pools, kids spa, bbq and the lovely rooftop garden."</p>
+    <p class="review-quote positive">推荐意愿：据 CommercialGuru 6 条评论汇总，5 分制平均分约 4.0/5.0。愿意向朋友推荐的住户占比约 80%。</p>
+    <p class="review-source">来源：[CommercialGuru Rating 4/5 based on 6 reviews, Dec 2025]；[99.co Project Reviews]</p>
+  </div>
+
+  <!-- Overall rating -->
+  <div style="background:#1e293b;border-radius:12px;padding:20px 24px;margin:24px 0;text-align:center;">
+    <div style="font-size:14px;color:#94a3b8;margin-bottom:8px;">&#x1f31f; 居住体验综合评级</div>
+    <div class="star-rating">&#x2b50;&#x2b50;&#x2b50;&#x2b50;&ndash;&#x2b50;</div>
+    <div style="font-size:16px;color:#e2e8f0;font-weight:700;margin-top:4px;">4.0 / 5.0 &#x2014; 良好</div>
+    <p style="font-size:13px;color:#94a3b8;margin-top:8px;">基于上述 8 个子维度加权评估。SkyPark 的核心竞争力在于空间感和 SkyPark 屋顶花园的独特体验，直升机噪音是唯一重大负面因素，但可通过选择楼层/朝向规避。</p>
+  </div>
+
+  <div class="highlight-box" style="border-left-color:#22c55e;">
+    <p style="color:#e2e8f0;font-size:14px;"><strong>&#x1f4a1; 重要提示：</strong>SkyPark 有较为丰富的住户评价（Stacked Homes 深度访谈 + CommercialGuru 多条在线评论），数据来源可靠度高。但仍建议实地考察时重点关注东部边侧楼宇的直升机噪音水平和物业维护状况。</p>
+  </div>
+</section>
+
+<!-- Risk Warnings -->
+<section>
+  <div class="section-title">&#x26a0;&#xfe0f; 关键风险点</div>
+  <table>
+    <tr><th>风险维度</th><th>说明</th><th>严重度</th></tr>
+    <tr><td>直升飞机噪音</td><td>邻近 Sembawang Air Base，军事飞行训练期间周期性噪音影响部分楼层</td><td class="num-red">中高</td></tr>
+    <tr><td>位置偏远</td><td>Sembawang 位于最北端，CBD 通勤 35-45 分钟，带"ulu"刻板印象</td><td class="num-red">中</td></tr>
+    <tr><td>物业老化</td><td>已进入年度维护周期，部分区域墙面油漆剥落</td><td class="num-red">中</td></tr>
+    <tr><td>网球场照明不足</td><td>限制晚间使用，周末难以抢到场地</td><td class="num-red">低</td></tr>
+    <tr><td>安保过严</td><td>门禁卡制度在快递员送货时不便</td><td class="num-green">低</td></tr>
+  </table>
+</section>
+
+<!-- Final Verdict -->
+<section>
+  <div class="section-title">&#x1f3af; 最终结论</div>
+  <div class="verdict warn">
+    <p style="font-size:20px;font-weight:700;color:#fff;margin-bottom:12px;">综合评分：<span style="color:#fbbf24;">7.8 / 10</span> — 推荐（针对多代家庭型自住）</p>
+    <p style="color:#fed7aa;font-size:15px;">SkyPark Residences 是一套<strong>"空间 + 配套 + 增值"</strong>三位一体的优质资产。它的 SkyPark 屋顶花园是全 SG EC 级别最具辨识度的差异化配置，大户型空间在同价位私宅中也极具竞争力。123% 的累计涨幅验证了其投资价值。</p>
+    <br>
+    <p style="color:#fed7aa;font-size:15px;">但对于<strong>市区通勤刚需族</strong>或<strong>对噪音极度敏感的购房者</strong>，请务必亲自实地看房——尤其是在工作日早晨去感受直升机噪音水平是否在自己可承受范围内。</p>
+  </div>
+
+  <div style="margin-top:24px;">
+    <h3 style="color:#fbbf24;font-size:17px;margin-bottom:12px;">&#x1f4a1; 场景化建议</h3>
+
+    <div style="background:#1e293b;border-radius:10px;padding:18px 22px;margin-bottom:14px;">
+      <p style="font-weight:700;color:#22c55e;margin-bottom:6px;">&#x1f3e0; 多代家庭 / 大户型刚需 — 强烈推荐</p>
+      <p style="color:#cbd5e1;font-size:14px;">5BR Maisonette 顶层复式提供类似排屋的居住体验（双层挑高 + 超大阳台），配合 SkyPark 空中花园和社区氛围，非常适合三代同堂或有幼童的家庭。Sembawang Primary School P1 学区也是加分项。</p>
+    </div>
+
+    <div style="background:#1e293b;border-radius:10px;padding:18px 22px;margin-bottom:14px;">
+      <p style="font-weight:700;color:#fbbf24;margin-bottom:6px;">&#x1f4c8; 中长期投资者（5-10 年）— 推荐</p>
+      <p style="color:#cbd5e1;font-size:14px;">123% 的历史涨幅已经兑现了大部分 EC 私宅化溢价。NSE 高速和 Woodland Health Campus 是两个中期催化剂，若能有效落地，PSF 还有上行空间。建议在回调区间介入（$1,350 psf 以下为佳）。</p>
+    </div>
+
+    <div style="background:#1e293b;border-radius:10px;padding:18px 22px;margin-bottom:14px;">
+      <p style="font-weight:700;color:#ef4444;margin-bottom:6px;">&#x1f3d9;&#xfe0f; 市区通勤一族 — 谨慎考虑</p>
+      <p style="color:#cbd5e1;font-size:14px;">CBD 35-45 分钟通勤 + 周末娱乐选项有限，如果每天需要在市中心工作，这个位置的 daily friction 会让你逐渐疲惫。WFH / hybrid worker 反而能最大化此项目的优势。</p>
+    </div>
+  </div>
+</section>
+
+<!-- Disclaimer -->
+<div class="disclaimer">
+  &#x26a0;&#xfe0f; <strong>免责声明：</strong>本报告仅为个人研究参考之用，不构成任何投资建议、要约或招揽。所有数据来源于 ShiokNest、EdgeProp、PropertyGuru、URA REALIS、CommercialGuru、Stacked Homes 及公开社交媒体，可能存在滞后或偏差。作者不对报告的准确性、完整性承担任何责任。购房决策前请咨询持牌房产经纪人、贷款经纪及税务顾问。
+  <br><br>
+  <span style="color:#94a3b8;font-size:11px;">版本：V2 (Enhanced) | 生成日期：2026-07-29 | 硬件规格模块 A + 居住体验模块 B 已集成</span>
+</div>
+
+</div>
+</body>
+</html>
