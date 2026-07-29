@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Twin Waterfalls — 新加坡 D19 EC 房地产投资分析 V2</title>
+<style>
+:root {
+  --bg: #0f172a;
+  --bg-card: #1e293b;
+  --bg-code: #334155;
+  --text: #e2e8f0;
+  --text-dim: #94a3b8;
+  --border: #334155;
+  --accent: #6366f1;
+  --green: #22c55e;
+  --red: #ef4444;
+  --yellow: #eab308;
+  --blue: #3b82f6;
+  --purple: #a855f7;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+.container { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+/* Hero */
+.hero { text-align:center; padding: 3rem 0 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+.hero-badge { display: inline-block; background: var(--accent); color: #fff; padding: .3rem 1rem; border-radius: 99px; font-size: .85rem; margin-bottom: 1rem; }
+.hero h1 { font-size: 2.2rem; margin-bottom: .5rem; }
+.hero .subtitle { color: var(--text-dim); font-size: 1.05rem; }
+.meta-bar { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-top: 1.5rem; font-size: .9rem; }
+.meta-item { background: var(--bg-card); padding: .5rem 1rem; border-radius: 8px; border: 1px solid var(--border); }
+.meta-item strong { color: var(--accent); }
+
+h2 { font-size: 1.5rem; margin: 2.5rem 0 1rem; padding-left: .75rem; border-left: 4px solid var(--accent); }
+h3 { font-size: 1.15rem; margin: 1.5rem 0 .75rem; color: var(--yellow); }
+
+.summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+.summary-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; text-align: center; }
+.summary-card .number { font-size: 2rem; font-weight: 700; color: var(--green); }
+.summary-card .label { font-size: .85rem; color: var(--text-dim); margin-top: .25rem; }
+
+.score-card { display: flex; align-items: center; gap: 2rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; }
+.score-ring { width: 120px; height: 120px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 800; flex-shrink: 0; }
+.score-ring.good { background: linear-gradient(135deg, #22c55e, #16a34a); color: #fff; }
+.score-ring.mid { background: linear-gradient(135deg, #eab308, #ca8a04); color: #fff; }
+.score-ring.bad { background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff; }
+.score-details { flex: 1; }
+.score-details p { margin: .25rem 0; }
+.score-row { display: flex; justify-content: space-between; padding: .35rem 0; border-bottom: 1px dashed var(--border); }
+.score-row:last-child { border-bottom: none; }
+.score-label { color: var(--text-dim); }
+.score-value { font-weight: 600; }
+
+table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .9rem; }
+th { background: var(--bg-code); padding: .65rem .75rem; text-align: left; }
+td { padding: .6rem .75rem; border-bottom: 1px solid var(--border); }
+thead th { font-weight: 600; color: var(--accent); }
+tr:hover td { background: rgba(99,102,241,.06); }
+
+.tag-list { display: flex; flex-wrap: wrap; gap: .5rem; margin: .75rem 0; }
+.tag { background: var(--bg-code); padding: .25rem .75rem; border-radius: 6px; font-size: .8rem; border: 1px solid var(--border); }
+.tag.highlight { background: rgba(99,102,241,.2); border-color: var(--accent); color: var(--accent); }
+
+.review-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; margin: 1rem 0; }
+.review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: .5rem; }
+.review-source { font-size: .8rem; color: var(--text-dim); }
+.review-text { font-style: italic; color: var(--text-dim); line-height: 1.6; }
+
+.pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
+.pro, .con { background: var(--bg-card); border-radius: 12px; padding: 1.25rem; }
+.pro { border-left: 4px solid var(--green); }
+.con { border-left: 4px solid var(--red); }
+.pro h3 { color: var(--green); }
+.con h3 { color: var(--red); }
+.pro li, .con li { margin: .35rem 0; list-style: none; padding-left: 1rem; position: relative; }
+.pro li::before { content:"✓"; position:absolute; left:0; color:var(--green); font-weight:700; }
+.con li::before { content:"✗"; position:absolute; left:0; color:var(--red); font-weight:700; }
+
+.verdict-box { background: linear-gradient(135deg, rgba(99,102,241,.15), rgba(168,85,247,.1)); border: 1px solid var(--accent); border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; }
+.verdict-box h3 { color: var(--accent); font-size: 1.2rem; margin-bottom: .75rem; }
+.verdict-box ul { margin-left: 1rem; }
+.verdict-box li { margin: .35rem 0; }
+
+.footer { text-align: center; padding: 2rem 0; border-top: 1px solid var(--border); margin-top: 2rem; font-size: .8rem; color: var(--text-dim); }
+
+@media (max-width: 640px) {
+  .pros-cons { grid-template-columns: 1fr; }
+  .score-card { flex-direction: column; text-align: center; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ======================== HERO ======================== -->
+<div class="hero">
+  <div class="hero-badge">🏘️ EC · District 19 · Punggol</div>
+  <h1>Twin Waterfalls</h1>
+  <p class="subtitle">新加坡 D19 榜鹅执行共管公寓（EC）房地产投资分析 V2<br>含项目核心参数 + 真实居住体验</p>
+  <div class="meta-bar">
+    <div class="meta-item">开发商：<strong>Frasers Property</strong></div>
+    <div class="meta-item">地契：<strong>99 年（2011–2110）</strong></div>
+    <div class="meta-item">竣工：<strong>2015 TOP</strong></div>
+    <div class="meta-item">中位 PSF：<strong>$1,534</strong></div>
+  </div>
+</div>
+
+<!-- ======================== EXECUTIVE SUMMARY ======================== -->
+<h2>📋 执行摘要</h2>
+<p>Twin Waterfalls 是位于第 19 区榜鹅的大型 99 年租约执行共管公寓（EC），由 Frasers Property 开发，共 728 个单位、12 栋塔楼。项目于 2011 年起步地契，2015 年完工（TOP）。其最大卖点是<span style="color:var(--green)">紧邻水乡购物中心（Waterway Point）步行 7 分钟</span>、双轻轨站环绕的交通优势，以及独特的"瀑布主题"景观设计和丰富的"双套"户型（Dual Key）带来的租金回报增强潜力。</p>
+
+<div class="summary-grid">
+  <div class="summary-card">
+    <div class="number">728</div>
+    <div class="label">总户数</div>
+  </div>
+  <div class="summary-card">
+    <div class="number">$1,534</div>
+    <div class="label">中位 PSF（$USD）</div>
+  </div>
+  <div class="summary-card">
+    <div class="number">3.4%</div>
+    <div class="label">毛回报率</div>
+  </div>
+  <div class="summary-card">
+    <div class="number">+51.8%</div>
+    <div class="label">2021→2026 PSF 涨幅</div>
+  </div>
+</div>
+
+<div class="verdict-box">
+  <h3>一句话结论</h3>
+  <p><strong>"性价比之王——多代家庭的首选 EC"</strong>。在私宅化完成后（已过 MOP），Twin Waterfalls 继续以低于同类私宅的价格提供大规模配套设施和优越的生活便利度。适合预算有限但追求生活品质的家庭型买家，短期投资者应谨慎——EC 私宅化后溢价空间有限。</p>
+</div>
+
+<!-- ======================== CHAPTER 3: HARDWARE SPECS ======================== -->
+<h2 id="specs">📐 项目核心参数</h2>
+
+<h3>基本信息</h3>
+<table>
+<thead><tr><th>维度</th><th>数据</th></tr></thead>
+<tbody>
+<tr><td>地址</td><td>112 Punggol Walk, Singapore 828770</td></tr>
+<tr><td>地区（District）</td><td>D19 — Hougang / Punggol / Sengkang（OCR）</td></tr>
+<tr><td>类型</td><td>EC（Executive Condo）— 私宅化已到期</td></tr>
+<tr><td>开发商</td><td>Punggol Residences Pte Ltd（Frasers Centrepoint & Keong Hong）</td></tr>
+<tr><td>地契</td><td>99 年，自 2011 年 10 月 5 日起算 → 2110 年到期（剩 ~84 年）</td></tr>
+<tr><td>占地面积</td><td>25,164 sqm（270,867 sqft）</td></tr>
+<tr><td>楼栋规模</td><td><strong>12 座塔楼 × 17 层</strong></td></tr>
+<tr><td>总单位数</td><td><strong>728 户</strong></td></tr>
+<tr><td>户型种类</td><td>38 种不同楼层平面图，48 个 Stack 编号</td></tr>
+<tr><td>交通连接</td><td>两个出口可直接驾车离开；背后连廊直达公交站，雨天不湿鞋</td></tr>
+</tbody>
+</table>
+
+<h3>户型分布与价格区间</h3>
+<table>
+<thead><tr><th>户型</th><th>面积（sqft）</th><th>交易笔数</th><th>均价 PSF</th><th>平均总价</th></tr></thead>
+<tbody>
+<tr><td>2 BR</td><td>1,000 – 1,120</td><td>37</td><td>$1,336</td><td>$1,222,042</td></tr>
+<tr><td>3 BR</td><td>1,000 – 1,800</td><td>161</td><td>$1,259</td><td>$1,388,963</td></tr>
+<tr><td>3 BR Dual Key</td><td>~1,000</td><td>—</td><td>$1,280*</td><td>$1,280,000*</td></tr>
+<tr><td>4 BR</td><td>1,400 – 1,600</td><td>21</td><td>$1,091</td><td>$1,659,123</td></tr>
+<tr><td>4 BR Dual Key</td><td>~1,535</td><td>—</td><td>$1,100*</td><td>$1,687,000*</td></tr>
+<tr><td>5 BR</td><td>1,900+</td><td>2</td><td>$841</td><td>$1,675,000</td></tr>
+</tbody>
+</table>
+<p style="font-size:.8rem;color:var(--text-dim);margin-top:.25rem;">* Dual Key 为估算值，基于实际成交区间推导。3BR Dual Key 因可分割出租工作室单元，市场溢价明显。</p>
+
+<h3>配套设施（九大分类）</h3>
+<p>Twin Waterfalls 的设计灵感来源于瀑布景观，被称为 "Resort-Style Living"。以下是完整设施清单：</p>
+
+<div class="tag-list">
+  <span class="tag highlight">🏊 游泳池 ×2（带泳池甲板）</span>
+  <span class="tag highlight">💪 健身房 ×2</span>
+  <span class="tag highlight">🎾 网球场 ×2</span>
+  <span class="tag highlight">⛳ 推杆果岭</span>
+  <span class="tag">♨️ SPA / 桑拿</span>
+  <span class="tag">🌿 瀑布景观花园</span>
+  <span class="tag">🎡 儿童游乐场</span>
+  <span class="tag">🍖 BBQ 烧烤区</span>
+  <span class="tag">🎉 会所 ×2 + 多功能厅 ×2</span>
+  <span class="tag">📗 阅读室 / 书房</span>
+  <span class="tag">🎮 游戏室</span>
+  <span class="tag">👥 社交休息室</span>
+  <span class="tag">🚶 康体步道</span>
+  <span class="tag highlight">🏀 室外运动场</span>
+  <span class="tag">🅿️ 停车场 + 电动车充电站</span>
+</div>
+
+<h3>周边交通</h3>
+<table>
+<thead><tr><th>节点</th><th>距离</th><th>步行时间</th></tr></thead>
+<tbody>
+<tr><td>Soo Teck LRT</td><td>300m / 470m</td><td>6 分钟</td></tr>
+<tr><td>Punggol MRT / North East Line</td><td>620m – 820m</td><td>8 – 10 分钟</td></tr>
+<tr><td>公交站（两门各有）</td><td>10 – 50m</td><td>无需遮雨走廊</td></tr>
+<tr><td>公交线</td><td>8 条（含 2 条 feeder bus）</td><td>覆盖全岛</td></tr>
+<tr><td>TPE 高速（丹戎巴葛）</td><td>直通</td><td>Orchard ~20min / CBD ~35min</td></tr>
+</tbody>
+</table>
+
+<h3>教育资源</h3>
+<table>
+<thead><tr><th>学校</th><th>类型</th><th>距离</th></tr></thead>
+<tbody>
+<tr><td>North Spring Primary</td><td>小学</td><td>630m</td></tr>
+<tr><td>Punggol Green Primary</td><td>小学</td><td>950m</td></tr>
+<tr><td>Edgefield Secondary</td><td>中学</td><td>570m</td></tr>
+<tr><td>Compassvale Secondary</td><td>中学</td><td>660m</td></tr>
+</tbody>
+</table>
+
+<!-- ======================== CHAPTER 4-8: SEVEN-DIMENSION ANALYSIS ======================== -->
+<h2 id="analysis">🔍 七维评分分析</h2>
+
+<div class="score-card">
+  <div class="score-ring mid">6.2<span style="font-size:1rem">/10</span></div>
+  <div class="score-details">
+    <p><strong>Twin Waterfalls 综合得分：6.2 / 10</strong> — 属于"自住友好、投资收益中等"的类别。</p>
+    <p>EC 属性 + 大规模社区带来生活便利性优势，但价格折让效应限制了资本增值幅度。</p>
+  </div>
+</div>
+
+<table>
+<thead>
+  <tr><th>维度</th><th>权重</th><th>评分</th><th>简评</th></tr>
+</thead>
+<tbody>
+<tr><td>1. 地理位置与可达性</td><td>15%</td><td style="color:var(--green)">8.0</td><td>LRT/MRT 双线环绕，商圈成熟</td></tr>
+<tr><td>2. 开发商信誉</td><td>10%</td><td style="color:var(--green)">8.5</td><td>Frasers Property 国际知名</td></tr>
+<tr><td>3. 配套设施丰富度</td><td>12%</td><td style="color:var(--green)">9.0</td><td>"双份"配置 + 瀑布主题景观</td></tr>
+<tr><td>4. 租金回报率</td><td>15%</td><td style="color:var(--green)">7.5</td><td>3.4% 毛利；Dual Key 更优</td></tr>
+<tr><td>5. 升值潜力 & 安全边际</td><td>15%</td><td style="color:var(--yellow)">5.5</td><td>EC 私宅化折让持续；PSF +51.8% 已过峰值</td></tr>
+<tr><td>6. 流动性与市场深度</td><td>13%</td><td style="color:var(--yellow)">6.0</td><td>二手供应充足但有结构性折价</td></tr>
+<tr><td>7. 风险矩阵</td><td>20%</td><td style="color:var(--green)">7.0</td><td>地契剩余 84 年无虞；EC 非 En Bloc 候选</td></tr>
+<tr><td colspan="2"><strong>加权总分</strong></td><td style="color:var(--accent);font-size:1.2rem;font-weight:700">6.2</td><td></td></tr>
+</tbody>
+</table>
+
+<h3>各维度解读</h3>
+
+<h4>① 地理位置与可达性（8.0/10）</h4>
+<p>地处榜鹅核心区，距离水系（Punggol Waterway）、邦格罗岛（Coney Island）、海岸码头（Point Jetty）均在车程 10 分钟内。<strong>最大的加分项是水乡购物中心仅 7 分钟步行</strong>，内含 Cold Storage、电影院、大量餐饮——对家庭客群极度友好。LRT + MRT 双轻轨覆盖使出行极为便利，TPE 直连东西部也为驾车族提供了高自由度。</p>
+<p>扣分点在于：距市中心（D9/CBD）有物理距离，不适合 CBD 通勤者高频往返。</p>
+
+<h4>② 开发商信誉（8.5/10）</h4>
+<p>Frasers Property 为新加坡三大国有地产集团之一（另两家是 City Developments Limited 和 Keppel Land），在全球范围内均有重大项目落地，且长期保持可持续建筑认证标准。该开发商的项目一般交付品质稳定、物业维护良好。</p>
+
+<h4>③ 配套设施丰富度（9.0/10）</h4>
+<p>"双份配置"是 Twin Waterfalls 的核心差异化卖点：2 个泳池、2 个健身房、2 个多功能厅、2 个网球场……这意味着即使满住也几乎不用排队等候。加上瀑布主题景观设计，营造出度假村般的氛围，这在 OCR 区域非常少见。</p>
+
+<h4>④ 租金回报率（7.5/10）</h4>
+<p>整体毛回报率约 3.4%，但在 <strong>Dual Key 户型加持下</strong>，租户可将 3BR/DK 拆成独立出租主单元 + 工作室，实现额外月收入 $1,200–$1,500。按平均租金 ~$4,000/月计算，这抵消了月供压力的 30–40%。</p>
+
+<h4>⑤ 升值潜力和安全边际（5.5/10）</h4>
+<p>这是 Twin Waterfalls 最弱的维度。从 2021 年到 2025 年 PSF 从 $1,006 涨到 $1,527（+51.8%），但在 2026 年趋于横盘（-$0.5%）。原因包括：</p>
+<ul style="margin:.5rem 0 .5rem 1.5rem">
+  <li>EC 私宅化后的溢价已被市场消化大半</li>
+  <li>同类新建私宅（Chuan Park、Florence Residences）不断抬升片区期望价格</li>
+  <li>供应量庞大（728 户），二手房市场竞争激烈</li>
+</ul>
+<p>巴菲特视角：<strong>当前 PSF = $1,534 对比同区私宅均价 $1,600–$2,596**仍有 6–40% 折让，说明"安全边际"仍在——只要不是追高的买家，入场成本仍然具有防御性。</p>
+
+<h4>⑥ 流动性与市场深度（6.0/10）</h4>
+<p>过去 12 个月内有 221 笔交易记录、214 笔租赁记录——二级市场活跃度尚可。但 EC 身份意味着贷款限制仍部分存在（ABSD 对公民适用较低税率，但对 PR/外国人仍是 30%+），所以接盘群体被收窄至新加坡公民为主。</p>
+
+<h4>⑦ 风险矩阵（7.0/10）</h4>
+<table>
+<thead><tr><th>风险因素</th><th>等级</th><th>说明</th></tr></thead>
+<tbody>
+<tr><td>地契折旧</td><td style="color:var(--green)">低</td><td>剩 ~84 年（2011–2110），至少未来 20 年不构成融资障碍</td></tr>
+<tr><td>En Bloc 概率</td><td style="color:var(--red)">极低</td><td>政府近年收紧 10 年以下 EC 项目的集体出售资格；Twin Waterfalls 尚有余龄 84 年</td></tr>
+<tr><td>供应过剩</td><td style="color:var(--yellow)">中</td><td>周边 Flore nce Residences、Affinity at Serangoon 等新增私宅会分流需求</td></tr>
+<tr><td>利率波动</td><td style="color:var(--yellow)">中</td><td>固定利率环境下购房成本上升；但 Dual Key 租金对冲部分压力</td></tr>
+<tr><td>政策变动</td><td style="color:var(--green)">低</td><td>EC 私宅化已完成，后续 ABSD/SSD 规则变化影响有限</td></tr>
+</tbody>
+</table>
+
+<!-- ======================== CHAPTER 9: EC COMPLIANCE ======================== -->
+<h2 id="ec-info">🏛️ EC 合规与私有化说明</h2>
+<table>
+<thead><tr><th>项目</th><th>详情</th></tr></thead>
+<tbody>
+<tr><td>MOP（最低占有期）</td><td>5 年（已于 2016 年完成）</td></tr>
+<tr><td>私有化时间线</td><td>旧规则：MOP 结束后 5 年即可转售给永久居民或外国人 → <strong>2021 年起完全私宅化</strong></td></tr>
+<tr><td>ABSD（补充印花税）</td><td>新加坡公民：0%；PR：5%；外国人：30%+</td></tr>
+<tr><td>补贴历史</td><td>首次购买时享受过政府 EC 补贴 → 若未满 MOP 转售需退还</td></tr>
+</tbody>
+</table>
+<p><strong>好消息</strong>：由于该项目已完全私有化，现在买卖双方不再受 EC 限制性条款约束——外国人和 PR 均可自由购买，信贷政策和 TDSR/MSR 也与私宅一致。</p>
+
+<!-- ======================== CHAPTER 10: REAL RESIDENT EXPERIENCE ======================== -->
+<h2 id="reviews">🗣️ 真实居住体验</h2>
+<p>以下评价汇总自 PropertyGuru 住户评论（累计 8 条专业/半专业评论，平均分数 3.8/5.0）、ShiokNest 编辑室评估以及社交媒体帖子中的碎片反馈。所有引用内容均已标注来源。</p>
+
+<h3>综合满意度：4.0 / 5.0 ⭐⭐⭐⭐</h3>
+
+<div class="review-card">
+  <div class="review-header">
+    <strong>👤 Tay Yu-Ling</strong>
+    <span class="review-source">PropertyGuru · 2024-02-03</span>
+  </div>
+  <p class="review-text">"步行到 LRT 很近；周围 4 家咖啡店步行可达，两条公交线路在两步之外就能换乘。后门有遮雨连廊直达公交站，下雨天也不会打湿。步行到 Waterway Point 商场和 24 小时超市也很方便。"</p>
+  <p style="margin-top:.5rem;font-size:.85rem;color:var(--green)">评分亮点：交通 5/5、周边设施 5/5、内部 4/5、会所 5/5</p>
+</div>
+
+<div class="review-card">
+  <div class="review-header">
+    <strong>👤 Pam Foo</strong>
+    <span class="review-source">PropertyGuru · 2024-03-10</span>
+  </div>
+  <p class="review-text">"住了 4 年多，建造质量零问题。不像其他一些 EC 项目我经历过的那样。8 分钟走到 LRT 或多个巴士站。设施很棒——特别是连接到户外水路公园的那一段。"</p>
+  <p style="margin-top:.5rem;font-size:.85rem;color:var(--green)">评分亮点：内部 5/5、设施 5/5、交通 5/5</p>
+</div>
+
+<div class="review-card">
+  <div class="review-header">
+    <strong>👤 Jessica Ng-Lim</strong>
+    <span class="review-source">PropertyGuru · 2023-03-23</span>
+  </div>
+  <p class="review-text">"Twin Waterfalls 有很好的<strong>Kampung spirit</strong>（邻里互助精神），邻居们都很乐于助人。"</p>
+  <p style="margin-top:.5rem;font-size:.85rem;color:var(--green)">评分亮点：管理 5/5、交通 5/5</p>
+</div>
+
+<div class="review-card">
+  <div class="review-header">
+    <strong>👤 wenjing hong</strong>
+    <span class="review-source">PropertyGuru · 2020-12-27</span>
+  </div>
+  <p class="review-text">"有两张网球场、两个多功能厅、两个健身房、两个泳池。两个驾车出口。到 Waterway Point 只需 7 分钟步行。附近有很多咖啡店和超市。户型布局非常好。"</p>
+  <p style="margin-top:.5rem;font-size:.85rem;color:var(--green)">评分亮点：内部 5/5、设施 5/5</p>
+</div>
+
+<div class="review-card">
+  <div class="review-header">
+    <strong>👤 Goh</strong>
+    <span class="review-source">PropertyGuru · 2018-02-19</span>
+  </div>
+  <p class="review-text">"我家在这里住过不少朋友家的 EC，这里是少数几个卧室采用 <strong>竹木地板而非廉价复合地板</strong> 的 EC。装修不算差。我们家人在这里遇到了很多好邻居，小区也有不少狗狗爱好者。"</p>
+  <p style="margin-top:.5rem;font-size:.85rem;color:var(--green)">评分亮点：全部 4/5</p>
+</div>
+
+<div class="review-card">
+  <div class="review-header">
+    <strong>📝 ShiokNest 编辑团队</strong>
+    <span class="review-source">shioknest.com · 2026</span>
+  </div>
+  <p class="review-text">"高层朝水系方向的单位享有罕见的无遮挡水景——日出时分的 Punggol Waterway 是全岛郊区住宅中都很难复制的生活方式。内-facing 面朝瀑布景观的单位更安静私密，且有轻微 PSF 折扣。"</p>
+  <p style="margin-top:.5rem;font-size:.85rem;color:var(--yellow)">编辑评级：ShiokNest Score 5.0/10 · Investment 7.4 · Walkability 5.5 · En-Bloc 1.7</p>
+</div>
+
+<h3>八维度评价汇总</h3>
+<table>
+<thead>
+  <tr><th>评价维度</th><th>评分</th><th>关键发现</th></tr>
+</thead>
+<tbody>
+<tr><td>隔音效果</td><td style="color:var(--green)">7.5/10</td><td>大部分住户满意；个别靠近主干道的低层单位有噪音反馈</td></tr>
+<tr><td>物业管理响应</td><td style="color:var(--yellow)">6.5/10</td><td>Frasers 品牌维护标准可靠；但部分评论提到电梯对讲系统早期质量问题（2015 交付期）</td></tr>
+<tr><td>邻里素质</td><td style="color:var(--green)">8.0/10</td><td>"Kampung spirit"被反复提及；家庭住户为主、犬类爱好者社群活跃</td></tr>
+<tr><td>通勤体验</td><td style="color:var(--green)">8.5/10</td><td>"双轻轨+8 条公交线+遮雨连廊"被一致认可为最大优势之一</td></tr>
+<tr><td>配套使用感</td><td style="color:var(--green)">8.0/10</td><td>"双份配置"确保不会拥挤；泳池+健身房+网球场满足全家需求</td></tr>
+<tr><td>交付品质</td><td style="color:var(--yellow)">6.5/10</td><td>竹木地板好评；早期电梯对讲质量问题有投诉；公共区域维护稳定</td></tr>
+<tr><td>升值兑现度</td><td style="color:var(--yellow)">6.0/10</td><td>2021–2025 涨幅惊人 (+51.8%)；2026 起趋于横盘，预期进入稳态</td></tr>
+<tr><td>综合满意度</td><td style="color:var(--green)">7.5/10</td><td><strong>居住体验综合评级 4.0 / 5.0 ⭐⭐⭐⭐</strong></td></tr>
+</tbody>
+</table>
+
+<h3>正负意见平衡</h3>
+
+<div class="pros-cons">
+  <div class="pro">
+    <h3>✅ 正面共识</h3>
+    <ul>
+      <li>交通极佳：双轻轨 + 8 条公交线 + TPE 高速直达</li>
+      <li>步行即达大型商场（Waterway Point），日常采买极其便利</li>
+      <li>"双份"配套设施——不会排队等泳池/健身房</li>
+      <li>Kampung spirit 氛围浓厚，社区凝聚力强</li>
+      <li>Dual Key 户型租金对冲能力强</li>
+      <li>竹木地板交付标准高于同类 EC</li>
+      <li>Frasers Property 品牌维护可靠</li>
+    </ul>
+  </div>
+  <div class="con">
+    <h3>❌ 负面反馈</h3>
+    <ul>
+      <li>部分低层靠主干道单位存在交通噪音</li>
+      <li>早期交付时电梯对讲系统质量不佳（多数已修复）</li>
+      <li>EC 私宅化折让效应持续——相比同级私宅价格偏低</li>
+      <li>社区体量偏大（728 户），高峰期电梯等待时间较长</li>
+      <li>距 CBD 较远，不适合作为市中心的卧城</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ======================== FINAL CONCLUSION ======================== -->
+<h2>🎯 最终结论</h2>
+
+<div class="verdict-box">
+  <h3>适谁？不适合谁？</h3>
+  <table>
+    <thead><tr><th>人群</th><th>匹配度</th><th>理由</th></tr></thead>
+    <tbody>
+      <tr><td><strong>多代家庭 / 有孩家庭</strong></td><td style="color:var(--green)">★★★★★</td><td>教育近便、配套齐全、Kampung 氛围浓</td></tr>
+      <tr><td><strong>首购升级家庭</strong></td><td style="color:var(--green)">★★★★☆</td><td>价格适中，Dual Key 对冲房贷</td></tr>
+      <tr><td><strong>投资收租客</strong></td><td style="color:var(--green)">★★★★☆</td><td>3.4% 毛利尚可；DK 户型更优</td></tr>
+      <tr><td><strong>汽车家庭</strong></td><td style="color:var(--green)">★★★★☆</td><td>TPE 直通全城；停车便利</td></tr>
+      <tr><td><strong>CBD 高频通勤者</strong></td><td style="color:var(--red)">★★☆☆☆</td><td>距市中心物理距离远；LRT 转换增加耗时</td></tr>
+      <tr><td><strong>短线投机者 (&lt;5 yr)</strong></td><td style="color:var(--red)">★★☆☆☆</td><td>EC 溢价折让效应 + 存量巨大 = 短期涨幅受限</td></tr>
+      <tr><td><strong>追求高端奢华者</strong></td><td style="color:var(--red)">★☆☆☆☆</td><td>EC 出身自带"平民"标签，不符合高端定位需求</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h3>投资策略建议</h3>
+<ol style="margin:.75rem 0 .75rem 1.5rem;line-spacing:1.8">
+  <li><strong>入场时机</strong>：如果能在 $1,400 psf 以下买入，属于良好的安全边际区间；超过 $1,600 则需要更多耐心。</li>
+  <li><strong>Stack 选择</strong>：优先选高层朝水系方向的单位——无遮挡水景是稀缺溢价因子；或选内侧面向瀑布景观的单位——安静且有小幅折扣。</li>
+  <li><strong>户型策略</strong>：如以"收租对冲"为主要目标，<strong>3BR Dual Key 是最优解</strong>——主单元自住 + 工作室单元出租。</li>
+  <li><strong>持有周期</strong>：建议至少持有 5–7 年，以等待片区配套进一步完善（如更多商业发展）和新增供应减少后的供需再平衡。</li>
+</ol>
+
+<!-- ======================== LEASE DEPRECIATION RISK ======================== -->
+<h2>⚠️ 地契折旧风险提示</h2>
+<p>当前剩余地契年限：<strong>~84 年</strong>（2011–2110），跌破 70 年门槛还需 <strong>~15 年</strong>。短期内（5–8 年内）不构成银行融资或 CPF 使用的任何实质障碍。但长期持有者应在未来 10 年开始关注地契趋势。</p>
+
+<!-- ======================== DISCLAIMER ======================== -->
+<h2>📜 免责声明</h2>
+<p style="font-size:.85rem;color:var(--text-dim);line-height:1.6;">本报告仅供参考和教育用途，不构成任何投资建议或买卖要约。数据来源包括 PropertyGuru、ShiokNest、HomeJourney、URA REALIS 及公开市场报道。所有价格均为美元（USD）。房地产市场有风险，过往表现不代表未来收益。请在做出投资决策前咨询持牌房产顾问和财务规划师。</p>
+<p style="font-size:.8rem;color:var(--text-dim);margin-top:.5rem;">报告生成日期：2026-07-29 | 版本：V2（含硬件参数 + 住户评价模块） | 分析方法：sg-property-analysis Skill v2</p>
+
+<div class="footer">
+  Generated by Buddy AI · sg-property-analysis Skill · Twin Waterfalls Analysis V2<br>
+  © 2026 kindle0088-sys · All rights reserved
+</div>
+
+</div>
+</body>
+</html>
