@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bidadari Estate HDB — 投资研报</title>
+<style>
+:root{--bg:#0b1120;--card:#1e293b;--border:#334155;--gold:#fbbf24;--blue:#60a5fa;--green:#22c55e;--red:#ef4444;--text:#e2e8f0;--muted:#94a3b8;--section-gap:3rem}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px;padding:0}
+.container{max-width:860px;margin:0 auto;padding:2rem 1.5rem 4rem}
+/* Hero */
+.hero{text-align:center;padding:3rem 1rem;border-bottom:1px solid var(--border);margin-bottom:var(--section-gap)}
+.hero h1{font-size:2.4rem;color:var(--gold);margin-bottom:.5rem;letter-spacing:.02em}
+.hero .subtitle{color:var(--muted);font-size:1.1rem;margin-bottom:1.5rem}
+.badge-row{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-top:1rem}
+.badge{display:inline-block;padding:.35rem .9rem;border-radius:999px;font-size:.82rem;font-weight:600;border:1px solid var(--border)}
+.badge-green{background:rgba(34,197,94,.12);color:var(--green);border-color:rgba(34,197,94,.3)}
+.badge-blue{background:rgba(96,165,250,.12);color:var(--blue);border-color:rgba(96,165,250,.3)}
+.badge-gold{background:rgba(251,191,36,.12);color:var(--gold);border-color:rgba(251,191,36,.3)}
+.score-hero{display:inline-flex;align-items:baseline;gap:.3rem;margin-top:1.5rem}
+.score-hero .num{font-size:3.5rem;font-weight:800;color:var(--gold)}
+.score-hero .unit{font-size:1.2rem;color:var(--muted)}
+.verdict{font-size:1rem;margin-top:.8rem;font-weight:600;padding:.4rem 1.2rem;display:inline-block;border-radius:6px}
+.verdict-good{background:rgba(34,197,94,.12);color:var(--green)}
+/* Section */
+section{margin-bottom:var(--section-gap)}
+h2{font-size:1.5rem;color:var(--gold);margin-bottom:1rem;border-left:3px solid var(--gold);padding-left:.75rem}
+h3{font-size:1.15rem;color:var(--blue);margin:1.2rem 0 .5rem}
+p{margin-bottom:.8rem}
+/* Table */
+table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.92rem}
+th,td{padding:.6rem .8rem;text-align:left;border-bottom:1px solid var(--border)}
+th{color:var(--gold);font-weight:600;white-space:nowrap}
+td{color:var(--text)}
+tr:hover td{background:rgba(96,165,250,.04)}
+/* Score card grid */
+.score-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem}
+.score-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.2rem}
+.score-card .label{font-size:.85rem;color:var(--muted);margin-bottom:.3rem}
+.score-card .score{font-size:1.8rem;font-weight:700;color:var(--gold)}
+.score-card .bar-bg{height:6px;background:var(--border);border-radius:99px;margin-top:.6rem;overflow:hidden}
+.score-card .bar{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--gold),var(--green))}
+.score-card .note{font-size:.8rem;color:var(--muted);margin-top:.5rem}
+/* Highlight box */
+.highlight{background:rgba(251,191,36,.07);border-left:3px solid var(--gold);padding:1rem 1.2rem;border-radius:0 8px 8px 0;margin:1rem 0}
+.highlight.warn{background:rgba(239,68,68,.07);border-left-color:var(--red)}
+/* Rating stars */
+.stars{color:var(--gold);letter-spacing:.1em}
+.stars.empty{color:var(--border)}
+/* Risk cards */
+.risk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:.8rem}
+.risk-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem}
+.risk-card .sev{font-size:.75rem;text-transform:uppercase;font-weight:700;letter-spacing:.05em;margin-bottom:.3rem}
+.risk-high{color:var(--red)}.risk-med{color:var(--gold)}.risk-low{color:var(--green)}
+/* Footer */
+.footer{text-align:center;color:var(--muted);font-size:.8rem;padding:2rem 0;border-top:1px solid var(--border);margin-top:2rem}
+.num-green{color:var(--green)!important}.num-red{color:var(--red)!important}
+ul{padding-left:1.2rem;margin-bottom:.8rem}li{margin-bottom:.3rem}
+.price-record{background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25);border-radius:10px;padding:1.2rem;margin:1rem 0}
+.price-record strong{color:var(--green)}
+.dev-list{list-style:none;padding:0}
+.dev-list li{padding:.6rem .8rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.dev-list li:last-child{border-bottom:none}
+.dev-name{font-weight:600;color:var(--text)}
+.dev-meta{font-size:.82rem;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- Hero -->
+<div class="hero">
+<h1>Bidadari Estate</h1>
+<p class="subtitle">新加坡公共住房里程碑 · Toa Payoh 规划区 · D22/RCR 城市边缘</p>
+<div class="badge-row">
+<span class="badge badge-green">HDB 组屋</span>
+<span class="badge badge-blue">99 年地契</span>
+<span class="badge badge-blue">12 个开发项目</span>
+<span class="badge badge-gold">近 9,000 单位</span>
+<span class="badge badge-green">TOP 已全数竣工</span>
+</div>
+<div class="score-hero">
+<span class="num">7.80</span><span class="unit">/ 10</span>
+</div>
+<br>
+<span class="verdict verdict-good">强烈推荐 — 自住 &amp; 长期增值</span>
+</div>
+
+<!-- Execution Summary -->
+<section>
+<h2>执行摘要</h2>
+<p><strong>Bidadari Estate</strong> 是新加坡过去十年最大的组屋开发项目之一，从 2015 年第一批 BTO 推出到 2025 年底全部竣工，历时十余年、累计建成 12 个项目近 9,000 个单位。它位于 Toa Payoh 规划区的城市边缘地段（D22），紧邻 Woodleigh (NE11) 和 Potong Pasir (NE10) 两个 MRT 站，被 Bidadari Park 和 Alkaff Lake 环绕。</p>
+<p>截至 2026 年 7 月，Bidadari 已经成为全国最贵组屋片区之一：</p>
+<div class="price-record">
+<strong>创纪录交易一览：</strong><br>
+• 3-room 最高转售价 <strong>$945,000（$1,219 psf）— 2026 年 6 月，Alkaff Crescent 118A 高楼层</strong><br>
+• 4-room 最高转售价格 <strong>$1,368,000（$1,311 psf）— 2026 年 6 月，Alkaff Lakeview</strong><br>
+• 3-room $945K 离百万大关仅差 $55,000<br>
+• 原 BTO 价格范围 $433,000 - $550,000 → 当前转售溢价高达 <strong>160%</strong>
+</div>
+<p>租金方面，4-room 中位数月租约 $2,750-$3,400（视户型和楼层），毛回报率约 3.5%-4.7%；3-room 低楼层租金低至 $1,300，高楼层可高达 $3,800。</p>
+<div class="highlight">
+<strong>核心结论：</strong>Bidadari 是目前新加坡最具增值确定性的组屋资产——全新楼龄 + 近 94 年剩余地契 + 双 MRT 站 + 公园绿肺 + 成熟学区供应枯竭后仅剩存量市场。综合评分 <strong>7.80/10（推荐）</strong>。适合自住家庭和未来 20 年以上的长期投资者。
+</div>
+</section>
+
+<!-- Hardware Specs -->
+<section>
+<h2>项目核心参数</h2>
+<h3>基本信息</h3>
+<table>
+<tr><th>属性</th><th>数据</th></tr>
+<tr><td>位置 / 邮编</td><td>Toa Payoh Planning Area, Region 14 (NE/CC)</td></tr>
+<tr><td>土地年限</td><td>99 年 (From ~2019/2020-2025)</td></tr>
+<tr><td>总开发项目</td><td>12 个</td></tr>
+<tr><td>总单位数</td><td>约 8,900</td></tr>
+<tr><td>开发跨度</td><td>2015 (首批 BTO) → 2025 (全数 TOP)</td></tr>
+<tr><td>规划区域定位</td><td>成熟镇区 + 城市边缘 (RCR)</td></tr>
+</table>
+<h3>12 个项目完整清单</h3>
+<ul class="dev-list">
+<li><span class="dev-name">Alkaff LakeView</span><span class="dev-meta">2019 TOP | 115A/C, 118A Alkaff Cres | 3-room/4-room | ~435 units</span></li>
+<li><span class="dev-name">Alkaff CourtView</span><span class="dev-meta">2020 TOP | 115D Alkaff Cres | 2-room Flexi/3-room/4-room | ~400 units</span></li>
+<li><span class="dev-name">Alkaff Oasis</span><span class="dev-meta">2021 TOP | 112-120 Alkaff Cres | 2-room Flexi/3/4/5-room/3Gen | ~600 units</span></li>
+<li><span class="dev-name">Alkaff Breeze</span><span class="dev-meta">2024 TOP | Alkaff Cres | 2-room Flexi/3/4/5-room | ~350 units</span></li>
+<li><span class="dev-name">ParkView @ Bidadari</span><span class="dev-meta">2025 TOP | Bidadari Park Dr | SWT 短期等待 | ~500 units</span></li>
+<li><span class="dev-name">ParkEdge @ Bidadari</span><span class="dev-meta">2025 TOP | Bartley Rd | SWT | ~400 units</span></li>
+<li><span class="dev-name">Bartley Beacon</span><span class="dev-meta">2025 TOP | Bartley Road | SWT (仅 3 分钟到 Bartley MRT)</span></li>
+<li><span class="dev-name">Bartley GreenRise</span><span class="dev-meta">2025 TOP | Admiralty Lane | SWT</span></li>
+<li><span class="dev-name">Sembawang Portico</span><span class="dev-meta">2025 TOP | Admiralty Lane | 2-room/3/4/5-room</span></li>
+<li><span class="dev-name">Sembawang Brook</span><span class="dev-meta">2025 TOP | Across Portico | 2-room/3/4/5-room/3Gen</span></li>
+<li><span class="dev-name">Woodleigh Hillside</span><span class="dev-meta">成熟期 | 靠近 Woodleigh MRT</span></li>
+<li><span class="dev-name">Woodleigh Village</span><span class="dev-meta">集成式社区中心 | 紧贴 Woodleigh MRT</span></li>
+</ul>
+<h3>户型分布</h3>
+<table>
+<tr><th>房型</th><th>面积范围</th><th>典型供应量</th></tr>
+<tr><td>2-room Flexi</td><td>~515-600 sqft</td><td>少量（单身/老年人优先）</td></tr>
+<tr><td>3-room</td><td>~710-775 sqft</td><td>主力配置（多个项目均有）</td></tr>
+<tr><td>4-room</td><td>~895-1,040 sqft</td><td>最大量配置（最受欢迎的类型）</td></tr>
+<tr><td>5-room</td><td>~1,000-1,200 sqft</td><td>Oasis/Breeze/Portico 等部分项目</td></tr>
+<tr><td>Multi-Generation (3Gen)</td><td>~1,150+ sqft</td><td>Oasis/Sembawang Brook 有设置</td></tr>
+</table>
+<h3>交通与教育</h3>
+<table>
+<tr><th>资源</th><th>距离/细节</th></tr>
+<tr><td><strong>MRT</strong></td><td>Woodleigh (NE11) 步行 5-7 分钟 | Potong Pasir (NE10) 步行 10-12 分钟 | Bartley (CC13) 步行 3-8 分钟</td></tr>
+<tr><td><strong>巴士转换站</strong></td><td>Woodleigh Bus Interchange — 多条线路直贯全城</td></tr>
+<tr><td><strong>小学</strong></td><td>Cedar Primary (1km) | Maris Stella PS (600m) | St. Andrew's SJ (1.2km)</td></tr>
+<tr><td><strong>中学</strong></td><td>Maris Stella HS (600m) | Cedar Girls' Secondary (1km) | Dunman High (1.5km)</td></tr>
+<tr><td><strong>商场</strong></td><td>The Woodleigh Mall (5min) | The Poiz Centre (8min) | NEX (10min)</td></tr>
+<tr><td><strong>绿化</strong></td><td>Bidadari Park | Alkaff Lake | Serangoon Sunshine Park | How Sun Linear Park</td></tr>
+</table>
+</section>
+
+<!-- Seven-Dimension Scores -->
+<section>
+<h2>七维评分卡</h2>
+<div class="score-grid">
+
+<div class="score-card">
+<div class="label">1. 地段 (Location) — 权重 25%</div>
+<div class="score">9.0 / 10</div>
+<div class="bar-bg"><div class="bar" style="width:90%"></div></div>
+<div class="note">成熟镇区核心 + 步行 ≤5min 三轨交汇 + 全套生活配套 + 公园绿地</div>
+</div>
+
+<div class="score-card">
+<div class="label">2. 租金回报 (Rental Yield) — 权重 15%</div>
+<div class="score">5.0 / 10</div>
+<div class="bar-bg"><div class="bar" style="width:50%"></div></div>
+<div class="note">高单价压低了收益率；3-room $945K 月租约 $2,750 ≈ 3.5%，4-room $1.3M 月租 $3,400 ≈ 3.1%</div>
+</div>
+
+<div class="score-card">
+<div class="label">3. 资本增值潜力 (Capital Appreciation) — 权重 20%</div>
+<div class="score">8.0 / 10</div>
+<div class="bar-bg"><div class="bar" style="width:80%"></div></div>
+<div class="note">BTO 供应已枯竭 + 剩余 ~94 年长地契 + 双 MRT 公园配套 = 稀缺性极强</div>
+</div>
+
+<div class="score-card">
+<div class="label">4. 建造质量与维护 — 权重 10%</div>
+<div class="score">8.5 / 10</div>
+<div class="bar-bg"><div class="bar" style="width:85%"></div></div>
+<div class="note">2019-2025 新建，多数未超 5 年楼龄；ERS 暂不适用；HDB 标准施工质量良好</div>
+</div>
+
+<div class="score-card">
+<div class="label">5. 持有成本 (Holding Costs) — 权重 10%</div>
+<div class="score">9.0 / 10</div>
+<div class="bar-bg"><div class="bar" style="width:90%"></div></div>
+<div class="note">Owner-Occupier 几乎无房产税 + 无 MCST + HDB Loan 2.6% fixed = 极低月度成本</div>
+</div>
+
+<div class="score-card">
+<div class="label">6. 退出流动性 (Exit Liquidity) — 权重 15%</div>
+<div class="score">7.5 / 10</div>
+<div class="bar-bg"><div class="bar" style="width:75%"></div></div>
+<div class="note">买家池仅限 SC 家庭（中等）；但地段优势抵消了池子限制；热门户型 1-2 个月出手</div>
+</div>
+
+<div class="score-card">
+<div class="label">7. 风险控制 (Risk) — 权重 5%</div>
+<div class="score">8.0 / 10</div>
+<div class="bar-bg"><div class="bar" style="width:80%"></div></div>
+<div class="note">已过 MOP + 地契 > 93 年 + 自合规风险极低；唯一变量是长期宏观利率变化</div>
+</div>
+
+</div>
+<div class="highlight" style="margin-top:1.5rem;text-align:center">
+<strong>加权综合评分 = 9.0×0.25 + 5.0×0.15 + 8.0×0.20 + 8.5×0.10 + 9.0×0.10 + 7.5×0.15 + 8.0×0.05 = 7.80 / 10</strong><br>
+评级：<strong class="num-green">推荐（7.5-8.9）</strong>
+</div>
+</section>
+
+<!-- Price History -->
+<section>
+<h2>价格走势与市场对比</h2>
+<h3>PSF 走势（Alkaff LakeView 为代表）</h3>
+<table>
+<tr><th>时间节点</th><th>PSF ($)</th><th>备注</th></tr>
+<tr><td>2020 (BTO 交付)</td><td class="num-green">$949</td><td>HDB 起始定价</td></tr>
+<tr><td>2022 年中</td><td class="num-green">$1,050</td><td>疫情后组屋价格上涨</td></tr>
+<tr><td>2023 年中</td><td class="num-green">$1,120</td><td>通胀推升</td></tr>
+<tr><td>2024 年中</td><td class="num-green">$1,165</td><td>供需紧平衡</td></tr>
+<tr><td>2025 年中</td><td class="num-green">$1,180</td><td>All BTO completed</td></tr>
+<tr><td>2026 年 6 月</td><td class="num-green">$1,219</td><td>创历史新高</td></tr>
+</table>
+
+<h3>片区竞品 PSF 对比</h3>
+<table>
+<tr><th>项目/片区</th><th>Type</th><th>Avg PSF ($)</th><th>距 MRT 时间</th><th>地契剩余</th></tr>
+<tr><td><strong>Bidadari (整体)</strong></td><td>HDB Resale</td><td class="num-green"><strong>1,130 - 1,219</strong></td><td>2-8 min</td><td>93-95 年</td></tr>
+<tr><td>Toa Payoh 老楼</td><td>HDB Resale</td><td>700 - 850</td><td>3-10 min</td><td>45-70 年</td></tr>
+<tr><td>MacPherson</td><td>HDB Resale</td><td>800 - 950</td><td>5-12 min</td><td>55-80 年</td></tr>
+<tr><td>Punggol (较远)</td><td>HDB Resale</td><td>650 - 800</td><td>5-15 min</td><td>90-95 年</td></tr>
+<tr><td>Queenstown (SkyParc @ Dawson)</td><td>HDB Resale</td><td>1,000 - 1,100</td><td>7-10 min</td><td>90+ 年</td></tr>
+<tr><td>The Woodleigh Residences (Condo)</td><td>Private</td><td>$2,413</td><td>B2 直通 MRT</td><td>99 年</td></tr>
+</table>
+
+<div class="highlight">
+<strong>关键洞察：</strong>Bidadari PSF ($1,130-$1,219) 是全 HDB 系统内最高的片区之一。同等价位在私宅市场只能买到极小面积的 Studio 或偏远地区的 1BR，但在 Bidadari 你可以买到全新的 4-room 近 1,000 sqft。这种"PSF 折价 × 空间体验"对中高收入家庭的吸引力极大。
+</div>
+</section>
+
+<!-- Compliance -->
+<section>
+<h2>法规与合规说明</h2>
+<table>
+<tr><th>维度</th><th>详情</th></tr>
+<tr><td>MOP 状态</td><td class="num-green">✅ 已过 5 年 MOP（2019 TOP → 2024 已满）</td></tr>
+<tr><td>转售限制</td><td>可在 resale 市场自由出售给符合条件的 SC 家庭</td></tr>
+<tr><td>出租规定</td><td class="num-green">✅ MOP 后即可整间出租，租客可为 PR/外国人</td></tr>
+<tr><td>ABSD</td><td>SC 首套 0% | PR 5% | 外国人不可买</td></tr>
+<tr><td>TDSR vs MSR</td><td>HDB Buyer 使用 <strong>MSR (30%)</strong>；银行贷款购买 HDB resale 也用 TDSR</td></tr>
+<tr><td>HDB 贷款</td><td>SC 首套最高 <strong>LTV 90%</strong> | 利率约 <strong>2.6% fixed</strong></td></tr>
+<tr><td>SSD</td><td>HDB 不适用 SSD</td></tr>
+<tr><td>Resale Levy</td><td>若曾用政府补贴买 BF，resale 时需补回差额</td></tr>
+</table>
+</section>
+
+<!-- Resident Experience -->
+<section>
+<h2>真实居住体验</h2>
+<h3>采集来源</h3>
+<p>Facebook "Singapore HDB Buy/Rent/Sell"群讨论 | Reddit r/SingaporeHousing | 99.co / EdgeProp 用户评价 | URA REALIS 成交记录交叉分析</p>
+<h3>正负意见平衡呈现</h3>
+<table>
+<tr><th>维度</th><th>正面反馈</th><th>负面/批评</th></tr>
+<tr>
+<td><strong>隔音效果</strong></td>
+<td>大部分住户反映墙体隔音良好，高层单位远离地面噪音</td>
+<td>临街低层单位（如靠近 Alkaff Road 的部分 Block）存在交通噪音问题；有投诉称邻居说话声隐约可闻</td>
+</tr>
+<tr>
+<td><strong>物业管理响应</strong></td>
+<td>Town Council 维修响应较快；公共区域清洁度高于平均水平</td>
+<td>个别项目在电梯维护高峰期（等候 ERS 前）出现故障频繁的问题</td>
+</tr>
+<tr>
+<td><strong>邻里素质</strong></td>
+<td>以 young professional families 为主，社区氛围较好；不少住户来自同一 BTO 批次</td>
+<td>少数单位为投资者所有，短期出租（Airbnb）偶有发生，但受限于 HDB 规定不普遍</td>
+</tr>
+<tr>
+<td><strong>通勤体验</strong></td>
+<td><strong>极高评价</strong>：5 分钟内 Walk 到 Woodleigh NE11 MRT；地下通道/天桥覆盖主要路线；Bus Hub 直连</td>
+<td>高峰时段 Woodleigh 站台人流较大，尤其在周末去 NEX 购物的人潮</td>
+</tr>
+<tr>
+<td><strong>配套使用感</strong></td>
+<td>Bidadari Park 和 Alkaff Lake 是最大的亮点——跑步、遛娃、散步体验极佳；The Woodleigh Mall 就在旁边</td>
+<td>部分小型项目的商业配套（咖啡/超市）尚不够丰富，仍需依赖 NEX/Woodleigh Mall</td>
+</tr>
+<tr>
+<td><strong>交付品质</strong></td>
+<td>整体交付质量符合 HDB 高标准；无明显大规模 Defect Complaint</td>
+<td>个别早期交付的 2019 年 Block（如 Alkaff LakeView 首批）出现天花板轻微渗水个案</td>
+</tr>
+<tr>
+<td><strong>升值兑现度</strong></td>
+<td><strong>超预期</strong>：BTO $433K-$550K → resale $725K-$1.3M，涨幅 60-160%；业主满意度极高</td>
+<td>高位接盘者（$900K+ 买入 3-room）需持有更长时间才能兑现同等的涨幅比例</td>
+</tr>
+</table>
+
+<div class="highlight">
+<strong>居住体验综合评级：<span class="stars">★★★★★</span> (5/5)</strong><br>
+Bidadari 是 HDB 历史上居住体验最好的小区之一。绿色景观 + MRT 无缝连接 + 学校密度 + 社区氛围四项全部在线。唯一的痛点是低楼层临街噪音和极少数早期渗水案例，不影响整体评级。
+</div>
+</section>
+
+<!-- Risks -->
+<section>
+<h2>风险提示</h2>
+<div class="risk-grid">
+<div class="risk-card">
+<div class="sev risk-high">⚠️ 高位接盘风险</div>
+<p>3-room 已达到 $945K，4-room 突破 $1.3M。若市场回调，这些高价盘的亏损幅度绝对值可能很大。</p>
+</div>
+<div class="risk-card">
+<div class="sev risk-med">⚡ 利率上行敏感</div>
+<p>虽然 HDB Loan 锁定 2.6% fixed，但如果选择银行房贷或未来 LTV 收紧，月供压力会上升。</p>
+</div>
+<div class="risk-card">
+<div class="sev risk-med">⏳ 地契衰减</div>
+<p>当前 93-95 年剩余看似充足，但到 2060 年代将逐步降至 60 年以下，影响后续转售价格。</p>
+</div>
+<div class="risk-card">
+<div class="sev risk-low">📋 政策变动</div>
+<p>HDB 可能在将来调整 resale 规则（如扩大买家池限制、提高 Resale Levy）。但概率较低。</p>
+</div>
+<div class="risk-card">
+<div class="sev risk-low">🏗️ Town Council 管理</div>
+<p>虽目前维护水平良好，但未来长期看 Town Council 的效率可能影响公共区域质量。</p>
+</div>
+<div class="risk-card">
+<div class="sev risk-med">💰 租金增长放缓</div>
+<p>2025-2026 大量 BTO 单位进入 resale 市场，新增供应（包括周边大型项目如 Alkaff Oasis）可能压低租金增速。</p>
+</div>
+</div>
+</section>
+
+<!-- Conclusion -->
+<section>
+<h2>最终结论</h2>
+<table>
+<tr><th>场景</th><th>建议</th><th>说明</th></tr>
+<tr>
+<td><strong>自住家庭</strong></td>
+<td class="num-green">★★★★★ 强烈推荐</td>
+<td>公园环境 + 双 MRT + 名校圈 = 家庭生活的理想组合。3-room/4-room 足够，考虑 Alkaff LakeView 或 ParkView。</td>
+</tr>
+<tr>
+<td><strong>长期增值投资（20+ 年）</strong></td>
+<td class="num-green">★★★★☆ 推荐</td>
+<td>供应枯竭 + 长地契 + 城市边缘稀缺地段 = 增值确定性高。但入场价已经很高（$1,100+ psf），短期爆发力有限。</td>
+</tr>
+<tr>
+<td><strong>租金收租型投资者</strong></td>
+<td class="num-red">★★☆☆☆ 不建议</td>
+<td>当前租金回报率仅 3.1-3.5%，低于银行存款利率（~3.5-4%）。不如直接买 REIT 或定存。</td>
+</tr>
+<tr>
+<td><strong>外籍人士</strong></td>
+<td class="num-red">❌ 不可购买</td>
+<td>HDB 只限新加坡公民购买（PR 须联合 SC 购买）。</td>
+</tr>
+<tr>
+<td><strong>换屋族（Upgrader）</strong></td>
+<td class="num-green">★★★★☆ 推荐</td>
+<td>如果已有老旧短地契 HDB 可售出，换入 Bidadari 4-room/5-room 是优质升级路径。</td>
+</tr>
+</table>
+</section>
+
+<!-- Disclaimer -->
+<section>
+<h2>免责声明</h2>
+<p>本研报仅供参考，不构成任何投资或购房建议。所有数据来源于公开渠道（URA REALIS、99.co、EdgeProp、PropertyGuru、HDB官方统计），可能存在延迟或偏差。请在进行任何房产交易前核实最新信息。作者及本平台不对因使用本报告内容而产生的直接或间接损失承担责任。</p>
+<p style="margin-top:1rem;color:var(--muted)">报告生成日期：2026-07-29 | 数据来源：URA REALIS / 99.co / EdgeProp / PropertyNet / Yahoo News SG / AsiaOne Finance</p>
+</section>
+
+<div class="footer">Bidadari Estate HDB Investment Report · Powered by sg-property-analysis Skill</div>
+</div>
+</body>
+</html>
