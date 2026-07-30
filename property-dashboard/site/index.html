@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Singapore Property Dashboard</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="logo">SG <span>Property</span> Dashboard</div>
+    <nav>
+      <a href="#" onclick="navigate('/')" class="nav-active">Dashboard</a>
+      <a href="#" onclick="navigate('/map')">Map</a>
+      <a href="https://kindle0088-sys.github.io/stock-analysis-reports/index.html" target="_blank">Reports</a>
+    </nav>
+  </header>
+
+  <div id="main">
+    <div class="loading"><div class="spinner"></div><br>Loading Singapore property data...</div>
+  </div>
+
+  <footer>
+    Singapore Property Dashboard · Powered by <a href="https://eservice.ura.gov.sg/uraDataService" target="_blank">URA Data Service</a> · Data updated daily<br>
+    <a href="https://github.com/kindle0088-sys/stock-analysis-reports" target="_blank">GitHub</a>
+  </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

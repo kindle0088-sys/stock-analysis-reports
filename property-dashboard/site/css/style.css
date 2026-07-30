@@ -1,0 +1,143 @@
+/* === Singapore Property Dashboard — Dark Theme === */
+:root {
+  --bg: #0b1120;
+  --bg2: #1e293b;
+  --bg3: #0f172a;
+  --bg-hover: #263548;
+  --border: #2a3a54;
+  --text: #e2e8f0;
+  --text2: #94a3b8;
+  --text3: #64748b;
+  --gold: #fbbf24;
+  --blue: #60a5fa;
+  --green: #22c55e;
+  --red: #ef4444;
+  --amber: #f59e0b;
+  --purple: #a78bfa;
+  --radius: 10px;
+  --shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* Layout */
+.container{max-width:1100px;margin:0 auto;padding:0 20px}
+header{padding:20px 0;border-bottom:1px solid var(--border);margin-bottom:28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+header .logo{font-size:18px;font-weight:700;color:#fff}
+header .logo span{color:var(--gold)}
+nav{display:flex;gap:6px}
+nav a{padding:6px 14px;border-radius:8px;font-size:13px;color:var(--text2);transition:all .15s}
+nav a:hover,.nav-active{background:var(--bg2);color:var(--gold)!important;text-decoration:none}
+footer{padding:24px 0;text-align:center;color:var(--text3);font-size:12px;border-top:1px solid var(--border);margin-top:40px}
+
+/* Hero */
+.hero{text-align:center;padding:32px 0 24px}
+.hero h1{font-size:28px;color:#fff;margin-bottom:6px}
+.hero p{color:var(--text2);font-size:14px;margin-bottom:20px}
+.kpi-row{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.kpi{background:var(--bg2);border-radius:var(--radius);padding:14px 22px;text-align:center;min-width:120px}
+.kpi .val{font-size:22px;font-weight:700;color:var(--gold)}
+.kpi .lbl{font-size:11px;color:var(--text2);margin-top:2px}
+
+/* Section titles */
+.section-title{font-size:17px;font-weight:600;color:var(--gold);margin:28px 0 14px;display:flex;align-items:center;gap:8px}
+
+/* Cards */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--bg2);border-radius:var(--radius);padding:16px 18px;border:1px solid transparent;transition:all .15s;cursor:pointer}
+.card:hover{border-color:var(--gold);background:var(--bg-hover)}
+.card h3{font-size:14px;font-weight:600;color:#fff;margin-bottom:4px}
+.card .meta{font-size:12px;color:var(--text2);margin-bottom:6px}
+.card .stat{display:flex;gap:16px;font-size:12px}
+.card .stat .n{font-weight:600}
+.stat-green{color:var(--green)}
+.stat-red{color:var(--red)}
+.stat-gold{color:var(--gold)}
+
+/* District grid row */
+.district-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin:12px 0}
+.district-card{background:var(--bg2);border-radius:var(--radius);padding:12px 14px;border-left:3px solid var(--gold);transition:all .15s;cursor:pointer}
+.district-card:hover{background:var(--bg-hover)}
+.district-card .d-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.district-card .d-name{font-size:13px;font-weight:600;color:#fff}
+.district-card .d-sector{font-size:10px;padding:2px 8px;border-radius:10px;background:var(--bg3);color:var(--text2)}
+.district-card .d-psf{font-size:16px;font-weight:700;color:var(--gold)}
+.district-card .d-detail{font-size:11px;color:var(--text2)}
+.district-card .d-detail span{margin-right:12px}
+
+/* Table */
+.table-wrap{overflow-x:auto;margin:12px 0}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--border)}
+th{color:var(--gold);font-weight:600;background:var(--bg3);position:sticky;top:0}
+td{color:var(--text)}
+tr:hover{background:var(--bg-hover)}
+.text-green{color:var(--green);font-weight:600}
+.text-red{color:var(--red);font-weight:600}
+.text-gold{color:var(--gold)}
+.text-muted{color:var(--text2)}
+.text-blue{color:var(--blue)}
+
+/* Search */
+.search-bar{display:flex;gap:8px;margin:12px 0;max-width:500px}
+.search-bar input{flex:1;padding:10px 14px;border-radius:8px;border:1px solid var(--border);background:var(--bg2);color:var(--text);font-size:14px;outline:none;transition:border-color .15s}
+.search-bar input:focus{border-color:var(--gold)}
+.search-bar input::placeholder{color:var(--text3)}
+.search-results{position:relative;margin-top:-8px}
+.search-result-item{padding:10px 14px;border-bottom:1px solid var(--border);cursor:pointer;font-size:13px;transition:background .15s}
+.search-result-item:hover{background:var(--bg-hover)}
+.search-result-item .sr-name{font-weight:600;color:#fff}
+.search-result-item .sr-meta{font-size:11px;color:var(--text2)}
+
+/* Project detail page */
+.project-hero{padding:20px 0;border-bottom:1px solid var(--border);margin-bottom:24px}
+.project-hero h1{font-size:26px;color:#fff}
+.project-hero .sub{color:var(--text2);font-size:13px;margin:4px 0 12px}
+.project-meta{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin:16px 0}
+.project-meta .pm{background:var(--bg2);border-radius:8px;padding:10px 12px;text-align:center}
+.project-meta .pm .pv{font-size:16px;font-weight:700;color:var(--gold)}
+.project-meta .pm .pl{font-size:11px;color:var(--text2);margin-top:2px}
+
+/* Tabs */
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin:20px 0}
+.tab{padding:10px 20px;font-size:13px;cursor:pointer;color:var(--text2);border-bottom:2px solid transparent;transition:all .15s}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* Map */
+.map-container{height:450px;border-radius:var(--radius);overflow:hidden;margin:16px 0}
+.map-container .leaflet-container{background:var(--bg2)}
+
+/* Highlight box */
+.highlight-box{background:linear-gradient(135deg,var(--bg2),var(--bg3));border-left:3px solid var(--gold);border-radius:0 var(--radius) var(--radius) 0;padding:16px 20px;margin:16px 0;font-size:13px;color:var(--text2)}
+
+/* Loading & empty states */
+.loading{text-align:center;padding:40px;color:var(--text3);font-size:14px}
+.loading .spinner{display:inline-block;width:24px;height:24px;border:2px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .6s linear infinite;margin-bottom:8px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.empty{text-align:center;padding:40px;color:var(--text3);font-size:14px}
+.error{background:linear-gradient(135deg,#7c2d12,#662410);border-radius:var(--radius);padding:16px 20px;color:var(--red);margin:16px 0;font-size:13px}
+
+/* Chart */
+.chart-container{background:var(--bg2);border-radius:var(--radius);padding:16px;margin:12px 0;height:280px}
+.chart-container canvas{max-height:250px!important}
+
+/* Tag */
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;margin:2px;background:var(--bg3);color:var(--text2)}
+.tag.ccr{background:#1e3a5f;color:var(--blue)}
+.tag.rcr{background:#1e3a2f;color:var(--green)}
+.tag.ocr{background:#3a2e1e;color:var(--amber)}
+
+/* Responsive */
+@media(max-width:640px){
+  .kpi-row{flex-wrap:wrap}
+  .district-row{grid-template-columns:1fr}
+  .card-grid{grid-template-columns:1fr}
+  .project-meta{grid-template-columns:repeat(2,1fr)}
+  header{flex-direction:column;text-align:center}
+  nav{flex-wrap:wrap;justify-content:center}
+}
