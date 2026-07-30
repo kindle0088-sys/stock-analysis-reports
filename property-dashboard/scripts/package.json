@@ -1,0 +1,15 @@
+{
+  "name": "sg-property-dashboard",
+  "version": "1.0.0",
+  "description": "Singapore property dashboard build scripts — URA API data fetcher + JSON generator",
+  "type": "module",
+  "scripts": {
+    "fetch-test": "node fetch-ura.js --batch 1",
+    "fetch-full": "node fetch-ura.js --full",
+    "build": "node build.js",
+    "build:demo": "node build.js --demo"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.0"
+  }
+}
