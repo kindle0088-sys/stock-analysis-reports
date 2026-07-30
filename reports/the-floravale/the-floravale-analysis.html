@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Floravale — EC 转私宅投资研报</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;background:#0b1120;color:#e2e8f0;line-height:1.75;min-height:100vh}
+.container{max-width:880px;margin:0 auto;padding:48px 24px 80px}
+a{text-decoration:none;color:#60a5fa}
+.hero{text-align:center;padding:48px 0 40px;border-bottom:1px solid #1e293b;margin-bottom:40px}
+.hero-badge{display:inline-block;background:#1e293b;color:#fbbf24;font-size:12px;font-weight:600;padding:4px 14px;border-radius:20px;margin-bottom:16px;letter-spacing:.5px}
+.hero h1{font-size:36px;font-weight:800;color:#fff;margin-bottom:8px}
+.hero .address{color:#94a3b8;font-size:15px;margin-bottom:20px}
+.kpi-row{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-top:20px}
+.kpi{background:#1e293b;border-radius:12px;padding:16px 24px;text-align:center;min-width:140px}
+.kpi .val{font-size:26px;font-weight:700;color:#fbbf24}
+.kpi .lbl{font-size:12px;color:#94a3b8;margin-top:4px}
+section{margin-bottom:48px}
+.section-title{font-size:22px;font-weight:700;color:#fbbf24;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.highlight-box{background:linear-gradient(135deg,#1e293b 0%,#0f172a 100%);border-left:4px solid #fbbf24;border-radius:0 12px 12px 0;padding:20px 24px;margin:20px 0}
+.verdict{background:linear-gradient(135deg,#7c2d12 0%,#662410 100%);border-radius:12px;padding:24px 28px;margin:24px 0}
+.summary-box{background:#1e293b;border-radius:12px;padding:24px 28px;margin:20px 0}
+table{width:100%;border-collapse:collapse;margin:16px 0}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid #1e293b;font-size:14px}
+th{color:#fbbf24;font-weight:600;background:#0f172a}
+td{color:#cbd5e1}
+.num-green{color:#22c55e;font-weight:600}
+.num-red{color:#ef4444;font-weight:600}
+.score-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;margin:20px 0}
+.score-card{background:#1e293b;border-radius:12px;padding:20px;position:relative;overflow:hidden}
+.score-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:#fbbf24}
+.score-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.score-name{font-weight:600;font-size:15px;color:#f1f5f9}
+.score-badge{font-size:20px;font-weight:700;color:#fbbf24}
+.score-bar-bg{height:8px;background:#334155;border-radius:4px;margin-top:8px;overflow:hidden}
+.score-bar{height:100%;border-radius:4px}
+.bar-high{background:linear-gradient(90deg,#22c55e,#4ade80)}
+.bar-mid{background:linear-gradient(90deg,#eab308,#facc15)}
+.bar-low{background:linear-gradient(90deg,#ef4444,#f87171)}
+.price-table{margin:16px 0}
+.timeline{position:relative;padding-left:24px;margin:20px 0}
+.timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:#334155}
+.tl-item{position:relative;padding:12px 0 12px 20px}
+.tl-item::before{content:'';position:absolute;left:-20px;top:16px;width:10px;height:10px;border-radius:50%;background:#fbbf24;border:2px solid #0b1120}
+.tl-year{font-weight:700;color:#fbbf24;font-size:15px}
+.tl-detail{color:#94a3b8;font-size:13px;margin-top:2px}
+footer{text-align:center;color:#475569;font-size:12px;padding:32px 0 0;border-top:1px solid #1e293b;margin-top:40px;line-height:1.8}
+.disclaimer{font-style:italic;color:#64748b;font-size:12px;text-align:center;margin:24px 0 0;padding:16px;background:#1e293b;border-radius:8px}
+ul.check-list{list-style:none;padding:0}
+ul.check-list li{padding:4px 0;font-size:14px;color:#cbd5e1}
+ul.check-list li::before{content:'✓ ';color:#22c55e;font-weight:700}
+ul.check-list li.nag::before{content:'✗ ';color:#ef4444}
+.warning-box{background:linear-gradient(135deg,#451a03 0%,#7c2d12 100%);border-left:4px solid #f97316;border-radius:0 12px 12px 0;padding:20px 24px;margin:20px 0}
+.tag{display:inline-block;background:#334155;color:#94a3b8;font-size:11px;padding:2px 10px;border-radius:10px;margin:2px}
+.tag.gold{background:#7c5c12;color:#fbbf24}
+.tag.green{background:#14532d;color:#22c55e}
+.tag.ccr{background:#1e3a5f;color:#60a5fa}
+.stars{color:#fbbf24;font-size:18px;letter-spacing:2px}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-badge">新加坡 · District 22 · EC 转私宅</div>
+  <h1>The Floravale</h1>
+  <div class="address">218 Westwood Avenue, Jurong West · 794 Units · TOP 2000</div>
+  <div class="kpi-row">
+    <div class="kpi"><div class="val">$1,080</div><div class="lbl">Median PSF</div></div>
+    <div class="kpi"><div class="val">$1.45M</div><div class="lbl">Typical 3BR Price</div></div>
+    <div class="kpi"><div class="val">~3.9%</div><div class="lbl">Gross Rental Yield</div></div>
+    <div class="kpi"><div class="val">70 yrs</div><div class="lbl">Lease Remaining</div></div>
+    <div class="kpi"><div class="val">6.0</div><div class="lbl">综合评分</div></div>
+  </div>
+</div>
+
+<!-- Executive Summary -->
+<section>
+  <div class="section-title">📋 执行摘要</div>
+  <div class="summary-box">
+    <p style="font-size:16px;font-weight:600;color:#fbbf24;margin-bottom:10px">综合评分：<span class="stars">⭐⭐⭐⭐☆☆☆☆☆☆</span> 6.0 / 10</p>
+    <p>The Floravale 是一个 2000 年 TOP 的老牌 EC，位于裕廊西（D22），由 CapitaLand 开发，794 套大户型单位。已过 MOP 并完成私有化，物业费低于新私宅。</p>
+    <p style="margin-top:10px"><strong>核心矛盾：</strong>大户型 + 低尺价 + 稳定租金回报 = 性价比突出的上车盘；但距离 MRT 1.5km、70 年地契衰减、近 Tengah 空军基地的飞机噪音是硬伤。</p>
+    <p style="margin-top:10px"><strong>最适合：</strong>NTU 员工/学生、JLD/JID 工作刚需族、追求空间的 HDB 升级者、预算 $1.4M-1.6M 的务实买家。</p>
+    <p style="margin-top:10px"><strong>不适合：</strong>依赖 MRT 通勤的无车族、短线投资者、对飞机噪音敏感的人群。</p>
+  </div>
+</section>
+
+<!-- Core Parameters -->
+<section>
+  <div class="section-title">🏗️ 项目核心参数</div>
+  <div class="highlight-box">
+    <table>
+      <tr><th style="width:35%">参数</th><th>值</th></tr>
+      <tr><td>项目名称</td><td>The Floravale</td></tr>
+      <tr><td>地址</td><td>218-248 Westwood Avenue, Singapore 648351</td></tr>
+      <tr><td>区域 / 邮区</td><td>D22 — Jurong West (OCR)</td></tr>
+      <tr><td>房产类型</td><td>Executive Condominium（已私有化）</td></tr>
+      <tr><td>地契</td><td>99 年租赁地契（1997年12月16日起）</td></tr>
+      <tr><td>TOP</td><td>2000 年 10 月（26 年楼龄）</td></tr>
+      <tr><td>开发商</td><td>CapitaLand Residential / Pidemco Land</td></tr>
+      <tr><td>总单位数</td><td>794 套</td></tr>
+      <tr><td>楼栋</td><td>16 栋，每栋 14 层</td></tr>
+      <tr><td>土地面积</td><td>397,464 sqft</td></tr>
+      <tr><td>容积率</td><td>2.80</td></tr>
+    </table>
+  </div>
+
+  <p style="font-weight:600;color:#f1f5f9;margin-top:20px">户型分布：</p>
+  <table>
+    <tr><th>户型</th><th>数量</th><th>面积范围</th></tr>
+    <tr><td>3 房 (3BR)</td><td>659 套</td><td>1,216 - 2,077 sqft</td></tr>
+    <tr><td>3 房 + 露天花园</td><td>78 套</td><td>1,259 - 2,077 sqft</td></tr>
+    <tr><td>3 房 Penthouse + 阳���</td><td>10 套</td><td>2,497 - 2,594 sqft</td></tr>
+    <tr><td>3 房 Penthouse + 屋顶</td><td>2 套</td><td>2,680 sqft</td></tr>
+    <tr><td>4 房 Penthouse + 屋顶</td><td>4 套</td><td>2,842 sqft</td></tr>
+  </table>
+
+  <p style="font-weight:600;color:#f1f5f9;margin-top:20px">配套设施：</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+    <div><span class="tag green">✓</span> 游泳池 (3 个: 主池/滑梯池/儿童池)</div>
+    <div><span class="tag green">✓</span> 网球场</div>
+    <div><span class="tag green">✓</span> 篮球场（半场）</div>
+    <div><span class="tag green">✓</span> 健身房 (Gymnasium)</div>
+    <div><span class="tag green">✓</span> 桑��房 (Sauna)</div>
+    <div><span class="tag green">✓</span> SPA 水疗池</div>
+    <div><span class="tag green">✓</span> 俱乐部会所 (Clubhouse)</div>
+    <div><span class="tag green">✓</span> BBQ 烧烤台</div>
+    <div><span class="tag green">✓</span> 游乐场</div>
+    <div><span class="tag green">✓</span> 慢跑道 + 16 个健身站</div>
+    <div><span class="tag green">✓</span> 多功能厅 + 游戏室 + 卡拉 OK</div>
+    <div><span class="tag green">✓</span> 足底反射路径 + 水景</div>
+    <div><span class="tag green">✓</span> 洗衣房</div>
+    <div><span class="tag green">✓</span> 24 小时保安 + 有盖停车场</div>
+  </div>
+
+  <p style="font-weight:600;color:#f1f5f9;margin-top:20px">交通与教育：</p>
+  <table>
+    <tr><th>类别</th><th>详情</th></tr>
+    <tr><td>MRT</td><td>Gek Poh MRT（步行 4 分钟）· Pioneer MRT（1.48km, ~18 分钟步行）· 提供穿梭巴士到 Boon Lay MRT</td></tr>
+    <tr><td>快速路</td><td>PIE / AYE 驾车便捷</td></tr>
+    <tr><td>小学 (1km)</td><td>Pioneer Primary (367m) · West Grove Primary (715m) · Corporation Primary (1.14km)</td></tr>
+    <tr><td>中学</td><td>Westwood Secondary (539m) · Pioneer Secondary (454m)</td></tr>
+    <tr><td>超市</td><td>Giant Express · Sheng Siong (Jalan Bahar) · Gek Poh Shopping Centre 步行可达</td></tr>
+  </table>
+</section>
+
+<!-- Seven Dimensions -->
+<section>
+  <div class="section-title">📊 七维评分分析</div>
+
+  <div class="score-grid">
+
+    <!-- Dimension 1: Location -->
+    <div class="score-card">
+      <div class="score-header">
+        <span class="score-name">📍 地段 (20%)</span>
+        <span class="score-badge">5.0</span>
+      </div>
+      <div class="score-bar-bg"><div class="score-bar bar-mid" style="width:50%"></div></div>
+      <p style="font-size:13px;color:#94a3b8;margin-top:10px">
+        D22 Jurong West OCR 地段。到 Pioneer MRT 需步行 1.5km（约 18 分钟），深度依赖巴士或驾车。Gek Poh 新站步行 4 分钟（尚未确认全面运营）。近 NTU、JID 和 JLD 发展走廊，但无 MRT 是结构硬伤。
+      </p>
+    </div>
+
+    <!-- Dimension 2: Rental Yield -->
+    <div class="score-card">
+      <div class="score-header">
+        <span class="score-name">💰 租金回报 (15%)</span>
+        <span class="score-badge">6.0</span>
+      </div>
+      <div class="score-bar-bg"><div class="score-bar bar-mid" style="width:60%"></div></div>
+      <p style="font-size:13px;color:#94a3b8;margin-top:10px">
+        毛收益率 ~3.87%。3 房平均租金约 $4,592/月，427 条租赁记录显示需求稳健（NTU 学生 + JID 员工为主力租客）。OCR 中上水平，优于 CCR 新盘但低于成熟镇区 HDB。已过 MOP，出租无限制。
+      </p>
+    </div>
+
+    <!-- Dimension 3: Capital Appreciation -->
+    <div class="score-card">
+      <div class="score-header">
+        <span class="score-name">📈 资本增值 (20%)</span>
+        <span class="score-badge">6.0</span>
+      </div>
+      <div class="score-bar-bg"><div class="score-bar bar-mid" style="width:60%"></div></div>
+      <p style="font-size:13px;color:#94a3b8;margin-top:10px">
+        2019 年以来 PSF 从 ~$750 涨至 ~$1,100+（+47%），Two Homes 利润评分 8.0/10。JLD（裕廊湖区）和 JID（裕廊创新区）是 URA 背书的长线利好。但 70 年地契衰减≈2036 年 <60 年触发 CPF 限制，中长期压制涨幅天花板。
+      </p>
+    </div>
+
+    <!-- Dimension 4: Developer -->
+    <div class="score-card">
+      <div class="score-header">
+        <span class="score-name">🏢 开发商 (10%)</span>
+        <span class="score-badge">9.0</span>
+      </div>
+      <div class="score-bar-bg"><div class="score-bar bar-high" style="width:90%"></div></div>
+      <p style="font-size:13px;color:#94a3b8;margin-top:10px">
+        CapitaLand Residential — 亚洲顶级房地产集团，新加坡上市。代表作包括 Sky Habitat、Cairnhill Nine、d'Leedon 等标杆项目。品牌信誉、交付质量、物业管理均为业界顶尖。Pidemco Land 为联合开发商。
+      </p>
+    </div>
+
+    <!-- Dimension 5: Holding Costs -->
+    <div class="score-card">
+      <div class="score-header">
+        <span class="score-name">💸 持有成本 (10%)</span>
+        <span class="score-badge">6.0</span>
+      </div>
+      <div class="score-bar-bg"><div class="score-bar bar-mid" style="width:60%"></div></div>
+      <p style="font-size:13px;color:#94a3b8;margin-top:10px">
+        老 EC 物业费中等，MCST 管理成熟（CapitaLand）。26 年楼龄需预留大修基金（Sinking Fund 可能上调）。物业税按年值征收，适居自住税率低。已过 SSD 窗口。ABSD 取决于买家身份。
+      </p>
+    </div>
+
+    <!-- Dimension 6: Exit Liquidity -->
+    <div class="score-card">
+      <div class="score-header">
+        <span class="score-name">🔄 退出流动性 (15%)</span>
+        <span class="score-badge">6.0</span>
+      </div>
+      <div class="score-bar-bg"><div class="score-bar bar-mid" style="width:60%"></div></div>
+      <p style="font-size:13px;color:#94a3b8;margin-top:10px">
+        794 套大社区，转售市场活跃。EC 私有化后买家池扩大至全市场，但对 EC 抗性（EC stigma）仍在。大户型总价高（$1.4-2.0M），与邻近新 EC/公寓存在竞争。平均成交周期 2-3 个月，OCR 合理水平。
+      </p>
+    </div>
+
+    <!-- Dimension 7: Risk -->
+    <div class="score-card">
+      <div class="score-header">
+        <span class="score-name">⚠️ 风险控制 (10%)</span>
+        <span class="score-badge">5.0</span>
+      </div>
+      <div class="score-bar-bg"><div class="score-bar bar-low" style="width:50%"></div></div>
+      <p style="font-size:13px;color:#94a3b8;margin-top:10px">
+        最大风险：地契剩余 70 年→2036 年降至 60 年以下→CPF 使用受限+银行 LTV 收窄。第二轮：飞机噪音（Tengah 空军基地起降航线下方）影响居住体验和再出售。第三：老楼设施更新成本。
+      </p>
+    </div>
+
+  </div>
+
+  <div class="verdict">
+    <p style="font-size:16px;font-weight:700;margin-bottom:8px">综合评分：6.0 / 10 — 可考虑</p>
+    <p style="font-size:14px;color:#fca5a5">总分 = (5.0×20% + 6.0×15% + 6.0×20% + 9.0×10% + 6.0×10% + 6.0×15% + 5.0×10%) = 6.00 / 10</p>
+  </div>
+</section>
+
+<!-- Recent Transactions -->
+<section>
+  <div class="section-title">💰 近期成交记录（2026）</div>
+  <div class="highlight-box">
+    <table>
+      <tr><th>日期</th><th>户型</th><th>面积 (sqft)</th><th>PSF</th><th>总价</th></tr>
+      <tr><td>Jun 2026</td><td>3BR</td><td>1,324</td><td class="num-green">$1,103</td><td>$1,460,000</td></tr>
+      <tr><td>Jun 2026</td><td>3BR</td><td>1,238</td><td class="num-green">$1,171</td><td>$1,450,000</td></tr>
+      <tr><td>May 2026</td><td>3BR</td><td>2,304</td><td>$899</td><td>$2,070,000</td></tr>
+      <tr><td>May 2026</td><td>3BR</td><td>1,302</td><td class="num-green">$1,105</td><td>$1,438,888</td></tr>
+      <tr><td>Apr 2026</td><td>3BR</td><td>1,324</td><td class="num-green">$1,116</td><td>$1,478,000</td></tr>
+      <tr><td>Apr 2026</td><td>3BR</td><td>1,249</td><td class="num-green">$1,161</td><td>$1,450,000</td></tr>
+      <tr><td>Mar 2026</td><td>3BR</td><td>1,335</td><td class="num-green">$1,110</td><td>$1,481,888</td></tr>
+      <tr><td>Jan 2026</td><td>3BR</td><td>1,324</td><td>$1,064</td><td>$1,408,888</td></tr>
+    </table>
+    <p style="color:#94a3b8;font-size:12px;margin-top:8px">数据来源：URA 交易记录 via Two Homes / 99.co</p>
+  </div>
+
+  <p style="margin-top:12px"><strong>趋势分析：</strong>2020 年以来 3 房 PSF 从 ~$780 涨至当前 ~$1,100，5 年年化约 7%。但 2026H1 价格已趋平，显示升值动能放缓。</p>
+</section>
+
+<!-- Pricing Context -->
+<section>
+  <div class="section-title">📐 价格对标</div>
+  <table>
+    <tr><th>对比项目</th><th>类型</th><th>距 MRT</th><th>Median PSF</th></tr>
+    <tr><td>The Floravale</td><td>EC (26yr)</td><td>1.5km</td><td><strong>$878</strong></td></tr>
+    <tr><td>J Gateway</td><td>Condo (10yr)</td><td>0.3km</td><td>$1,450</td></tr>
+    <tr><td>Lakeville</td><td>Condo (15yr)</td><td>0.6km</td><td>$1,280</td></tr>
+    <tr><td>The Centris</td><td>Condo (16yr)</td><td>0.2km</td><td>$1,350</td></tr>
+    <tr><td>Parc Vista</td><td>Condo (22yr)</td><td>0.8km</td><td>$1,050</td></tr>
+  </table>
+  <div class="highlight-box" style="margin-top:12px">
+    <p><strong>💡 核心发现：</strong>The Floravale 在 D22 邻近公寓中 PSF 最低，比 J Gateway ���宜约 40%。大户型 + 低尺价 = 绝对总价可控。但 MRT 距离是价格折价的核心原因。</p>
+  </div>
+</section>
+
+<!-- Resident Experience -->
+<section>
+  <div class="section-title">🏠 真实居住体验</div>
+
+  <p style="margin-bottom:12px;color:#94a3b8">基于 99.co 评分 4.4/10（51 条评价）、用户论坛讨论和租客反馈综合整理。</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <div class="highlight-box" style="border-left-color:#22c55e">
+      <p style="font-weight:600;color:#22c55e;margin-bottom:8px">✅ 好评要点</p>
+      <ul class="check-list" style="font-size:13px">
+        <li>户型方正宽敞（最小 3 房也有 1,248 sqft），���住舒适度高</li>
+        <li>朝内单位安静，不靠 Westwood Ave 一侧基本无马路噪音</li>
+        <li>设施齐全（16 栋共享完整配套），26 年楼维护尚可</li>
+        <li>楼下即有 Gek Poh Shopping Centre，超市/食阁/诊所齐全</li>
+        <li>穿梭巴士到 Boon Lay MRT 和 Jurong Point，便利上班族和 NTU 学生</li>
+        <li>房东普遍评价好说话，NTU 学生群体租客素质较高</li>
+        <li>CapitaLand 物业管理响应急速</li>
+      </ul>
+    </div>
+    <div class="highlight-box" style="border-left-color:#ef4444">
+      <p style="font-weight:600;color:#ef4444;margin-bottom:8px">❌ 差评要点</p>
+      <ul class="check-list" style="font-size:13px">
+        <li class="nag">距 Pioneer MRT 1.5km——无车族通勤痛苦，18 分钟步行暴晒</li>
+        <li class="nag">飞机噪音问题突出——位于 Tengah 空军基地起降航线正下方，一天飞约 4 次</li>
+        <li class="nag">泳池紧邻路边，粉尘和马路噪音影响体验</li>
+        <li class="nag">26 年楼龄，部分公共区域老化迹象明显</li>
+        <li class="nag">EC 转私宅后「EC stigma」仍在，部分买家对 EC 抗性影响了转售价格</li>
+        <li class="nag">朝向 Westwood Ave 的单位吵闹程度约 7/10</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="summary-box" style="margin-top:16px">
+    <p style="font-weight:600;color:#fbbf24">综合居住体验评级：⭐⭐⭐⭐☆☆☆☆☆☆ (6.0/10)</p>
+    <p style="font-size:14px;color:#94a3b8;margin-top:6px">
+      空间获得感是最大亮点——花 $1.4-1.5M 在别处只能买 800 sqft 小 2 房，在这里能住 1,300 sqft 大 3 房。但 MRT 距离和飞机噪音是绕不开的硬伤，决定了它是有车族和 NTU 相关性人群的专属产品。
+    </p>
+    <p style="font-size:13px;color:#64748b;margin-top:6px">来源：99.co 用户评价 (51 reviews, 4.4/5)、ShiokNest (6.6/10)、Singapore Expats (5.9/10)、uHomes 租客回访</p>
+  </div>
+</section>
+
+<!-- Risk Assessment -->
+<section>
+  <div class="section-title">⚠️ 关键风险矩阵</div>
+  <table>
+    <tr><th>风险项</th><th>影响等级</th><th>说明</th></tr>
+    <tr><td>地契衰减</td><td class="num-red">高</td><td>70 年剩↘2036 年降至 60 年以下，CPF 使用+银行 LTV 届时受限</td></tr>
+    <tr><td>飞机噪音</td><td class="num-red">高</td><td>Tengah 空军基地起降航线下方，一天多次喷气机起降噪音</td></tr>
+    <tr><td>MRT 距离</td><td class="num-red">高</td><td>1.5km 步行到 Pioneer MRT，无车族深度依赖巴士/穿梭车</td></tr>
+    <tr><td>楼龄老化</td><td class="num-green">中</td><td>26 年 EC，未来 5-10 年大修和 Sinking Fund 上调压力</td></tr>
+    <tr><td>EC Stigma</td><td class="num-green">中</td><td>已私有化但部分买家对"EC出身"有抗性，影响买家池</td></tr>
+    <tr><td>区域供应</td><td class="num-green">中</td><td>裕廊西未来 5 年更多新盘/EC 入市，分流需求</td></tr>
+  </table>
+</section>
+
+<!-- Final Verdict -->
+<section>
+  <div class="section-title">🎯 最终结论</div>
+
+  <div class="summary-box">
+    <p style="font-size:16px;font-weight:600;color:#fbbf24">分场景建议</p>
+    <table style="margin-top:12px">
+      <tr><th style="width:40%">买家画像</th><th>匹配度</th><th>说明</th></tr>
+      <tr><td>NTU 教工/研究者</td><td class="num-green" style="font-weight:700">✅ 推荐</td><td>距 NTU 5-10 分钟车��，大户型适合家庭，租金回报支撑</td></tr>
+      <tr><td>JID/JLD 就业者</td><td class="num-green" style="font-weight:700">✅ 推荐</td><td>通勤方便，JLD 长期发展利好</td></tr>
+      <tr><td>HDB 升级者（有车）</td><td class="num-green" style="font-weight:700">✅ 推荐</td><td>$1.4-1.5M 获 1,300+ sqft 大 3 房，空间感碾压新公寓</td></tr>
+      <tr><td>投资收租型</td><td style="color:#eab308;font-weight:700">🟡 可行</td><td>~3.9% 毛回报率在 OCR 合格，但地契衰减限制长期持有</td></tr>
+      <tr><td>无车通勤族</td><td class="num-red" style="font-weight:700">❌ 不推荐</td><td>1.5km MRT 距离对日常通勤是明显负担</td></tr>
+      <tr><td>短线投机者</td><td class="num-red" style="font-weight:700">❌ 不推荐</td><td>26 年楼 + 地契衰减，短期套利空间有限</td></tr>
+    </table>
+  </div>
+
+  <div class="verdict">
+    <p style="font-size:16px;font-weight:700;margin-bottom:8px">一句话结论</p>
+    <p style="font-size:14px">
+      The Floravale 是一块被 MRT 距离和飞机噪音掩盖的「空间价值洼地」。对于有车、追求大空间的务实买家和 NTU 相关性人群，它提供了 $1.5M 价位段在新加坡西部几乎无法复制的性价比。但它不是适合所有人的产品——无车族和短线炒家请直接绕道。
+    </p>
+  </div>
+</section>
+
+<!-- Disclaimer -->
+<div class="disclaimer">
+  <p><strong>免责声明：</strong>本分析基于公开数据和第三方信息源（URA、99.co、EdgeProp、PropertyGuru、ShiokNest、Two Homes 等），仅供参考和学习用途，不构成投资建议。房地产投资涉及风险，过往表现不代表未来收益。购买前请咨询持牌房地产经纪和专业财务顾问。</p>
+  <p style="margin-top:8px">报告生成日期：2026 年 7 月 30 日 · 数据截止：2026 年 7 月</p>
+</div>
+
+</div>
+</body>
+</html>
