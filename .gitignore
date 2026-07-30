@@ -16,3 +16,18 @@ Thumbs.db
 # WorkBuddy 工作区元数据
 .workbuddy/
 property-dashboard/
+
+# 房地产研报 — 已迁移�� sg-property 仓库
+reports/aurelle-tampines/
+reports/dunearn-house/
+reports/lentor-central/
+reports/parc-life/
+reports/skye-at-holland/
+reports/skypark-residences/
+reports/the-floravale/
+reports/the-quartz/
+reports/the-terrace/
+reports/twin-waterfalls/
+reports/bidadari-estate.html
+reports/one-canberra.html
+reports/the-visionaire.html
