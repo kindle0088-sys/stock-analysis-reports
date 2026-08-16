@@ -82,13 +82,13 @@ body {
 
     <div class="metric-card">
       <div class="label">营收增速 (YoY)</div>
-      <div class="value green">13.0%</div>
+      <div class="value red">13.0%</div>
       <div class="sub">3年CAGR 10.0%</div>
     </div>
 
     <div class="metric-card">
       <div class="label">利润增速 (YoY)</div>
-      <div class="value green">15.0%</div>
+      <div class="value red">15.0%</div>
       <div class="sub">归母净利润</div>
     </div>
 
@@ -201,11 +201,11 @@ chart1.setOption({
   tooltip: { trigger: 'axis' },
   legend: { data: ['营收', '归母净利润'], top: 28 },
   grid: { left: 60, right: 20, top: 60, bottom: 30 },
-  xAxis: { type: 'category', data: ["2025-FY","2024-FY","2023-FY","2022-FY"] },
+  xAxis: { type: 'category', data: ["2022-FY","2023-FY","2024-FY","2025-FY"] },
   yAxis: { type: 'value', axisLabel: { formatter: (v) => v >= 1e12 ? (v/1e12).toFixed(1)+'万亿' : v >= 1e8 ? (v/1e8).toFixed(0)+'亿' : v } },
   series: [
-    { name: '营收', type: 'bar', data: [751766000000,660257000000,609015000000,554552000000], itemStyle: { color: '#5b8ff9' } },
-    { name: '归母净利润', type: 'bar', data: [224842000000,194073000000,115216000000,188243000000], itemStyle: { color: '#f5a623' } },
+    { name: '营收', type: 'bar', data: [554552000000,609015000000,660257000000,751766000000], itemStyle: { color: '#5b8ff9' } },
+    { name: '归母净利润', type: 'bar', data: [188243000000,115216000000,194073000000,224842000000], itemStyle: { color: '#f5a623' } },
   ]
 });
 
