@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>腾讯控股 · 巴菲特价值投资分析 v2 | 2026-08-16</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: #f5f6fa; color: #1a1a2e; line-height: 1.7; padding: 24px;
+}
+.container { max-width: 960px; margin: 0 auto; }
+
+.report-header {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: #fff; border-radius: 16px; padding: 36px 40px; margin-bottom: 24px;
+}
+.report-header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; letter-spacing: 1px; }
+.report-header .subtitle { font-size: 14px; color: rgba(255,255,255,0.7); }
+.report-header .meta { display: flex; gap: 20px; margin-top: 14px; font-size: 13px; color: rgba(255,255,255,0.6); flex-wrap: wrap; }
+.report-header .badge { display: inline-block; background: rgba(255,255,255,0.12); padding: 2px 10px; border-radius: 6px; margin-right: 6px; }
+.version-tag { display: inline-block; background: #f5a623; color: #1a1a2e; font-weight: 700; padding: 2px 10px; border-radius: 6px; margin-right: 6px; font-size: 12px; }
+
+.metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+.metric-card { background: #fff; border-radius: 12px; padding: 18px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); text-align: center; }
+.metric-card .label { font-size: 12px; color: #888; margin-bottom: 4px; }
+.metric-card .value { font-size: 22px; font-weight: 700; color: #1a1a2e; }
+.metric-card .value.red { color: #d8363a; }
+.metric-card .value.green { color: #19a974; }
+.metric-card .value.orange { color: #f5a623; }
+.metric-card .sub { font-size: 11px; color: #999; margin-top: 2px; }
+
+.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.full-row { margin-bottom: 20px; }
+.card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+.card h3 { font-size: 14px; font-weight: 600; color: #555; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+.chart-box { width: 100%; height: 340px; }
+.card p { font-size: 13px; color: #444; }
+.card .src { font-size: 11px; color: #aaa; margin-top: 8px; }
+
+.verdict-box {
+  background: #fff; border-radius: 12px; padding: 24px; border-left: 4px solid #d8363a;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04); margin-bottom: 20px; display: flex; gap: 16px;
+}
+.verdict-icon { font-size: 40px; line-height: 1; }
+.verdict-content h3 { font-size: 16px; font-weight: 700; margin-bottom: 10px; color: #1a1a2e; }
+.verdict-content p { font-size: 13px; color: #444; margin-bottom: 4px; }
+.verdict-content p strong { color: #1a1a2e; }
+.verdict-final { margin-top: 10px !important; font-weight: 600; color: #d8363a !important; padding-top: 8px; border-top: 1px solid #eee; }
+
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.data-table th { background: #f0f2f5; padding: 8px 10px; text-align: left; font-weight: 600; color: #555; }
+.data-table td { padding: 8px 10px; border-bottom: 1px solid #f0f2f5; }
+.data-table tr:last-child td { border-bottom: none; }
+.data-table .pos { color: #d8363a; }
+.data-table .neg { color: #19a974; }
+.data-table .neutral { color: #f5a623; }
+
+.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+.tag-a { background: #ffe8e8; color: #d8363a; }
+.tag-b { background: #fff3e0; color: #e67e22; }
+.tag-c { background: #e8f5e9; color: #27ae60; }
+.tag-na { background: #f0f2f5; color: #999; }
+
+.score-bar { background: #f0f2f5; border-radius: 8px; height: 10px; overflow: hidden; margin-top: 4px; }
+.score-bar .fill { height: 100%; border-radius: 8px; }
+.score-dim { margin-bottom: 12px; }
+
+.alert-box {
+  background: #fff8e6; border: 1px solid #f5d78e; border-radius: 12px; padding: 18px 20px; margin-bottom: 20px;
+}
+.alert-box h3 { font-size: 14px; font-weight: 700; color: #b57f0a; margin-bottom: 8px; }
+.alert-box p { font-size: 13px; color: #6b5310; }
+
+.checklist { list-style: none; }
+.checklist li { font-size: 13px; color: #444; padding: 6px 0 6px 24px; position: relative; border-bottom: 1px dashed #f0f2f5; }
+.checklist li:last-child { border-bottom: none; }
+.checklist li:before { content: "☐"; position: absolute; left: 0; color: #888; }
+
+.footer { text-align: center; font-size: 12px; color: #aaa; padding: 20px 0; }
+.disclaimer { font-size: 11px; color: #999; text-align: center; padding: 12px 20px; border-top: 1px solid #eee; margin-top: 8px; }
+
+@media (max-width: 700px) {
+  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .row-2 { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="report-header">
+  <h1>📄 腾讯控股 · 巴菲特价值投资分析 <span class="version-tag">v2</span></h1>
+  <div class="subtitle">Q2 2026 财报更新版 · 六维框架：护城河 · 盈利质量 · 现金流 · 估值 · 管理层 · 安全边际</div>
+  <div class="meta">
+    <span>📅 2026-08-16</span>
+    <span>🏷️ <span class="badge">hk00700</span> 腾讯控股</span>
+    <span>📊 现价 HKD 440.0</span>
+    <span>📡 财报 2026-08-12 发布 · 行情 2026-08-14</span>
+    <span>🐾 巴迪出品</span>
+  </div>
+</div>
+
+<!-- TL;DR 结论 -->
+<div class="verdict-box">
+  <div class="verdict-icon">🐾</div>
+  <div class="verdict-content">
+    <h3>巴迪的巴菲特式结论（v2 · Q2 财报更新）</h3>
+    <p><strong>生意质量：<span class="tag tag-a">A+</span></strong> — 微信 14.39 亿月活的网络效应护城河 + 毛利率升至 58%，Non-IFRS 归母净利 H1 +10%</p>
+    <p><strong>管理层：<span class="tag tag-a">A</span></strong> — 创始人掌舵，H1 回购约 244 亿港元 + 分红，AI 投入战略清晰且执行到位</p>
+    <p><strong>估值：<span class="tag tag-b">B+</span></strong> — PE(TTM) 14.77× 历史低分位，YTD -25.9% 提供安全边际，但 PB 3.07× 不低</p>
+    <p><strong>新变量（v2 核心）：<span class="tag tag-b">B</span></strong> — AI 资本开支 H1 同比 +82% 至 847 亿元，Q2 自由现金流转负 -138 亿元</p>
+    <p><strong>确定性：<span class="tag tag-b">B</span></strong> — 主业确定性强，但 AI 军备竞赛的回报率尚未被验证</p>
+    <p class="verdict-final">→ 好生意 + 便宜价格，但"所有者收益"正被 AI 资本开支侵蚀。巴菲特会问：这笔钱投进去，护城河是加深了还是被摊薄了？答案是"加深但回报待验证"——适合分批布局，不追高，重点跟踪 AI 投入回报率。</p>
+  </div>
+</div>
+
+<!-- Key Metrics -->
+<div class="metrics-grid">
+  <div class="metric-card">
+    <div class="label">PE (TTM)</div>
+    <div class="value red">14.77×</div>
+    <div class="sub">历史低分位 · 港股科技龙头折价</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">毛利率 (2026 H1)</div>
+    <div class="value red">58.0%</div>
+    <div class="sub">同比 +1pct · 连续多年提升</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">Non-IFRS 归母净利 (H1)</div>
+    <div class="value red">1363 亿</div>
+    <div class="sub">同比 +10% · 真实经营盈利</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">Q2 自由现金流</div>
+    <div class="value green">-138 亿</div>
+    <div class="sub">AI 资本开支激增 · v2 关键警报</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">ROE (TTM)</div>
+    <div class="value red">≈20.8%</div>
+    <div class="sub">PB/PE 反推 · 远超 15% 门槛</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">股息率 (TTM)</div>
+    <div class="value orange">1.21%</div>
+    <div class="sub">+ 回购约 3% · 股东回报合计约 4%</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">市值</div>
+    <div class="value">4.01 万亿</div>
+    <div class="sub">港元 · 总股本 91.03 亿股</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">年初至今 (YTD)</div>
+    <div class="value green">-25.9%</div>
+    <div class="sub">52 周区间 411 – 677.7 HKD</div>
+  </div>
+</div>
+
+<!-- 财报核心解读 -->
+<div class="full-row">
+<div class="card">
+  <h3>📋 Q2 2026 财报核心解读（2026-08-12 披露 · 一手来源：港交所业绩公告）</h3>
+  <p><strong>收入稳增，毛利改善：</strong>Q2 收入 2047.85 亿元（+11% YoY），毛利 1184.33 亿元，毛利率升至 58%。上半年收入 4012.43 亿元（+10%），毛利率由 57% 升至 58%。这延续了腾讯"高质量增长"的主线——毛利率从 2022 年的约 43% 一路升至 58%，是持续降本增效 + 高毛利业务占比提升的结果，而非一次性因素。</p>
+  <p style="margin-top:8px;"><strong>分板块（Q2 单季）：</strong></p>
+  <table class="data-table" style="margin-top:8px;">
+    <tr><th>业务板块</th><th>Q2 收入</th><th>YoY</th><th>要点</th></tr>
+    <tr><td>增值服务</td><td class="pos">984.14 亿</td><td class="pos">+8%</td><td>本土游戏 473 亿（+17%），《洛克王国:世界》《三角洲行动》等新品领跑</td></tr>
+    <tr><td>营销服务</td><td class="pos">435.65 亿</td><td class="pos">+22%</td><td>增速最快板块，AI 投放体系 AIM+ 落地，618 大促拉动</td></tr>
+    <tr><td>金融科技及企业服务</td><td>602.86 亿</td><td class="pos">+9%</td><td>云业务受益政企 AI 算力需求，海外拓展，毛利率稳定 52%</td></tr>
+  </table>
+  <p style="margin-top:8px;"><strong>关键会计口径提醒（巴菲特"看透会计噪音"）：</strong>Q2 IFRS 归母净利 560.22 亿元仅 +0.7%，几乎零增长；但 Non-IFRS 归母净利 684.15 亿元 +9%。差异主因是 Q2 分占联营/合营公司由盈利转为亏损 99.93 亿元（投资收益波动）。判断腾讯经营实质，应看 Non-IFRS 口径 + 经营现金流，而非被投资收益扭曲的 IFRS 净利润。</p>
+  <p style="margin-top:8px;"><strong>生态与用户：</strong>微信及 WeChat 合并月活 14.39 亿（+2%），视频号使用时长同比 +20%——流量基本盘仍在缓慢扩张，AI 智能体"小微"灰度测试，微信生态是 AI 商业化的核心场景。</p>
+  <div class="src">来源：港交所披露易《截至 2026-06-30 止三个月及六个月业绩公告》(2026-08-12)；证券时报 (2026-08-12)。</div>
+</div>
+</div>
+
+<!-- AI 资本开支专题（v2 新增） -->
+<div class="full-row">
+<div class="alert-box">
+  <h3>⚠️ v2 新增警报：AI 资本开支激增，自由现金流转负 —— 巴菲特最警惕的"生意模式变化"</h3>
+  <p>这是本期财报最需要投资者重视的变化：<strong>腾讯 2026 上半年资本开支 847.20 亿元，同比 +82%；Q2 单季 527.84 亿元，同比 +176%，环比 +65%</strong>，主要投向数据中心、服务器等 AI 基础设施。受此影响，<strong>Q2 录得负自由现金流 -138 亿元</strong>（剔除算力采购预付款后为 +376 亿元）。现金净额从 3 月末的 1468.60 亿元骤降至 6 月末的 581.91 亿元。</p>
+  <p style="margin-top:8px;">巴菲特终其一生反复强调：<em>"最好的生意是不需要持续巨额资本开支、却能不断产生现金的生意"</em>（喜诗糖果式）。腾讯过去是典型的"轻资产现金牛"——用极低的边际成本把微信流量货币化。如今主动向"AI 基础设施重投入"转型，本质上是从现金牛向军备竞赛切换。<strong>这笔钱是加深护城河，还是被时代裹挟的被动防御？</strong>这是当前估值的核心分歧：</p>
+  <p style="margin-top:8px;">· <strong>乐观面：</strong>管理层称 AI 商业化闭环正在形成（Hy3 大模型词元消耗全球前三、WorkBuddy 国内桌面端 AI 办公第一、CodeBuddy 渗透研发、广告 AIM+ 已直接贡献营销服务 +22% 增速）——这是"花钱加固护城河"。</p>
+  <p style="margin-top:8px;">· <strong>警惕面：</strong>资本开支同比 +82% 远超收入 +10% 的增速，若 AI 投入的边际回报不及预期，将长期压制自由现金流与股东回报，这正是 2021 年后全球科技股"AI 军备竞赛"型估值压缩的剧本。</p>
+  <p style="margin-top:8px;"><strong>巴迪判断：</strong>广告板块 AI 投放已兑现真金白银（营销服务 +22%），说明腾讯的 AI 不是纯烧钱，有明确变现路径；但云 + 大模型的回报仍需 2-3 个季度验证。这是把 v1 的"确定性 B"调低的核心原因，也是估值 B+（而非 A-）的关键。</p>
+  <div class="src">来源：港交所业绩公告 (2026-08-12) · 证券时报报道 (2026-08-12)。</div>
+</div>
+</div>
+
+<!-- 图表区 -->
+<div class="full-row">
+<div class="card">
+  <h3>📈 营业收入趋势（年度 · 人民币）</h3>
+  <div id="chart1" class="chart-box"></div>
+  <div class="src">数据：neodata 财务（2022-2025 财年，IFRS 口径，人民币）；2026 H1 为半年值，未入图避免量级误导。</div>
+</div>
+</div>
+
+<div class="row-2">
+  <div class="card">
+    <h3>🧩 Q2 2026 收入结构</h3>
+    <div id="chart2" class="chart-box" style="height:300px;"></div>
+    <div class="src">来源：港交所业绩公告 (2026-08-12)，单位亿元。</div>
+  </div>
+  <div class="card">
+    <h3>🛡️ 护城河评估（六维雷达）</h3>
+    <div id="chart3" class="chart-box" style="height:300px;"></div>
+  </div>
+</div>
+
+<div class="row-2">
+  <div class="card">
+    <h3>📊 毛利率趋势：质量改善的硬证据</h3>
+    <div id="chart4" class="chart-box" style="height:300px;"></div>
+    <div class="src">2022-2024 为公开财报值，2025 约值，2026H1 来自业绩公告。</div>
+  </div>
+  <div class="card">
+    <h3>💰 会计口径对比：IFRS vs Non-IFRS</h3>
+    <div id="chart5" class="chart-box" style="height:300px;"></div>
+    <div class="src">IFRS 受投资收益波动大；Non-IFRS 更接近真实经营盈利。单位亿元。</div>
+  </div>
+</div>
+
+<div class="full-row">
+<div class="card">
+  <h3>🎯 安全边际：52 周价格区间与估值位置</h3>
+  <div id="chart6" class="chart-box"></div>
+  <div class="src">行情来源：腾讯自选股 westock (2026-08-14 收盘)。当前价 440 距 52 周低点 411 仅 7%，距高点 677.7 已回撤 35%。</div>
+</div>
+</div>
+
+<!-- 六维评分 -->
+<div class="row-2">
+  <div class="card">
+    <h3>🧮 巴菲特六维评分（v2）</h3>
+    <div class="score-dim">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#666;"><span>护城河 <span style="color:#aaa;">(25%)</span></span><span>90</span></div>
+      <div class="score-bar"><div class="fill" style="width:90%;background:#5b8ff9;"></div></div>
+    </div>
+    <div class="score-dim">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#666;"><span>盈利质量 <span style="color:#aaa;">(20%)</span></span><span>85</span></div>
+      <div class="score-bar"><div class="fill" style="width:85%;background:#d8363a;"></div></div>
+    </div>
+    <div class="score-dim">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#666;"><span>估值 / 安全边际 <span style="color:#aaa;">(20%)</span></span><span>78</span></div>
+      <div class="score-bar"><div class="fill" style="width:78%;background:#f5a623;"></div></div>
+    </div>
+    <div class="score-dim">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#666;"><span>管理层 / 资本配置 <span style="color:#aaa;">(15%)</span></span><span>82</span></div>
+      <div class="score-bar"><div class="fill" style="width:82%;background:#9254de;"></div></div>
+    </div>
+    <div class="score-dim">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#666;"><span>现金流 <span style="color:#aaa;">(10%)</span></span><span>62</span></div>
+      <div class="score-bar"><div class="fill" style="width:62%;background:#ff6b6b;"></div></div>
+    </div>
+    <div class="score-dim">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#666;"><span>确定性 / 风险 <span style="color:#aaa;">(10%)</span></span><span>66</span></div>
+      <div class="score-bar"><div class="fill" style="width:66%;background:#19a974;"></div></div>
+    </div>
+    <p style="font-size:12px;color:#666;margin-top:10px;"><strong>加权综合评分 ≈ 79 / 100</strong>（v1 为 73）—— 护城河与盈利质量得分上调（毛利率、Non-IFRS 增长验证质量），现金流与确定性得分下调（AI 资本开支侵蚀）。评级：<span class="tag tag-a">可分批布局</span></p>
+  </div>
+  <div class="card">
+    <h3>👔 管理层与股东回报</h3>
+    <p><strong>马化腾（主席）创始人掌舵，管理层结构稳定。</strong>腾讯是罕见的"创始团队 + 职业经理人"长期稳定的中国科技公司。</p>
+    <p style="margin-top:8px;"><strong>股东回报（巴菲特最看重的资本配置纪律）：</strong></p>
+    <table class="data-table" style="margin-top:8px;">
+      <tr><td style="width:44%;color:#888;">2026 H1 回购</td><td>5003 万股 · 约 244 亿港元</td></tr>
+      <tr><td style="width:44%;color:#888;">2025 年度股息支付</td><td>约 416 亿元</td></tr>
+      <tr><td style="width:44%;color:#888;">TTM 股息率</td><td>1.21%</td></tr>
+      <tr><td style="width:44%;color:#888;">股东回报合计（股息+回购）</td><td>约 4% / 年</td></tr>
+    </table>
+    <p style="margin-top:8px;">管理层在 AI 重投入的同时仍维持回购与分红，体现"资本配置纪律"——但需注意：<strong>若 AI 资本开支继续攀升，回购力度可能被动收缩</strong>（现金流压力），这是未来几个季度需盯紧的信号。</p>
+    <div class="src">来源：港交所业绩公告 (2026-08-12) · 腾讯自选股 (2026-08-14)。</div>
+  </div>
+</div>
+
+<!-- 风险矩阵 -->
+<div class="full-row">
+<div class="card">
+  <h3>⚠️ 巴菲特关注的"永久性损失风险"</h3>
+  <table class="data-table">
+    <tr><th style="width:20%;">风险因素</th><th style="width:12%;">概率</th><th style="width:12%;">影响</th><th>巴迪解读（v2 更新）</th></tr>
+    <tr><td>AI 投入回报不及预期</td><td class="neutral">中</td><td class="pos">大</td><td><strong>v2 新增核心风险</strong>——资本开支 +82% 而收入 +10%，若回报滞后将长期压制现金流与估值</td></tr>
+    <tr><td>监管政策变化</td><td class="neg">低→中</td><td class="pos">大</td><td>2021 年已验证，当前政策趋稳，但游戏/支付/数据合规长期不确定性仍在</td></tr>
+    <tr><td>字节跳动竞争（广告/短视频）</td><td class="neutral">中</td><td class="neutral">中</td><td>豆包 AI 与抖音侵蚀广告预算，但视频号时长 +20% 补位，营销服务 +22% 证明反击有效</td></tr>
+    <tr><td>投资收益波动</td><td class="neutral">高</td><td class="neutral">中</td><td>Q2 联营/合营亏损 99.93 亿元拖累 IFRS 利润，报表利润与实际经营严重背离</td></tr>
+    <tr><td>宏观经济消费疲软</td><td class="neutral">中</td><td class="neutral">中</td><td>广告 + 支付对消费周期敏感，H1 仍双位数增长显示韧性</td></tr>
+    <tr><td>中美地缘政治</td><td class="neg">低</td><td class="neutral">中</td><td>国际游戏 + AI 芯片供应存在潜在制约，需持续关注</td></tr>
+  </table>
+</div>
+</div>
+
+<!-- 核心财务数据 -->
+<div class="full-row">
+<div class="card">
+  <h3>📋 核心财务数据（人民币）</h3>
+  <table class="data-table">
+    <tr><th>指标</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th><th>2026 H1</th></tr>
+    <tr><td>营业收入（亿元）</td><td>5,545.52</td><td>6,090.15</td><td>6,602.57</td><td>7,517.66</td><td>4,012.43</td></tr>
+    <tr><td>IFRS 归母净利（亿元）</td><td>1,882.43</td><td>1,152.16</td><td>1,940.73</td><td>2,248.42</td><td>1,141.15</td></tr>
+    <tr><td>Non-IFRS 归母净利（亿元）</td><td>≈1,156</td><td>≈1,577</td><td>≈2,227</td><td>—</td><td>1,363.20</td></tr>
+    <tr><td>毛利率</td><td>≈43%</td><td>≈48%</td><td>≈53%</td><td>≈55%</td><td class="pos">58%</td></tr>
+    <tr><td>资本开支（亿元）</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="neg">847.20 (+82%)</td></tr>
+  </table>
+  <p style="font-size:11px;color:#999;margin-top:8px;">注：2022-2025 年度数据来自 neodata 财务（IFRS 口径）；Non-IFRS 2022-2024 为公开财报值（腾讯每季披露），2025 全年 Non-IFRS 未取到精确值故留空；2026 H1 数据来自 2026-08-12 业绩公告。IFRS 归母净利受投资收益/一次性项目影响大（如 2022 年含美团分派一次性收益），横向比较应优先看 Non-IFRS。</p>
+</div>
+</div>
+
+<!-- 决策清单 -->
+<div class="full-row">
+<div class="card">
+  <h3>✅ 巴菲特式决策清单</h3>
+  <ul class="checklist">
+    <li><strong>能力圈</strong>：腾讯的生意（社交 + 游戏 + 广告 + 支付）是否在你能理解的范围？—— 是，商业模式清晰；AI 转型是唯一超出传统能力圈的变量</li>
+    <li><strong>护城河</strong>：10 年后微信关系链是否还在？—— 大概率在，网络效应 + 转换成本极难复制</li>
+    <li><strong>盈利质量</strong>：Non-IFRS 净利是否持续增长、毛利率是否持续提升？—— 是，H1 Non-IFRS +10%、毛利率 58%</li>
+    <li><strong>现金流</strong>：赚的是不是真钱、能否自由支配？—— <strong>v2 警报</strong>：Q2 自由现金流转负，需连续跟踪 AI 投入回报</li>
+    <li><strong>管理层</strong>：是否理性配置资本、诚实回报股东？—— 是，回购 + 分红 + 聚焦主业，AI 投入有清晰变现路径</li>
+    <li><strong>安全边际</strong>：当前价是否显著低于内在价值？—— PE 14.77× 历史低分位，YTD -26% 提供一定缓冲，但边际不算厚</li>
+  </ul>
+  <p style="margin-top:10px;font-size:13px;"><strong>操作框架（条件化）：</strong>若认同微信护城河且能承受 AI 投入期波动 → 当前价可分批建仓，摊薄成本，留足 AI 回报不及预期的容错；若更看重即期自由现金流 → 观望至 AI 资本开支见顶、自由现金流转正后再介入。设好"AI 投入回报率"这一核心监控指标，而非盯股价。</p>
+</div>
+</div>
+
+<div class="footer">
+  🐾 巴迪出品 · 腾讯控股 v2（2026-08-16） · 数据来源：港交所披露易业绩公告 (2026-08-12)、腾讯自选股 (2026-08-14)、neodata 财务 · 分析框架：格雷厄姆-巴菲特-芒格价值投资
+</div>
+
+<div class="disclaimer">
+  <strong>免责声明</strong>：以上内容基于公开数据和量化分析，仅供参考，不构成投资建议。市场有风险，投资需谨慎。任何投资决策应结合个人风险承受能力、资金状况和投资目标独立判断，必要时咨询持牌专业机构。过往表现不预示未来收益。
+</div>
+
+</div>
+
+<script>
+// Chart 1: 营收趋势（年度）
+(function() {
+  var c1 = echarts.init(document.getElementById('chart1'));
+  c1.setOption({
+    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+    grid: { left: 70, right: 30, bottom: 30, top: 30 },
+    xAxis: { type: 'category', data: ['2022', '2023', '2024', '2025'] },
+    yAxis: { type: 'value', name: '亿元', axisLabel: { formatter: '{value}' } },
+    series: [
+      {
+        name: '营业收入(亿元)', type: 'bar',
+        data: [5545.52, 6090.15, 6602.57, 7517.66],
+        itemStyle: { color: '#3b82f6', borderRadius: [4,4,0,0] },
+        barMaxWidth: 60,
+        label: { show: true, position: 'top', formatter: '{c}', fontSize: 11, fontWeight: 600 }
+      }
+    ]
+  });
+})();
+
+// Chart 2: Q2 2026 收入结构
+(function() {
+  var c2 = echarts.init(document.getElementById('chart2'));
+  c2.setOption({
+    tooltip: { trigger: 'item', formatter: '{b}<br/>{c} 亿元 ({d}%)' },
+    legend: { bottom: 0, fontSize: 11 },
+    series: [{
+      type: 'pie', radius: ['40%', '68%'], center: ['50%', '46%'],
+      label: { formatter: '{b}\n{d}%', fontSize: 11 },
+      data: [
+        { name: '增值服务', value: 984.14, itemStyle: { color: '#3b82f6' } },
+        { name: '金融科技及企业服务', value: 602.86, itemStyle: { color: '#f59e0b' } },
+        { name: '营销服务', value: 435.65, itemStyle: { color: '#10b981' } },
+        { name: '其他', value: 25.20, itemStyle: { color: '#8b8fa3' } }
+      ]
+    }]
+  });
+})();
+
+// Chart 3: 护城河雷达
+(function() {
+  var c3 = echarts.init(document.getElementById('chart3'));
+  c3.setOption({
+    tooltip: {},
+    radar: {
+      indicator: [
+        { name: '网络效应', max: 5 },
+        { name: '切换成本', max: 5 },
+        { name: '生态锁定', max: 5 },
+        { name: '规模/成本', max: 5 },
+        { name: '品牌/定价权', max: 5 },
+        { name: '现金流质量', max: 5 }
+      ],
+      center: ['50%', '54%'], radius: '62%',
+      axisName: { color: '#555', fontSize: 11 }
+    },
+    series: [{
+      type: 'radar',
+      data: [
+        {
+          value: [5, 5, 5, 4.5, 3.5, 4],
+          name: '腾讯控股',
+          areaStyle: { color: 'rgba(59,130,246,0.2)' },
+          lineStyle: { color: '#3b82f6', width: 2 },
+          itemStyle: { color: '#3b82f6' }
+        }
+      ]
+    }]
+  });
+})();
+
+// Chart 4: 毛利率趋势
+(function() {
+  var c4 = echarts.init(document.getElementById('chart4'));
+  c4.setOption({
+    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' }, formatter: '{b}<br/>毛利率: {c}%' },
+    grid: { left: 50, right: 20, bottom: 30, top: 30 },
+    xAxis: { type: 'category', data: ['2022', '2023', '2024', '2025', '2026H1'] },
+    yAxis: { type: 'value', name: '%', min: 35, max: 65, axisLabel: { formatter: '{value}%' } },
+    series: [
+      {
+        name: '毛利率', type: 'bar',
+        data: [
+          { value: 43, itemStyle: { color: '#8b8fa3' } },
+          { value: 48, itemStyle: { color: '#8b8fa3' } },
+          { value: 53, itemStyle: { color: '#f59e0b' } },
+          { value: 55, itemStyle: { color: '#f59e0b' } },
+          { value: 58, itemStyle: { color: '#d8363a' } }
+        ],
+        barMaxWidth: 50,
+        label: { show: true, position: 'top', formatter: '{c}%', fontSize: 11, fontWeight: 600 }
+      }
+    ]
+  });
+})();
+
+// Chart 5: IFRS vs Non-IFRS 归母净利
+(function() {
+  var c5 = echarts.init(document.getElementById('chart5'));
+  c5.setOption({
+    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+    legend: { data: ['IFRS 归母净利', 'Non-IFRS 归母净利'], top: 0, fontSize: 11 },
+    grid: { left: 60, right: 20, bottom: 30, top: 40 },
+    xAxis: { type: 'category', data: ['2024 全年', '2026 H1', '2026 Q2'] },
+    yAxis: { type: 'value', name: '亿元' },
+    series: [
+      {
+        name: 'IFRS 归母净利', type: 'bar',
+        data: [1940.73, 1141.15, 560.22],
+        itemStyle: { color: '#8b8fa3', borderRadius: [4,4,0,0] },
+        barMaxWidth: 44
+      },
+      {
+        name: 'Non-IFRS 归母净利', type: 'bar',
+        data: [2227, 1363.20, 684.15],
+        itemStyle: { color: '#d8363a', borderRadius: [4,4,0,0] },
+        barMaxWidth: 44
+      }
+    ]
+  });
+})();
+
+// Chart 6: 52周价格区间
+(function() {
+  var c6 = echarts.init(document.getElementById('chart6'));
+  c6.setOption({
+    tooltip: { trigger: 'axis', formatter: function(p) { return p[0].name + '<br/>HKD ' + p[0].value; } },
+    grid: { left: 60, right: 20, bottom: 30, top: 20 },
+    xAxis: { type: 'category', data: ['52周最低', '当前价', '52周最高'], axisTick: { show: false } },
+    yAxis: { type: 'value', name: 'HKD', min: 350, max: 720 },
+    series: [
+      {
+        type: 'bar',
+        data: [
+          { value: 411, itemStyle: { color: '#19a974' } },
+          { value: 440, itemStyle: { color: '#3b82f6' } },
+          { value: 677.7, itemStyle: { color: '#d8363a' } }
+        ],
+        barMaxWidth: 55,
+        label: { show: true, position: 'top', formatter: function(p) { return 'HKD ' + p.value; }, fontSize: 12, fontWeight: 700 }
+      }
+    ]
+  });
+})();
+</script>
+</body>
+</html>
