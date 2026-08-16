@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>财报流水线 · 横向对比</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f5f6fa; color: #1a1a2e; line-height: 1.6; padding: 32px 20px 60px; }
+.container { max-width: 980px; margin: 0 auto; }
+h1 { font-size: 26px; margin-bottom: 6px; }
+.subtitle { color: #666; font-size: 14px; margin-bottom: 28px; }
+.card { background: #fff; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); padding: 20px; margin-bottom: 20px; }
+.card h2 { font-size: 16px; margin-bottom: 12px; }
+#radar { width: 100%; height: 460px; }
+table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); font-size: 13px; }
+th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #f0f0f3; }
+th { background: #fafbfe; font-weight: 600; color: #555; }
+.mono { font-family: Consolas, monospace; }
+.score-cell { color: #2563eb; font-size: 16px; }
+.pos { color: #d8363a; font-weight: 600; }
+.neg { color: #19a974; font-weight: 600; }
+.badge { padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+.verdict-green { background: #e8f5e9; color: #1b8a3a; }
+.verdict-red { background: #fdecea; color: #c0392b; }
+.verdict-yellow { background: #fff8e1; color: #b8860b; }
+.note { font-size: 12px; color: #999; margin-top: 8px; }
+@media (max-width: 700px) { #radar { height: 320px; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>📊 财报流水线 · 横向对比</h1>
+  <p class="subtitle">六维评分 + 核心指标并排对比 · 最新一期（2026-08-16）</p>
+
+  <div class="card">
+    <h2>🕸️ 六维评分雷达图</h2>
+    <div id="radar"></div>
+    <p class="note">注：护城河/管理层/风险未注入 AI 时计 0（待评估）。</p>
+  </div>
+
+  <div class="card">
+    <h2>📋 指标对比表</h2>
+    <div style="overflow-x:auto;">
+      <table>
+        <tr><th>名称</th><th>代码</th><th>期</th><th>评分</th><th>ROE</th><th>PE</th><th>PB</th><th>股息率</th><th>营收增速</th><th>3年CAGR</th><th>DCF安全边际</th><th>结论</th></tr>
+        <tr>
+      <td>腾讯控股</td>
+      <td class="mono">00700</td>
+      <td>2026-08-16</td>
+      <td class="score-cell"><b>73</b></td>
+      <td>19.0%</td>
+      <td>13.61</td>
+      <td>3.00</td>
+      <td>1.2%</td>
+      <td>13.0%</td>
+      <td>10.0%</td>
+      <td class="pos">6.7%</td>
+      <td><span class="badge verdict-yellow">合理关注</span></td>
+    </tr><tr>
+      <td>贵州茅台</td>
+      <td class="mono">600519</td>
+      <td>2026-08-16</td>
+      <td class="score-cell"><b>70</b></td>
+      <td>32.8%</td>
+      <td>20.60</td>
+      <td>6.68</td>
+      <td>—</td>
+      <td>-1.2%</td>
+      <td>10.5%</td>
+      <td class="neg">-19.4%</td>
+      <td><span class="badge verdict-yellow">合理关注</span></td>
+    </tr><tr>
+      <td>Apple Inc.</td>
+      <td class="mono">AAPL</td>
+      <td>2026-08-16</td>
+      <td class="score-cell"><b>70</b></td>
+      <td>—</td>
+      <td>35.08</td>
+      <td>41.57</td>
+      <td>0.3%</td>
+      <td>6.4%</td>
+      <td>1.8%</td>
+      <td class="neg">-115.9%</td>
+      <td><span class="badge verdict-yellow">合理关注</span></td>
+    </tr><tr>
+      <td>DBS Group Holdings</td>
+      <td class="mono">D05.SI</td>
+      <td>2026-08-16</td>
+      <td class="score-cell"><b>46</b></td>
+      <td>—</td>
+      <td>19.32</td>
+      <td>3.11</td>
+      <td>4.2%</td>
+      <td>3.1%</td>
+      <td>11.6%</td>
+      <td class="">—</td>
+      <td><span class="badge verdict-red">高估回避</span></td>
+    </tr>
+      </table>
+    </div>
+  </div>
+</div>
+<script>
+const radar = echarts.init(document.getElementById('radar'));
+radar.setOption({
+  tooltip: { trigger: 'item' },
+  legend: { data: ["腾讯控股","贵州茅台","Apple Inc.","DBS Group Holdings"], bottom: 0 },
+  radar: { indicator: [{"name":"财务健康","max":100},{"name":"成长性","max":100},{"name":"估值","max":100},{"name":"护城河","max":100},{"name":"管理层","max":100},{"name":"风险","max":100}], radius: '62%' },
+  series: [{ type: 'radar', data: [{"name":"腾讯控股","value":[76,63,73,85,78,62]},{"name":"贵州茅台","value":[100,17,74,95,70,55]},{"name":"Apple Inc.","value":[100,46,41,90,80,60]},{"name":"DBS Group Holdings","value":[0,24,84,70,75,60]}] }],
+});
+window.addEventListener('resize', () => radar.resize());
+</script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>估值分位分析</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif; background:#f5f6fa; color:#1a1a2e; padding:32px 20px; }
+.container { max-width:900px; margin:0 auto; }
+h1 { font-size:24px; margin-bottom:6px; }
+.subtitle { color:#666; font-size:13px; margin-bottom:24px; }
+table { width:100%; border-collapse:collapse; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 1px 4px rgba(0,0,0,0.06); font-size:13px; }
+th,td { padding:10px 12px; text-align:left; border-bottom:1px solid #f0f0f3; }
+th { background:#fafbfe; font-weight:600; color:#555; }
+.note { font-size:12px; color:#999; margin-top:12px; }
+</style></head><body><div class="container">
+<h1>📉 估值分位分析</h1>
+<p class="subtitle">PE/PB 分位基于每日快照（需 ≥5 天数据才有效）；价格位置基于 yfinance 52 周区间 · 更新 2026-08-16</p>
+<table>
+<tr><th>标的</th><th>快照</th><th>PE</th><th>PE分位</th><th>PB</th><th>PB分位</th><th>52周价格位置</th></tr>
+<tr>
+      <td>00700</td>
+      <td>1 天</td>
+      <td>13.6126</td>
+      <td>数据不足</td>
+      <td>3.004335</td>
+      <td>数据不足</td>
+      <td>11%（现价 440 / 区间 411.79998779296875~669.6973876953125）</td>
+    </tr><tr>
+      <td>600519</td>
+      <td>1 天</td>
+      <td>20.6</td>
+      <td>数据不足</td>
+      <td>6.68</td>
+      <td>数据不足</td>
+      <td>—</td>
+    </tr><tr>
+      <td>AAPL</td>
+      <td>1 天</td>
+      <td>35.083714</td>
+      <td>数据不足</td>
+      <td>41.566574</td>
+      <td>数据不足</td>
+      <td>71%（现价 305.92999267578125 / 区间 224.07228088378906~339.78692626953125）</td>
+    </tr><tr>
+      <td>D05.SI</td>
+      <td>1 天</td>
+      <td>19.317135</td>
+      <td>数据不足</td>
+      <td>3.1125853</td>
+      <td>数据不足</td>
+      <td>98%（现价 75.52999877929688 / 区间 47.06521224975586~76.17481231689453）</td>
+    </tr>
+</table>
+<p class="note">分位越低越便宜（0% = 历史最低估值，100% = 历史最高）。每日跑 <code>node snapshot.mjs</code> 积累数据。</p>
+</div></body></html>
