@@ -70,6 +70,7 @@
   .total-score { text-align: center; padding: 30px; margin: 24px 0; }
   .total-score .score-circle { width: 120px; height: 120px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 2.6rem; font-weight: 800; margin-bottom: 12px; }
   .total-score .score-circle.high { background: linear-gradient(135deg, #064e3b, #065f46); color: #6ee7b7; border: 3px solid #10b981; }
+  .total-score .score-circle.mid { background: linear-gradient(135deg, #422006, #713f12); color: #fcd34d; border: 3px solid #f59e0b; }
   .total-score .verdict-text { font-size: 1.2rem; font-weight: 600; color: #e2e8f0; }
   
   .highlight-box { background: #0f172a; border-left: 4px solid #60a5fa; padding: 14px 18px; border-radius: 6px; margin: 16px 0; font-size: 0.95rem; }
@@ -159,21 +160,21 @@
 
   <p><strong>贵州茅台</strong>是中国白酒行业无可争议的王者，主营茅台酒系列产品的生产与销售。公司成立于 1999 年，2001 年在上交所上市，总部位于贵州省仁怀市茅台镇。茅台酒因其独特的酿造工艺（五年陈酿）、不可复制的地理环境和深厚的文化底蕴，形成了中国消费品牌中最宽阔的护城河。</p>
 
-  <p>从巴菲特价值投资的角度来看，茅台是 A 股市场中<strong>最接近于"理想买入并永久持有"的标的</strong>之一。它拥有顶级的盈利能力（毛利率 >91%）、极低的负债（净现金状态）、持续的利润增长（10 年利润 CAGR ~15%）、卓越的品牌护城河——几乎完美匹配巴菲特的选股标准。</p>
+  <p>从巴菲特价值投资的角度来看，茅台拥有 A 股市场中<strong>最宽的护城河</strong>——顶级盈利能力（毛利率 >91%）、极低的经营性借款、卓越的品牌壁垒。但 <strong>2025 年营收 -1.2%、净利 -4.5%</strong>，"永续高增长"的前提已被打破（详见 v2 更新）。这使茅台从"理想买入并永久持有"的成长股，切换为需要重新估值的成熟价值股。</p>
 
   <div class="summary-bar">
     <div class="summary-tag"><span class="label">护城河评级</span><span class="value" style="color:#6ee7b7;">极宽（文化/品牌）</span></div>
-    <div class="summary-tag"><span class="label">盈利能力</span><span class="value" style="color:#6ee7b7;">顶级（净利率 ~49%）</span></div>
-    <div class="summary-tag"><span class="label">财务健康</span><span class="value" style="color:#6ee7b7;">净现金状态</span></div>
+    <div class="summary-tag"><span class="label">盈利能力</span><span class="value" style="color:#6ee7b7;">顶级（净利率 ~50%）</span></div>
+    <div class="summary-tag"><span class="label">财务健康</span><span class="value" style="color:#6ee7b7;">现金余额 1848 亿</span></div>
     <div class="summary-tag"><span class="label">ROE</span><span class="value" style="color:#6ee7b7;">~33% 卓越</span></div>
-    <div class="summary-tag"><span class="label">当前估值</span><span class="value" style="color:#6ee7b7;">PE 19.6x 合理偏低</span></div>
+    <div class="summary-tag"><span class="label">增长</span><span class="value" style="color:#fca5a5;">负增长（拐点）</span></div>
   </div>
 
   <div class="total-score">
-    <div class="score-circle high">9.3 / 10</div>
-    <div class="verdict-text">总体评价：⭐⭐⭐⭐⭐⭐⭐⭐⭐☆ &nbsp; 9.3/10</div>
+    <div class="score-circle mid">7.0 / 10</div>
+    <div class="verdict-text">总体评价（修订后）：⭐⭐⭐⭐⭐⭐⭐☆☆☆ &nbsp; 7.0/10</div>
     <p style="color:#94a3b8; margin-top:8px; font-size:0.9rem;">
-      几乎完美的巴菲特式投资标的。如果巴菲特投资 A 股，茅台大概率是其第一大持仓。
+      顶级品牌 + 顶级财务，但增长引擎熄火、估值不便宜。评分已按修订后数据重算（原 9.3/10 基于错误的 +14% 增长假设）。
     </p>
   </div>
 </section>
@@ -333,25 +334,25 @@
   </div>
 
   <div style="display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap;">
-    <span class="verdict pass">✅ PE 19.6x 处于历史低位</span>
-    <span class="verdict pass">✅ 股息率 4.01% 有吸引力</span>
-    <span class="verdict pass">✅ 远期 PE 14.9x 偏低</span>
-    <span class="verdict neutral">➡️ PB 6.96x 合理</span>
+    <span class="verdict warn">⚠️ PE 20.28x 面对负增长不便宜</span>
+    <span class="verdict neutral">➡️ 股息率 3.88% 提供有限缓冲</span>
+    <span class="verdict neutral">➡️ 远期 PE 15.4x 中性</span>
+    <span class="verdict neutral">➡️ PB 7.2x 合理</span>
   </div>
 
-  <h3>核心估值指标</h3>
+  <h3>核心估值指标（修订后）</h3>
   <table>
-    <tr><th>指标</th><th>当前</th><th>5年历史均值</th><th>评价</th></tr>
-    <tr><td>PE（TTM）</td><td>19.6x</td><td>~35x</td><td class="num-green">显著低于均值</td></tr>
-    <tr><td>PE（2026E）</td><td>~15-16x</td><td>~30x</td><td class="num-green">明显偏低</td></tr>
-    <tr><td>PB</td><td>6.96x</td><td>~10x</td><td class="num-green">低于均值</td></tr>
-    <tr><td>股息率</td><td>4.01%</td><td>~1.5%</td><td class="num-green">历史最高水平</td></tr>
-    <tr><td>市值（万亿）</td><td>¥1.62</td><td>~¥2.5</td><td class="num-green">从高点回调显著</td></tr>
-    <tr><td>52周高/低</td><td>1,540 / 1,151</td><td>—</td><td>距高点回落 ~16%</td></tr>
+    <tr><th>指标</th><th>当前（修订后）</th><th>5年历史均值</th><th>评价</th></tr>
+    <tr><td>PE（TTM）</td><td>20.28x</td><td>~35x</td><td class="num-yellow">低于历史均值，但对应负增长</td></tr>
+    <tr><td>PE（Forward）</td><td>15.4x</td><td>~30x</td><td class="num-yellow">中性</td></tr>
+    <tr><td>PB</td><td>7.2x</td><td>~10x</td><td class="num-yellow">低于均值</td></tr>
+    <tr><td>股息率</td><td>3.88%</td><td>~1.5%</td><td class="num-green">高于历史均值</td></tr>
+    <tr><td>DCF 内在价值</td><td>¥1,123.94</td><td>—</td><td class="num-red">现价高估约 19%</td></tr>
+    <tr><td>52周高/低</td><td>1,539.98 / 1,151.01</td><td>—</td><td>现价距高点回落 ~13%</td></tr>
   </table>
 
   <div class="highlight-box gold">
-    <strong>巴菲特视角：</strong>这是茅台近 5 年来最便宜的估值水平。PE 19.6x 对应一家净利润 ¥800 亿+、年增长 ~15%、ROE 33%、几乎零负债的公司，性价比极高。当前 PE 远低于 5 年平均 35x，也低于 10 年平均 30x。茅台历史上 PE 低于 20x 的时期非常罕见（通常出现在市场极度悲观时），而这些时期事后看都是极佳的买入点。股息率 4.01% 已是历史最高水平——这本身就是一个强烈的价值信号。
+    <strong>巴菲特视角（修订后）：</strong>表面看 PE 20.28x 仍低于 5 年平均 35x，但这是"低估值陷阱"与"合理低估"的关键区别——当一家公司从成长股变成成熟股，估值锚必须从 PEG 切换到"股息 + 稳定现金流折现"。DCF 测算（FCF 698.6 亿、增长率 10.5%、折现率 10%）给出的内在价值为 ¥1,123.94，现价 ¥1,341.99 已高估约 19%。股息率 3.88% 是唯一的估值缓冲，但不足以覆盖负增长带来的估值压缩。原报告"极佳买入点"的判断，建立在"年增长 ~15%"的错误假设上。
   </div>
 </section>
 
@@ -373,8 +374,8 @@
     </tr>
     <tr>
       <td><strong>3. 长期可持续盈利能力</strong></td>
-      <td><span class="verdict pass">✅ 10/10</span></td>
-      <td>连续 20 年以上盈利增长，从未亏损，毛利率 >91%，净利率 ~50%。巴菲特会说"这太棒了"。</td>
+      <td><span class="verdict warn">⚠️ 6/10</span></td>
+      <td>从未亏损、毛利率 89.56%、净利率 50.75% 仍顶级，但 <strong>2025 营收 -1.2%、净利 -4.5%，2026 H1 净利继续 -1.95%</strong>——增长拐点已确认，"持续增长"被打折。</td>
     </tr>
     <tr>
       <td><strong>4. 高 ROE</strong></td>
@@ -383,8 +384,8 @@
     </tr>
     <tr>
       <td><strong>5. 保守的财务结构</strong></td>
-      <td><span class="verdict pass">✅ 10/10</span></td>
-      <td>现金余额 ¥1,848 亿（含定期存款）、经营性借款极少，资产负债率 15.2%。稳健的资产负债表。</td>
+      <td><span class="verdict pass">✅ 9/10</span></td>
+      <td>现金余额 ¥1,848 亿（含定期存款）、经营性借款极少，资产负债率 15.2%。稳健，但合同负债（预收）较峰值大幅下降，有息负债 256.7 亿（财务公司存款）。</td>
     </tr>
     <tr>
       <td><strong>6. 优秀的管理层</strong></td>
@@ -393,19 +394,19 @@
     </tr>
     <tr>
       <td><strong>7. 合理的买入价格</strong></td>
-      <td><span class="verdict pass">✅ 8/10</span></td>
-      <td>PE 19.6x 处于历史低位，股息率 4.01% 为历史最高。对于茅台这种质量的标的，当前价格提供了不错的安全边际。</td>
+      <td><span class="verdict fail">❌ 3/10</span></td>
+      <td>PE 20.28x 面对负增长不便宜，股息率 3.88% 仅提供有限缓冲；DCF 测算内在价值约 ¥1,124，现价 ¥1,342 已高估约 19%，安全边际不足。</td>
     </tr>
   </table>
 
   <div class="total-score">
-    <div class="score-circle high">9.3 / 10</div>
-    <div class="verdict-text">综合结论：<strong style="color:#6ee7b7;">强烈符合巴菲特投资标准</strong></div>
+    <div class="score-circle mid">7.0 / 10</div>
+    <div class="verdict-text">综合结论：<strong style="color:#fcd34d;">顶级公司，但增长见顶、估值不便宜</strong></div>
     <p style="color:#94a3b8; margin-top:8px; font-size:0.9rem;">
-      公司质地得分：9.5/10 — 价格得分：8/10 — 综合：9.3/10
+      公司质地得分：8.7/10 — 价格得分：3/10 — 综合：7.0/10（按修订后数据重算）
     </p>
     <p style="color:#cbd5e1; font-size:0.95rem; margin-top:12px;">
-      茅台是 A 股中最接近巴菲特"理想投资标的"概念的公司——拥有无可匹敌的品牌护城河、顶级的盈利能力、完美的资产负债表，并且当前处于 5 年来的估值低点。如果巴菲特管理 A 股资金，茅台极大概率是前三大重仓股。
+      茅台拥有无可匹敌的品牌护城河、顶级的盈利能力和稳健的资产负债表，但增长拐点已现，PE 20.28x 面对负增长、安全边际不足。它从"理想买入并永久持有"的成长股，切换为"吃分红等周期"的成熟价值股。原 9.3/10 的评分基于错误的 +14% 增长假设，现已按修订数据重算。
     </p>
   </div>
 </section>
@@ -418,13 +419,12 @@
     <div class="box pros">
       <h4 style="color:#6ee7b7;">✅ 核心优势</h4>
       <ul style="margin:0; padding-left:18px;">
-        <li>毛利率 >91%，净利率 ~50%</li>
-        <li>净现金 ¥500 亿+</li>
+        <li>毛利率 89.56%，净利率 50.75%</li>
+        <li>现金余额 ¥1,848 亿（含定期存款）</li>
         <li>ROE 连续多年 >30%</li>
-        <li>合同负债显示强劲需求</li>
+        <li>合同负债仍有（约 ¥32 亿）</li>
         <li>存货越陈越值钱</li>
-        <li>PE 19.6x 历史低位</li>
-        <li>股息率 4%+ 历史最高</li>
+        <li>股息率 3.88% 提供缓冲</li>
       </ul>
     </div>
     <div class="box cons">
@@ -449,32 +449,33 @@
   <div style="background: linear-gradient(135deg, #1e293b, #0f172a); border: 1px solid #334155; border-radius: 12px; padding: 28px; margin: 20px 0;">
     <h3 style="color:#fbbf24; margin-top:0;">巴迪·巴菲特式诊断 🐾</h3>
 
-    <p><strong>如果巴菲特投资 A 股，茅台就是他的可口可乐。</strong></p>
+    <p><strong>护城河未变，但增长引擎熄火——这是 v1 修订版的核心判断。</strong></p>
 
-    <p>从任何一个巴菲特价值投资的维度来看，茅台都展现出顶级的品质：</p>
+    <p>按修订后数据重新评估的巴菲特维度：</p>
     <ul>
       <li><strong>护城河：</strong>★★★★★ 茅台=中国最高端的社交货币，不可复制</li>
-      <li><strong>盈利能力：</strong>★★★★★ 毛利率 91%+ 净利率 50%，全球顶级</li>
-      <li><strong>财务健康：</strong>★★★★★ 净现金 ¥500 亿+，几乎零负债</li>
-      <li><strong>定价权：</strong>★★★★★ 出厂价远低于市场价，提价空间巨大</li>
+      <li><strong>盈利能力：</strong>★★★★★ 毛利率 89.56%、净利率 50.75%，全球顶级</li>
+      <li><strong>财务健康：</strong>★★★★★ 现金余额 ¥1,848 亿，经营借款极少</li>
+      <li><strong>定价权：</strong>★★★★☆ 出厂价与批价价差收窄，提价能力仍存但需求承压</li>
       <li><strong>存货价值：</strong>★★★★★ 越陈越值钱，是时间的朋友</li>
-      <li><strong>估值：</strong>★★★★☆ PE 19.6x 是近 5 年低位，提供了安全边际</li>
+      <li><strong>增长：</strong>★★☆☆☆ 2025 营收 -1.2%、净利 -4.5%，拐点已现</li>
+      <li><strong>估值：</strong>★★☆☆☆ PE 20.28x + DCF 高估约 19%，安全边际不足</li>
     </ul>
 
     <div class="buffett-quote" style="margin:16px 0;">
-      "Our favorite holding period is forever." — 对于茅台，这句话格外合适。
+      "Our favorite holding period is forever." — 这句话成立的前提是"增长仍在"。对茅台而言，护城河仍在，但"永远"的前提需要重新审视。
     </div>
 
-    <p><strong>操作建议：</strong></p>
+    <p><strong>操作建议（修订后）：</strong></p>
     <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
-      <span class="verdict pass">✅ 适合长期持有</span>
-      <span class="verdict pass">✅ 当前估值有吸引力</span>
-      <span class="verdict pass">✅ 股息再投资复利</span>
-      <span class="verdict neutral">➡️ 建议分批建仓</span>
+      <span class="verdict neutral">➡️ 已持有者：底仓可留（吃分红等周期）</span>
+      <span class="verdict warn">⚠️ 未持有者：不急于重仓</span>
+      <span class="verdict fail">❌ 增长未企稳前不建议加仓</span>
+      <span class="verdict pass">✅ 关注批价与动销企稳信号</span>
     </div>
 
     <p style="margin-top:16px; color:#fbbf24; font-size:1.1rem;">
-      <strong>一句话总结：</strong>贵州茅台> = 中国版的可口可乐 + 爱马仕 + See's Candies 的结合体。当前 PE 19.6x 是近 5 年最低水平，对长期价值投资者来说，这是一个难得的击球机会。
+      <strong>一句话总结：</strong>茅台仍是中国版的可口可乐 + 爱马仕 + See's Candies，但从"永续成长股"切换为"顶级成熟价值股"。当前 PE 20.28x 面对负增长、DCF 高估约 19%，不是原报告所认为的"击球机会"，而是"耐心等待批价与动销企稳"的阶段。
     </p>
   </div>
 </section>
