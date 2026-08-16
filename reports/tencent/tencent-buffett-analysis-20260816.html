@@ -23,6 +23,22 @@ body {
 .report-header .badge { display: inline-block; background: rgba(255,255,255,0.12); padding: 2px 10px; border-radius: 6px; margin-right: 6px; }
 .version-tag { display: inline-block; background: #f5a623; color: #1a1a2e; font-weight: 700; padding: 2px 10px; border-radius: 6px; margin-right: 6px; font-size: 12px; }
 
+/* Version switcher */
+.version-switcher {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  background: #fff; border-radius: 12px; padding: 10px 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04); margin-bottom: 16px; font-size: 13px;
+}
+.version-switcher .vs-label { color: #888; font-weight: 600; }
+.vs-tab {
+  text-decoration: none; color: #555; font-weight: 600;
+  padding: 6px 16px; border-radius: 20px; background: #f0f2f5;
+  transition: background 0.15s;
+}
+.vs-tab:hover { background: #e2e5ea; }
+.vs-tab.active { background: #1a1a2e; color: #fff; }
+.vs-note { margin-left: auto; font-size: 11px; color: #aaa; }
+
 .metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
 .metric-card { background: #fff; border-radius: 12px; padding: 18px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); text-align: center; }
 .metric-card .label { font-size: 12px; color: #888; margin-bottom: 4px; }
@@ -90,6 +106,13 @@ body {
 </head>
 <body>
 <div class="container">
+
+<div class="version-switcher">
+  <span class="vs-label">📑 版本切换</span>
+  <a class="vs-tab" href="tencent-buffett-analysis-20260726.html">v1 · 2026-07-26</a>
+  <a class="vs-tab active" href="tencent-buffett-analysis-20260816.html">v2 · 2026-08-16 · 当前</a>
+  <span class="vs-note">v2 迭代：Q2 财报 + AI 资本开支警报</span>
+</div>
 
 <div class="report-header">
   <h1>📄 腾讯控股 · 巴菲特价值投资分析 <span class="version-tag">v2</span></h1>
