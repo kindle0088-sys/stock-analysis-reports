@@ -89,6 +89,22 @@
 
   .disclaimer { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.82rem; color: #94a3b8; }
   .footer { text-align: center; padding: 30px 20px; color: #64748b; font-size: 0.82rem; }
+
+  /* Version switcher */
+  .version-switcher {
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    background: #1e293b; border: 1px solid #334155; border-radius: 10px;
+    padding: 10px 16px; margin: 20px auto; font-size: 13px; max-width: 1000px;
+  }
+  .version-switcher .vs-label { color: #94a3b8; font-weight: 600; }
+  .vs-tab {
+    text-decoration: none; color: #cbd5e1; font-weight: 600;
+    padding: 6px 16px; border-radius: 20px; background: #0f172a; border: 1px solid #334155;
+    transition: background 0.15s;
+  }
+  .vs-tab:hover { background: #1a2744; }
+  .vs-tab.active { background: #b91c1c; color: #fff; border-color: #b91c1c; }
+  .vs-note { margin-left: auto; font-size: 11px; color: #64748b; }
   
   @media (max-width: 640px) { .card-grid, .pros-cons { grid-template-columns: 1fr; } .hero .quote-box { gap: 20px; } }
 </style>
@@ -124,6 +140,13 @@
 </div>
 
 <div class="container">
+
+<div class="version-switcher">
+  <span class="vs-label">📑 版本切换</span>
+  <a class="vs-tab active" href="moutai-buffett-analysis-20260726.html">v1 · 2026-07-26 · 当前</a>
+  <a class="vs-tab" href="moutai-buffett-analysis-20260816.html">v2 · 2026-08-16</a>
+  <span class="vs-note">v2 迭代：H1 净利首次下滑 · 增长拐点确认</span>
+</div>
 
 <!-- EXECUTIVE SUMMARY -->
 <section>

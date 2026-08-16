@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>贵州茅台 · 巴菲特价值投资分析 v2 | 2026-08-16</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0b1120; color: #e2e8f0; font-family: -apple-system, 'Segoe UI', 'PingFang SC', 'Noto Sans SC', 'Microsoft YaHei', sans-serif; line-height: 1.8; padding: 0; }
+
+  .hero { background: linear-gradient(135deg, #0b1120 0%, #7c1d1d 50%, #0b1120 100%); padding: 60px 20px 50px; text-align: center; border-bottom: 1px solid #5c1a1a; }
+  .hero h1 { font-size: 2.4rem; color: #fbbf24; letter-spacing: 2px; margin-bottom: 8px; }
+  .hero .ticker { display: inline-block; background: #b91c1c; color: #fff; padding: 4px 16px; border-radius: 20px; font-size: 0.95rem; font-weight: 600; letter-spacing: 1px; margin-bottom: 12px; }
+  .hero .sub { color: #94a3b8; font-size: 1rem; margin-top: 6px; }
+  .hero .v2-tag { display: inline-block; background: #fbbf24; color: #1a1a2e; font-weight: 700; padding: 2px 12px; border-radius: 6px; font-size: 0.85rem; margin-left: 8px; letter-spacing: 0; }
+  .hero .quote-box { display: flex; justify-content: center; gap: 40px; margin-top: 24px; flex-wrap: wrap; }
+  .hero .q-item { text-align: center; }
+  .hero .q-item .num { font-size: 2rem; font-weight: 700; color: #fbbf24; }
+  .hero .q-item .num.green { color: #22c55e; }
+  .hero .q-item .num.red { color: #ef4444; }
+  .hero .q-item .label { font-size: 0.82rem; color: #94a3b8; margin-top: 2px; }
+
+  .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+
+  .buffett-quote { background: linear-gradient(135deg, #1e293b, #0f172a); border-left: 4px solid #fbbf24; padding: 20px 24px; margin: 30px 0; border-radius: 0 8px 8px 0; font-style: italic; color: #cbd5e1; font-size: 1.05rem; }
+  .buffett-quote .attr { display: block; text-align: right; color: #fbbf24; font-style: normal; font-size: 0.88rem; margin-top: 8px; }
+
+  section { padding: 40px 0; border-bottom: 1px solid #1e293b; }
+  section:last-child { border-bottom: none; }
+
+  h2 { font-size: 1.6rem; color: #fbbf24; margin-bottom: 24px; padding-bottom: 10px; border-bottom: 2px solid #b91c1c; display: flex; align-items: center; gap: 10px; }
+  h2 .icon { font-size: 1.4rem; }
+  h3 { font-size: 1.2rem; color: #93c5fd; margin-top: 24px; margin-bottom: 12px; }
+  h4 { color: #a5b4fc; margin-top: 16px; margin-bottom: 8px; font-size: 1.02rem; }
+
+  p { margin-bottom: 14px; color: #cbd5e1; }
+  ul, ol { padding-left: 24px; margin-bottom: 16px; }
+  li { margin-bottom: 8px; color: #cbd5e1; }
+
+  .verdict { display: inline-block; padding: 3px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; margin-right: 6px; margin-bottom: 4px; }
+  .verdict.pass { background: #064e3b; color: #6ee7b7; }
+  .verdict.fail { background: #450a0a; color: #fca5a5; }
+  .verdict.warn { background: #422006; color: #fcd34d; }
+  .verdict.neutral { background: #1e3a5f; color: #93c5fd; }
+
+  .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+  .card { background: #1e293b; border-radius: 10px; padding: 20px; border: 1px solid #334155; }
+  .card h4 { color: #fbbf24; margin-top: 0; font-size: 1rem; }
+  .card .big-num { font-size: 2rem; font-weight: 700; color: #fbbf24; margin: 6px 0 2px; }
+  .card .big-num.green { color: #22c55e; }
+  .card .big-num.red { color: #ef4444; }
+  .card .desc { font-size: 0.85rem; color: #94a3b8; }
+
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.9rem; }
+  th, td { border: 1px solid #334155; padding: 10px 14px; text-align: right; }
+  th { background: #1e293b; color: #fbbf24; font-weight: 600; text-align: center; }
+  td:first-child, th:first-child { text-align: left; }
+  td { background: #0f172a; }
+  tr:hover td { background: #1a2744; }
+  .num-green { color: #22c55e; }
+  .num-red { color: #ef4444; }
+  .num-yellow { color: #facc15; }
+
+  .score-section { background: #1e293b; border-radius: 12px; padding: 24px; margin: 20px 0; }
+  .score-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #334155; }
+  .score-row:last-child { border-bottom: none; }
+  .score-row .label { color: #cbd5e1; font-weight: 500; }
+  .score-row .stars { color: #fbbf24; letter-spacing: 2px; }
+  .score-row .stars.empty { color: #334155; }
+
+  .total-score { text-align: center; padding: 30px; margin: 24px 0; }
+  .total-score .score-circle { width: 120px; height: 120px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 2.6rem; font-weight: 800; margin-bottom: 12px; }
+  .total-score .score-circle.high { background: linear-gradient(135deg, #064e3b, #065f46); color: #6ee7b7; border: 3px solid #10b981; }
+  .total-score .score-circle.mid { background: linear-gradient(135deg, #422006, #713f12); color: #fcd34d; border: 3px solid #f59e0b; }
+  .total-score .verdict-text { font-size: 1.2rem; font-weight: 600; color: #e2e8f0; }
+
+  .highlight-box { background: #0f172a; border-left: 4px solid #60a5fa; padding: 14px 18px; border-radius: 6px; margin: 16px 0; font-size: 0.95rem; }
+  .highlight-box strong { color: #fbbf24; }
+  .highlight-box.gold { border-left-color: #fbbf24; }
+  .highlight-box.red { border-left-color: #ef4444; }
+
+  .summary-bar { display: flex; gap: 12px; flex-wrap: wrap; margin: 16px 0; }
+  .summary-tag { background: #1e293b; border: 1px solid #334155; padding: 8px 14px; border-radius: 8px; font-size: 0.88rem; }
+  .summary-tag .label { color: #94a3b8; display: block; font-size: 0.75rem; }
+  .summary-tag .value { color: #e2e8f0; font-weight: 600; }
+
+  .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+  .pros-cons .box { padding: 16px; border-radius: 8px; }
+  .pros-cons .pros { background: #064e3b; border: 1px solid #10b981; }
+  .pros-cons .cons { background: #450a0a; border: 1px solid #ef4444; }
+  .pros-cons .box h4 { margin-top: 0; margin-bottom: 8px; }
+
+  .change-block { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 20px; margin: 20px 0; }
+  .change-block h4 { color: #fbbf24; margin-top: 0; }
+  .change-item { display: flex; align-items: baseline; gap: 12px; padding: 8px 0; border-bottom: 1px dashed #334155; font-size: 0.9rem; }
+  .change-item:last-child { border-bottom: none; }
+  .change-item .metric { color: #94a3b8; width: 110px; flex-shrink: 0; }
+  .change-item .from { color: #64748b; text-decoration: line-through; }
+  .change-item .arrow { color: #64748b; }
+  .change-item .to { color: #e2e8f0; font-weight: 600; }
+  .change-item .to.up { color: #22c55e; }
+  .change-item .to.down { color: #ef4444; }
+
+  .disclaimer { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.82rem; color: #94a3b8; }
+  .footer { text-align: center; padding: 30px 20px; color: #64748b; font-size: 0.82rem; }
+
+  /* Version switcher */
+  .version-switcher {
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    background: #1e293b; border: 1px solid #334155; border-radius: 10px;
+    padding: 10px 16px; margin: 20px auto; font-size: 13px; max-width: 1000px;
+  }
+  .version-switcher .vs-label { color: #94a3b8; font-weight: 600; }
+  .vs-tab {
+    text-decoration: none; color: #cbd5e1; font-weight: 600;
+    padding: 6px 16px; border-radius: 20px; background: #0f172a; border: 1px solid #334155;
+    transition: background 0.15s;
+  }
+  .vs-tab:hover { background: #1a2744; }
+  .vs-tab.active { background: #b91c1c; color: #fff; border-color: #b91c1c; }
+  .vs-note { margin-left: auto; font-size: 11px; color: #64748b; }
+
+  @media (max-width: 640px) { .card-grid, .pros-cons { grid-template-columns: 1fr; } .hero .quote-box { gap: 20px; } .change-item { flex-wrap: wrap; } }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="ticker">SH: 600519</span>
+  <h1>贵州茅台 · 巴菲特价值投资分析 <span class="v2-tag">v2</span></h1>
+  <p class="sub">Kweichow Moutai — 中国白酒绝对龙头 · 2026 半年报更新 · 数据截至 2026-08-14</p>
+  <div class="quote-box">
+    <div class="q-item">
+      <div class="num green">¥1,341.99</div>
+      <div class="label">最新股价</div>
+    </div>
+    <div class="q-item">
+      <div class="num" style="color:#fbbf24;">¥1.68万亿</div>
+      <div class="label">总市值</div>
+    </div>
+    <div class="q-item">
+      <div class="num green">20.28x</div>
+      <div class="label">PE (TTM)</div>
+    </div>
+    <div class="q-item">
+      <div class="num" style="color:#fbbf24;">15.4x</div>
+      <div class="label">PE (Forward)</div>
+    </div>
+    <div class="q-item">
+      <div class="num green">3.88%</div>
+      <div class="label">股息率</div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+<div class="version-switcher">
+  <span class="vs-label">📑 版本切换</span>
+  <a class="vs-tab" href="moutai-buffett-analysis-20260726.html">v1 · 2026-07-26</a>
+  <a class="vs-tab active" href="moutai-buffett-analysis-20260816.html">v2 · 2026-08-16 · 当前</a>
+  <span class="vs-note">v2 迭代：H1 净利首次下滑 · 增长拐点确认</span>
+</div>
+
+<!-- EXECUTIVE SUMMARY -->
+<section>
+  <h2><span class="icon">📋</span> 执行摘要</h2>
+
+  <div class="buffett-quote">
+    "The most important thing to me is figuring out how big a moat there is around the business. What I love, of course, is a big castle and a big moat with piranhas and crocodiles."
+    <span class="attr">— Warren Buffett</span>
+  </div>
+
+  <p><strong>贵州茅台</strong>于 2026-08-14 盘后发布 2026 年半年报。这份财报传递了一个信号：<strong>茅台的"永续高增长"神话，首次出现实质裂缝</strong>。</p>
+
+  <p>上半年实现营业总收入 922.78 亿元（+1.3%），归母净利润 <strong>445.17 亿元（-1.95%）</strong>——这是 2015 年以来茅台首次出现半年度净利润下滑。第二季度更弱：营收 375.75 亿元（-5.23%）、净利润 172.74 亿元（-6.9%），环比一季度下滑 36.8%。</p>
+
+  <p>但护城河没有消失：毛利率仍高达 89.56%、净利率 50.75%、ROE 32.8%、现金余额 1848 亿元（较年初 +46%）。茅台的"城堡"依然坚固，只是"护城河外的需求水位"在下降——商务宴请与礼品需求萎缩，白酒行业全面进入存量博弈时代。</p>
+
+  <div class="summary-bar">
+    <div class="summary-tag"><span class="label">护城河评级</span><span class="value" style="color:#6ee7b7;">极宽（未变）</span></div>
+    <div class="summary-tag"><span class="label">盈利能力</span><span class="value" style="color:#6ee7b7;">顶级（净利率 50.75%）</span></div>
+    <div class="summary-tag"><span class="label">增长</span><span class="value" style="color:#fca5a5;">负增长（拐点）</span></div>
+    <div class="summary-tag"><span class="label">财务健康</span><span class="value" style="color:#6ee7b7;">现金 1848 亿</span></div>
+    <div class="summary-tag"><span class="label">估值</span><span class="value" style="color:#fcd34d;">PE 20.3x 中性偏高</span></div>
+  </div>
+
+  <div class="total-score">
+    <div class="score-circle mid">7.0 / 10</div>
+    <div class="verdict-text">总体评价：⭐⭐⭐⭐⭐⭐⭐☆☆☆ &nbsp; 7.0/10</div>
+    <p style="color:#94a3b8; margin-top:8px; font-size:0.9rem;">
+      顶级品牌 + 顶级财务，但增长引擎熄火。从 v1 的 9.3/10 下调至 7.0/10。
+    </p>
+  </div>
+</section>
+
+<!-- V1 → V2 迭代变化 -->
+<section>
+  <h2><span class="icon">🔁</span> v1 → v2 迭代变化</h2>
+
+  <div class="change-block">
+    <h4>关键指标对比（v1 数据截至 2026-07-24 → v2 数据截至 2026-08-14）</h4>
+    <div class="change-item"><span class="metric">H1 净利润增速</span><span class="from">未披露（当时仅年报到 2024）</span><span class="arrow">→</span><span class="to down">-1.95%（2015 年来首次下滑）</span></div>
+    <div class="change-item"><span class="metric">Q2 单季营收</span><span class="from">—</span><span class="arrow">→</span><span class="to down">375.75 亿（-5.23%）</span></div>
+    <div class="change-item"><span class="metric">Q2 单季净利</span><span class="from">—</span><span class="arrow">→</span><span class="to down">172.74 亿（-6.9%）</span></div>
+    <div class="change-item"><span class="metric">PE (TTM)</span><span class="from">19.61x</span><span class="arrow">→</span><span class="to up">20.28x（利润下滑被动抬升）</span></div>
+    <div class="change-item"><span class="metric">股息率</span><span class="from">4.01%</span><span class="arrow">→</span><span class="to down">3.88%</span></div>
+    <div class="change-item"><span class="metric">股价</span><span class="from">¥1,297.41</span><span class="arrow">→</span><span class="to up">¥1,341.99（+3.4%）</span></div>
+    <div class="change-item"><span class="metric">综合评分</span><span class="from">9.3 / 10</span><span class="arrow">→</span><span class="to down">7.0 / 10</span></div>
+  </div>
+
+  <div class="highlight-box red">
+    <strong>巴菲特视角的迭代：</strong>v1 的判断建立在"茅台永续增长 ~15%"的假设上，因此 PE 19.6x 显得便宜、值得重仓。v2 的核心事实是——<strong>2025 全年营收 -1.2%、净利 -4.5%，2026 H1 净利继续 -1.95%</strong>。当"成长股"的成长逻辑被证伪，它必须被重新归类为"成熟价值股"，估值锚从 PEG 切换到"股息 + 高 ROE 的稳定现金流折现"。这个切换意味着 PE 中枢要系统性下移，而当前 20.28x 恰恰还没反映这一点。
+  </div>
+</section>
+
+<!-- COMPANY OVERVIEW -->
+<section>
+  <h2><span class="icon">🏢</span> 公司概况</h2>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>公司名称</h4>
+      <div class="big-num" style="font-size:1.2rem;">贵州茅台酒股份有限公司</div>
+      <div class="desc">Kweichow Moutai Co., Ltd.</div>
+    </div>
+    <div class="card">
+      <h4>上市日期</h4>
+      <div class="big-num" style="font-size:1.2rem;">2001-08-27</div>
+      <div class="desc">上交所上市 25 年</div>
+    </div>
+    <div class="card">
+      <h4>实控人</h4>
+      <div class="big-num" style="font-size:1.2rem;">贵州省国资委</div>
+      <div class="desc">国企背景 · 管理层由国资委任命</div>
+    </div>
+    <div class="card">
+      <h4>总股本</h4>
+      <div class="big-num" style="font-size:1.2rem;">12.50 亿股</div>
+      <div class="desc">全流通</div>
+    </div>
+  </div>
+
+  <h3>核心业务</h3>
+  <p>茅台酒及系列酒的生产与销售。2026 上半年：茅台酒收入 777.24 亿元（+2.82%），系列酒 129.34 亿元（-6.02%），i 茅台（直营渠道）402.64 亿元。酿造工艺为国家机密，核心产区仅限茅台镇，形成天然地理壁垒。</p>
+</section>
+
+<!-- FINANCIAL ANALYSIS -->
+<section>
+  <h2><span class="icon">📊</span> 财务深度分析</h2>
+
+  <div class="buffett-quote">
+    "In the business world, the rearview mirror is always clearer than the windshield."
+    <span class="attr">— Warren Buffett</span>
+  </div>
+
+  <h3>六年业绩一览（年度数据 · 已修正 v1 数据口径）</h3>
+  <table>
+    <tr><th>年份</th><th>营收（亿）</th><th>同比</th><th>净利润（亿）</th><th>同比</th><th>毛利率</th><th>净利率</th></tr>
+    <tr><td>2021</td><td>1,094.64</td><td class="num-green">+11.7%</td><td>524.60</td><td class="num-green">+12.3%</td><td>91.5%</td><td>49.4%</td></tr>
+    <tr><td>2022</td><td>1,275.54</td><td class="num-green">+16.5%</td><td>627.17</td><td class="num-green">+19.6%</td><td>91.9%</td><td>50.5%</td></tr>
+    <tr><td>2023</td><td>1,505.60</td><td class="num-green">+18.0%</td><td>747.34</td><td class="num-green">+19.2%</td><td>92.0%</td><td>50.6%</td></tr>
+    <tr><td>2024</td><td>1,741.44</td><td class="num-green">+15.7%</td><td>862.28</td><td class="num-green">+15.4%</td><td>91.9%</td><td>50.5%</td></tr>
+    <tr><td>2025</td><td>1,720.54</td><td class="num-red">-1.2%</td><td>823.20</td><td class="num-red">-4.5%</td><td>91.2%</td><td>48.8%</td></tr>
+    <tr><td>2026 H1</td><td>907.03</td><td class="num-green">+1.47%</td><td>445.17</td><td class="num-red">-1.95%</td><td>89.56%</td><td>50.75%</td></tr>
+  </table>
+  <p style="font-size:0.85rem; color:#94a3b8;">※ 2021-2025 为年报数据，2026 H1 为半年报数据（非全年）。2025 年茅台营收与净利均现上市以来罕见的年度负增长。</p>
+
+  <div class="highlight-box red">
+    <strong>巴菲特视角：</strong>连续多年双位数增长的光环在 2025 年被打破。营收增速从 +15.7%（2024）骤降至 -1.2%（2025），净利增速从 +15.4% 转 -4.5%。更关键的是 2026 上半年净利继续 -1.95%、Q2 单季 -6.9%——这不是单季扰动，而是趋势性拐点。<strong>巴菲特最看重的是"未来十年能否持续赚钱"，而非"过去十年赚了多少"。增长的持续性正在被证伪。</strong>
+  </div>
+
+  <h3>资产负债表（2026-06-30）</h3>
+  <div class="card-grid">
+    <div class="card">
+      <h4>总资产</h4>
+      <div class="big-num">¥3,090.5 亿</div>
+      <div class="desc">规模持续增长</div>
+    </div>
+    <div class="card">
+      <h4>货币资金</h4>
+      <div class="big-num green">¥1,848 亿</div>
+      <div class="desc">较年初 +46.18%</div>
+    </div>
+    <div class="card">
+      <h4>股东权益</h4>
+      <div class="big-num">¥2,512.5 亿</div>
+      <div class="desc">净资产</div>
+    </div>
+    <div class="card">
+      <h4>资产负债率</h4>
+      <div class="big-num green">15.2%</div>
+      <div class="desc">几乎无有息负债</div>
+    </div>
+  </div>
+
+  <table>
+    <tr><th>关键指标</th><th>2026-06-30</th><th>趋势</th></tr>
+    <tr><td>现金及现金等价物</td><td>¥1,848 亿</td><td class="num-green">较年初 +46%</td></tr>
+    <tr><td>存货</td><td>¥614 亿+</td><td class="num-yellow">基酒库存，越陈越值钱</td></tr>
+    <tr><td>有息负债</td><td>几乎为零</td><td class="num-green">净现金状态</td></tr>
+    <tr><td>经营现金流（H1）</td><td>¥706.91 亿</td><td class="num-green">同比 +438.84%</td></tr>
+  </table>
+
+  <div class="highlight-box gold">
+    <strong>巴菲特视角：</strong>财务底子依然完美——1848 亿现金、几乎零借贷、经营现金流 706.91 亿（去年同期仅 131.19 亿，同比 +438%，主因是去年同期销售回款节奏异常低）。<strong>茅台的"城堡"没有任何裂痕，问题出在"城堡外能流入的现金流增速"上。</strong>这与巴菲特区分"好公司"与"好价格"的逻辑一致：公司质地没变，变的是成长性，而成长性决定了估值锚。
+  </div>
+
+  <h3>ROE 分析 — 巴菲特最看重的指标</h3>
+  <table>
+    <tr><th>年份</th><th>净利润（亿）</th><th>ROE</th></tr>
+    <tr><td>2021</td><td>524.60</td><td class="num-green">~31%</td></tr>
+    <tr><td>2022</td><td>627.17</td><td class="num-green">~31%</td></tr>
+    <tr><td>2023</td><td>747.34</td><td class="num-green">~33%</td></tr>
+    <tr><td>2024</td><td>862.28</td><td class="num-green">~35%</td></tr>
+    <tr><td>2025</td><td>823.20</td><td class="num-green">~33%</td></tr>
+    <tr><td>2026 TTM</td><td>—</td><td class="num-green">~32.8%</td></tr>
+  </table>
+
+  <div class="highlight-box">
+    <strong>巴菲特对 ROE 的标准是 >15%：</strong>茅台 ROE 稳定在 32-35%，几乎零杠杆，仍是中国 A 股 ROE 质量最高的公司。但需注意：ROE = 净利/权益，当净利开始负增长而权益（现金留存）持续增长时，ROE 会自然回落。32.8% 仍是顶级水平，但方向已从"上升"转为"缓慢下行"。
+  </div>
+</section>
+
+<!-- ECONOMIC MOAT -->
+<section>
+  <h2><span class="icon">🏰</span> 护城河分析 — 城堡依然坚固，但护城河水在退</h2>
+
+  <div class="buffett-quote">
+    "The single most important decision in evaluating a business is pricing power. If you've got the power to raise prices without losing business to a competitor, you've got a very good business."
+    <span class="attr">— Warren Buffett</span>
+  </div>
+
+  <div style="display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap;">
+    <span class="verdict pass">✅ 品牌护城河（文化符号）</span>
+    <span class="verdict pass">✅ 稀缺性（地理壁垒）</span>
+    <span class="verdict pass">✅ 转换成本（社交货币）</span>
+    <span class="verdict pass">✅ 存货价值（越陈越值钱）</span>
+    <span class="verdict warn">⚠️ 定价权（批价承压）</span>
+  </div>
+
+  <p><strong>v2 的关键判断：护城河本身没有变窄，但"护城河的水"（需求）在退。</strong>品牌、地理稀缺、社交货币属性、越陈越值钱的存货——这四重护城河依然完整。但"定价权"这条出现了松动信号：白酒行业批价倒挂（市场价低于出厂价的现象）在部分区域蔓延，若持续将冲击经销商体系。茅台自身批价仍相对坚挺，但已不是 v1 时"供不应求、批价远高于出厂价"的绝对状态。</p>
+
+  <div class="score-section">
+    <div class="score-row"><span class="label">品牌护城河（文化/社交）</span><span class="stars">★★★★★</span></div>
+    <div class="score-row"><span class="label">稀缺性（地理壁垒）</span><span class="stars">★★★★★</span></div>
+    <div class="score-row"><span class="label">转换成本（不可替代）</span><span class="stars">★★★★★</span></div>
+    <div class="score-row"><span class="label">存货价值（越陈越值钱）</span><span class="stars">★★★★★</span></div>
+    <div class="score-row"><span class="label">定价权（提价能力）</span><span class="stars">★★★★<span class="empty">★</span></span></div>
+  </div>
+
+  <div class="highlight-box red">
+    <strong>巴菲特会问：</strong>"十年后，人们还会在重要场合喝茅台吗？"——答案大概率是"会"，护城河仍在。但他紧接着会问："十年后，喝得起茅台的人会比现在多吗？能喝的量会比现在多吗？"——答案开始不确定。人口结构、消费降级、反腐常态化，都在侵蚀高端白酒的需求端。<strong>护城河决定"能不能赚钱"，需求决定"能赚多少钱"。茅台前者没变，后者在下滑。</strong>
+  </div>
+</section>
+
+<!-- VALUATION -->
+<section>
+  <h2><span class="icon">💰</span> 估值分析</h2>
+
+  <div class="buffett-quote">
+    "Price is what you pay. Value is what you get."
+    <span class="attr">— Warren Buffett</span>
+  </div>
+
+  <div style="display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap;">
+    <span class="verdict neutral">➡️ PE 20.3x 中性（利润下滑被动抬升）</span>
+    <span class="verdict pass">✅ 股息率 3.88% 有支撑</span>
+    <span class="verdict warn">⚠️ DCF 安全边际 -19.4%</span>
+    <span class="verdict neutral">➡️ PB 7.2x 合理</span>
+  </div>
+
+  <h3>核心估值指标</h3>
+  <table>
+    <tr><th>指标</th><th>当前（v2）</th><th>v1（07-24）</th><th>变化</th></tr>
+    <tr><td>PE（TTM）</td><td>20.28x</td><td>19.61x</td><td class="num-yellow">利润下滑被动抬升</td></tr>
+    <tr><td>PE（Forward）</td><td>15.4x</td><td>14.88x</td><td class="num-yellow">略升</td></tr>
+    <tr><td>PB</td><td>7.2x</td><td>6.96x</td><td class="num-yellow">略升</td></tr>
+    <tr><td>股息率</td><td>3.88%</td><td>4.01%</td><td class="num-yellow">略降</td></tr>
+    <tr><td>DCF 内在价值</td><td>¥1,123.94</td><td>—</td><td class="num-red">低于现价 19.4%</td></tr>
+    <tr><td>52 周高/低</td><td>1,539.98 / 1,151.01</td><td>1,540 / 1,151</td><td>—</td></tr>
+  </table>
+
+  <div class="highlight-box red">
+    <strong>巴菲特视角：</strong>v1 说"PE 19.6x 是近 5 年最低，是难得的击球机会"——这个判断错在把茅台当成了永续成长的成长股。当成长股变成成熟股，估值锚必须从 PEG 切换到"股息 + 稳定现金流"。<strong>DCF 测算（FCF 698.6 亿、增长率 10.5%、折现率 10%）给出的内在价值为 1123.94 元，而现价 1341.99 元，安全边际为 -19.4%，即当前价格已透支了约 19% 的成长预期。</strong>若增长进一步下修（例如永续增长率从 10.5% 降到 3-5%），内在价值还会更低。当前 3.88% 的股息率是唯一的估值缓冲，但不足以单独支撑买入。
+  </div>
+</section>
+
+<!-- BUFFETT CHECKLIST -->
+<section>
+  <h2><span class="icon">✅</span> 巴菲特七项核心原则评估（v2）</h2>
+
+  <table>
+    <tr><th style="width:35%;">原则</th><th style="width:15%;">评分</th><th>说明</th></tr>
+    <tr>
+      <td><strong>1. 可理解的业务</strong></td>
+      <td><span class="verdict pass">✅ 10/10</span></td>
+      <td>卖白酒，商业模式极简单——生产、陈酿、销售。无技术风险。</td>
+    </tr>
+    <tr>
+      <td><strong>2. 持久竞争优势</strong></td>
+      <td><span class="verdict pass">✅ 10/10</span></td>
+      <td>护城河未变，文化品牌 + 地理稀缺 + 不可替代性三重防护仍在。</td>
+    </tr>
+    <tr>
+      <td><strong>3. 长期可持续盈利能力</strong></td>
+      <td><span class="verdict warn">⚠️ 6/10</span></td>
+      <td>毛利率 89.56%、净利率 50.75% 仍顶级，但盈利增速已转负，持续性打折。</td>
+    </tr>
+    <tr>
+      <td><strong>4. 高 ROE</strong></td>
+      <td><span class="verdict pass">✅ 10/10</span></td>
+      <td>ROE 32.8%，几乎零杠杆，仍远超巴菲特 15% 门槛。</td>
+    </tr>
+    <tr>
+      <td><strong>5. 保守的财务结构</strong></td>
+      <td><span class="verdict pass">✅ 10/10</span></td>
+      <td>现金 1848 亿、几乎零借贷，资产负债率 15.2%。完美的资产负债表。</td>
+    </tr>
+    <tr>
+      <td><strong>6. 优秀的管理层</strong></td>
+      <td><span class="verdict neutral">➡️ 7/10</span></td>
+      <td>国企任命制，治理规范、分红慷慨，但渠道改革（直营化）是当前阵痛的直接来源。</td>
+    </tr>
+    <tr>
+      <td><strong>7. 合理的买入价格</strong></td>
+      <td><span class="verdict fail">❌ 4/10</span></td>
+      <td>PE 20.28x 面对负增长不便宜，DCF 显示高估 19%，安全边际不足。</td>
+    </tr>
+  </table>
+
+  <div class="total-score">
+    <div class="score-circle mid">7.0 / 10</div>
+    <div class="verdict-text">综合结论：<strong style="color:#fcd34d;">顶级公司，但增长见顶、估值不便宜</strong></div>
+    <p style="color:#94a3b8; margin-top:8px; font-size:0.9rem;">
+      公司质地 9/10 — 增长 4/10 — 估值 5/10 — 综合 7.0/10（v1 为 9.3/10）
+    </p>
+  </div>
+</section>
+
+<!-- RISKS -->
+<section>
+  <h2><span class="icon">⚠️</span> 风险因素</h2>
+
+  <div class="pros-cons">
+    <div class="box pros">
+      <h4 style="color:#6ee7b7;">✅ 核心优势（未变）</h4>
+      <ul style="margin:0; padding-left:18px;">
+        <li>毛利率 89.56%、净利率 50.75%</li>
+        <li>现金 1848 亿、几乎零负债</li>
+        <li>ROE 32.8% 顶级</li>
+        <li>护城河四重防护未变</li>
+        <li>存货越陈越值钱</li>
+        <li>股息率 3.88% 提供缓冲</li>
+      </ul>
+    </div>
+    <div class="box cons">
+      <h4 style="color:#fca5a5;">⚠️ 主要风险（v2 强化）</h4>
+      <ul style="margin:0; padding-left:18px;">
+        <li>增长拐点已确认（H1 净利 -1.95%）</li>
+        <li>Q2 单季营收净利双降</li>
+        <li>行业存量博弈、批价倒挂风险</li>
+        <li>渠道改革阵痛（直营化）</li>
+        <li>中央汇金、证金退出前十大股东</li>
+        <li>系列酒 -6.02%、海外 -64%</li>
+        <li>消费降级 + 人口结构长期利空</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CONCLUSION -->
+<section>
+  <h2><span class="icon">🎯</span> 最终结论（v2）</h2>
+
+  <div style="background: linear-gradient(135deg, #1e293b, #0f172a); border: 1px solid #334155; border-radius: 12px; padding: 28px; margin: 20px 0;">
+    <h3 style="color:#fbbf24; margin-top:0;">巴迪·巴菲特式诊断 🐾</h3>
+
+    <p><strong>v1 的"可口可乐式永久持有"叙事，需要打一个问号了。</strong></p>
+
+    <p>茅台的护城河和财务质地没有任何问题——它依然是中国 A 股最接近巴菲特理想的公司之一。但 v2 的这份半年报揭示了一个巴菲特框架下最关键的变量：<strong>增长的确定性消失了</strong>。</p>
+
+    <ul>
+      <li><strong>护城河：</strong>★★★★★ 未变，但需求水位在退</li>
+      <li><strong>盈利能力：</strong>★★★★★ 毛利率 89.56% 顶级</li>
+      <li><strong>财务健康：</strong>★★★★★ 现金 1848 亿、零负债</li>
+      <li><strong>增长：</strong>★★☆☆☆ 2025 已负增长，H1 继续 -1.95%</li>
+      <li><strong>估值：</strong>★★★☆☆ PE 20.3x + DCF 高估 19%</li>
+    </ul>
+
+    <div class="buffett-quote" style="margin:16px 0;">
+      "It's far better to buy a wonderful company at a fair price than a fair company at a wonderful price." — 茅台是 wonderful company，但 1341.99 元是不是 fair price，v2 的答案是：还差一点。
+    </div>
+
+    <p><strong>操作建议（v2 修正）：</strong></p>
+    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+      <span class="verdict neutral">➡️ 已持有者：底仓可留（吃分红等周期）</span>
+      <span class="verdict warn">⚠️ 未持有者：不急于重仓</span>
+      <span class="verdict fail">❌ 不建议在负增长未企稳前加仓</span>
+      <span class="verdict pass">✅ 关注批价与动销企稳信号</span>
+    </div>
+
+    <p style="margin-top:16px; color:#fbbf24; font-size:1.1rem;">
+      <strong>一句话总结：</strong>茅台从"永续成长股"切换为"顶级成熟价值股"。城堡依然坚固，但增长引擎熄火，估值需要时间消化。当前 1342 元对应 DCF 高估约 19%，不是 v1 所认为的"击球机会"，而是"耐心等待批价与动销企稳"的阶段。
+    </p>
+  </div>
+</section>
+
+<div class="disclaimer">
+  <strong>免责声明：</strong>以上内容基于公开数据和量化分析，仅供参考，不构成投资建议。市场有风险，投资需谨慎。任何投资决策应结合个人风险承受能力、资金状况和投资目标独立判断，必要时咨询持牌专业机构。过往表现不预示未来收益。
+</div>
+
+<div class="footer">
+  报告由 巴迪（🐾 WorkBuddy）自动生成 · 数据来源：腾讯自选股（行情）、巨潮资讯网/澎湃新闻（半年报，2026-08-14 披露）、a-stock 财务（年度数据）· 基于巴菲特价值投资框架 · 2026-08-16 · v2
+</div>
+
+</div><!-- /container -->
+
+</body>
+</html>
