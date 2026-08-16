@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>财报流水线 · 历史对比</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f5f6fa; color: #1a1a2e; line-height: 1.6; padding: 32px 20px 60px; }
+.container { max-width: 980px; margin: 0 auto; }
+h1 { font-size: 26px; margin-bottom: 6px; }
+.subtitle { color: #666; font-size: 14px; margin-bottom: 28px; }
+h2 { font-size: 18px; margin: 32px 0 14px; }
+table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); font-size: 13px; }
+th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #f0f0f3; }
+th { background: #fafbfe; font-weight: 600; color: #555; }
+.mono { font-family: Consolas, monospace; }
+.score-cell { color: #2563eb; font-size: 16px; }
+.badge { padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+.verdict-green { background: #e8f5e9; color: #1b8a3a; }
+.verdict-red { background: #fdecea; color: #c0392b; }
+.verdict-yellow { background: #fff8e1; color: #b8860b; }
+.sym-card { background: #fff; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); padding: 20px; margin-bottom: 20px; }
+.sym-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+.sym-name { font-size: 18px; font-weight: 700; }
+.sym-code { color: #888; font-size: 13px; font-family: Consolas, monospace; }
+.sym-badge { padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+.verdict-green { background: #e8f5e9; color: #1b8a3a; }
+.verdict-red { background: #fdecea; color: #c0392b; }
+.verdict-yellow { background: #fff8e1; color: #b8860b; }
+.sym-score { margin-left: auto; font-size: 15px; font-weight: 700; color: #2563eb; }
+.chart-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.chart-box { border: 1px solid #f0f0f3; border-radius: 8px; padding: 8px; }
+.chart-title { font-size: 12px; color: #888; margin: 4px 6px; }
+.chart { width: 100%; height: 200px; }
+@media (max-width: 640px) { .chart-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>📈 财报流水线 · 历史对比</h1>
+  <p class="subtitle">多期数据自动积累：每跑一次 <code>--all</code> 追加一期快照。当前共 4 只标的、4 期。</p>
+
+  <h2>最新一期横向对比</h2>
+  <table>
+    <tr><th>名称</th><th>代码</th><th>期数</th><th>最新期</th><th>评分</th><th>ROE</th><th>PE</th><th>PB</th><th>股息率</th><th>结论</th></tr>
+    <tr>
+      <td>00700</td>
+      <td class="mono">00700</td>
+      <td>1 期</td>
+      <td>2026-08-16</td>
+      <td class="score-cell"><b>64</b></td>
+      <td>19.0%</td>
+      <td>13.61</td>
+      <td>3.00</td>
+      <td>1.2%</td>
+      <td><span class="badge verdict-yellow">合理关注</span></td>
+    </tr><tr>
+      <td>贵州茅台</td>
+      <td class="mono">600519</td>
+      <td>1 期</td>
+      <td>2026-08-16</td>
+      <td class="score-cell"><b>61</b></td>
+      <td>32.8%</td>
+      <td>20.60</td>
+      <td>6.68</td>
+      <td>—</td>
+      <td><span class="badge verdict-yellow">合理关注</span></td>
+    </tr><tr>
+      <td>AAPL</td>
+      <td class="mono">AAPL</td>
+      <td>1 期</td>
+      <td>2026-08-16</td>
+      <td class="score-cell"><b>60</b></td>
+      <td>—</td>
+      <td>35.08</td>
+      <td>41.57</td>
+      <td>0.3%</td>
+      <td><span class="badge verdict-yellow">合理关注</span></td>
+    </tr><tr>
+      <td>D05.SI</td>
+      <td class="mono">D05.SI</td>
+      <td>1 期</td>
+      <td>2026-08-16</td>
+      <td class="score-cell"><b>39</b></td>
+      <td>—</td>
+      <td>19.32</td>
+      <td>3.11</td>
+      <td>4.2%</td>
+      <td><span class="badge verdict-red">高估回避</span></td>
+    </tr>
+  </table>
+
+  <h2>多期趋势</h2>
+  
+  <div class="sym-card">
+    <div class="sym-head">
+      <span class="sym-name">00700</span>
+      <span class="sym-code">00700</span>
+      <span class="sym-badge verdict-yellow">合理关注</span>
+      <span class="sym-score">64 分</span>
+    </div>
+    <div class="chart-grid">
+      
+      <div class="chart-box">
+        <div class="chart-title">综合评分</div>
+        <div id="ch-00700-0" class="chart"></div>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title">ROE (%)</div>
+        <div id="ch-00700-1" class="chart"></div>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title">PE</div>
+        <div id="ch-00700-2" class="chart"></div>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title">营收同比 (%)</div>
+        <div id="ch-00700-3" class="chart"></div>
+      </div>
+    </div>
+  </div>
+  <div class="sym-card">
+    <div class="sym-head">
+      <span class="sym-name">贵州茅台</span>
+      <span class="sym-code">600519</span>
+      <span class="sym-badge verdict-yellow">合理关注</span>
+      <span class="sym-score">61 分</span>
+    </div>
+    <div class="chart-grid">
+      
+      <div class="chart-box">
+        <div class="chart-title">综合评分</div>
+        <div id="ch-600519-0" class="chart"></div>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title">ROE (%)</div>
+        <div id="ch-600519-1" class="chart"></div>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title">PE</div>
+        <div id="ch-600519-2" class="chart"></div>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title">营收同比 (%)</div>
+        <div id="ch-600519-3" class="chart"></div>
+      </div>
+    </div>
+  </div>
+  <div class="sym-card">
+    <div class="sym-head">
+      <span class="sym-name">AAPL</span>
+      <span class="sym-code">AAPL</span>
+      <span class="sym-badge verdict-yellow">合理关注</span>
+      <span class="sym-score">60 分</span>
+    </div>
+    <div class="chart-grid">
+      
+      <div class="chart-box">
+        <div class="chart-title">综合评分</div>
+        <div id="ch-AAPL-0" class="chart"></div>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title">ROE (%)</div>
+        <div id="ch-AAPL-1" class="chart"></div>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title">PE</div>
+        <div id="ch-AAPL-2" class="chart"></div>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title">营收同比 (%)</div>
+        <div id="ch-AAPL-3" class="chart"></div>
+      </div>
+    </div>
+  </div>
+  <div class="sym-card">
+    <div class="sym-head">
+      <span class="sym-name">D05.SI</span>
+      <span class="sym-code">D05.SI</span>
+      <span class="sym-badge verdict-red">高估回避</span>
+      <span class="sym-score">39 分</span>
+    </div>
+    <div class="chart-grid">
+      
+      <div class="chart-box">
+        <div class="chart-title">综合评分</div>
+        <div id="ch-D05SI-0" class="chart"></div>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title">ROE (%)</div>
+        <div id="ch-D05SI-1" class="chart"></div>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title">PE</div>
+        <div id="ch-D05SI-2" class="chart"></div>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title">营收同比 (%)</div>
+        <div id="ch-D05SI-3" class="chart"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+
+  (() => {
+    const el = document.getElementById('ch-00700-0');
+    const c = echarts.init(el);
+    c.setOption({
+      grid: { left: 48, right: 12, top: 16, bottom: 28 },
+      tooltip: { trigger: 'axis' },
+      xAxis: { type: 'category', data: ["08-16"], axisLabel: { fontSize: 10 } },
+      yAxis: { type: 'value', scale: true, splitLine: { lineStyle: { type: 'dashed', color: '#eee' } } },
+      series: [{
+        type: 'line', smooth: true, data: [64],
+        symbolSize: 6, lineStyle: { width: 2 },
+        itemStyle: { color: '#2563eb' },
+        connectNulls: true,
+        markPoint: sd.vals.length > 1 ? {} : undefined,
+        label: { show: sd.vals.length === 1, position: 'top', fontSize: 10 },
+      }],
+    });
+    window.addEventListener('resize', () => c.resize());
+  })();
+
+  (() => {
+    const el = document.getElementById('ch-00700-1');
+    const c = echarts.init(el);
+    c.setOption({
+      grid: { left: 48, right: 12, top: 16, bottom: 28 },
+      tooltip: { trigger: 'axis' },
+      xAxis: { type: 'category', data: ["08-16"], axisLabel: { fontSize: 10 } },
+      yAxis: { type: 'value', scale: true, splitLine: { lineStyle: { type: 'dashed', color: '#eee' } } },
+      series: [{
+        type: 'line', smooth: true, data: [19.0048],
+        symbolSize: 6, lineStyle: { width: 2 },
+        itemStyle: { color: '#2563eb' },
+        connectNulls: true,
+        markPoint: sd.vals.length > 1 ? {} : undefined,
+        label: { show: sd.vals.length === 1, position: 'top', fontSize: 10 },
+      }],
+    });
+    window.addEventListener('resize', () => c.resize());
+  })();
+
+  (() => {
+    const el = document.getElementById('ch-00700-2');
+    const c = echarts.init(el);
+    c.setOption({
+      grid: { left: 48, right: 12, top: 16, bottom: 28 },
+      tooltip: { trigger: 'axis' },
+      xAxis: { type: 'category', data: ["08-16"], axisLabel: { fontSize: 10 } },
+      yAxis: { type: 'value', scale: true, splitLine: { lineStyle: { type: 'dashed', color: '#eee' } } },
+      series: [{
+        type: 'line', smooth: true, data: [13.6126],
+        symbolSize: 6, lineStyle: { width: 2 },
+        itemStyle: { color: '#2563eb' },
+        connectNulls: true,
+        markPoint: sd.vals.length > 1 ? {} : undefined,
+        label: { show: sd.vals.length === 1, position: 'top', fontSize: 10 },
+      }],
+    });
+    window.addEventListener('resize', () => c.resize());
+  })();
+
+  (() => {
+    const el = document.getElementById('ch-00700-3');
+    const c = echarts.init(el);
+    c.setOption({
+      grid: { left: 48, right: 12, top: 16, bottom: 28 },
+      tooltip: { trigger: 'axis' },
+      xAxis: { type: 'category', data: ["08-16"], axisLabel: { fontSize: 10 } },
+      yAxis: { type: 'value', scale: true, splitLine: { lineStyle: { type: 'dashed', color: '#eee' } } },
+      series: [{
+        type: 'line', smooth: true, data: [13.008600000000001],
+        symbolSize: 6, lineStyle: { width: 2 },
+        itemStyle: { color: '#2563eb' },
+        connectNulls: true,
+        markPoint: sd.vals.length > 1 ? {} : undefined,
+        label: { show: sd.vals.length === 1, position: 'top', fontSize: 10 },
+      }],
+    });
+    window.addEventListener('resize', () => c.resize());
+  })();
+
+  (() => {
+    const el = document.getElementById('ch-600519-0');
+    const c = echarts.init(el);
+    c.setOption({
+      grid: { left: 48, right: 12, top: 16, bottom: 28 },
+      tooltip: { trigger: 'axis' },
+      xAxis: { type: 'category', data: ["08-16"], axisLabel: { fontSize: 10 } },
+      yAxis: { type: 'value', scale: true, splitLine: { lineStyle: { type: 'dashed', color: '#eee' } } },
+      series: [{
+        type: 'line', smooth: true, data: [61],
+        symbolSize: 6, lineStyle: { width: 2 },
+        itemStyle: { color: '#2563eb' },
+        connectNulls: true,
+        markPoint: sd.vals.length > 1 ? {} : undefined,
+        label: { show: sd.vals.length === 1, position: 'top', fontSize: 10 },
+      }],
+    });
+    window.addEventListener('resize', () => c.resize());
+  })();
+
+  (() => {
+    const el = document.getElementById('ch-600519-1');
+    const c = echarts.init(el);
+    c.setOption({
+      grid: { left: 48, right: 12, top: 16, bottom: 28 },
+      tooltip: { trigger: 'axis' },
+      xAxis: { type: 'category', data: ["08-16"], axisLabel: { fontSize: 10 } },
+      yAxis: { type: 'value', scale: true, splitLine: { lineStyle: { type: 'dashed', color: '#eee' } } },
+      series: [{
+        type: 'line', smooth: true, data: [32.76373708876623],
+        symbolSize: 6, lineStyle: { width: 2 },
+        itemStyle: { color: '#2563eb' },
+        connectNulls: true,
+        markPoint: sd.vals.length > 1 ? {} : undefined,
+        label: { show: sd.vals.length === 1, position: 'top', fontSize: 10 },
+      }],
+    });
+    window.addEventListener('resize', () => c.resize());
+  })();
+
+  (() => {
+    const el = document.getElementById('ch-600519-2');
+    const c = echarts.init(el);
+    c.setOption({
+      grid: { left: 48, right: 12, top: 16, bottom: 28 },
+      tooltip: { trigger: 'axis' },
+      xAxis: { type: 'category', data: ["08-16"], axisLabel: { fontSize: 10 } },
+      yAxis: { type: 'value', scale: true, splitLine: { lineStyle: { type: 'dashed', color: '#eee' } } },
+      series: [{
+        type: 'line', smooth: true, data: [20.6],
+        symbolSize: 6, lineStyle: { width: 2 },
+        itemStyle: { color: '#2563eb' },
+        connectNulls: true,
+        markPoint: sd.vals.length > 1 ? {} : undefined,
+        label: { show: sd.vals.length === 1, position: 'top', fontSize: 10 },
+      }],
+    });
+    window.addEventListener('resize', () => c.resize());
+  })();
+
+  (() => {
+    const el = document.getElementById('ch-600519-3');
+    const c = echarts.init(el);
+    c.setOption({
+      grid: { left: 48, right: 12, top: 16, bottom: 28 },
+      tooltip: { trigger: 'axis' },
+      xAxis: { type: 'category', data: ["08-16"], axisLabel: { fontSize: 10 } },
+      yAxis: { type: 'value', scale: true, splitLine: { lineStyle: { type: 'dashed', color: '#eee' } } },
+      series: [{
+        type: 'line', smooth: true, data: [-1.2000971769185174],
+        symbolSize: 6, lineStyle: { width: 2 },
+        itemStyle: { color: '#2563eb' },
+        connectNulls: true,
+        markPoint: sd.vals.length > 1 ? {} : undefined,
+        label: { show: sd.vals.length === 1, position: 'top', fontSize: 10 },
+      }],
+    });
+    window.addEventListener('resize', () => c.resize());
+  })();
+
+  (() => {
+    const el = document.getElementById('ch-AAPL-0');
+    const c = echarts.init(el);
+    c.setOption({
+      grid: { left: 48, right: 12, top: 16, bottom: 28 },
+      tooltip: { trigger: 'axis' },
+      xAxis: { type: 'category', data: ["08-16"], axisLabel: { fontSize: 10 } },
+      yAxis: { type: 'value', scale: true, splitLine: { lineStyle: { type: 'dashed', color: '#eee' } } },
+      series: [{
+        type: 'line', smooth: true, data: [60],
+        symbolSize: 6, lineStyle: { width: 2 },
+        itemStyle: { color: '#2563eb' },
+        connectNulls: true,
+        markPoint: sd.vals.length > 1 ? {} : undefined,
+        label: { show: sd.vals.length === 1, position: 'top', fontSize: 10 },
+      }],
+    });
+    window.addEventListener('resize', () => c.resize());
+  })();
+
+  (() => {
+    const el = document.getElementById('ch-AAPL-1');
+    const c = echarts.init(el);
+    c.setOption({
+      grid: { left: 48, right: 12, top: 16, bottom: 28 },
+      tooltip: { trigger: 'axis' },
+      xAxis: { type: 'category', data: ["08-16"], axisLabel: { fontSize: 10 } },
+      yAxis: { type: 'value', scale: true, splitLine: { lineStyle: { type: 'dashed', color: '#eee' } } },
+      series: [{
+        type: 'line', smooth: true, data: [null],
+        symbolSize: 6, lineStyle: { width: 2 },
+        itemStyle: { color: '#2563eb' },
+        connectNulls: true,
+        markPoint: sd.vals.length > 1 ? {} : undefined,
+        label: { show: sd.vals.length === 1, position: 'top', fontSize: 10 },
+      }],
+    });
+    window.addEventListener('resize', () => c.resize());
+  })();
+
+  (() => {
+    const el = document.getElementById('ch-AAPL-2');
+    const c = echarts.init(el);
+    c.setOption({
+      grid: { left: 48, right: 12, top: 16, bottom: 28 },
+      tooltip: { trigger: 'axis' },
+      xAxis: { type: 'category', data: ["08-16"], axisLabel: { fontSize: 10 } },
+      yAxis: { type: 'value', scale: true, splitLine: { lineStyle: { type: 'dashed', color: '#eee' } } },
+      series: [{
+        type: 'line', smooth: true, data: [35.083714],
+        symbolSize: 6, lineStyle: { width: 2 },
+        itemStyle: { color: '#2563eb' },
+        connectNulls: true,
+        markPoint: sd.vals.length > 1 ? {} : undefined,
+        label: { show: sd.vals.length === 1, position: 'top', fontSize: 10 },
+      }],
+    });
+    window.addEventListener('resize', () => c.resize());
+  })();
+
+  (() => {
+    const el = document.getElementById('ch-AAPL-3');
+    const c = echarts.init(el);
+    c.setOption({
+      grid: { left: 48, right: 12, top: 16, bottom: 28 },
+      tooltip: { trigger: 'axis' },
+      xAxis: { type: 'category', data: ["08-16"], axisLabel: { fontSize: 10 } },
+      yAxis: { type: 'value', scale: true, splitLine: { lineStyle: { type: 'dashed', color: '#eee' } } },
+      series: [{
+        type: 'line', smooth: true, data: [6.425511782832739],
+        symbolSize: 6, lineStyle: { width: 2 },
+        itemStyle: { color: '#2563eb' },
+        connectNulls: true,
+        markPoint: sd.vals.length > 1 ? {} : undefined,
+        label: { show: sd.vals.length === 1, position: 'top', fontSize: 10 },
+      }],
+    });
+    window.addEventListener('resize', () => c.resize());
+  })();
+
+  (() => {
+    const el = document.getElementById('ch-D05SI-0');
+    const c = echarts.init(el);
+    c.setOption({
+      grid: { left: 48, right: 12, top: 16, bottom: 28 },
+      tooltip: { trigger: 'axis' },
+      xAxis: { type: 'category', data: ["08-16"], axisLabel: { fontSize: 10 } },
+      yAxis: { type: 'value', scale: true, splitLine: { lineStyle: { type: 'dashed', color: '#eee' } } },
+      series: [{
+        type: 'line', smooth: true, data: [39],
+        symbolSize: 6, lineStyle: { width: 2 },
+        itemStyle: { color: '#2563eb' },
+        connectNulls: true,
+        markPoint: sd.vals.length > 1 ? {} : undefined,
+        label: { show: sd.vals.length === 1, position: 'top', fontSize: 10 },
+      }],
+    });
+    window.addEventListener('resize', () => c.resize());
+  })();
+
+  (() => {
+    const el = document.getElementById('ch-D05SI-1');
+    const c = echarts.init(el);
+    c.setOption({
+      grid: { left: 48, right: 12, top: 16, bottom: 28 },
+      tooltip: { trigger: 'axis' },
+      xAxis: { type: 'category', data: ["08-16"], axisLabel: { fontSize: 10 } },
+      yAxis: { type: 'value', scale: true, splitLine: { lineStyle: { type: 'dashed', color: '#eee' } } },
+      series: [{
+        type: 'line', smooth: true, data: [null],
+        symbolSize: 6, lineStyle: { width: 2 },
+        itemStyle: { color: '#2563eb' },
+        connectNulls: true,
+        markPoint: sd.vals.length > 1 ? {} : undefined,
+        label: { show: sd.vals.length === 1, position: 'top', fontSize: 10 },
+      }],
+    });
+    window.addEventListener('resize', () => c.resize());
+  })();
+
+  (() => {
+    const el = document.getElementById('ch-D05SI-2');
+    const c = echarts.init(el);
+    c.setOption({
+      grid: { left: 48, right: 12, top: 16, bottom: 28 },
+      tooltip: { trigger: 'axis' },
+      xAxis: { type: 'category', data: ["08-16"], axisLabel: { fontSize: 10 } },
+      yAxis: { type: 'value', scale: true, splitLine: { lineStyle: { type: 'dashed', color: '#eee' } } },
+      series: [{
+        type: 'line', smooth: true, data: [19.317135],
+        symbolSize: 6, lineStyle: { width: 2 },
+        itemStyle: { color: '#2563eb' },
+        connectNulls: true,
+        markPoint: sd.vals.length > 1 ? {} : undefined,
+        label: { show: sd.vals.length === 1, position: 'top', fontSize: 10 },
+      }],
+    });
+    window.addEventListener('resize', () => c.resize());
+  })();
+
+  (() => {
+    const el = document.getElementById('ch-D05SI-3');
+    const c = echarts.init(el);
+    c.setOption({
+      grid: { left: 48, right: 12, top: 16, bottom: 28 },
+      tooltip: { trigger: 'axis' },
+      xAxis: { type: 'category', data: ["08-16"], axisLabel: { fontSize: 10 } },
+      yAxis: { type: 'value', scale: true, splitLine: { lineStyle: { type: 'dashed', color: '#eee' } } },
+      series: [{
+        type: 'line', smooth: true, data: [3.05171715353108],
+        symbolSize: 6, lineStyle: { width: 2 },
+        itemStyle: { color: '#2563eb' },
+        connectNulls: true,
+        markPoint: sd.vals.length > 1 ? {} : undefined,
+        label: { show: sd.vals.length === 1, position: 'top', fontSize: 10 },
+      }],
+    });
+    window.addEventListener('resize', () => c.resize());
+  })();
+</script>
+</body>
+</html>
