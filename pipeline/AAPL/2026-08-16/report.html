@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AAPL · 巴菲特价值投资分析（自动流水线）| 2026-08-16</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: #f5f6fa; color: #1a1a2e; line-height: 1.7; padding: 24px;
+}
+.container { max-width: 960px; margin: 0 auto; }
+.report-header {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: #fff; border-radius: 16px; padding: 36px 40px; margin-bottom: 24px;
+}
+.report-header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; letter-spacing: 1px; }
+.report-header .subtitle { font-size: 14px; color: rgba(255,255,255,0.7); }
+.report-header .meta { display: flex; gap: 24px; margin-top: 14px; font-size: 13px; color: rgba(255,255,255,0.6); flex-wrap: wrap; }
+.report-header .badge { display: inline-block; background: rgba(255,255,255,0.12); padding: 2px 10px; border-radius: 6px; margin-right: 6px; }
+.metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+.metric-card { background: #fff; border-radius: 12px; padding: 18px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); text-align: center; }
+.metric-card .label { font-size: 12px; color: #888; margin-bottom: 4px; }
+.metric-card .value { font-size: 22px; font-weight: 700; color: #1a1a2e; }
+.metric-card .value.red { color: #d8363a; }
+.metric-card .value.green { color: #19a974; }
+.metric-card .value.orange { color: #f5a623; }
+.metric-card .sub { font-size: 11px; color: #999; margin-top: 2px; }
+.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.full-row { margin-bottom: 20px; }
+.card { background: #fff; border-radius: 12px; padding: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+.card h3 { font-size: 14px; font-weight: 600; color: #555; margin-bottom: 12px; }
+.chart-box { width: 100%; height: 340px; }
+.verdict-box {
+  background: #fff; border-radius: 12px; padding: 24px; border-left: 4px solid #f5a623;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04); margin-bottom: 20px; display: flex; gap: 16px;
+}
+.verdict-icon { font-size: 40px; line-height: 1; }
+.verdict-content h3 { font-size: 16px; font-weight: 700; margin-bottom: 10px; color: #1a1a2e; }
+.verdict-content p { font-size: 13px; color: #444; margin-bottom: 4px; }
+.verdict-final { margin-top: 10px !important; font-weight: 600; color: #f5a623 !important; padding-top: 8px; border-top: 1px solid #eee; }
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.data-table th { background: #f0f2f5; padding: 8px 10px; text-align: left; font-weight: 600; color: #555; }
+.data-table td { padding: 8px 10px; border-bottom: 1px solid #f0f2f5; }
+.data-table tr:last-child td { border-bottom: none; }
+.data-table .pos { color: #d8363a; }
+.data-table .neg { color: #19a974; }
+.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+.tag-a { background: #ffe8e8; color: #d8363a; }
+.tag-b { background: #fff3e0; color: #e67e22; }
+.tag-c { background: #e8f5e9; color: #27ae60; }
+.footer { text-align: center; font-size: 12px; color: #aaa; padding: 20px 0; }
+.score-bar { background: #f0f2f5; border-radius: 8px; height: 12px; overflow: hidden; margin-top: 4px; }
+.score-bar .fill { height: 100%; border-radius: 8px; }
+.score-dim { margin-bottom: 14px; }
+@media (max-width: 700px) { .metrics-grid { grid-template-columns: repeat(2, 1fr); } .row-2 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="report-header">
+  <h1>📄 AAPL · 巴菲特价值投资分析</h1>
+  <div class="subtitle">财报季自动流水线 · 六维框架：护城河 · ROE · 现金流 · 估值 · 管理层 · 安全边际</div>
+  <div class="meta">
+    <span>📅 2026-08-16</span>
+    <span>🏷️ <span class="badge">AAPL</span> 美股</span>
+    <span>📊 现价 305.93</span>
+    <span>📡 数据源 yfinance</span>
+  </div>
+</div>
+
+<div class="metrics-grid">
+
+    <div class="metric-card">
+      <div class="label">ROE</div>
+      <div class="value orange">—</div>
+      <div class="sub">巴菲特门槛 15%</div>
+    </div>
+
+    <div class="metric-card">
+      <div class="label">营收增速 (YoY)</div>
+      <div class="value green">6.4%</div>
+      <div class="sub">3年CAGR 1.8%</div>
+    </div>
+
+    <div class="metric-card">
+      <div class="label">利润增速 (YoY)</div>
+      <div class="value green">19.5%</div>
+      <div class="sub">归母净利润</div>
+    </div>
+
+    <div class="metric-card">
+      <div class="label">资产负债率</div>
+      <div class="value red">—</div>
+      <div class="sub">流动比率 —</div>
+    </div>
+</div>
+
+
+  <div class="verdict-box">
+    <div class="verdict-icon">🟡</div>
+    <div class="verdict-content">
+      <h3>巴迪的巴菲特式投资结论</h3>
+      <p><strong>财务健康：<span class="tag tag-c">A</span></strong> — 六维自动评分</p>
+      <p><strong>成长性：<span class="tag tag-a">C</span></strong> — 六维自动评分</p>
+      <p><strong>估值：<span class="tag tag-a">C</span></strong> — 六维自动评分</p>
+      <p><strong>护城河：<span class="tag tag-a">C</span></strong> — 待 AI 填写</p>
+      <p><strong>管理层：<span class="tag tag-a">C</span></strong> — 待 AI 填写</p>
+      <p><strong>风险：<span class="tag tag-a">C</span></strong> — 待 AI 填写</p>
+      <p class="verdict-final">→ 综合评分 <strong>60</strong> / 100：合理关注</p>
+    </div>
+  </div>
+
+<div class="row-2">
+  <div class="card"><h3>🧮 六维评分</h3>
+    <div class="score-dim">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#666;">
+        <span>财务健康 <span style="color:#aaa;">(权重 25%)</span></span>
+        <span>100</span>
+      </div>
+      <div class="score-bar"><div class="fill" style="width:100%;background:#f5a623;"></div></div>
+    </div>
+
+    <div class="score-dim">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#666;">
+        <span>成长性 <span style="color:#aaa;">(权重 20%)</span></span>
+        <span>46</span>
+      </div>
+      <div class="score-bar"><div class="fill" style="width:46%;background:#19a974;"></div></div>
+    </div>
+
+    <div class="score-dim">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#666;">
+        <span>估值 <span style="color:#aaa;">(权重 20%)</span></span>
+        <span>41</span>
+      </div>
+      <div class="score-bar"><div class="fill" style="width:41%;background:#d8363a;"></div></div>
+    </div>
+
+    <div class="score-dim">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#666;">
+        <span>护城河 <span style="color:#aaa;">(权重 15%)</span></span>
+        <span>50</span>
+      </div>
+      <div class="score-bar"><div class="fill" style="width:50%;background:#5b8ff9;"></div></div>
+    </div>
+
+    <div class="score-dim">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#666;">
+        <span>管理层 <span style="color:#aaa;">(权重 10%)</span></span>
+        <span>50</span>
+      </div>
+      <div class="score-bar"><div class="fill" style="width:50%;background:#9254de;"></div></div>
+    </div>
+
+    <div class="score-dim">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#666;">
+        <span>风险 <span style="color:#aaa;">(权重 10%)</span></span>
+        <span>50</span>
+      </div>
+      <div class="score-bar"><div class="fill" style="width:50%;background:#ff6b6b;"></div></div>
+    </div></div>
+  <div class="card"><h3>💰 资产负债与现金流（最新财年）</h3>
+    <table class="data-table"><tr><td style="width:40%;color:#888;">总资产</td><td>—</td></tr><tr><td style="width:40%;color:#888;">总负债</td><td>—</td></tr><tr><td style="width:40%;color:#888;">股东权益</td><td>—</td></tr><tr><td style="width:40%;color:#888;">现金</td><td>624.0 亿</td></tr><tr><td style="width:40%;color:#888;">应收账款</td><td>—</td></tr><tr><td style="width:40%;color:#888;">经营现金流</td><td>1467.2 亿</td></tr><tr><td style="width:40%;color:#888;">自由现金流</td><td>1467.2 亿</td></tr></table>
+  </div>
+</div>
+
+<div class="full-row">
+<div class="card">
+  <h3>📈 营业收入与归母净利润趋势</h3>
+  <div id="chart1" class="chart-box"></div>
+</div>
+</div>
+
+
+    <div class="card" style="margin-bottom:20px;">
+      <h3>🛡️ 护城河评估</h3>
+      <p style="font-size:13px;color:#444;color:#aaa;">（待 AI 填写）</p>
+    </div>
+
+    <div class="card" style="margin-bottom:20px;">
+      <h3>🧑‍💼 管理层质量</h3>
+      <p style="font-size:13px;color:#444;color:#aaa;">（待 AI 填写）</p>
+    </div>
+
+    <div class="card" style="margin-bottom:20px;">
+      <h3>⚠️ 主要风险</h3>
+      <p style="font-size:13px;color:#444;color:#aaa;">（待 AI 填写）</p>
+    </div>
+
+<div class="footer">Generated by 财报季自动分析流水线 · 2026-08-16 · 数据仅供研究参考</div>
+</div>
+<script>
+
+const chart1 = echarts.init(document.getElementById('chart1'));
+chart1.setOption({
+  title: { text: '营业收入与归母净利润（2021-09-30 → 2025-09-30）', textStyle: { fontSize: 13, color: '#555' } },
+  tooltip: { trigger: 'axis' },
+  legend: { data: ['营收', '归母净利润'], top: 28 },
+  grid: { left: 60, right: 20, top: 60, bottom: 30 },
+  xAxis: { type: 'category', data: ["2025-09-30","2024-09-30","2023-09-30","2022-09-30","2021-09-30"] },
+  yAxis: { type: 'value', axisLabel: { formatter: (v) => v >= 1e12 ? (v/1e12).toFixed(1)+'万亿' : v >= 1e8 ? (v/1e8).toFixed(0)+'亿' : v } },
+  series: [
+    { name: '营收', type: 'bar', data: [416161000000,391035000000,383285000000,394328000000], itemStyle: { color: '#5b8ff9' } },
+    { name: '归母净利润', type: 'bar', data: [112010000000,93736000000,96995000000,99803000000], itemStyle: { color: '#f5a623' } },
+  ]
+});
+
+</script>
+</body>
+</html>
