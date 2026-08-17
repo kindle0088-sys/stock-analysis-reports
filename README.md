@@ -12,6 +12,7 @@
 | 贵州茅台 (Moutai) | 2026-08-16 | [`reports/moutai/moutai-buffett-analysis-20260816.html`](reports/moutai/moutai-buffett-analysis-20260816.html)（v2 · 半年报更新）|
 | 小米 (Xiaomi) | 2026-07-26 | [`reports/xiaomi/buffett-analysis-20260726.html`](reports/xiaomi/buffett-analysis-20260726.html) |
 | 百汇生命产业信托 (ParkwayLife REIT) | 2026-08-17 | [`reports/parkwaylife/parkwaylife-buffett-analysis-20260817.html`](reports/parkwaylife/parkwaylife-buffett-analysis-20260817.html)（v2 · 1H2026 财报 + REIT 专属模板）|
+| 凯德综合商业信托 (CICT) | 2026-08-17 | [`reports/cict/cict-buffett-analysis-20260817.html`](reports/cict/cict-buffett-analysis-20260817.html)（v1 · 1H2026 财报）|
 
 ## 目录结构
 

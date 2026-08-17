@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>凯德综合商业信托 CICT (C38U) · 巴菲特价值投资分析 | 2026-08-17</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: #f5f6fa; color: #1a1a2e; line-height: 1.7; padding: 24px;
+}
+.container { max-width: 960px; margin: 0 auto; }
+
+.report-header {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: #fff; border-radius: 16px; padding: 36px 40px; margin-bottom: 24px;
+}
+.report-header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; letter-spacing: 1px; }
+.report-header .subtitle { font-size: 14px; color: rgba(255,255,255,0.7); }
+.report-header .meta { display: flex; gap: 20px; margin-top: 14px; font-size: 13px; color: rgba(255,255,255,0.6); flex-wrap: wrap; }
+.report-header .badge { display: inline-block; background: rgba(255,255,255,0.12); padding: 2px 10px; border-radius: 6px; margin-right: 6px; }
+.version-tag { display: inline-block; background: #f5a623; color: #1a1a2e; font-weight: 700; padding: 2px 10px; border-radius: 6px; margin-right: 6px; font-size: 12px; }
+
+.metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+.metric-card { background: #fff; border-radius: 12px; padding: 18px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); text-align: center; }
+.metric-card .label { font-size: 12px; color: #888; margin-bottom: 4px; }
+.metric-card .value { font-size: 22px; font-weight: 700; color: #1a1a2e; }
+.metric-card .value.red { color: #d8363a; }
+.metric-card .value.green { color: #19a974; }
+.metric-card .value.orange { color: #f5a623; }
+.metric-card .sub { font-size: 11px; color: #999; margin-top: 2px; }
+
+.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.full-row { margin-bottom: 20px; }
+.card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+.card h3 { font-size: 14px; font-weight: 600; color: #555; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+.chart-box { width: 100%; height: 340px; }
+.card p { font-size: 13px; color: #444; }
+.card .src { font-size: 11px; color: #aaa; margin-top: 8px; }
+
+.verdict-box {
+  background: #fff; border-radius: 12px; padding: 24px; border-left: 4px solid #19a974;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04); margin-bottom: 20px; display: flex; gap: 16px;
+}
+.verdict-icon { font-size: 40px; line-height: 1; }
+.verdict-content h3 { font-size: 16px; font-weight: 700; margin-bottom: 10px; color: #1a1a2e; }
+.verdict-content p { font-size: 13px; color: #444; margin-bottom: 4px; }
+.verdict-content p strong { color: #1a1a2e; }
+.verdict-final { margin-top: 10px !important; font-weight: 600; color: #19a974 !important; padding-top: 8px; border-top: 1px solid #eee; }
+
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.data-table th { background: #f0f2f5; padding: 8px 10px; text-align: left; font-weight: 600; color: #555; }
+.data-table td { padding: 8px 10px; border-bottom: 1px solid #f0f2f5; }
+.data-table tr:last-child td { border-bottom: none; }
+.data-table .pos { color: #d8363a; }
+.data-table .neg { color: #19a974; }
+.data-table .neutral { color: #f5a623; }
+
+.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+.tag-a { background: #ffe8e8; color: #d8363a; }
+.tag-b { background: #fff3e0; color: #e67e22; }
+.tag-c { background: #e8f5e9; color: #27ae60; }
+.tag-na { background: #f0f2f5; color: #999; }
+
+.alert-box {
+  background: #fff8e6; border: 1px solid #f5d78e; border-radius: 12px; padding: 18px 20px; margin-bottom: 20px;
+}
+.alert-box h3 { font-size: 14px; font-weight: 700; color: #b57f0a; margin-bottom: 8px; }
+.alert-box p { font-size: 13px; color: #6b5310; }
+
+.checklist { list-style: none; }
+.checklist li { font-size: 13px; color: #444; padding: 6px 0 6px 24px; position: relative; border-bottom: 1px dashed #f0f2f5; }
+.checklist li:last-child { border-bottom: none; }
+.checklist li:before { content: "☐"; position: absolute; left: 0; color: #888; }
+
+.footer { text-align: center; font-size: 12px; color: #aaa; padding: 20px 0; }
+.disclaimer { font-size: 11px; color: #999; text-align: center; padding: 12px 20px; border-top: 1px solid #eee; margin-top: 8px; }
+
+@media (max-width: 700px) {
+  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .row-2 { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="report-header">
+  <h1>🏢 凯德综合商业信托 CICT · 巴菲特价值投资分析 <span class="version-tag">v1</span></h1>
+  <div class="subtitle">1H2026 财报版 · 六维框架（REIT 适配）：资产质量 · 派息能力 · 财务结构 · 经营健康 · 管理层 · 安全边际</div>
+  <div class="meta">
+    <span class="badge">💱 基准货币：SGD（新加坡元）</span>
+    <span class="badge">📊 现价 S$2.43</span>
+    <span class="badge">📡 数据源：yfinance + 1H2026 业绩公告</span>
+    <span>财报 2026-08-12 发布 · 行情 2026-08-17</span>
+  </div>
+</div>
+
+<div class="verdict-box">
+  <div class="verdict-icon">🏬</div>
+  <div class="verdict-content">
+    <h3>可分批布局 · 新加坡最大商业 REIT，增长与规模兼备</h3>
+    <p><strong>巴菲特视角：核心区位"收租机器"——Raffles City、MBFC、Funan 等新加坡地标物业，规模效应 + CapitaLand 品牌背书，价格合理。</strong></p>
+    <p>1H2026 营收 +7.5%、NPI +8.7%、可分配收入 +13.3%，DPU 6.02¢（+7.1%）——靠 CapitaSpring 并表 + Gallileo 出租 + 降息红利，且是在单位基数扩大 5.8% 后实现的增长。</p>
+    <p>出租率 95.6%、租金 reversion 零售 +4.0%/办公 +6.5%，Paragon（7-01 完成）+ AST2 出售（2H26）重塑组合。短板：WALE 仅 ~3 年，需持续续租驱动。</p>
+    <p class="verdict-final">结论：可分批布局 · 六维评分 86/100 · 年化分派收益率 ~5.1% vs 10Y SGS 2.29%（利差 ~2.8pp）</p>
+  </div>
+</div>
+
+<div class="metrics-grid">
+  <div class="metric-card"><div class="label">现价</div><div class="value">S$2.43</div><div class="sub">2026-08-17 · yfinance</div></div>
+  <div class="metric-card"><div class="label">分派收益率</div><div class="value green">~5.1%</div><div class="sub">年化 DPU 12.04¢ 计算</div></div>
+  <div class="metric-card"><div class="label">P/NAV</div><div class="value">1.13×</div><div class="sub">NAV S$2.15/单位</div></div>
+  <div class="metric-card"><div class="label">PE (TTM)</div><div class="value">15.2×</div><div class="sub">yfinance</div></div>
+  <div class="metric-card"><div class="label">市值</div><div class="value">S$19.2B</div><div class="sub">新加坡最大 REIT</div></div>
+  <div class="metric-card"><div class="label">DPU（1H26）</div><div class="value green">6.02¢</div><div class="sub">+7.1% YoY</div></div>
+  <div class="metric-card"><div class="label">Gearing</div><div class="value green">37.4%</div><div class="sub">较 2025 年末 38.6% 下降</div></div>
+  <div class="metric-card"><div class="label">52 周</div><div class="value">2.17–2.57</div><div class="sub">yfinance</div></div>
+</div>
+
+<div class="full-row">
+  <div class="card">
+    <h3>🏗️ 资产组合质量</h3>
+    <div class="row-2" style="margin-bottom:0;">
+      <div>
+        <table class="data-table">
+          <tr><th>维度</th><th>数值</th><th>评价</th></tr>
+          <tr><td>组合规模</td><td>S$27.4B / 25 处物业</td><td class="pos">新加坡最大上市 REIT</td></tr>
+          <tr><td>核心资产</td><td>Raffles City、MBFC、Funan、Ion 等</td><td class="pos">地标级区位</td></tr>
+          <tr><td>地域</td><td>新加坡 + 德国（Gallileo）+ 澳洲</td><td class="neutral">以新加坡为主</td></tr>
+          <tr><td>资产类型</td><td>零售 / 办公 / 综合发展</td><td class="neutral">零售 97.7% 出租</td></tr>
+          <tr><td>WALE</td><td>~3.0 年 📋</td><td class="neutral">商业 REIT 正常水平，需持续续租</td></tr>
+        </table>
+        <div class="src">📋 WALE 来源：1H2026 业绩电话会（TipRanks）· 组合规模：业绩新闻稿</div>
+      </div>
+      <div id="chart-occ" class="chart-box" style="height:300px;"></div>
+    </div>
+  </div>
+</div>
+
+<div class="full-row">
+  <div class="card">
+    <h3>💰 DPU 分析与派息能力</h3>
+    <div id="chart-dpu" class="chart-box"></div>
+    <table class="data-table" style="margin-top:12px;">
+      <tr><th>指标</th><th>1H2026</th><th>1H2025</th><th>变化</th></tr>
+      <tr><td>总营收</td><td>S$846.8m</td><td>S$787.7m</td><td class="pos">+7.5%</td></tr>
+      <tr><td>净物业收入 NPI</td><td>S$630.5m</td><td>S$580.0m</td><td class="pos">+8.7%</td></tr>
+      <tr><td>可分配收入</td><td class="pos">S$466.7m</td><td>S$411.9m</td><td class="pos">+13.3%</td></tr>
+      <tr><td>DPU</td><td class="pos">6.02¢</td><td>5.62¢</td><td class="pos">+7.1%</td></tr>
+    </table>
+    <p style="font-size:12px; color:#666; margin-top:10px;">
+      💡 <strong>DPU 含"提前派息"结构</strong>：3.98¢（1/1–4/28 期间）已于 6/8 派发，剩余 2.04¢（4/29–6/30）将于 9/25 派发（登记日 8/20）。增长驱动 = CapitaSpring 并表 + Gallileo 出租 + 融资成本下降（可分配收入增速 13.3% &gt; NPI 8.7% 的部分即来自利息节约）。
+    </p>
+    <p style="font-size:12px; color:#666; margin-top:6px;">
+      📊 <strong>分派收益率 ~5.1% vs 10Y SGS 2.29% = 利差 ~2.8pp。</strong>高于 parkwaylife 的 2.0pp，接近 S-REIT 行业均值 5.5-6.5% 的下沿，性价比优于"医疗 REIT 溢价"。
+    </p>
+    <div class="src">财务数据来源：CICT 1H2026 业绩公告（2026-08-12）；10Y SGS ~2.29%（OCBC DTO 2026-08-06）</div>
+  </div>
+</div>
+
+<div class="full-row">
+  <div class="card">
+    <h3>🏦 资产负债结构</h3>
+    <table class="data-table">
+      <tr><th>指标</th><th>数值</th><th>巴菲特标准</th><th>判断</th></tr>
+      <tr><td>Gearing（负债/总资产）</td><td>37.4%</td><td>&lt; 50%（MAS）</td><td class="pos">✅ 安全，且较 2025 年末 38.6% 下降</td></tr>
+      <tr><td>平均债务成本</td><td>2.9%</td><td>越低越好</td><td class="pos">✅ 低（受益降息）</td></tr>
+      <tr><td>固定利率占比</td><td>78%</td><td>&gt; 80%</td><td class="neutral">⚠️ 接近达标</td></tr>
+      <tr><td>平均债务期限</td><td>4.1 年</td><td>需有缓冲</td><td class="pos">✅ 错峰良好</td></tr>
+      <tr><td>利率敏感度</td><td>+1% 利率 ≈ -S$0.0027 DPU</td><td>越低越好</td><td class="pos">✅ 有限</td></tr>
+    </table>
+    <div class="src">📋 来源：1H2026 业绩公告 + 电话会</div>
+  </div>
+</div>
+
+<div class="full-row">
+  <div class="card">
+    <h3>📋 经营健康度</h3>
+    <table class="data-table">
+      <tr><th>指标</th><th>数值</th><th>评价</th></tr>
+      <tr><td>组合出租率</td><td>95.6%（+0.4pp）</td><td class="pos">健康</td></tr>
+      <tr><td>零售 / 办公 / 综合</td><td>97.7% / 94.4% / 95.5%</td><td class="pos">零售最强，办公改善 +0.7pp</td></tr>
+      <tr><td>租金 reversion（零售 / 办公）</td><td>+4.0% / +6.5%</td><td class="pos">连续正值</td></tr>
+      <tr><td>租户保留率（零售 / 办公）</td><td>83.9% / 70.8%</td><td class="neutral">办公偏低</td></tr>
+      <tr><td>租户销售额 / 访客流量</td><td>+1.6% / +3.2%</td><td class="pos">量价健康</td></tr>
+    </table>
+    <div class="src">📋 来源：1H2026 业绩公告 + 演示材料</div>
+  </div>
+</div>
+
+<div class="full-row">
+  <div class="card">
+    <h3>🎯 六维评分（巴菲特框架 REIT 适配）</h3>
+    <table class="data-table">
+      <tr><th>维度</th><th>评分</th><th>REIT 对应</th><th>依据</th></tr>
+      <tr><td>1. 可理解的业务</td><td><span class="tag tag-c">95</span></td><td>物业类型简单度</td><td>零售+办公收租，商业地产模式清晰（含海外物业略复杂）</td></tr>
+      <tr><td>2. 持久竞争优势</td><td><span class="tag tag-c">85</span></td><td>区位/品牌/规模/保荐人</td><td>Raffles City/MBFC 等核心区位 + CapitaLand 品牌 + 全国最大规模；但商业竞争与线上冲击强于医疗</td></tr>
+      <tr><td>3. 盈利质量</td><td><span class="tag tag-c">88</span></td><td>DPU 覆盖率 / NPI 增速</td><td>DPU +7.1%（并购增厚+降息），reversion 连续正值；有机内生中等</td></tr>
+      <tr><td>4. 投资回报</td><td><span class="tag tag-b">80</span></td><td>隐含 cap rate / ROA</td><td>规模回报稳定，Paragon 增厚 1.7%</td></tr>
+      <tr><td>5. 财务结构</td><td><span class="tag tag-c">85</span></td><td>Gearing / ICR</td><td>37.4%（下降中）、成本 2.9%、78% 固定——良好，较医疗 REIT 略高</td></tr>
+      <tr><td>6. 合理价格</td><td><span class="tag tag-b">78</span></td><td>NAV 折溢价 / 利差</td><td>PB 1.13 合理偏低、收益率 5.1%、利差 2.8pp——优于 parkwaylife</td></tr>
+    </table>
+    <p style="font-size:12px;color:#666;margin-top:10px;"><strong>加权综合评分 ≈ 86 / 100</strong>（权重 25/20/20/15/10/10）—— 评级：<span class="tag tag-c">可分批布局</span>。价格与派息优势弥补了护城河深度不及医疗 REIT 的差距。</p>
+  </div>
+</div>
+
+<div class="full-row">
+  <div class="card">
+    <h3>📐 估值与安全边际</h3>
+    <div class="row-2" style="margin-bottom:0;">
+      <div>
+        <table class="data-table">
+          <tr><th>指标</th><th>数值</th><th>评价</th></tr>
+          <tr><td>P/NAV</td><td>1.13×</td><td class="pos">合理偏低（NAV S$2.15）</td></tr>
+          <tr><td>分派收益率</td><td>~5.1%</td><td>行业 5.5-6.5%，接近下沿</td></tr>
+          <tr><td>10Y SGS</td><td>2.29%</td><td>利差 ~2.8pp</td></tr>
+          <tr><td>下行保护</td><td>52 周低点 2.17（-11%）</td><td class="neutral">回调空间有限</td></tr>
+        </table>
+        <div class="src">估值基于 1H2026 公告 + yfinance</div>
+      </div>
+      <div id="chart-yield" class="chart-box" style="height:280px;"></div>
+    </div>
+  </div>
+</div>
+
+<div class="full-row">
+  <div class="card">
+    <h3>👔 管理层与保荐人</h3>
+    <table class="data-table">
+      <tr><th>维度</th><th>内容</th></tr>
+      <tr><td>经理人</td><td>CICTML，CEO Tan Choon Siang（2026-04 私募配售 + Paragon 收购 + AST2 出售均顺利执行）</td></tr>
+      <tr><td>保荐人</td><td>CapitaLand Investment（CLI）——亚洲最大资产管理公司之一，资产注入与运营资源池</td></tr>
+      <tr><td>资本纪律</td><td>买入 CapitaSpring 剩余 55% + 出售 Bukit Panjang Plaza（S$428m）/ AST2（S$2.48B，9.9% 溢价）——持续"卖旧买新"提质</td></tr>
+    </table>
+    <div class="src">📋 来源：业绩公告 + 公司新闻稿</div>
+  </div>
+</div>
+
+<div class="alert-box">
+  <h3>⚠️ 核心风险</h3>
+  <p>① <strong>WALE 仅 ~3 年</strong>：商业租约短，需持续续租（办公保留率仅 70.8%）——出租率/租金波动传导快</p>
+  <p>② <strong>并购驱动依赖</strong>：增长相当部分靠收购增厚（CapitaSpring/Paragon），外延式增长对估值与融资窗口敏感</p>
+  <p>③ <strong>利率敏感度</strong>：2.9% 平均成本已处低位，若利率反弹，78% 固定之外的部分承压（+1% ≈ DPU -2%+）</p>
+  <p>④ <strong>零售结构性压力</strong>：线上冲击下 97.7% 出租率的高位维持需要持续招商投入（多个 AEI 在推进）</p>
+</div>
+
+<div class="full-row">
+  <div class="card">
+    <h3>📌 决策清单与监控指标</h3>
+    <ul class="checklist">
+      <li>已持有：继续持有，享受 ~5.1% 收益率 + 并购增厚</li>
+      <li>空仓者：可分 2-3 批建仓，S$2.30 下方（PB &lt;1.1×）加大力度</li>
+      <li>监控 ①：Paragon 全年并表效果 + AST2 出售落地（2H26）</li>
+      <li>监控 ②：办公出租率与保留率能否维持在 94%+ / 70%+</li>
+      <li>监控 ③：AEI 进展（Tampines 3Q26 完成、Lot One 1Q27）与 reversion 持续性</li>
+      <li>卖出触发：DPU 下滑、Gearing 升破 42%、出租率跌破 93%</li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">凯德综合商业信托（C38U.SI）巴菲特研报 v1 · 数据截至 2026-08-17</div>
+<div class="disclaimer">
+  本报告基于公开数据（yfinance + CICT 1H2026 业绩公告/演示材料）与量化分析，仅供参考，不构成投资建议。新加坡交易所数据为延迟报价。市场有风险，投资需谨慎。任何投资决策应结合个人风险承受能力独立判断，必要时咨询持牌专业机构。
+</div>
+
+</div>
+
+<script>
+// ===== 1. 出租率分类型 =====
+var chartOcc = echarts.init(document.getElementById('chart-occ'));
+chartOcc.setOption({
+  tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+  title: { text: '出租率（1H2026）', left: 'center', textStyle: { fontSize: 13 } },
+  grid: { left: 55, right: 20, top: 45, bottom: 30 },
+  xAxis: { type: 'category', data: ['零售', '综合发展', '办公', '组合'], axisLabel: { fontSize: 11 } },
+  yAxis: { type: 'value', name: '%', min: 85, max: 100, nameTextStyle: { fontSize: 10 } },
+  series: [{
+    type: 'bar',
+    data: [
+      { value: 97.7, itemStyle: { color: '#19a974' } },
+      { value: 95.5, itemStyle: { color: '#3366cc' } },
+      { value: 94.4, itemStyle: { color: '#3366cc' } },
+      { value: 95.6, itemStyle: { color: '#d8363a' } }
+    ],
+    barMaxWidth: 46,
+    label: { show: true, position: 'top', formatter: '{c}%', fontSize: 11, fontWeight: 600 }
+  }]
+});
+
+// ===== 2. DPU 对比 =====
+var chartDpu = echarts.init(document.getElementById('chart-dpu'));
+chartDpu.setOption({
+  tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+  legend: { data: ['DPU（¢）'], top: 0 },
+  grid: { left: 55, right: 20, top: 40, bottom: 30 },
+  xAxis: { type: 'category', data: ['1H2025', '1H2026', 'FY2026E 年化'], axisLabel: { fontSize: 11 } },
+  yAxis: { type: 'value', name: '¢ / 单位', min: 4, nameTextStyle: { fontSize: 10 } },
+  series: [{
+    name: 'DPU（¢）', type: 'bar',
+    data: [
+      { value: 5.62, itemStyle: { color: '#3366cc' } },
+      { value: 6.02, itemStyle: { color: '#19a974' } },
+      { value: 12.04, itemStyle: { color: '#d8363a' } }
+    ],
+    barMaxWidth: 46,
+    label: { show: true, position: 'top', formatter: '{c}', fontSize: 11, fontWeight: 600 }
+  }],
+  graphic: [
+    {
+      type: 'text', left: 'center', top: 64,
+      style: { text: '1H26 +7.1% · 年化 12.04¢ 对应收益率 ~5.1%', fill: '#d8363a', fontSize: 12, fontWeight: 'bold' },
+      z: 100
+    }
+  ]
+});
+
+// ===== 3. 分派收益率 vs 10Y SGS =====
+var chartYield = echarts.init(document.getElementById('chart-yield'));
+chartYield.setOption({
+  tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+  title: { text: '分派收益率 vs 10Y SGS', left: 'center', textStyle: { fontSize: 13 } },
+  grid: { left: 55, right: 20, top: 45, bottom: 30 },
+  xAxis: { type: 'category', data: ['CICT 分派收益率', 'S-REIT 行业均值', '10Y SGS'], axisLabel: { fontSize: 11 } },
+  yAxis: { type: 'value', name: '%', nameTextStyle: { fontSize: 10 } },
+  series: [{
+    type: 'bar',
+    data: [
+      { value: 5.08, itemStyle: { color: '#3366cc' } },
+      { value: 5.90, itemStyle: { color: '#8b8fa3' } },
+      { value: 2.29, itemStyle: { color: '#f5a623' } }
+    ],
+    barMaxWidth: 46,
+    label: { show: true, position: 'top', formatter: '{c}%', fontSize: 11, fontWeight: 600 }
+  }]
+});
+
+window.addEventListener('resize', function() {
+  chartOcc.resize();
+  chartDpu.resize();
+  chartYield.resize();
+});
+</script>
+</body>
+</html>
