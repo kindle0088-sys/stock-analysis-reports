@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>百汇生命产业信托 (C2PU) · 巴菲特价值投资分析 v2 | 2026-08-17</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: #f5f6fa; color: #1a1a2e; line-height: 1.7; padding: 24px;
+}
+.container { max-width: 960px; margin: 0 auto; }
+
+.report-header {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: #fff; border-radius: 16px; padding: 36px 40px; margin-bottom: 24px;
+}
+.report-header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; letter-spacing: 1px; }
+.report-header .subtitle { font-size: 14px; color: rgba(255,255,255,0.7); }
+.report-header .meta { display: flex; gap: 20px; margin-top: 14px; font-size: 13px; color: rgba(255,255,255,0.6); flex-wrap: wrap; }
+.report-header .badge { display: inline-block; background: rgba(255,255,255,0.12); padding: 2px 10px; border-radius: 6px; margin-right: 6px; }
+.version-tag { display: inline-block; background: #f5a623; color: #1a1a2e; font-weight: 700; padding: 2px 10px; border-radius: 6px; margin-right: 6px; font-size: 12px; }
+
+/* Version switcher */
+.version-switcher {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  background: #fff; border-radius: 12px; padding: 10px 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04); margin-bottom: 16px; font-size: 13px;
+}
+.version-switcher .vs-label { color: #888; font-weight: 600; }
+.vs-tab {
+  text-decoration: none; color: #555; font-weight: 600;
+  padding: 6px 16px; border-radius: 20px; background: #f0f2f5;
+  transition: background 0.15s;
+}
+.vs-tab:hover { background: #e2e5ea; }
+.vs-tab.active { background: #1a1a2e; color: #fff; }
+.vs-note { margin-left: auto; font-size: 11px; color: #aaa; }
+
+.metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+.metric-card { background: #fff; border-radius: 12px; padding: 18px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); text-align: center; }
+.metric-card .label { font-size: 12px; color: #888; margin-bottom: 4px; }
+.metric-card .value { font-size: 22px; font-weight: 700; color: #1a1a2e; }
+.metric-card .value.red { color: #d8363a; }
+.metric-card .value.green { color: #19a974; }
+.metric-card .value.orange { color: #f5a623; }
+.metric-card .sub { font-size: 11px; color: #999; margin-top: 2px; }
+
+.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.full-row { margin-bottom: 20px; }
+.card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+.card h3 { font-size: 14px; font-weight: 600; color: #555; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+.chart-box { width: 100%; height: 340px; }
+.card p { font-size: 13px; color: #444; }
+.card .src { font-size: 11px; color: #aaa; margin-top: 8px; }
+
+.verdict-box {
+  background: #fff; border-radius: 12px; padding: 24px; border-left: 4px solid #19a974;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04); margin-bottom: 20px; display: flex; gap: 16px;
+}
+.verdict-icon { font-size: 40px; line-height: 1; }
+.verdict-content h3 { font-size: 16px; font-weight: 700; margin-bottom: 10px; color: #1a1a2e; }
+.verdict-content p { font-size: 13px; color: #444; margin-bottom: 4px; }
+.verdict-content p strong { color: #1a1a2e; }
+.verdict-final { margin-top: 10px !important; font-weight: 600; color: #19a974 !important; padding-top: 8px; border-top: 1px solid #eee; }
+
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.data-table th { background: #f0f2f5; padding: 8px 10px; text-align: left; font-weight: 600; color: #555; }
+.data-table td { padding: 8px 10px; border-bottom: 1px solid #f0f2f5; }
+.data-table tr:last-child td { border-bottom: none; }
+.data-table .pos { color: #d8363a; }
+.data-table .neg { color: #19a974; }
+.data-table .neutral { color: #f5a623; }
+
+.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+.tag-a { background: #ffe8e8; color: #d8363a; }
+.tag-b { background: #fff3e0; color: #e67e22; }
+.tag-c { background: #e8f5e9; color: #27ae60; }
+.tag-na { background: #f0f2f5; color: #999; }
+
+.score-bar { background: #f0f2f5; border-radius: 8px; height: 10px; overflow: hidden; margin-top: 4px; }
+.score-bar .fill { height: 100%; border-radius: 8px; }
+.score-dim { margin-bottom: 12px; }
+
+.alert-box {
+  background: #fff8e6; border: 1px solid #f5d78e; border-radius: 12px; padding: 18px 20px; margin-bottom: 20px;
+}
+.alert-box h3 { font-size: 14px; font-weight: 700; color: #b57f0a; margin-bottom: 8px; }
+.alert-box p { font-size: 13px; color: #6b5310; }
+
+.checklist { list-style: none; }
+.checklist li { font-size: 13px; color: #444; padding: 6px 0 6px 24px; position: relative; border-bottom: 1px dashed #f0f2f5; }
+.checklist li:last-child { border-bottom: none; }
+.checklist li:before { content: "☐"; position: absolute; left: 0; color: #888; }
+
+.footer { text-align: center; font-size: 12px; color: #aaa; padding: 20px 0; }
+.disclaimer { font-size: 11px; color: #999; text-align: center; padding: 12px 20px; border-top: 1px solid #eee; margin-top: 8px; }
+
+@media (max-width: 700px) {
+  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .row-2 { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="version-switcher">
+  <span class="vs-label">📑 版本切换</span>
+  <a class="vs-tab" href="parkwaylife-buffett-analysis-20260726.html">v1 · 2026-07-26</a>
+  <a class="vs-tab active" href="parkwaylife-buffett-analysis-20260817.html">v2 · 2026-08-17 · 当前</a>
+  <span class="vs-note">v2 迭代：1H2026 财报（8-04 发布）+ REIT 专属模板</span>
+</div>
+
+<div class="report-header">
+  <h1>🏢 百汇生命产业信托 ParkwayLife · 巴菲特价值投资分析 <span class="version-tag">v2</span></h1>
+  <div class="subtitle">1H2026 财报更新版 · 六维框架（REIT 适配）：资产质量 · 派息能力 · 财务结构 · 经营健康 · 管理层 · 安全边际</div>
+  <div class="meta">
+    <span class="badge">💱 基准货币：SGD（新加坡元）</span>
+    <span class="badge">📊 现价 S$4.11</span>
+    <span class="badge">📡 数据源：yfinance + 1H2026 公告 PDF</span>
+    <span>财报 2026-08-04 发布 · 行情 2026-08-17</span>
+  </div>
+</div>
+
+<div class="verdict-box">
+  <div class="verdict-icon">🛡️</div>
+  <div class="verdict-content">
+    <h3>可分批布局 · 稳健收息压舱石</h3>
+    <p><strong>巴菲特视角：新加坡私立医院"类垄断"收租生意，18 年 DPU 从未削减，财务极度保守——但价格不便宜。</strong></p>
+    <p>1H2026 可分配收入 +14.6%、DPU 8.77¢ 创新高，靠新加坡医院租约跳涨（FY2026 最低租金 +24.3%）驱动；但营收 -1.6% 暴露日元贬值与日本租户退出拖累。</p>
+    <p>WALE 14.64 年、新加坡/法国 100% 出租、Gearing 仅 33.8%、ICR 8.2x、96% 利率对冲——防御性无可挑剔。</p>
+    <p class="verdict-final">结论：持有 / 分批布局 · 六维评分 85/100 · 分派收益率 4.27% vs 10Y SGS 2.29%（利差 ~2.0pp）</p>
+  </div>
+</div>
+
+<div class="metrics-grid">
+  <div class="metric-card"><div class="label">现价</div><div class="value">S$4.11</div><div class="sub">2026-08-17 · yfinance</div></div>
+  <div class="metric-card"><div class="label">分派收益率</div><div class="value green">4.27%</div><div class="sub">年化 DPU 17.54¢ 计算</div></div>
+  <div class="metric-card"><div class="label">P/NAV</div><div class="value">1.60×</div><div class="sub">NAV S$2.57/单位</div></div>
+  <div class="metric-card"><div class="label">PE (TTM)</div><div class="value">16.4×</div><div class="sub">yfinance</div></div>
+  <div class="metric-card"><div class="label">市值</div><div class="value">S$2.68B</div><div class="sub">yfinance</div></div>
+  <div class="metric-card"><div class="label">DPU（1H26）</div><div class="value green">8.77¢</div><div class="sub">+14.6% YoY</div></div>
+  <div class="metric-card"><div class="label">Gearing</div><div class="value green">33.8%</div><div class="sub">距 45% 上限空间 S$5.4 亿</div></div>
+  <div class="metric-card"><div class="label">52 周</div><div class="value">3.91–4.44</div><div class="sub">yfinance</div></div>
+</div>
+
+<div class="full-row">
+  <div class="card">
+    <h3>🏗️ 资产组合质量</h3>
+    <div class="row-2" style="margin-bottom:0;">
+      <div id="chart-region" class="chart-box" style="height:280px;"></div>
+      <div>
+        <table class="data-table">
+          <tr><th>维度</th><th>数值</th><th>评价</th></tr>
+          <tr><td>物业总数</td><td>73 处（S$2.56B）</td><td class="neutral">医疗保健 REIT</td></tr>
+          <tr><td>新加坡（收入占比）</td><td>~68%</td><td class="pos">盈利核心</td></tr>
+          <tr><td>日本</td><td>~22%</td><td class="neutral">日元贬值压力</td></tr>
+          <tr><td>法国</td><td>~10%</td><td class="neutral">获税豁免</td></tr>
+          <tr><td>WALE（按 GRI）</td><td>14.64 年</td><td class="pos">极长，未来 5 年单年到期 ≤3%</td></tr>
+          <tr><td>租户集中度 Top10</td><td>~91% 📋</td><td class="neutral">集中于 IHH 医疗集团</td></tr>
+        </table>
+        <div class="src">📋 出租率/租户集中度来源：1H2026 Business Update（SGX 公告 2026-08-04）；地域占比按 gross revenue</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="full-row">
+  <div class="card">
+    <h3>💰 DPU 分析与派息能力</h3>
+    <div id="chart-dpu" class="chart-box"></div>
+    <table class="data-table" style="margin-top:12px;">
+      <tr><th>指标</th><th>1H2026</th><th>1H2025</th><th>变化</th></tr>
+      <tr><td>总营收</td><td>S$77.08m</td><td>S$78.31m</td><td class="neg">-1.6%</td></tr>
+      <tr><td>净物业收入 NPI</td><td>S$72.36m</td><td>S$73.84m</td><td class="neg">-2.0%</td></tr>
+      <tr><td>可分配收入</td><td>S$57.24m</td><td>S$49.92m</td><td class="pos">+14.6%</td></tr>
+      <tr><td>DPU</td><td class="pos">8.77¢</td><td>7.65¢</td><td class="pos">+14.6%</td></tr>
+      <tr><td>EPU</td><td>8.12¢</td><td>6.22¢</td><td class="pos">+30.5%</td></tr>
+    </table>
+    <p style="font-size:12px; color:#666; margin-top:10px;">
+      💡 <strong>为何营收降而 DPU 增？</strong>主因新加坡医院 CPI 挂钩租约 FY2026 上调 <strong>+24.3%</strong>（最低租金升至 S$99.1m），叠加法国组合租约 step-up 与前年已计提税项的消除；日本养老院处置（JPY1,165.5m，溢价 38%）带来 S$0.6m 收益。另 Q1 新加坡 revenue sharing S$0.8m 将在 2H 派发。
+    </p>
+    <p style="font-size:12px; color:#666; margin-top:6px;">
+      📊 <strong>分派收益率 4.27% vs 10Y SGS 2.29% = 利差 ~2.0pp。</strong>医疗 REIT 顶级质量的溢价合理，但绝对收益率对"收息型"投资者吸引力一般（行业平均 5.5-6.5%）。
+    </p>
+    <div class="src">财务数据来源：1H2026 Business Update（SGX 公告）；DPU 历史为年化值；10Y SGS ~2.29%（OCBC DTO 2026-08-06）</div>
+  </div>
+</div>
+
+<div class="full-row">
+  <div class="card">
+    <h3>🏦 资产负债结构</h3>
+    <table class="data-table">
+      <tr><th>指标</th><th>数值</th><th>巴菲特标准</th><th>判断</th></tr>
+      <tr><td>Gearing（负债/总资产）</td><td>33.8%</td><td>&lt; 50%（MAS）</td><td class="pos">✅ 安全，距 45% 上限 S$542.5m 空间</td></tr>
+      <tr><td>ICR 利息覆盖率</td><td>8.2×</td><td>&gt; 5×</td><td class="pos">✅ 卓越</td></tr>
+      <tr><td>综合融资成本</td><td>1.67%</td><td>越低越好</td><td class="pos">✅ 极优</td></tr>
+      <tr><td>利率对冲比例</td><td>96%</td><td>&gt; 80%</td><td class="pos">✅ 充分</td></tr>
+      <tr><td>债务再融资</td><td>无长期再融资需求至 2027-03</td><td>需有缓冲</td><td class="pos">✅ 到期错峰</td></tr>
+      <tr><td>现金</td><td>S$58.5m</td><td>流动性缓冲</td><td class="pos">✅ 充足（2025 年末 47.8m）</td></tr>
+    </table>
+    <p style="font-size:12px; color:#666; margin-top:10px;">
+      💡 1.67% 的综合融资成本在全球 REIT 中属于顶级水平——医疗资产抵押 + IHH 信用背书 + 绿色/社会金融框架。利率敏感度：96% 已对冲，降息周期中若再融资，成本有望进一步下移。
+    </p>
+    <div class="src">📋 来源：1H2026 Business Update + FY2025 年报</div>
+  </div>
+</div>
+
+<div class="full-row">
+  <div class="card">
+    <h3>📋 经营健康度</h3>
+    <table class="data-table">
+      <tr><th>指标</th><th>数值</th><th>评价</th></tr>
+      <tr><td>新加坡出租率</td><td>100%</td><td class="pos">满租，长期总租约</td></tr>
+      <tr><td>法国出租率</td><td>100%</td><td class="pos">满租</td></tr>
+      <tr><td>日本出租率</td><td>94.3% 📋</td><td class="neutral">5 处 Miyako 物业空置（租户退出）</td></tr>
+      <tr><td>新加坡医院最低租金 FY2026</td><td>S$99.1m（+24.3%）</td><td class="pos">CPI 挂钩，另有 revenue sharing 上行</td></tr>
+      <tr><td>租约到期分布</td><td>未来 5 年单年 ≤3.0%</td><td class="pos">结构性低扰动</td></tr>
+    </table>
+    <div class="src">📋 来源：1H2026 Business Update（SGX 公告 2026-08-04）</div>
+  </div>
+</div>
+
+<div class="full-row">
+  <div class="card">
+    <h3>🎯 六维评分（巴菲特框架 REIT 适配）</h3>
+    <table class="data-table">
+      <tr><th>维度</th><th>评分</th><th>REIT 对应</th><th>依据</th></tr>
+      <tr><td>1. 可理解的业务</td><td><span class="tag tag-c">95</span></td><td>物业类型简单度</td><td>持有医院/养老院收租，一张纸讲得清</td></tr>
+      <tr><td>2. 持久竞争优势</td><td><span class="tag tag-c">92</span></td><td>区位/品牌/规模/保荐人</td><td>新加坡三大私立医院实质垄断 + WALE 14.64 年 + IHH 集团绑定</td></tr>
+      <tr><td>3. 盈利质量</td><td><span class="tag tag-b">85</span></td><td>DPU 覆盖率 / NPI 增速</td><td>DPU +14.6% 但营收 -1.6%（日元/日本租户）；增长靠租约跳涨非内增</td></tr>
+      <tr><td>4. 投资回报</td><td><span class="tag tag-b">78</span></td><td>隐含 cap rate / ROA</td><td>医疗 REIT 回报稳定但偏低，NAV 2.57 对应收益率中等</td></tr>
+      <tr><td>5. 财务结构</td><td><span class="tag tag-c">95</span></td><td>Gearing / ICR</td><td>33.8% / 8.2x / 1.67% 成本 / 96% 对冲——顶级稳健</td></tr>
+      <tr><td>6. 合理价格</td><td><span class="tag tag-b">68</span></td><td>NAV 折溢价 / 利差</td><td>PB 1.60 低于 5 年均 1.7 但非折价；利差 2.0pp 一般，不便宜</td></tr>
+    </table>
+    <p style="font-size:12px;color:#666;margin-top:10px;"><strong>加权综合评分 ≈ 85 / 100</strong>（权重 25/20/20/15/10/10）—— 评级：<span class="tag tag-c">可分批布局</span>。巴菲特式定性：这是"REIT 世界的可口可乐"，唯一短板是价格。</p>
+  </div>
+</div>
+
+<div class="full-row">
+  <div class="card">
+    <h3>📐 估值与安全边际</h3>
+    <div class="row-2" style="margin-bottom:0;">
+      <div>
+        <table class="data-table">
+          <tr><th>指标</th><th>数值</th><th>评价</th></tr>
+          <tr><td>P/NAV</td><td>1.60×</td><td>5 年均 1.7×，小幅折价但非便宜</td></tr>
+          <tr><td>分派收益率</td><td>4.27%</td><td>行业 5.5-6.5%，偏低</td></tr>
+          <tr><td>10Y SGS</td><td>2.29%</td><td>利差 ~2.0pp</td></tr>
+          <tr><td>Morningstar 公允价值</td><td>S$4.22–4.34</td><td class="pos">高于现价 3–6%</td></tr>
+          <tr><td>有吸引入场位</td><td>PB 1.2–1.3×（约 S$3.1–3.4）</td><td class="neutral">历史折价区</td></tr>
+        </table>
+        <div class="src">Morningstar Quantitative Rating（2026-06）；历史 PB 区间参考 SG Investors</div>
+      </div>
+      <div id="chart-yield" class="chart-box" style="height:280px;"></div>
+    </div>
+  </div>
+</div>
+
+<div class="full-row">
+  <div class="card">
+    <h3>👔 管理层与保荐人</h3>
+    <table class="data-table">
+      <tr><th>维度</th><th>内容</th></tr>
+      <tr><td>经理人</td><td>Parkway Trust Management Ltd（IHH Healthcare 旗下），CEO Yong Yean Chau</td></tr>
+      <tr><td>保荐人</td><td>IHH Healthcare（亚洲最大私立医疗集团）——潜在资产注入池与租约绑定方</td></tr>
+      <tr><td>资本纪律</td><td>2026 年处置日本养老院（溢价 38% 于成本），持续资本循环；10 年社会贷款 + 绿色债券框架</td></tr>
+    </table>
+    <div class="src">📋 来源：年报 Corporate Governance 章节 + 公告</div>
+  </div>
+</div>
+
+<div class="alert-box">
+  <h3>⚠️ 核心风险</h3>
+  <p>① <strong>价格不便宜</strong>：PB 1.60、收益率 4.27%——安全边际有限，回调至 PB 1.3× 更佳</p>
+  <p>② <strong>日元/日本运营</strong>：日元贬值 + 5 处养老院空置，日本收入持续承压</p>
+  <p>③ <strong>租户集中</strong>：Top10 占租金 ~91%，实质绑定 IHH——保荐人信用即风险敞口</p>
+  <p>④ <strong>REIT 结构限制复利</strong>：90% 收入强制分派，增长靠并购/处置，无法"利润再投资"</p>
+</div>
+
+<div class="full-row">
+  <div class="card">
+    <h3>📌 决策清单与监控指标</h3>
+    <ul class="checklist">
+      <li>已持有：底仓可留，享受 DPU +14.6% 确定性派息</li>
+      <li>空仓者：可小仓位建立观察仓，PB ≤1.4×（S$3.6 附近）分批加仓</li>
+      <li>监控 ①：日本出租率能否回升（Miyako 空置去化）</li>
+      <li>监控 ②：S$ 兑 JPY/EUR 汇率（部分已对冲至 2029/30）</li>
+      <li>监控 ③：新加坡医院 revenue sharing 全年结算是否如期派发（2H 预期 S$0.8m+）</li>
+      <li>卖出触发：DPU 覆盖率 &lt;100%、Gearing 升破 40%、IHH 信用事件</li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">百汇生命产业信托（C2PU.SI）巴菲特研报 v2 · 数据截至 2026-08-17</div>
+<div class="disclaimer">
+  本报告基于公开数据（yfinance + 1H2026 Business Update / FY2025 年报）与量化分析，仅供参考，不构成投资建议。新加坡交易所数据为延迟报价。市场有风险，投资需谨慎。任何投资决策应结合个人风险承受能力独立判断，必要时咨询持牌专业机构。
+</div>
+
+</div>
+
+<script>
+// ===== 1. 地域收入分布 =====
+var chartRegion = echarts.init(document.getElementById('chart-region'));
+chartRegion.setOption({
+  tooltip: { trigger: 'item', formatter: '{b}: {c}%' },
+  title: { text: '收入地域分布（1H2026）', left: 'center', textStyle: { fontSize: 13 } },
+  series: [{
+    type: 'pie', radius: ['35%', '65%'], center: ['50%', '55%'],
+    label: { formatter: '{b}\n{d}%', fontSize: 11 },
+    data: [
+      { name: '新加坡', value: 68, itemStyle: { color: '#d8363a' } },
+      { name: '日本', value: 22, itemStyle: { color: '#3366cc' } },
+      { name: '法国', value: 10, itemStyle: { color: '#19a974' } }
+    ]
+  }]
+});
+
+// ===== 2. DPU 趋势 =====
+var chartDpu = echarts.init(document.getElementById('chart-dpu'));
+chartDpu.setOption({
+  tooltip: { trigger: 'axis' },
+  legend: { data: ['年化 DPU（¢）'], top: 0 },
+  grid: { left: 55, right: 20, top: 40, bottom: 30 },
+  xAxis: { type: 'category', data: ['FY2021', 'FY2022', 'FY2023', 'FY2024', 'FY2025', 'FY2026E'], axisLabel: { fontSize: 11 } },
+  yAxis: { type: 'value', name: '¢ / 单位', min: 12, nameTextStyle: { fontSize: 10 } },
+  series: [{
+    name: '年化 DPU（¢）', type: 'bar',
+    data: [
+      { value: 13.80, itemStyle: { color: '#3366cc' } },
+      { value: 14.20, itemStyle: { color: '#3366cc' } },
+      { value: 14.55, itemStyle: { color: '#3366cc' } },
+      { value: 14.92, itemStyle: { color: '#3366cc' } },
+      { value: 15.29, itemStyle: { color: '#3366cc' } },
+      { value: 17.54, itemStyle: { color: '#d8363a' } }
+    ],
+    barMaxWidth: 42,
+    label: { show: true, position: 'top', formatter: '{c}', fontSize: 11, fontWeight: 600 }
+  }],
+  graphic: [
+    {
+      type: 'text', left: 'center', top: 64,
+      style: { text: 'FY2026E 年化 +14.7%（1H 8.77¢ ×2）', fill: '#d8363a', fontSize: 12, fontWeight: 'bold' },
+      z: 100
+    }
+  ]
+});
+
+// ===== 3. 分派收益率 vs 10Y SGS =====
+var chartYield = echarts.init(document.getElementById('chart-yield'));
+chartYield.setOption({
+  tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+  title: { text: '分派收益率 vs 10Y SGS', left: 'center', textStyle: { fontSize: 13 } },
+  grid: { left: 55, right: 20, top: 45, bottom: 30 },
+  xAxis: { type: 'category', data: ['C2PU 分派收益率', 'S-REIT 行业均值', '10Y SGS'], axisLabel: { fontSize: 11 } },
+  yAxis: { type: 'value', name: '%', nameTextStyle: { fontSize: 10 } },
+  series: [{
+    type: 'bar',
+    data: [
+      { value: 4.27, itemStyle: { color: '#3366cc' } },
+      { value: 5.90, itemStyle: { color: '#8b8fa3' } },
+      { value: 2.29, itemStyle: { color: '#f5a623' } }
+    ],
+    barMaxWidth: 46,
+    label: { show: true, position: 'top', formatter: '{c}%', fontSize: 11, fontWeight: 600 }
+  }]
+});
+
+window.addEventListener('resize', function() {
+  chartRegion.resize();
+  chartDpu.resize();
+  chartYield.resize();
+});
+</script>
+</body>
+</html>

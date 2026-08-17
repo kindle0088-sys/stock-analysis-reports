@@ -97,13 +97,20 @@ body {
 <body>
 <div class="container">
 
+<div class="version-switcher">
+  <span class="vs-label">📑 版本切换</span>
+  <a class="vs-tab active" href="parkwaylife-buffett-analysis-20260726.html">v1 · 2026-07-26 · 当前</a>
+  <a class="vs-tab" href="parkwaylife-buffett-analysis-20260817.html">v2 · 2026-08-17</a>
+  <span class="vs-note">v2 迭代：1H2026 财报 + REIT 专属模板</span>
+</div>
+
 <div class="report-header">
-  <h1>百汇生命产业信托（C2PU）· 巴菲特价值投资分析</h1>
+  <h1>百汇生命产业信托（C2PU）· 巴菲特价值投资分析 <span class="version-tag">v1</span></h1>
   <div class="subtitle">基于巴菲特六维价值投资框架，结合 FY2025 年报与最新市场数据</div>
   <div class="meta">
     <span><span class="badge">📅</span> 2026-07-26</span>
     <span><span class="badge">🏢</span> 医疗保健 REIT · 新加坡交易所</span>
-    <span><span class="badge">💰</span> 新加坡元（SGD）</span>
+    <span><span class="badge">💱</span> 基准货币：SGD（新加坡元）</span>
     <span><span class="badge">🔖</span> C2PU.SI / SGX</span>
   </div>
 </div>
@@ -200,12 +207,12 @@ body {
     <p style="font-size:12px; color:#888; margin-top:10px;">管理人为 Parkway Trust Management Limited，由 Parkway Holdings（IHH Healthcare 旗下）控股。</p>
   </div>
   <div class="card">
-    <h3>📋 ���理层评估</h3>
+    <h3>📋 管理层评估</h3>
     <p style="font-size:13px; color:#444; margin-bottom:10px;"><strong>✅ 优势：</strong></p>
     <ul style="font-size:13px; color:#444; padding-left:18px; margin-bottom:10px;">
       <li>连续 18 年 DPU 增长——执行力和稳定性验证</li>
       <li>资本配置纪律严格：2025 年果断出售马来西亚资产，回笼资金</li>
-      <li>风险管理出色：93% 利率对���、日元欧元收入全额对冲</li>
+      <li>风险管理出色：93% 利率对冲、日元欧元收入全额对冲</li>
       <li>股东利益导向：持续优化资本结构，降低融资成本</li>
     </ul>
     <p style="font-size:13px; color:#444; margin-bottom:10px;"><strong>⚠️ 关注点：</strong></p>
@@ -489,7 +496,7 @@ body {
 </div>
 
 <div class="disclaimer">
-  <strong>⚠️ 免责��明：</strong>本报告基于公开市场数据生成，仅供学习与研究参考，不构成任何投资建议。数据来源包括 Morningstar、Yahoo Finance、ShareInvestor、公司 FY2025 年报（2026年2月发布）及公司公告。新加坡交易所（SGX）数据为延迟报价。巴菲特价值投资框架为定性分析方法，实际投资决策请咨询持牌机构。投资有风险，入市需谨慎。
+  <strong>⚠️ 免责声明：</strong>本报告基于公开市场数据生成，仅供学习与研究参考，不构成任何投资建议。数据来源包括 Morningstar、Yahoo Finance、ShareInvestor、公司 FY2025 年报（2026年2月发布）及公司公告。新加坡交易所（SGX）数据为延迟报价。巴菲特价值投资框架为定性分析方法，实际投资决策请咨询持牌机构。投资有风险，入市需谨慎。
 </div>
 
 </div>
@@ -534,7 +541,7 @@ regionChart.setOption({
     data: [
       { value: 65, name: '新加坡', itemStyle: { color: '#d8363a' } },
       { value: 25, name: '日本', itemStyle: { color: '#3366cc' } },
-      { value: 10, name: '法���', itemStyle: { color: '#19a974' } }
+      { value: 10, name: '法国', itemStyle: { color: '#19a974' } }
     ],
     emphasis: { itemStyle: { shadowBlur: 10, shadowColor: 'rgba(0,0,0,0.2)' } }
   }]
