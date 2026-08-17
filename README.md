@@ -13,6 +13,7 @@
 | 小米 (Xiaomi) | 2026-07-26 | [`reports/xiaomi/buffett-analysis-20260726.html`](reports/xiaomi/buffett-analysis-20260726.html) |
 | 百汇生命产业信托 (ParkwayLife REIT) | 2026-08-17 | [`reports/parkwaylife/parkwaylife-buffett-analysis-20260817.html`](reports/parkwaylife/parkwaylife-buffett-analysis-20260817.html)（v2 · 1H2026 财报 + REIT 专属模板）|
 | 凯德综合商业信托 (CICT) | 2026-08-17 | [`reports/cict/cict-buffett-analysis-20260817.html`](reports/cict/cict-buffett-analysis-20260817.html)（v1 · 1H2026 财报）|
+| 丰树工业信托 (MIT) | 2026-08-17 | [`reports/mit/mit-buffett-analysis-20260817.html`](reports/mit/mit-buffett-analysis-20260817.html)（v1 · 1QFY27 财报）|
 
 ## 目录结构
 
