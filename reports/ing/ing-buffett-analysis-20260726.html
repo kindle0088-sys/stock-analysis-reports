@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>荷兰国际集团 · 巴菲特价值投资分析 | 2026-07-26</title>
+<title>荷兰国际集团 · 巴菲特价值投资分析 v1 | 2026-07-26</title>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -15,6 +15,22 @@ body {
   padding: 24px;
 }
 .container { max-width: 960px; margin: 0 auto; }
+
+.version-switcher {
+  display: flex; align-items: center; gap: 10px;
+  background: #fff; border-radius: 12px; padding: 10px 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04); margin-bottom: 16px; flex-wrap: wrap;
+}
+.vs-label { font-size: 13px; font-weight: 600; color: #555; margin-right: 4px; }
+.vs-tab {
+  display: inline-block; padding: 4px 14px; border-radius: 20px;
+  font-size: 12px; font-weight: 600; text-decoration: none;
+  background: #f0f2f5; color: #666;
+}
+.vs-tab:hover { background: #e2e8f0; }
+.vs-tab.active { background: #1a1a2e; color: #fff; }
+.vs-note { font-size: 11px; color: #999; margin-left: auto; }
+
 .report-header {
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
   color: #fff;
@@ -29,6 +45,12 @@ body {
   display: inline-block; background: rgba(255,255,255,0.12);
   padding: 2px 10px; border-radius: 6px; margin-right: 6px;
 }
+.version-tag {
+  display: inline-block; background: #8b8fa3; color: #fff;
+  font-weight: 700; font-size: 12px; padding: 2px 10px; border-radius: 6px;
+  margin-left: 10px; vertical-align: middle;
+}
+
 .metrics-grid {
   display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px;
 }
@@ -50,6 +72,8 @@ body {
 }
 .card h3 { font-size: 14px; font-weight: 600; color: #555; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
 .chart-box { width: 100%; height: 340px; }
+.src { font-size: 11px; color: #999; margin-top: 8px; }
+
 .verdict-box {
   background: #fff; border-radius: 12px; padding: 24px;
   border-left: 4px solid #3b82f6;
@@ -61,6 +85,19 @@ body {
 .verdict-content p { font-size: 13px; color: #444; margin-bottom: 4px; }
 .verdict-content p strong { color: #1a1a2e; }
 .verdict-final { margin-top: 10px !important; font-weight: 600; color: #3b82f6 !important; padding-top: 8px; border-top: 1px solid #eee; }
+.verdict-vs { margin-top: 12px !important; font-size: 12px !important; color: #888 !important; padding: 10px; background: #f8fafc; border-radius: 8px; }
+.verdict-vs strong { color: #555; }
+
+.alert-box {
+  background: #fff8e6; border: 1px solid #f5d78e; border-radius: 12px; padding: 18px 20px; margin-bottom: 20px;
+}
+.alert-box h3 { font-size: 14px; font-weight: 700; color: #b57f0a; margin-bottom: 8px; }
+.alert-box p { font-size: 13px; color: #6b5310; }
+
+.score-bar { background: #f0f2f5; border-radius: 8px; height: 10px; overflow: hidden; margin-top: 4px; }
+.score-bar .fill { height: 100%; border-radius: 8px; }
+.score-dim { margin-bottom: 12px; }
+
 .data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
 .data-table th { background: #f0f2f5; padding: 8px 10px; text-align: left; font-weight: 600; color: #555; }
 .data-table td { padding: 8px 10px; border-bottom: 1px solid #f0f2f5; }
@@ -68,32 +105,63 @@ body {
 .data-table .pos { color: #d8363a; }
 .data-table .neg { color: #19a974; }
 .data-table .neutral { color: #f5a623; }
+.risk-box td:first-child { font-weight: 600; }
+
 .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
 .tag-a { background: #ffe8e8; color: #d8363a; }
 .tag-b { background: #fff3e0; color: #e67e22; }
 .tag-c { background: #e8f5e9; color: #27ae60; }
+.tag-d { background: #e3f2fd; color: #1565c0; }
+
+.checklist { list-style: none; }
+.checklist li { font-size: 13px; color: #444; padding: 6px 0 6px 24px; position: relative; border-bottom: 1px dashed #f0f2f5; }
+.checklist li:last-child { border-bottom: none; }
+.checklist li:before { content: "☐"; position: absolute; left: 0; color: #888; }
+
 .footer { text-align: center; font-size: 12px; color: #aaa; padding: 20px 0; }
+.disclaimer { font-size: 11px; color: #999; text-align: center; padding: 12px 20px; border-top: 1px solid #eee; margin-top: 8px; }
+
 @media (max-width: 700px) {
   .metrics-grid { grid-template-columns: repeat(2, 1fr); }
   .row-2 { grid-template-columns: 1fr; }
 }
-.risk-box td:first-child { font-weight: 600; }
-.text-muted { font-size: 11px; color: #999; }
-.tag-d { background: #e3f2fd; color: #1565c0; }
 </style>
 </head>
 <body>
 <div class="container">
 
-<!-- Report Header -->
+<div class="version-switcher">
+  <span class="vs-label">📑 版本切换</span>
+  <a class="vs-tab active" href="ing-buffett-analysis-20260726.html">v1 · 2026-07-26 · 当前</a>
+  <a class="vs-tab" href="ing-buffett-analysis-20260819.html">v2 · 2026-08-19</a>
+  <span class="vs-note">v1 基线：2025 年报 + 2026 Q1</span>
+</div>
+
 <div class="report-header">
-  <h1>🏦 荷兰国际集团 · 巴菲特价值投资分析</h1>
-  <div class="subtitle">基于巴菲特的六维框架：护城河 · ROE · 现金流 · 估值 · 管理层 · 安全边际</div>
+  <h1>🏦 荷兰国际集团 · 巴菲特价值投资分析 <span class="version-tag">v1</span></h1>
+  <div class="subtitle">基于 2025 年报与 2026 Q1 · 六维框架：护城河 · 盈利质量 · 现金流 · 估值 · 管理层 · 安全边际</div>
   <div class="meta">
     <span>📅 2026-07-26</span>
-    <span>🏷️ <span class="badge">usING.N</span> ING Group (ADR)</span>
-    <span>📊 现价 USD 32.83</span>
+    <span>🏷️ <span class="badge">INGA.AS</span> ING Groep N.V.（阿姆斯特丹主上市）</span>
+    <span>📊 现价 ≈EUR 29</span>
+    <span>💱 基准货币：EUR（欧元）</span>
+    <span>📡 财报 2026-04-30 (Q1) · 行情 2026-07-24</span>
     <span>🐾 巴迪出品</span>
+  </div>
+</div>
+
+<!-- TL;DR 结论 -->
+<div class="verdict-box">
+  <div class="verdict-icon">🏦</div>
+  <div class="verdict-content">
+    <h3>巴迪的巴菲特式结论（v1 · 2026-07-26）</h3>
+    <p><strong>生意质量：<span class="tag tag-b">B+</span></strong> — 荷兰/比利时/德国零售银行有区域护城河 + 欧洲数字银行领先，2025 年移动主力客户 1540 万（+100 万）</p>
+    <p><strong>盈利质量：<span class="tag tag-b">B</span></strong> — ROE 13.2%、ROTE 13.6%，接近但未达巴菲特 15% 门槛</p>
+    <p><strong>管理层：<span class="tag tag-b">B+</span></strong> — 成功完成数字转型，风险管控稳健，2026 指引 ROTE &gt;14%</p>
+    <p><strong>估值：<span class="tag tag-b">B+</span></strong> — PE ≈13×、PB ≈1.7× 对欧洲银行合理，股息率 ≈4.1% 有吸引力</p>
+    <p><strong>确定性：<span class="tag tag-b">B</span></strong> — 欧洲低利率环境改善 + 存款粘性强，但 ECB 政策走向与宏观不确定性存在</p>
+    <p class="verdict-final">→ 巴菲特框架下：<b>欧洲银行龙头，有分红，估值合理；但 ROE 未达 15% 门槛，且欧洲银行并非他传统"能力圈"</b>——属于"可关注、等待盈利质量进一步验证"的状态，核心盯 ROTE 能否在 2026 站上 14-15%</p>
+    <p class="verdict-vs"><strong>与 v2 对比（2026-08-19）：</strong>本版本基于 2025 年报与 Q1 数据，评分 74。2Q2026 财报（7/30 发布）后 ROTE 跃升至 17%、2026 指引上调至 &gt;15%，v2 已相应上调盈利质量评分。行情与数据均以欧元为基准（v1 曾误标美元 ADR，已在本版统一修正）。</p>
   </div>
 </div>
 
@@ -101,156 +169,235 @@ body {
 <div class="metrics-grid">
   <div class="metric-card">
     <div class="label">PE (TTM)</div>
-    <div class="value green">13.04×</div>
-    <div class="sub">欧洲银行合理偏低</div>
+    <div class="value orange">≈13×</div>
+    <div class="sub">欧洲银行合理区间</div>
   </div>
   <div class="metric-card">
     <div class="label">ROE (2025)</div>
-    <div class="value orange">12.96%</div>
+    <div class="value orange">13.2%</div>
     <div class="sub">接近 15% 门槛，中等</div>
   </div>
   <div class="metric-card">
-    <div class="label">股息率</div>
-    <div class="value red">3.28%</div>
-    <div class="sub">巴菲特喜欢有分红的银行</div>
+    <div class="label">ROTE (2025)</div>
+    <div class="value orange">13.6%</div>
+    <div class="sub">2026 指引 &gt;14%</div>
   </div>
   <div class="metric-card">
-    <div class="label">YTD 涨幅</div>
-    <div class="value red">+21.86%</div>
-    <div class="sub">接近 52 周高点</div>
+    <div class="label">2025 净利润</div>
+    <div class="value red">€63.27 亿</div>
+    <div class="sub">创纪录 · 同比 +7%</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">股息率 (TTM)</div>
+    <div class="value red">≈4.1%</div>
+    <div class="sub">末期股息 €0.736/股</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">CET1 资本充足率</div>
+    <div class="value green">13.1%</div>
+    <div class="sub">目标区间 12.5%-13.5%</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">市值</div>
+    <div class="value">≈€82B</div>
+    <div class="sub">总股本 28.6 亿股</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">移动主力客户</div>
+    <div class="value red">1540 万</div>
+    <div class="sub">2025 年 +100 万 · 持续扩张</div>
   </div>
 </div>
 
-<!-- Verdict -->
-<div class="verdict-box">
-  <div class="verdict-icon">🏦</div>
-  <div class="verdict-content">
-    <h3>巴迪的巴菲特式投资结论</h3>
-    <p><strong>生意质量：<span class="tag tag-b">B+</span></strong> — 荷兰/比利时零售银行有区域护城河 + 欧洲数字银行领先，但银行业本身是强周期高杠杆生意</p>
-    <p><strong>管理层：<span class="tag tag-b">B+</span></strong> — 成功完成数字转型，风险管控稳健，但创始人不掌舵（央企风格）</p>
-    <p><strong>估值：<span class="tag tag-b">B+</span></strong> — PE 13×、PB 1.6× 对欧洲银行合理，3.28% 股息率有吸引力</p>
-    <p><strong>确定性：<span class="tag tag-b">B</span></strong> — 欧洲低利率环境改善 + 存款粘性强，但 ECB 政策走向和宏观不确定性存在</p>
-    <p class="verdict-final">→ 巴菲特的框架下：欧洲银行龙头，有分红，估值合理；但 ROE 未达 15% 门槛，且欧洲银行非他传统"能力圈"</p>
-  </div>
-</div>
-
-<!-- Chart 1: Revenue & Net Profit -->
+<!-- 财报核心解读 -->
 <div class="full-row">
 <div class="card">
-  <h3>📈 营业收入与归母净利润趋势</h3>
-  <div id="chart1" class="chart-box"></div>
+  <h3>📋 2025 年报与 2026 Q1 核心解读（一手来源：ING 官方业绩公告）</h3>
+  <p><strong>2025 全年（2026-01-29 发布）：</strong>净利润 €63.27 亿（+7%，创纪录）、税前利润 €91.48 亿，总收入 €230 亿。手续费收入 €46 亿（+15%）是主要增长引擎，商业净利息收入 €153 亿。ROE 13.2%、ROTE 13.6%，CET1 13.1%。净核心贷款 +€569 亿（+8%）、存款 +€381 亿（+6%）。提出末期股息 €0.736/股。</p>
+  <p style="margin-top:8px;"><strong>2026 Q1（2026-04-30 发布）：</strong>总收入 €58.23 亿、净利润 €15.56 亿，四季度滚动 ROTE 13.6%。管理层确认 2026 指引：总收入约 €240 亿、ROTE &gt;14%；并将 2027 目标上调至总收入 &gt;€250 亿、ROTE &gt;15%。</p>
+  <p style="margin-top:8px;"><strong>巴菲特视角点评：</strong>2025 年 ROE 13.2% 相比 2023 年峰值 14.8% 回落，主要受利率见顶 + 风险成本正常化影响；但客户基础与手续费收入持续扩张，证明"生意本身"在变好。Q1 的 ROTE 13.6% 持平，尚缺一根"盈利加速"的阳线——这正是 v1 保持"合理关注"而非"强推"的原因。</p>
+  <div class="src">来源：ING FY2025 press release (2026-01-29)；ING 1Q2026 press release (2026-04-30)；Google Finance 行情 (2026-07-24)。</div>
 </div>
 </div>
 
-<!-- Row 2: Two charts side by side -->
+<!-- 观察提示 -->
+<div class="full-row">
+<div class="alert-box">
+  <h3>👀 v1 关注点：ROTE 能否站上 15%？</h3>
+  <p>巴菲特买银行的核心前提是 <strong>ROE/ROTE 持续 ≥15%</strong>（如富国银行黄金年代）。ING 2023 年曾达 14.8%（利率高峰），2024-2025 回落至 13%。2026 指引 ROTE &gt;14%、2027 &gt;15%，但能否兑现取决于三点：① 手续费收入增速能否维持 15%（AUM 扩张）；② 净息差在 ECB 降息下能否稳住；③ 风险成本能否保持低位。若 2026 年 ROTE 站上 15%，估值逻辑将上修；反之则维持"合理银行"定价。这是 v1 阶段最需要跟踪的指标。</p>
+</div>
+</div>
+
+<!-- 图表区 -->
+<div class="full-row">
+<div class="card">
+  <h3>📈 总收入与净利润趋势（欧元）</h3>
+  <div id="chart1" class="chart-box"></div>
+  <div class="src">数据：ING 官方业绩公告。2022 为估算值；2026Q1 为单季，与全年不可直接比较。</div>
+</div>
+</div>
+
 <div class="row-2">
   <div class="card">
     <h3>🧩 收入结构（2025）</h3>
     <div id="chart2" class="chart-box" style="height:300px;"></div>
+    <div class="src">来源：ING 2025 年报分部数据（销售收入占比）。</div>
   </div>
   <div class="card">
-    <h3>🛡️ 巴菲特护城河评估</h3>
+    <h3>🛡️ 护城河评估（六维雷达）</h3>
     <div id="chart3" class="chart-box" style="height:300px;"></div>
+    <div class="src">评分：巴迪基于 2025 年报与 Q1 数据。</div>
   </div>
 </div>
 
-<!-- Chart 4: ROE & Margin -->
-<div class="full-row">
-<div class="card">
-  <h3>📊 盈利质量：ROE 与净利润率</h3>
-  <div id="chart4" class="chart-box"></div>
-</div>
-</div>
-
-<!-- Row: Cash Flow + Price Band -->
 <div class="row-2">
   <div class="card">
-    <h3>💰 现金流质量：经营活动现金流 vs 净利润</h3>
-    <div id="chart5" class="chart-box" style="height:300px;"></div>
+    <h3>📊 盈利质量：ROE 趋势</h3>
+    <div id="chart4" class="chart-box" style="height:300px;"></div>
+    <div class="src">2022 为估算值。2023 年峰值 14.8%（利率高峰）后回落至 13.2%。</div>
   </div>
   <div class="card">
-    <h3>🎯 安全边际：52 周价格区间</h3>
-    <div id="chart6" class="chart-box" style="height:300px;"></div>
+    <h3>📱 经营扩张：移动主力客户（百万）</h3>
+    <div id="chart5" class="chart-box" style="height:300px;"></div>
+    <div class="src">数据：ING 官方年报。客户数是巴菲特式"生意扩张"领先指标。</div>
   </div>
 </div>
 
-<!-- Risk Table -->
+<div class="full-row">
+<div class="card">
+  <h3>🎯 安全边际：52 周价格区间（欧元）</h3>
+  <div id="chart6" class="chart-box"></div>
+  <div class="src">行情来源：Google Finance (2026-07-24)，约为 EUR 29.0。52 周区间约 €19.3-30.7（财报前高点，8 月 2Q 财报后刷新）。</div>
+</div>
+</div>
+
+<!-- 六维评分 -->
+<div class="row-2">
+  <div class="card">
+    <h3>🧮 巴菲特六维评分（v1）</h3>
+    <div class="score-dim">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#666;"><span>护城河 <span style="color:#aaa;">(25%)</span></span><span>80</span></div>
+      <div class="score-bar"><div class="fill" style="width:80%;background:#5b8ff9;"></div></div>
+    </div>
+    <div class="score-dim">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#666;"><span>盈利质量 <span style="color:#aaa;">(20%)</span></span><span>72</span></div>
+      <div class="score-bar"><div class="fill" style="width:72%;background:#d8363a;"></div></div>
+    </div>
+    <div class="score-dim">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#666;"><span>估值 / 安全边际 <span style="color:#aaa;">(20%)</span></span><span>75</span></div>
+      <div class="score-bar"><div class="fill" style="width:75%;background:#f5a623;"></div></div>
+    </div>
+    <div class="score-dim">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#666;"><span>管理层 / 资本配置 <span style="color:#aaa;">(15%)</span></span><span>75</span></div>
+      <div class="score-bar"><div class="fill" style="width:75%;background:#9254de;"></div></div>
+    </div>
+    <div class="score-dim">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#666;"><span>现金流 <span style="color:#aaa;">(10%)</span></span><span>68</span></div>
+      <div class="score-bar"><div class="fill" style="width:68%;background:#ff6b6b;"></div></div>
+    </div>
+    <div class="score-dim">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#666;"><span>确定性 / 风险 <span style="color:#aaa;">(10%)</span></span><span>65</span></div>
+      <div class="score-bar"><div class="fill" style="width:65%;background:#19a974;"></div></div>
+    </div>
+    <p style="font-size:12px;color:#666;margin-top:10px;"><strong>加权综合评分 74 / 100</strong>（v2：76）—— 盈利质量与确定性待 2Q2026 财报验证后上调。评级：<span class="tag tag-b">合理关注</span></p>
+  </div>
+  <div class="card">
+    <h3>👔 管理层与股东回报</h3>
+    <p><strong>Steven van Rijswijk（CEO，ING 25 年老兵）掌舵，管理层稳定。</strong>2025 年连续第三年超额完成移动主力客户目标（+100 万 → 1540 万），战略主线：加速增长 + 收入多元化 + 数字化转型。</p>
+    <p style="margin-top:8px;"><strong>股东回报（巴菲特最看重的资本配置纪律）：</strong></p>
+    <table class="data-table" style="margin-top:8px;">
+      <tr><td style="width:44%;color:#888;">2025 全年股东回报</td><td>€73 亿（股息 + 回购）</td></tr>
+      <tr><td style="width:44%;color:#888;">2025 末期股息</td><td>€0.736 / 股</td></tr>
+      <tr><td style="width:44%;color:#888;">2024 年度股息</td><td>€0.71 末期 + 中期</td></tr>
+      <tr><td style="width:44%;color:#888;">TTM 股息率</td><td>≈4.1%</td></tr>
+    </table>
+    <p style="margin-top:8px;">分红政策：将年利润的约 50% 通过常规股息分配。管理层 1 月表示 2026 年欧洲银行业将迎来并购活跃期，ING 对"universal bank"定位保持开放——需警惕管理层扩张冲动对资本纪律的稀释。</p>
+    <div class="src">来源：ING FY2025 press release · Google Finance (2026-07-24)。</div>
+  </div>
+</div>
+
+<!-- 风险矩阵 -->
 <div class="full-row">
 <div class="card">
   <h3>⚠️ 巴菲特关注的"永久性损失风险"</h3>
-  <table class="data-table risk-box">
-    <tr><th style="width:18%;">风险因素</th><th style="width:14%;">概率</th><th style="width:14%;">影响</th><th>巴迪解读</th></tr>
+  <table class="data-table">
+    <tr><th style="width:20%;">风险因素</th><th style="width:12%;">概率</th><th style="width:12%;">影响</th><th>巴迪解读（v1）</th></tr>
     <tr><td>欧洲利率下行</td><td class="neutral">中</td><td class="pos">大</td><td>ECB 若降息将压缩净息差，ING 核心收入受直接影响</td></tr>
-    <tr><td>经济衰退/坏账激增</td><td class="neutral">中</td><td class="pos">大</td><td>欧洲经济疲软 → 贷款损失增加 → 侵蚀利润</td></tr>
-    <tr><td>监管资本要求</td><td class="pos">高</td><td class="neutral">中</td><td>Basel III 终局规则可能提高资本要求，限制 ROE</td></tr>
-    <tr><td>地缘政治风险</td><td class="neutral">中</td><td class="neutral">中</td><td>土耳其/波兰/乌克兰等业务存在潜在风险</td></tr>
+    <tr><td>经济衰退 / 坏账激增</td><td class="neutral">中</td><td class="pos">大</td><td>欧洲经济疲软 → 贷款损失增加 → 侵蚀利润</td></tr>
+    <tr><td>监管资本要求</td><td class="pos">高</td><td class="neutral">中</td><td>Basel III 终局规则可能提高资本要求，限制 ROE 与分红</td></tr>
+    <tr><td>地缘政治风险</td><td class="neutral">中</td><td class="neutral">中</td><td>土耳其/波兰/乌克兰等业务存在潜在风险（2022 年已大幅压缩俄罗斯敞口）</td></tr>
     <tr><td>竞争加剧</td><td class="neutral">中</td><td class="neg">低</td><td>数字银行竞争 + 大型投行挤压批发业务</td></tr>
   </table>
 </div>
 </div>
 
-<!-- Key Financial Data -->
+<!-- 核心财务数据 -->
 <div class="full-row">
 <div class="card">
-  <h3>📋 核心财务数据（USD）</h3>
+  <h3>📋 核心财务数据（EUR · 欧元）</h3>
   <table class="data-table">
     <tr><th>指标</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th><th>2026 Q1</th></tr>
-    <tr><td>营业收入（亿USD）</td><td>490</td><td>550</td><td>630</td><td class="pos">697</td><td>68.1</td></tr>
-    <tr><td>归母净利（亿USD）</td><td>28</td><td>55</td><td>65</td><td class="pos">71.4</td><td>18.2</td></tr>
-    <tr><td>净利润率</td><td>5.7%</td><td>10.0%</td><td>10.3%</td><td>10.2%</td><td>26.7%</td></tr>
-    <tr><td>ROE</td><td>5.2%</td><td>10.5%</td><td>11.8%</td><td class="orange">13.0%</td><td>13.0%</td></tr>
-    <tr><td>EPS（USD）</td><td>0.89</td><td>1.78</td><td>2.10</td><td class="pos">2.39</td><td>0.63</td></tr>
-    <tr><td>BVPS（USD）</td><td>17.2</td><td>18.4</td><td>19.2</td><td class="pos">20.1</td><td>20.4</td></tr>
+    <tr><td>总收入（亿EUR）</td><td>≈186</td><td>226</td><td>226</td><td class="pos">230</td><td>58.2</td></tr>
+    <tr><td>净利润（亿EUR）</td><td>≈37</td><td>73</td><td>63.9</td><td class="pos">63.3</td><td>15.6</td></tr>
+    <tr><td>净利润率</td><td>≈20%</td><td>32.3%</td><td>28.3%</td><td>27.5%</td><td>26.7%</td></tr>
+    <tr><td>ROE</td><td>≈7%</td><td class="pos">14.8%</td><td>13.0%</td><td class="orange">13.2%</td><td>—</td></tr>
+    <tr><td>ROTE（年化）</td><td>—</td><td>—</td><td>—</td><td>13.6%</td><td>13.6%*</td></tr>
+    <tr><td>EPS（EUR，约值）</td><td>≈1.0</td><td>≈2.1</td><td>≈1.9</td><td>≈2.2</td><td>≈0.54</td></tr>
+    <tr><td>CET1 资本充足率</td><td>—</td><td>—</td><td>13.6%</td><td class="neutral">13.1%</td><td class="neutral">13.1%</td></tr>
   </table>
-  <p class="text-muted" style="margin-top:8px;">2022-2024 基于公开财报估算。ING 财年为自然年（1-12 月）。2026 Q1 净利率较高为季节性因素。</p>
+  <p style="font-size:11px;color:#999;margin-top:8px;">注：2022 为公开资料估算；2026 Q1 为单季值，与全年不可直接比较。*Q1 的 ROTE 为四季度滚动口径。EPS 为净利润/总股本约值。ING 财年为自然年，财报与股价均以欧元为基准。</p>
 </div>
 </div>
 
-<!-- Buffett's Bank Investment Comparison -->
+<!-- 决策清单 -->
 <div class="full-row">
 <div class="card">
-  <h3>⚖️ ING vs 巴菲特持仓银行对比</h3>
-  <table class="data-table">
-    <tr><th>指标</th><th>ING (usING.N)</th><th>美国银行 (BAC)</th><th>富国银行 (WFC)</th><th>巴菲特偏好</th></tr>
-    <tr><td>所在地</td><td>荷兰（欧洲）</td><td>美国</td><td>美国</td><td>偏好美国银行</td></tr>
-    <tr><td>PE</td><td>13.0×</td><td>~13×</td><td>~14×</td><td>均合理</td></tr>
-    <tr><td>ROE</td><td>13.0%</td><td>~14-15%</td><td>~12-13%</td><td>> 15% 理想</td></tr>
-    <tr><td>PB</td><td>1.62×</td><td>~1.2×</td><td>~1.4×</td><td>< 1.5× 更安全</td></tr>
-    <tr><td>股息率</td><td>3.28%</td><td>~2.3%</td><td>~2.6%</td><td>有分红的银行</td></tr>
-    <tr><td>YTD</td><td>+21.9%</td><td>—</td><td>—</td><td>较高，安全边际不足</td></tr>
-  </table>
-  <p class="text-muted" style="margin-top:8px;">BAC/WFC 数据为公开估算，仅供框架性对比参考。</p>
+  <h3>✅ 巴菲特式决策清单</h3>
+  <ul class="checklist">
+    <li><strong>能力圈</strong>：银行的生意是否容易理解？—— 是，商业模式清晰；需理解的是利率周期与监管</li>
+    <li><strong>护城河</strong>：10 年后欧洲零售客户的储蓄与贷款是否还在 ING？—— 大概率在，存款粘性 + 数字银行领先，客户数持续增长</li>
+    <li><strong>盈利质量</strong>：ROE 是否 ≥15%？—— <strong>未达</strong>（13.2%），这是 v1 不重仓的核心原因</li>
+    <li><strong>现金流</strong>：赚的是不是真钱、资本是否充足？—— CET1 13.1% 充足，2025 分红率约 45%</li>
+    <li><strong>管理层</strong>：是否理性配置资本？—— 是，股息 + 回购 + 聚焦主业</li>
+    <li><strong>安全边际</strong>：当前价是否显著低于内在价值？—— PE ≈13× 合理，YTD +18% 后缓冲适中</li>
+  </ul>
+  <p style="margin-top:10px;font-size:13px;"><strong>操作框架（条件化）：</strong>v1 阶段属"观察清单"级别——保持关注，等待两个触发信号：① 2026 年 ROTE 站上 15%（8 月 2Q 财报即可验证）；② 股价回调提供更厚安全边际。任一兑现后重新评估建仓。</p>
 </div>
 </div>
 
 <div class="footer">
-  🐾 巴迪出品 · 数据来源：腾讯自选股 · 本报告不构成投资建议
+  🐾 巴迪出品 · ING v1（2026-07-26，EUR 口径） · 数据来源：ING FY2025 press release (2026-01-29)、ING 1Q2026 press release (2026-04-30)、Google Finance 行情 (2026-07-24) · 分析框架：格雷厄姆-巴菲特-芒格价值投资
+</div>
+
+<div class="disclaimer">
+  <strong>免责声明</strong>：以上内容基于公开数据和量化分析，仅供参考，不构成投资建议。市场有风险，投资需谨慎。任何投资决策应结合个人风险承受能力、资金状况和投资目标独立判断，必要时咨询持牌专业机构。过往表现不预示未来收益。
 </div>
 
 </div>
 
 <script>
-// Chart 1: Revenue & Net Profit
+// Chart 1: Total income & Net result (EUR)
 (function() {
   var c1 = echarts.init(document.getElementById('chart1'));
   c1.setOption({
     tooltip: { trigger: 'axis', axisPointer: { type: 'cross' } },
-    legend: { data: ['营业收入(亿USD)', '归母净利(亿USD)'], top: 0 },
+    legend: { data: ['总收入(亿EUR)', '净利润(亿EUR)'], top: 0 },
     grid: { left: 60, right: 60, bottom: 30, top: 50 },
     xAxis: { type: 'category', data: ['2022', '2023', '2024', '2025', '2026Q1'], axisLabel: { fontWeight: 500 } },
     yAxis: [
-      { type: 'value', name: '营收(亿USD)', axisLabel: { formatter: '{value}' } },
-      { type: 'value', name: '净利(亿USD)', axisLabel: { formatter: '{value}' } }
+      { type: 'value', name: '亿EUR', axisLabel: { formatter: '{value}' } },
+      { type: 'value', name: '亿EUR', axisLabel: { formatter: '{value}' } }
     ],
     series: [
       {
-        name: '营业收入(亿USD)', type: 'bar', data: [490, 550, 630, 697, 68],
+        name: '总收入(亿EUR)', type: 'bar', data: [186, 226, 226, 230, 58],
         itemStyle: { color: '#3b82f6', borderRadius: [4,4,0,0] },
-        barMaxWidth: 50
+        barMaxWidth: 45,
+        label: { show: true, position: 'top', fontSize: 10 }
       },
       {
-        name: '归母净利(亿USD)', type: 'line', yAxisIndex: 1,
-        data: [28, 55, 65, 71.4, 18.2],
+        name: '净利润(亿EUR)', type: 'line', yAxisIndex: 1,
+        data: [37, 73, 63.9, 63.3, 15.6],
         symbol: 'circle', symbolSize: 8,
         lineStyle: { color: '#19a974', width: 3 },
         itemStyle: { color: '#19a974' },
@@ -261,7 +408,7 @@ body {
   });
 })();
 
-// Chart 2: Revenue Segments Pie
+// Chart 2: Revenue Segments Pie (2025)
 (function() {
   var c2 = echarts.init(document.getElementById('chart2'));
   c2.setOption({
@@ -314,84 +461,70 @@ body {
   });
 })();
 
-// Chart 4: ROE & Net Margin
+// Chart 4: ROE trend
 (function() {
   var c4 = echarts.init(document.getElementById('chart4'));
   c4.setOption({
-    tooltip: { trigger: 'axis' },
-    legend: { data: ['ROE(%)', '净利润率(%)'], top: 0 },
-    grid: { left: 60, right: 30, bottom: 30, top: 50 },
+    tooltip: { trigger: 'axis', formatter: function(p) { return p[0].name + '<br/>ROE: ' + p[0].value + '%'; } },
+    grid: { left: 60, right: 30, bottom: 30, top: 30 },
     xAxis: { type: 'category', data: ['2022', '2023', '2024', '2025'] },
     yAxis: { type: 'value', name: '%', min: 0, max: 18 },
     series: [
       {
         name: 'ROE(%)', type: 'bar',
-        data: [5.2, 10.5, 11.8, 13.0],
-        itemStyle: {
-          color: function(p) { return p.value >= 15 ? '#d8363a' : p.value >= 10 ? '#f5a623' : '#19a974'; },
-          borderRadius: [4,4,0,0]
-        },
-        barMaxWidth: 45,
+        data: [
+          { value: 7.3, itemStyle: { color: '#19a974' } },
+          { value: 14.8, itemStyle: { color: '#d8363a' } },
+          { value: 13.0, itemStyle: { color: '#f5a623' } },
+          { value: 13.2, itemStyle: { color: '#f5a623' } }
+        ],
+        barMaxWidth: 50,
         label: { show: true, position: 'top', formatter: '{c}%', fontSize: 11, fontWeight: 600 }
-      },
-      {
-        name: '净利润率(%)', type: 'line',
-        data: [5.7, 10.0, 10.3, 10.2],
-        symbol: 'diamond', symbolSize: 10,
-        lineStyle: { color: '#3b82f6', width: 3 },
-        itemStyle: { color: '#3b82f6' },
-        label: { show: true, position: 'bottom', formatter: '{c}%', fontSize: 11 }
       }
     ]
   });
 })();
 
-// Chart 5: Cash Flow Quality
+// Chart 5: Mobile primary customers
 (function() {
   var c5 = echarts.init(document.getElementById('chart5'));
   c5.setOption({
-    tooltip: { trigger: 'axis' },
-    legend: { data: ['经营活动净现金流(亿USD)', '归母净利润(亿USD)'], top: 0 },
-    grid: { left: 60, right: 20, bottom: 30, top: 50 },
+    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+    grid: { left: 60, right: 20, bottom: 30, top: 30 },
     xAxis: { type: 'category', data: ['2022', '2023', '2024', '2025'] },
-    yAxis: { type: 'value', name: '亿USD' },
+    yAxis: { type: 'value', name: '百万' },
     series: [
       {
-        name: '经营活动净现金流(亿USD)', type: 'bar',
-        data: [85, 92, 105, 115],
+        name: '移动主力客户(百万)', type: 'bar',
+        data: [12.4, 13.3, 14.4, 15.4],
         itemStyle: { color: '#3b82f6', borderRadius: [4,4,0,0] },
-        barMaxWidth: 40
-      },
-      {
-        name: '归母净利润(亿USD)', type: 'bar',
-        data: [28, 55, 65, 71.4],
-        itemStyle: { color: '#f59e0b', borderRadius: [4,4,0,0] },
-        barMaxWidth: 40
+        barMaxWidth: 50,
+        label: { show: true, position: 'top', formatter: '{c}', fontSize: 12, fontWeight: 600 }
       }
     ]
   });
 })();
 
-// Chart 6: 52-week Price Band
+// Chart 6: 52-week Price Band (EUR)
 (function() {
   var c6 = echarts.init(document.getElementById('chart6'));
   c6.setOption({
-    tooltip: { trigger: 'axis', formatter: function(p) { return p[0].name + '<br/>' + p[0].value; } },
+    tooltip: { trigger: 'axis', formatter: function(p) { return p[0].name + '<br/>EUR ' + p[0].value; } },
     grid: { left: 50, right: 20, bottom: 30, top: 20 },
     xAxis: { type: 'category', data: ['52周最低', '现价', '52周最高'], axisTick: { show: false } },
-    yAxis: { type: 'value', name: 'USD', min: 15, max: 40 },
+    yAxis: { type: 'value', name: 'EUR', min: 18, max: 34 },
     series: [
       {
         type: 'bar',
         data: [
-          { value: 21.07, itemStyle: { color: '#19a974' } },
-          { value: 32.83, itemStyle: { color: '#3b82f6' } },
-          { value: 33.46, itemStyle: { color: '#d8363a' } }
+          { value: 19.3, itemStyle: { color: '#19a974' } },
+          { value: 29.0, itemStyle: { color: '#3b82f6' } },
+          { value: 30.7, itemStyle: { color: '#d8363a' } }
         ],
-        barMaxWidth: 50,
+        barMaxWidth: 55,
         label: {
           show: true, position: 'top',
-          formatter: function(p) { return 'USD ' + p.value; },
+          formatter: function(p) { return 'EUR ' + p.value; },
           fontSize: 12, fontWeight: 700
         }
       }
