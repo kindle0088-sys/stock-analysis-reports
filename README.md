@@ -7,7 +7,7 @@
 | 公司 | 最新报告日期 | 文件 |
 |------|------------|------|
 | 阿里巴巴 (Alibaba) | 2026-07-26 | [`reports/alibaba/buffett-analysis-20260726.html`](reports/alibaba/buffett-analysis-20260726.html) |
-| ING | 2026-07-26 | [`reports/ing/buffett-analysis-20260726.html`](reports/ing/buffett-analysis-20260726.html) |
+| ING | 2026-08-19 | [`reports/ing/ing-buffett-analysis-20260819.html`](reports/ing/ing-buffett-analysis-20260819.html)（v2 · 2Q2026 财报更新）|
 | 腾讯 (Tencent) | 2026-08-16 | [`reports/tencent/buffett-analysis-20260816.html`](reports/tencent/buffett-analysis-20260816.html)（v2 · Q2 财报更新）|
 | 贵州茅台 (Moutai) | 2026-08-16 | [`reports/moutai/moutai-buffett-analysis-20260816.html`](reports/moutai/moutai-buffett-analysis-20260816.html)（v2 · 半年报更新）|
 | 小米 (Xiaomi) | 2026-07-26 | [`reports/xiaomi/buffett-analysis-20260726.html`](reports/xiaomi/buffett-analysis-20260726.html) |
