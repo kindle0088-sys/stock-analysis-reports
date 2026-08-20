@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>阿里巴巴 · 巴菲特价值投资分析 v2 | 2026-08-20</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: #f5f6fa; color: #1a1a2e; line-height: 1.7; padding: 24px;
+}
+.container { max-width: 960px; margin: 0 auto; }
+
+.report-header {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: #fff; border-radius: 16px; padding: 36px 40px; margin-bottom: 24px;
+}
+.report-header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; letter-spacing: 1px; }
+.report-header .subtitle { font-size: 14px; color: rgba(255,255,255,0.7); }
+.report-header .meta { display: flex; gap: 20px; margin-top: 14px; font-size: 13px; color: rgba(255,255,255,0.6); flex-wrap: wrap; }
+.report-header .badge { display: inline-block; background: rgba(255,255,255,0.12); padding: 2px 10px; border-radius: 6px; margin-right: 6px; }
+.version-tag { display: inline-block; background: #f5a623; color: #1a1a2e; font-weight: 700; padding: 2px 10px; border-radius: 6px; margin-right: 6px; font-size: 12px; }
+
+/* Version switcher */
+.version-switcher {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  background: #fff; border-radius: 12px; padding: 10px 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04); margin-bottom: 16px; font-size: 13px;
+}
+.version-switcher .vs-label { color: #888; font-weight: 600; }
+.vs-tab {
+  text-decoration: none; color: #555; font-weight: 600;
+  padding: 6px 16px; border-radius: 20px; background: #f0f2f5;
+  transition: background 0.15s;
+}
+.vs-tab:hover { background: #e2e5ea; }
+.vs-tab.active { background: #1a1a2e; color: #fff; }
+.vs-note { margin-left: auto; font-size: 11px; color: #aaa; }
+
+.metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+.metric-card { background: #fff; border-radius: 12px; padding: 18px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); text-align: center; }
+.metric-card .label { font-size: 12px; color: #888; margin-bottom: 4px; }
+.metric-card .value { font-size: 22px; font-weight: 700; color: #1a1a2e; }
+.metric-card .value.red { color: #d8363a; }
+.metric-card .value.green { color: #19a974; }
+.metric-card .value.orange { color: #f5a623; }
+.metric-card .sub { font-size: 11px; color: #999; margin-top: 2px; }
+
+.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.full-row { margin-bottom: 20px; }
+.card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+.card h3 { font-size: 14px; font-weight: 600; color: #555; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+.chart-box { width: 100%; height: 340px; }
+.card p { font-size: 13px; color: #444; }
+.card .src { font-size: 11px; color: #aaa; margin-top: 8px; }
+
+.verdict-box {
+  background: #fff; border-radius: 12px; padding: 24px; border-left: 4px solid #f5a623;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04); margin-bottom: 20px; display: flex; gap: 16px;
+}
+.verdict-icon { font-size: 40px; line-height: 1; }
+.verdict-content h3 { font-size: 16px; font-weight: 700; margin-bottom: 10px; color: #1a1a2e; }
+.verdict-content p { font-size: 13px; color: #444; margin-bottom: 4px; }
+.verdict-content p strong { color: #1a1a2e; }
+.verdict-final { margin-top: 10px !important; font-weight: 600; color: #d8363a !important; padding-top: 8px; border-top: 1px solid #eee; }
+
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.data-table th { background: #f0f2f5; padding: 8px 10px; text-align: left; font-weight: 600; color: #555; }
+.data-table td { padding: 8px 10px; border-bottom: 1px solid #f0f2f5; }
+.data-table tr:last-child td { border-bottom: none; }
+.data-table .pos { color: #d8363a; }
+.data-table .neg { color: #19a974; }
+.data-table .neutral { color: #f5a623; }
+
+.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+.tag-a { background: #ffe8e8; color: #d8363a; }
+.tag-b { background: #fff3e0; color: #e67e22; }
+.tag-c { background: #e8f5e9; color: #27ae60; }
+.tag-na { background: #f0f2f5; color: #999; }
+
+.score-bar { background: #f0f2f5; border-radius: 8px; height: 10px; overflow: hidden; margin-top: 4px; }
+.score-bar .fill { height: 100%; border-radius: 8px; }
+.score-dim { margin-bottom: 12px; }
+
+.alert-box {
+  background: #fff8e6; border: 1px solid #f5d78e; border-radius: 12px; padding: 18px 20px; margin-bottom: 20px;
+}
+.alert-box h3 { font-size: 14px; font-weight: 700; color: #b57f0a; margin-bottom: 8px; }
+.alert-box p { font-size: 13px; color: #6b5310; }
+
+.checklist { list-style: none; }
+.checklist li { font-size: 13px; color: #444; padding: 6px 0 6px 24px; position: relative; border-bottom: 1px dashed #f0f2f5; }
+.checklist li:last-child { border-bottom: none; }
+.checklist li:before { content: "☐"; position: absolute; left: 0; color: #888; }
+
+.footer { text-align: center; font-size: 12px; color: #aaa; padding: 20px 0; }
+.disclaimer { font-size: 11px; color: #999; text-align: center; padding: 12px 20px; border-top: 1px solid #eee; margin-top: 8px; }
+
+@media (max-width: 700px) {
+  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .row-2 { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="version-switcher">
+  <span class="vs-label">📑 版本切换</span>
+  <a class="vs-tab" href="alibaba-buffett-analysis-20260726.html">v1 · 2026-07-26</a>
+  <a class="vs-tab active" href="alibaba-buffett-analysis-20260820.html">v2 · 2026-08-20 · 当前</a>
+  <span class="vs-note">v2 迭代：Q1 FY2027 财报 + 云加速 vs 自由现金流转负</span>
+</div>
+
+<div class="report-header">
+  <h1>📄 阿里巴巴 · 巴菲特价值投资分析 <span class="version-tag">v2</span></h1>
+  <div class="subtitle">Q1 FY2027 财报更新版（自然年 2026 Q2）· 六维框架：护城河 · 盈利质量 · 现金流 · 估值 · 管理层 · 安全边际</div>
+  <div class="meta">
+    <span>📅 2026-08-20</span>
+    <span>🏷️ <span class="badge">hk09988</span> 阿里巴巴 (港股)</span>
+    <span>📊 现价 HKD 126.2</span>
+    <span>💱 基准货币：CNY（人民币）</span>
+    <span>📡 财报 2026-08-20 发布 · 行情 2026-08-20</span>
+    <span>🐾 巴迪出品</span>
+  </div>
+</div>
+
+<!-- TL;DR 结论 -->
+<div class="verdict-box">
+  <div class="verdict-icon">🧭</div>
+  <div class="verdict-content">
+    <h3>巴迪的巴菲特式结论（v2 · Q1 FY2027 财报更新）</h3>
+    <p><strong>生意质量：<span class="tag tag-b">B</span></strong> — 电商基本盘承压（客户管理收入 -7%），但云 + AI 加速：外部商业化收入 +45% 创 22 个季度新高，AI 相关产品收入 123.76 亿元连续 12 季三位数增长</p>
+    <p><strong>管理层：<span class="tag tag-b">B+</span></strong> — 吴泳铭"全栈 AI"战略清晰且执行到位（自研芯片真武已服务 650+ 客户，组织重组聚焦三大板块），但本季回购仅 1.62 亿美元，股东回报力度大幅收缩</p>
+    <p><strong>估值：<span class="tag tag-b">B-</span></strong> — PE(TTM) 20.18×、PB 2.02×，52 周区间中下部（88.65–185.17 HKD），YTD -11%，安全边际中性偏弱</p>
+    <p><strong>新变量（v2 核心）：<span class="tag tag-c">C</span></strong> — 资本开支 676.78 亿元（+75%），自由现金流净流出 446.7 亿元——从"现金流奶牛"向"AI 重资产"切换</p>
+    <p><strong>确定性：<span class="tag tag-c">C+</span></strong> — GAAP 归母净利 -76%（含商誉减值与欧盟罚款）、Non-GAAP -38%，AI 投入回报尚未被验证</p>
+    <p class="verdict-final">→ 一家正在从"护城河变浅的电商公司"转型为"AI 云平台公司"的企业：云与 AI 是真变化（45% 增速 + 云 EBITA 利润率升至 12%），但代价是利润大幅下滑、自由现金流转负。巴菲特会问：这笔巨额资本开支是加深护城河，还是被迫军备竞赛？答案目前是"加深但未验证"——适合放观察清单，等"自由现金流改善 + AI 应用减亏 + 估值回落"信号，当前不急于出手。</p>
+  </div>
+</div>
+
+<!-- Key Metrics -->
+<div class="metrics-grid">
+  <div class="metric-card">
+    <div class="label">PE (TTM)</div>
+    <div class="value orange">20.18×</div>
+    <div class="sub">利润下滑中 · 历史中位偏高</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">云收入增速 (Q1)</div>
+    <div class="value red">+45%</div>
+    <div class="sub">22 个季度新高 · AI 产品收入 123.76 亿</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">Non-GAAP 净利 (Q1)</div>
+    <div class="value green">207.15 亿</div>
+    <div class="sub">同比 -38% · 真实经营盈利承压</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">Q1 自由现金流</div>
+    <div class="value green">-446.7 亿</div>
+    <div class="sub">资本开支 676.78 亿 (+75%) · v2 关键警报</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">毛利率 (FY2026)</div>
+    <div class="value red">39.8%</div>
+    <div class="sub">多年稳定 · 无大幅波动</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">股息率 (TTM)</div>
+    <div class="value orange">0.82%</div>
+    <div class="sub">本季回购仅 1.62 亿美元 · 力度收缩</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">市值</div>
+    <div class="value">24,199 亿</div>
+    <div class="sub">港元 · 总股本 191.75 亿股</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">年初至今 (YTD)</div>
+    <div class="value green">-10.98%</div>
+    <div class="sub">52 周区间 88.65 – 185.17 HKD</div>
+  </div>
+</div>
+
+<!-- 财报核心解读 -->
+<div class="full-row">
+<div class="card">
+  <h3>📋 Q1 FY2027 财报核心解读（2026-08-20 披露 · 一手来源：阿里业绩公告）</h3>
+  <p><strong>收入稳增，利润大幅失速：</strong>Q1 收入 2,689.53 亿元（+9% YoY，基本符合市场预期 2683-2690 亿）。但经营利润仅 151.61 亿元（-57%），归母净利 105.37 亿元（-76%），Non-GAAP 净利 207.15 亿元（-38%）。经营利润下滑主因：经调整 EBITA 减少 + 商誉减值 44.58 亿元 + 欧盟《数字服务法案》(DSA) 相关 5.5 亿欧元罚款准备金。</p>
+  <p style="margin-top:8px;"><strong>分部收入（Q1 单季，新四大板块架构）：</strong></p>
+  <table class="data-table" style="margin-top:8px;">
+    <tr><th>业务板块</th><th>Q1 收入</th><th>YoY</th><th>要点</th></tr>
+    <tr><td>阿里巴巴电商集团</td><td class="pos">2,058.62 亿</td><td class="pos">+4%</td><td>客户管理收入 825.47 亿（-7%，剔除营销补贴冲减后同口径 +1%）；即时零售 532.95 亿（+45%）</td></tr>
+    <tr><td>AI 云与算力服务</td><td class="pos">484.37 亿</td><td class="pos">+45%</td><td>外部客户收入 +45%，创 22 季新高；经调整 EBITA 56.28 亿（+133%），利润率升至 12%</td></tr>
+    <tr><td>AI 实验室与应用</td><td>33.38 亿</td><td class="pos">+16%</td><td>投入期：经调整 EBITA 亏损 138.61 亿（亏损扩大 330%），千问 app 2.5 亿用户用 AI 购物</td></tr>
+    <tr><td>所有其他</td><td>288.03 亿</td><td class="pos">+1%</td><td>菜鸟、本地生活等（含分部间抵消与未分摊调整）</td></tr>
+  </table>
+  <p style="margin-top:8px;"><strong>关键会计口径提醒（巴菲特"看透会计噪音"）：</strong>GAAP 归母净利 105.37 亿元（-76%）受商誉减值、欧盟罚款准备金、股权投资市值变动与处置收益减少多重扰动；Non-GAAP 净利 207.15 亿元（-38%）更能反映经营实质，但仍被科技投入与即时零售补贴压制。判断阿里经营实质，应看 Non-GAAP + 分部门 EBITA，而非被减值扭曲的 GAAP 净利润。</p>
+  <p style="margin-top:8px;"><strong>AI 商业化验证信号：</strong>AI 相关产品季度收入 123.76 亿元（连续第 12 季三位数同比增长）；平头哥自研芯片（含真武 M890）已服务 20+ 行业 650+ 外部客户；据 Omdia《中国 AI 云市场份额 2025》，阿里云以 38.1% 份额居中国 AI 云市场第一；8 月开源 2.4 万亿参数旗舰模型 Qwen3.8-Max。88VIP 会员约 6,400 万（双位数增长），淘宝闪购活跃骑手约 418.3 万人。</p>
+  <div class="src">来源：阿里巴巴《截至 2026-06-30 止季度业绩公告》(2026-08-20)；上海证券报 / 澎湃 / 21 世纪经济报道 (2026-08-20)。</div>
+</div>
+</div>
+
+<!-- AI 资本开支专题（v2 新增） -->
+<div class="full-row">
+<div class="alert-box">
+  <h3>⚠️ v2 新增警报：资本开支 +75%，自由现金流净流出 447 亿 —— 巴菲特最警惕的"生意模式变化"</h3>
+  <p>这是本期财报最需要投资者重视的变化：<strong>Q1 资本开支 676.78 亿元，同比 +75%</strong>，主要用于 AI 基础设施投入及芯片组件价格上涨。受此影响，<strong>自由现金流录得净流出 446.70 亿元</strong>（去年同期亦为净流出 188.15 亿元）。经营现金流 +11% 至 229.45 亿元，账面现金及流动投资仍达 4,745.05 亿元，短期无流动性风险，但"造血能力"正在被 AI 投入吞噬。</p>
+  <p style="margin-top:8px;">巴菲特终其一生反复强调：<em>"最好的生意是不需要持续巨额资本开支、却能不断产生现金的生意"</em>（喜诗糖果式）。阿里过去十年的电商现金流恰是"轻资产现金牛"的典型。如今主动转向"AI 基础设施重投入"——自研芯片、超节点、数据中心全面开花。<strong>这笔钱是加深护城河，还是被时代裹挟的被动防御？</strong>这是当前估值的核心分歧：</p>
+  <p style="margin-top:8px;">· <strong>乐观面：</strong>云已跑通变现闭环——外部商业化收入 +45%、AI 云与算力经调整 EBITA +133%、利润率升至 12%，AI 相关产品收入连续 12 季三位数增长。这是"花钱加固护城河"并已兑现真金白银。</p>
+  <p style="margin-top:8px;">· <strong>警惕面：</strong>AI 实验室与应用（C 端）单季亏损扩大至 138.61 亿元（+330%）；资本开支 +75% 远超收入 +9%；若算力投入的边际回报不及预期，自由现金流将持续为负，压制股东回报空间——这正是市场对全球科技股"AI 军备竞赛"定价的核心担忧。</p>
+  <p style="margin-top:8px;"><strong>巴迪判断：</strong>云+算力分部的回报已验证（EBITA 利润率 12%），说明阿里的 AI 投入不是纯烧钱；但 C 端 AI 应用与模型研发仍是"战略性亏损"。对比腾讯 v2 的同类警报，阿里更早进入自由现金流为负区间，且回购力度同步收缩（本季仅 1.62 亿美元 vs 以往每季数十亿美元）——股东回报的"隐形成本"更高。这是把估值定为 B-（而非 B+）的关键。</p>
+  <div class="src">来源：阿里业绩公告 (2026-08-20) · 速途网 / 21 世纪经济报道 (2026-08-20)。</div>
+</div>
+</div>
+
+<!-- 图表区 -->
+<div class="full-row">
+<div class="card">
+  <h3>📈 营业收入趋势（年度 · 人民币）</h3>
+  <div id="chart1" class="chart-box"></div>
+  <div class="src">数据：FY2022-FY2024 来自公开财报（财年截至 3/31）；FY2025-FY2026 来自腾讯自选股 westock（与官方业绩一致）。Q1 FY27 为单季值 2,689.53 亿，未入图避免量级误导。</div>
+</div>
+</div>
+
+<div class="row-2">
+  <div class="card">
+    <h3>🧩 Q1 FY2027 收入结构（新四大分部）</h3>
+    <div id="chart2" class="chart-box" style="height:300px;"></div>
+    <div class="src">来源：阿里业绩公告 (2026-08-20)，单位亿元。"其他"含所有其他+未分摊-分部间抵消。</div>
+  </div>
+  <div class="card">
+    <h3>🛡️ 护城河评估（六维雷达）</h3>
+    <div id="chart3" class="chart-box" style="height:300px;"></div>
+  </div>
+</div>
+
+<div class="row-2">
+  <div class="card">
+    <h3>📊 经营利润率：利润承压的硬证据</h3>
+    <div id="chart4" class="chart-box" style="height:300px;"></div>
+    <div class="src">FY2022-FY2026 为公开财报值（stockanalysis/westock），Q1 FY27 来自业绩公告。FY2025 为 14.1% 峰值后骤降至 FY2026 4.9%。</div>
+  </div>
+  <div class="card">
+    <h3>💰 会计口径对比：GAAP vs Non-GAAP（Q1 单季）</h3>
+    <div id="chart5" class="chart-box" style="height:300px;"></div>
+    <div class="src">GAAP 受商誉减值/欧盟罚款/投资收益波动影响大；Non-GAAP 更接近经营实质。单位亿元。</div>
+  </div>
+</div>
+
+<div class="full-row">
+<div class="card">
+  <h3>🎯 安全边际：52 周价格区间与估值位置</h3>
+  <div id="chart6" class="chart-box"></div>
+  <div class="src">行情来源：腾讯自选股 westock (2026-08-20 收盘)。当前价 126.2 距 52 周高点 185.17 回撤 32%，距低点 88.65 高 42%；ADR (BABA) 约 $128.15（财报后 +2.76%，市场对云加速反应正面）。</div>
+</div>
+</div>
+
+<!-- 六维评分 -->
+<div class="row-2">
+  <div class="card">
+    <h3>🧮 巴菲特六维评分（v2）</h3>
+    <div class="score-dim">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#666;"><span>护城河 <span style="color:#aaa;">(25%)</span></span><span>78</span></div>
+      <div class="score-bar"><div class="fill" style="width:78%;background:#5b8ff9;"></div></div>
+    </div>
+    <div class="score-dim">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#666;"><span>盈利质量 <span style="color:#aaa;">(20%)</span></span><span>55</span></div>
+      <div class="score-bar"><div class="fill" style="width:55%;background:#d8363a;"></div></div>
+    </div>
+    <div class="score-dim">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#666;"><span>估值 / 安全边际 <span style="color:#aaa;">(20%)</span></span><span>62</span></div>
+      <div class="score-bar"><div class="fill" style="width:62%;background:#f5a623;"></div></div>
+    </div>
+    <div class="score-dim">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#666;"><span>管理层 / 资本配置 <span style="color:#aaa;">(15%)</span></span><span>70</span></div>
+      <div class="score-bar"><div class="fill" style="width:70%;background:#9254de;"></div></div>
+    </div>
+    <div class="score-dim">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#666;"><span>现金流 <span style="color:#aaa;">(10%)</span></span><span>38</span></div>
+      <div class="score-bar"><div class="fill" style="width:38%;background:#ff6b6b;"></div></div>
+    </div>
+    <div class="score-dim">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#666;"><span>确定性 / 风险 <span style="color:#aaa;">(10%)</span></span><span>55</span></div>
+      <div class="score-bar"><div class="fill" style="width:55%;background:#19a974;"></div></div>
+    </div>
+    <p style="font-size:12px;color:#666;margin-top:10px;"><strong>加权综合评分 63 / 100</strong>（v1 字母评级：生意 B / 管理层 B- / 估值 B / 确定性 C+）—— 护城河与管理层得分上调（云 +45%、AI 全栈自研验证），现金流与盈利质量大幅下调（资本开支 +75%、自由现金流 -447 亿、Non-GAAP -38%）。评级：<span class="tag tag-c">观望 · 等待验证</span></p>
+  </div>
+  <div class="card">
+    <h3>👔 管理层与股东回报</h3>
+    <p><strong>吴泳铭（CEO）掌舵，AI 战略清晰。</strong>"用户为先、AI 驱动"落地为全栈 AI：自研芯片（真武 M890）→ 开源模型（Qwen3.8-Max）→ 云与千问应用，组织上重组为三大板块（电商 / AI 云与算力 / AI 实验室与应用）聚焦协同。</p>
+    <p style="margin-top:8px;"><strong>股东回报（巴菲特最看重的资本配置纪律）：</strong></p>
+    <table class="data-table" style="margin-top:8px;">
+      <tr><td style="width:44%;color:#888;">Q1 FY27 回购</td><td>1.62 亿美元 · 1,340 万股普通股（170 万 ADS）</td></tr>
+      <tr><td style="width:44%;color:#888;">TTM 股息率</td><td>0.82%</td></tr>
+      <tr><td style="width:44%;color:#888;">现金及流动投资</td><td>4,745.05 亿元</td></tr>
+      <tr><td style="width:44%;color:#888;">董事会回购授权</td><td>仍在执行（2027 年 3 月到期）</td></tr>
+    </table>
+    <p style="margin-top:8px;"><strong>⚠️ 关键信号：</strong>本季回购力度较往年大幅收缩（历史季度常为数十亿美元级），与资本开支 +75% 形成此消彼长——<strong>若 AI 资本开支继续攀升，股东回报可能持续让位</strong>。这是未来几个季度需盯紧的信号，也是与腾讯 v2"回购维持+AI 投入"节奏差异的关键点。</p>
+    <div class="src">来源：阿里业绩公告 (2026-08-20) · 腾讯自选股 (2026-08-20)。</div>
+  </div>
+</div>
+
+<!-- 风险矩阵 -->
+<div class="full-row">
+<div class="card">
+  <h3>⚠️ 巴菲特关注的"永久性损失风险"</h3>
+  <table class="data-table">
+    <tr><th style="width:20%;">风险因素</th><th style="width:12%;">概率</th><th style="width:12%;">影响</th><th>巴迪解读（v2 更新）</th></tr>
+    <tr><td>AI 投入回报不及预期</td><td class="neutral">中</td><td class="pos">大</td><td><strong>v2 新增核心风险</strong>——资本开支 +75% 而收入 +9%，自由现金流 -447 亿，若回报滞后将持续压制现金流与估值</td></tr>
+    <tr><td>电商竞争加剧</td><td class="pos">高</td><td class="pos">大</td><td>客户管理收入 -7%（剔除补贴冲减同口径 +1%），拼多多/抖音持续蚕食，淘宝靠即时零售（+45%）对冲</td></tr>
+    <tr><td>利润持续承压</td><td class="pos">高</td><td class="neutral">中</td><td>商誉减值 44.58 亿 + 欧盟 DSA 罚款 5.5 亿欧元准备金 + 高研发投入，GAAP 利润失真、Non-GAAP -38%</td></tr>
+    <tr><td>监管与合规</td><td class="neutral">中</td><td class="pos">大</td><td>欧盟《数字服务法案》罚款落地为标志性事件，数据/AI 监管不确定性长期存在</td></tr>
+    <tr><td>中美地缘政治</td><td class="neutral">中</td><td class="neutral">中</td><td>AI 芯片供应、跨境业务受潜在影响（自研芯片部分对冲供应风险）</td></tr>
+    <tr><td>回购力度持续收缩</td><td class="neutral">中</td><td class="neutral">中</td><td>股东回报让位于资本开支，若持续将削弱"资本配置纪律"评分</td></tr>
+  </table>
+</div>
+</div>
+
+<!-- 核心财务数据 -->
+<div class="full-row">
+<div class="card">
+  <h3>📋 核心财务数据（人民币 · 财年截至 3 月 31 日）</h3>
+  <table class="data-table">
+    <tr><th>指标</th><th>FY2022</th><th>FY2023</th><th>FY2024</th><th>FY2025</th><th>FY2026</th><th>Q1 FY27*</th></tr>
+    <tr><td>营业收入（亿元）</td><td>8,531</td><td>8,687</td><td>9,412</td><td>10,797</td><td>11,594</td><td class="pos">2,689.53 (+9%)</td></tr>
+    <tr><td>归母净利 GAAP（亿元）</td><td>620</td><td>725</td><td>797</td><td>1,410</td><td>1,173</td><td class="neg">105.37 (-76%)</td></tr>
+    <tr><td>Non-GAAP 净利（亿元）</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="neg">207.15 (-38%)</td></tr>
+    <tr><td>毛利率</td><td>36.8%</td><td>36.7%</td><td>37.7%</td><td>40.0%</td><td>39.8%</td><td>—</td></tr>
+    <tr><td>经营利润率</td><td>8.2%</td><td>11.6%</td><td>12.0%</td><td class="pos">14.1%</td><td class="neg">4.9%</td><td class="neg">6%</td></tr>
+    <tr><td>经营现金流（亿元）</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="pos">229.45 (+11%)</td></tr>
+    <tr><td>资本开支（亿元）</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="neg">676.78 (+75%)</td></tr>
+    <tr><td>自由现金流（亿元）</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="neg">-446.70</td></tr>
+  </table>
+  <p style="font-size:11px;color:#999;margin-top:8px;">* Q1 FY27 为自然年 2026 Q2 单季（截至 2026-06-30）。FY2022-FY2024 来自公开财报/stockanalysis 标准化口径；FY2025-FY2026 来自 westock（与官方业绩一致：FY2025 收入 10,797 亿、FY2026 收入 11,594 亿均为人民币，westock 港币标注系误标）；FY2025 归母净利含出售资产等处置收益。Non-GAAP 年度精确值未取到故留空。</p>
+</div>
+</div>
+
+<!-- 决策清单 -->
+<div class="full-row">
+<div class="card">
+  <h3>✅ 巴菲特式决策清单</h3>
+  <ul class="checklist">
+    <li><strong>能力圈</strong>：电商 + 云 + AI 是否在你能理解的范围？—— 电商清晰，云/AI 部分超出传统能力圈（重资产、回报周期长、技术迭代快）</li>
+    <li><strong>护城河</strong>：10 年后淘宝的电商关系链还在吗？—— 电商护城河被侵蚀（CMR -7%），但云（中国 AI 云份额 38.1% 第一）+ 全栈 AI 自研正在构筑新护城河</li>
+    <li><strong>盈利质量</strong>：Non-GAAP 净利是否持续增长？—— <strong>否</strong>，Q1 -38%，商誉减值 + 欧盟罚款 + 战略性亏损三重压制</li>
+    <li><strong>现金流</strong>：赚的是不是真钱、能否自由支配？—— <strong>v2 警报</strong>：自由现金流 -446.7 亿，连续为负且扩大，需连续跟踪 AI 投入回报</li>
+    <li><strong>管理层</strong>：是否理性配置资本、诚实回报股东？—— AI 战略理性且有变现路径（云 EBITA +133%），但回购力度大幅收缩值得警惕</li>
+    <li><strong>安全边际</strong>：当前价是否显著低于内在价值？—— PE 20.18× 不便宜、PB 2.02×，52 周中下部但距低点仍有 42% 空间，边际偏薄</li>
+  </ul>
+  <p style="margin-top:10px;font-size:13px;"><strong>操作框架（条件化）：</strong>当前评为"观望 · 等待验证"。触发重新评估的三个观察指标：① 云经调整 EBITA 利润率能否站稳并突破 12%+（验证 AI 变现）；② AI 实验室与应用季度亏损能否收窄、自由现金流能否改善；③ 估值是否回落至 PB 1.5× 以下或出现市场恐慌性错杀。三者出现其一，再把阿里从观察清单移入"可分批布局"；若云增速回落且现金流继续恶化，则维持观望。设好"自由现金流 + 云 EBITA 利润率"为核心监控指标，而非盯股价。</p>
+</div>
+</div>
+
+<div class="footer">
+  🐾 巴迪出品 · 阿里巴巴 v2（2026-08-20） · 数据来源：阿里巴巴业绩公告 (2026-08-20)、腾讯自选股 westock (2026-08-20)、公开财报 · 分析框架：格雷厄姆-巴菲特-芒格价值投资
+</div>
+
+<div class="disclaimer">
+  <strong>免责声明</strong>：以上内容基于公开数据和量化分析，仅供参考，不构成投资建议。市场有风险，投资需谨慎。任何投资决策应结合个人风险承受能力、资金状况和投资目标独立判断，必要时咨询持牌专业机构。过往表现不预示未来收益。
+</div>
+
+</div>
+
+<script>
+// Chart 1: 营收趋势（年度）
+(function() {
+  var c1 = echarts.init(document.getElementById('chart1'));
+  c1.setOption({
+    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+    grid: { left: 70, right: 30, bottom: 30, top: 30 },
+    xAxis: { type: 'category', data: ['FY2022', 'FY2023', 'FY2024', 'FY2025', 'FY2026'] },
+    yAxis: { type: 'value', name: '亿元', axisLabel: { formatter: '{value}' } },
+    series: [
+      {
+        name: '营业收入(亿元)', type: 'bar',
+        data: [8531, 8687, 9412, 10797, 11594],
+        itemStyle: { color: '#3b82f6', borderRadius: [4,4,0,0] },
+        barMaxWidth: 60,
+        label: { show: true, position: 'top', formatter: '{c}', fontSize: 11, fontWeight: 600 }
+      }
+    ]
+  });
+})();
+
+// Chart 2: Q1 FY27 收入结构
+(function() {
+  var c2 = echarts.init(document.getElementById('chart2'));
+  c2.setOption({
+    tooltip: { trigger: 'item', formatter: '{b}<br/>{c} 亿元 ({d}%)' },
+    legend: { bottom: 0, fontSize: 11 },
+    series: [{
+      type: 'pie', radius: ['40%', '68%'], center: ['50%', '46%'],
+      label: { formatter: '{b}\n{d}%', fontSize: 11 },
+      data: [
+        { name: '电商集团', value: 2058.62, itemStyle: { color: '#d8363a' } },
+        { name: 'AI云与算力', value: 484.37, itemStyle: { color: '#3b82f6' } },
+        { name: 'AI实验室与应用', value: 33.38, itemStyle: { color: '#8b5cf6' } },
+        { name: '其他', value: 113.16, itemStyle: { color: '#8b8fa3' } }
+      ]
+    }]
+  });
+})();
+
+// Chart 3: 护城河雷达
+(function() {
+  var c3 = echarts.init(document.getElementById('chart3'));
+  c3.setOption({
+    tooltip: {},
+    radar: {
+      indicator: [
+        { name: '电商网络效应', max: 5 },
+        { name: '云市场份额', max: 5 },
+        { name: 'AI全栈自研', max: 5 },
+        { name: '物流/供应链', max: 5 },
+        { name: '品牌/生态', max: 5 },
+        { name: '现金流质量', max: 5 }
+      ],
+      center: ['50%', '54%'], radius: '62%',
+      axisName: { color: '#555', fontSize: 11 }
+    },
+    series: [{
+      type: 'radar',
+      data: [
+        {
+          value: [3.5, 4.5, 4.5, 3.5, 3, 2.5],
+          name: '阿里巴巴',
+          areaStyle: { color: 'rgba(59,130,246,0.2)' },
+          lineStyle: { color: '#3b82f6', width: 2 },
+          itemStyle: { color: '#3b82f6' }
+        }
+      ]
+    }]
+  });
+})();
+
+// Chart 4: 经营利润率趋势
+(function() {
+  var c4 = echarts.init(document.getElementById('chart4'));
+  c4.setOption({
+    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' }, formatter: '{b}<br/>经营利润率: {c}%' },
+    grid: { left: 50, right: 20, bottom: 30, top: 30 },
+    xAxis: { type: 'category', data: ['FY2022', 'FY2023', 'FY2024', 'FY2025', 'FY2026', 'Q1FY27'] },
+    yAxis: { type: 'value', name: '%', min: 0, max: 16, axisLabel: { formatter: '{value}%' } },
+    series: [
+      {
+        name: '经营利润率', type: 'bar',
+        data: [
+          { value: 8.2, itemStyle: { color: '#8b8fa3' } },
+          { value: 11.6, itemStyle: { color: '#8b8fa3' } },
+          { value: 12.0, itemStyle: { color: '#f59e0b' } },
+          { value: 14.1, itemStyle: { color: '#d8363a' } },
+          { value: 4.9, itemStyle: { color: '#19a974' } },
+          { value: 6.0, itemStyle: { color: '#19a974' } }
+        ],
+        barMaxWidth: 50,
+        label: { show: true, position: 'top', formatter: '{c}%', fontSize: 11, fontWeight: 600 }
+      }
+    ]
+  });
+})();
+
+// Chart 5: GAAP vs Non-GAAP 归母净利（Q1 单季）
+(function() {
+  var c5 = echarts.init(document.getElementById('chart5'));
+  c5.setOption({
+    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+    legend: { data: ['GAAP 归母净利', 'Non-GAAP 净利'], top: 0, fontSize: 11 },
+    grid: { left: 60, right: 20, bottom: 30, top: 40 },
+    xAxis: { type: 'category', data: ['Q1 FY26', 'Q1 FY27'] },
+    yAxis: { type: 'value', name: '亿元' },
+    series: [
+      {
+        name: 'GAAP 归母净利', type: 'bar',
+        data: [431.16, 105.37],
+        itemStyle: { color: '#8b8fa3', borderRadius: [4,4,0,0] },
+        barMaxWidth: 44
+      },
+      {
+        name: 'Non-GAAP 净利', type: 'bar',
+        data: [335.10, 207.15],
+        itemStyle: { color: '#3b82f6', borderRadius: [4,4,0,0] },
+        barMaxWidth: 44
+      }
+    ]
+  });
+})();
+
+// Chart 6: 52周价格区间
+(function() {
+  var c6 = echarts.init(document.getElementById('chart6'));
+  c6.setOption({
+    tooltip: { trigger: 'axis', formatter: function(p) { return p[0].name + '<br/>HKD ' + p[0].value; } },
+    grid: { left: 60, right: 20, bottom: 30, top: 20 },
+    xAxis: { type: 'category', data: ['52周最低', '当前价', '52周最高'], axisTick: { show: false } },
+    yAxis: { type: 'value', name: 'HKD', min: 60, max: 200 },
+    series: [
+      {
+        type: 'bar',
+        data: [
+          { value: 88.65, itemStyle: { color: '#19a974' } },
+          { value: 126.2, itemStyle: { color: '#3b82f6' } },
+          { value: 185.17, itemStyle: { color: '#d8363a' } }
+        ],
+        barMaxWidth: 55,
+        label: { show: true, position: 'top', formatter: function(p) { return 'HKD ' + p.value; }, fontSize: 12, fontWeight: 700 }
+      }
+    ]
+  });
+})();
+</script>
+</body>
+</html>
