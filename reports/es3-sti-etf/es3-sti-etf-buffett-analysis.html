@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>巴菲特价值投资分析 · STI ETF (ES3)</title>
+<title>巴菲特价值投资分析 · STI ETF (ES3) v2</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { background: #0b1120; color: #e2e8f0; font-family: -apple-system, 'Segoe UI', 'PingFang SC', 'Noto Sans SC', 'Microsoft YaHei', sans-serif; line-height: 1.8; padding: 0; }
@@ -18,8 +18,6 @@
   .hero .q-item .num.green { color: #22c55e; }
   .hero .q-item .num.yellow { color: #facc15; }
   .hero .q-item .label { font-size: 0.82rem; color: #94a3b8; margin-top: 2px; }
-
-  .flag-bg { display: inline-block; margin-right: 6px; }
   
   .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
   
@@ -50,6 +48,7 @@
   .card .big-num { font-size: 2rem; font-weight: 700; color: #60a5fa; margin: 6px 0 2px; }
   .card .big-num.green { color: #22c55e; }
   .card .big-num.red { color: #ef4444; }
+  .card .big-num.yellow { color: #facc15; }
   .card .desc { font-size: 0.85rem; color: #94a3b8; }
 
   .card-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin: 16px 0; }
@@ -79,6 +78,8 @@
   
   .highlight-box { background: #0f172a; border-left: 4px solid #60a5fa; padding: 14px 18px; border-radius: 6px; margin: 16px 0; font-size: 0.95rem; }
   .highlight-box strong { color: #fbbf24; }
+  .highlight-box.warn { border-left-color: #f59e0b; }
+  .highlight-box.warn strong { color: #fcd34d; }
 
   .buffett-index-badge { background: linear-gradient(135deg, #1e293b, #0f172a); border: 1px solid #fbbf24; border-radius: 12px; padding: 20px; margin: 20px 0; text-align: center; }
   .buffett-index-badge h3 { color: #fbbf24; margin-top: 0; font-size: 1.3rem; }
@@ -88,6 +89,9 @@
   .summary-tag { background: #1e293b; border: 1px solid #334155; padding: 8px 14px; border-radius: 8px; font-size: 0.88rem; }
   .summary-tag .label { color: #94a3b8; display: block; font-size: 0.75rem; }
   .summary-tag .value { color: #e2e8f0; font-weight: 600; }
+
+  .update-banner { background: linear-gradient(135deg, #422006, #1e293b); border: 1px solid #f59e0b; border-radius: 10px; padding: 16px 20px; margin: 20px 0; font-size: 0.92rem; }
+  .update-banner strong { color: #fcd34d; }
 
   .disclaimer { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.82rem; color: #94a3b8; }
   .footer { text-align: center; padding: 30px 20px; color: #64748b; font-size: 0.82rem; }
@@ -104,29 +108,29 @@
 <body>
 
 <div class="hero">
-  <span class="ticker">SGX: ES3</span>
+  <span class="ticker">SGX: ES3 · v2 更新</span>
   <h1>STI ETF · 巴菲特价值投资分析</h1>
-  <p class="sub">SPDR Straits Times Index ETF — 追踪新加坡海峡时报指数的 ETF · 数据截至 2026-07-24</p>
+  <p class="sub">SPDR Straits Times Index ETF — 追踪新加坡海峡时报指数的 ETF · 💱 基准货币：SGD（新加坡元） · 数据截至 2026-08-26</p>
   <div class="quote-box">
     <div class="q-item">
-      <div class="num green">SGD 5.66</div>
-      <div class="label">最新价格</div>
+      <div class="num green">SGD 5.82</div>
+      <div class="label">最新价格 (08-26)</div>
     </div>
     <div class="q-item">
-      <div class="num" style="color:#fbbf24;">SGD 35.5亿</div>
+      <div class="num" style="color:#fbbf24;">SGD 39.5亿</div>
       <div class="label">资产管理规模 (AUM)</div>
     </div>
     <div class="q-item">
-      <div class="num green">3.3%</div>
-      <div class="label">股息率 (TTM)</div>
+      <div class="num green">3.05%</div>
+      <div class="label">股息率 (Distribution)</div>
     </div>
     <div class="q-item">
-      <div class="num" style="color:#fbbf24;">0.28%</div>
-      <div class="label">费率 (TER)</div>
-    </div>
-    <div class="q-item">
-      <div class="num green">16.71</div>
+      <div class="num" style="color:#fbbf24;">17.56</div>
       <div class="label">成份股加权 PE</div>
+    </div>
+    <div class="q-item">
+      <div class="num" style="color:#fbbf24;">1.83</div>
+      <div class="label">成份股加权 PB</div>
     </div>
   </div>
 </div>
@@ -138,27 +142,39 @@
   <h2><span class="icon">📋</span> 执行摘要</h2>
 
   <div class="buffett-quote">
-    "A low-cost index fund is the most sensible equity investment for the great majority of investors."
-    <span class="attr">— Warren Buffett, 2014 Berkshire Hathaway Annual Letter</span>
+    "A low-cost index fund is the most sensible equity investment for the great majority of investors. Be fearful when others are greedy."
+    <span class="attr">— Warren Buffett（前半句 2014 年致股东信；后半句为其一贯市场态度）</span>
   </div>
 
-  <p><strong>SPDR Straits Times Index ETF (ES3)</strong> 是新加坡交易所最老牌、流动性最强的 ETF，追踪由新加坡交易所 30 家最大上市公司组成的海峡时报指数（STI）。基金管理人为 State Street Global Advisors Singapore（道富环球），自 2002 年上市以来已有 24 年历史。</p>
+  <p><strong>SPDR Straits Times Index ETF (ES3)</strong> 是新加坡交易所最老牌、流动性最强的 ETF，追踪由新加坡交易所 30 家最大上市公司组成的海峡时报指数（STI）。基金管理人为 State Street Global Advisors Singapore（道富环球），2002 年 4 月上市，至今 24 年。</p>
 
-  <p>ES3 是巴菲特最推崇的"低成本指数基金"在新加坡市场的典型代表——管理费仅 0.28%，覆盖新加坡最优质的 30 家蓝筹公司，并且持续 20 年以上稳定派息。对于希望获得新加坡市场 Beta 收益的投资者来说，这几乎是不可绕过的选择。</p>
+  <p>ES3 是巴菲特最推崇的"低成本指数基金"在新加坡市场的典型代表——费用率 0.28%，覆盖新加坡最优质的 30 家蓝筹公司，连续 20 年以上稳定派息。但 <strong>v2 更新（2026-08-26）的核心变化是：市场环境已显著改变</strong>——STI 于 2026 年 2 月历史性突破 5,000 点后继续上行，8 月站上 5,700 点创历史新高，估值从一年前的 PE ~13x / PB 1.2-1.3x 扩张至 PE 17.6x / PB 1.83x，安全边际明显收窄。</p>
+
+  <div class="update-banner">
+    <strong>⚠️ v2 更新要点（2026-08-26）：</strong>
+    <ol style="margin:6px 0 0 18px; font-size:0.9rem; color:#cbd5e1;">
+      <li><strong>STI 创历史新高</strong>（8-17 收 5,768，历史峰值 5,774），YTD +22.4%</li>
+      <li><strong>估值大幅扩张</strong>：PE 17.56x / PB 1.83x（一年前 ~13x / 1.2x），高于 10 年均值约两个标准差</li>
+      <li><strong>银行集中度升至 57.4%</strong>：DBS 29.1% + OCBC 19.0% + UOB 9.3%（2020 年 7 月时仅 38%）</li>
+      <li><strong>8 月 13 日派息 0.093 SGD 创新高</strong>（同比 +4.5%），股息率 3.05%</li>
+      <li>结论由 v1 的"强烈看多 8.2"调整为<strong>"看多 6.7 — 分批定投，不追高"</strong></li>
+    </ol>
+  </div>
 
   <div class="summary-bar">
     <div class="summary-tag"><span class="label">成立时间</span><span class="value">2002 年（24 年）</span></div>
-    <div class="summary-tag"><span class="label">费用率</span><span class="value" style="color:#6ee7b7;">0.28% 偏低</span></div>
-    <div class="summary-tag"><span class="label">股息率</span><span class="value" style="color:#6ee7b7;">~3.3% 良好</span></div>
-    <div class="summary-tag"><span class="label">10年年化回报</span><span class="value" style="color:#6ee7b7;">~10.1%</span></div>
-    <div class="summary-tag"><span class="label">成份股集中度</span><span class="value" style="color:#fca5a5;">三大银行占 50%</span></div>
+    <div class="summary-tag"><span class="label">费用率 TER</span><span class="value" style="color:#6ee7b7;">0.28% 合理</span></div>
+    <div class="summary-tag"><span class="label">股息率</span><span class="value" style="color:#6ee7b7;">3.05%</span></div>
+    <div class="summary-tag"><span class="label">10年年化回报</span><span class="value" style="color:#6ee7b7;">10.98%（含股息）</span></div>
+    <div class="summary-tag"><span class="label">成份股集中度</span><span class="value" style="color:#fca5a5;">三大银行占 57.4%</span></div>
+    <div class="summary-tag"><span class="label">估值状态</span><span class="value" style="color:#fcd34d;">历史高位 · 安全边际收窄</span></div>
   </div>
 
   <div class="total-score">
-    <div class="score-circle high">8.2</div>
-    <div class="verdict-text">总体评价：⭐⭐⭐⭐⭐⭐⭐⭐☆☆ &nbsp; 8.2/10</div>
+    <div class="score-circle medium">6.7</div>
+    <div class="verdict-text">总体评价：⭐⭐⭐⭐⭐⭐⭐☆☆☆ &nbsp; 6.7/10 · 看多（由 v1 的 8.2 下调）</div>
     <p style="color:#94a3b8; margin-top:8px; font-size:0.9rem;">
-      符合巴菲特"低成本指数基金"投资哲学，是新加坡投资者参与本地蓝筹市场的理想工具。银行集中度是主要风险。
+      工具品质未变——低费用、高透明度、长期稳健派息。但当前估值处于历史高位、银行集中度升至 57.4%，安全边际显著收窄。<strong>结论：分批/定投买入，避免一次性追高；设置再评估触发点。</strong>
     </p>
   </div>
 </section>
@@ -176,11 +192,11 @@
     <div class="card">
       <h4>交易代码</h4>
       <div class="big-num" style="font-size:1.8rem;">ES3</div>
-      <div class="desc">SGX 新加坡交易所</div>
+      <div class="desc">SGX 新加坡交易所 · 挂牌 2002-04-17</div>
     </div>
     <div class="card">
       <h4>成立日期</h4>
-      <div class="big-num" style="font-size:1.1rem;">2002-04-17</div>
+      <div class="big-num" style="font-size:1.1rem;">2002-04-11</div>
       <div class="desc">超过 24 年历史</div>
     </div>
     <div class="card">
@@ -191,24 +207,25 @@
     <div class="card">
       <h4>基准指数</h4>
       <div class="big-num" style="font-size:1.1rem;">FTSE Straits Times Index</div>
-      <div class="desc">海峡时报指数（STI）</div>
+      <div class="desc">海峡时报指数（STI），1966 年回溯</div>
     </div>
     <div class="card">
       <h4>复制方式</h4>
       <div class="big-num" style="font-size:1.1rem;">完全复制</div>
-      <div class="desc">Full Replication</div>
+      <div class="desc">Full Replication · 30 只成份股</div>
     </div>
     <div class="card">
       <h4>派息频率</h4>
       <div class="big-num" style="font-size:1.1rem;">每半年一次</div>
-      <div class="desc">Semi-Annual</div>
+      <div class="desc">2 月与 8 月派息</div>
     </div>
     <div class="card">
-      <h4>基础货币</h4>
-      <div class="big-num" style="font-size:1.1rem;">SGD</div>
-      <div class="desc">新加坡元</div>
+      <h4>规模与流动性</h4>
+      <div class="big-num" style="font-size:1.1rem;">AUM SGD 39.5 亿</div>
+      <div class="desc">日均成交额/量居同类 ETF 之首 · 整手 1 股</div>
     </div>
   </div>
+  <p style="font-size:0.82rem; color:#94a3b8;">来源：SSGA 官网，基金信息截至 2026-08-18；价格行情截至 2026-08-26（yfinance）。</p>
 </section>
 
 <!-- BUFFETT'S INDEX PHILOSOPHY -->
@@ -217,11 +234,11 @@
 
   <div class="buffett-index-badge">
     <h3>🏆 巴菲特的百万美元赌约</h3>
-    <p>2007 年，巴菲特以 50 万美元打赌：一只低成本的标普 500 指数基金在 10 年内的回报将超过一篮子对冲基金。到 2017 年到期时，指数基金累计回报 <strong>+125.8%</strong>，而对冲基金组合仅 <strong>+36.3%</strong>。巴菲特完胜。</p>
+    <p>2007 年，巴菲特以 50 万美元打赌：一只低成本的标普 500 指数基金在 10 年内的回报将超过一篮子对冲基金。到 2017 年到期时，指数基金累计回报 <strong>+125.8%</strong>，而对冲基金组合仅 <strong>+36.3%</strong>。巴菲特完胜——低费用 + 长期持有 + 不择时。</p>
   </div>
 
   <div class="buffett-quote">
-    "The best thing for the ordinary investor is to buy a low-cost index fund that tracks the market. ... Just buy a cheap index fund and keep buying it."
+    "The best thing for the ordinary investor is to buy a low-cost index fund that tracks the market. Just buy a cheap index fund and keep buying it."
     <span class="attr">— Warren Buffett</span>
   </div>
 
@@ -231,37 +248,37 @@
     <tr>
       <td><strong>1. 低成本</strong></td>
       <td><span class="verdict pass">✅ 0.28%</span></td>
-      <td>费用率 0.28%，低于全球 ETF 平均水平的 0.5-0.7%。</td>
+      <td>费用率 0.28%（FY2025），低于全球 ETF 平均，但竞品 G3B 已降至 0.25% 上限。</td>
     </tr>
     <tr>
       <td><strong>2. 广泛分散</strong></td>
-      <td><span class="verdict neutral">⚠️ 部分</span></td>
-      <td>覆盖 30 只新加坡蓝筹股，��行业集中于金融（55%+）。</td>
+      <td><span class="verdict warn">⚠️ 部分</span></td>
+      <td>30 只蓝筹，但行业集中于金融（60.5%），三大银行合计 57.4%——集中度在升高。</td>
     </tr>
     <tr>
       <td><strong>3. 长期持有</strong></td>
       <td><span class="verdict pass">✅ 适合</span></td>
-      <td>24 年历史证明，10 年年化回报约 10%，适��买入持有。</td>
+      <td>24 年历史，10 年年化含息回报 10.98%，契合买入持有。</td>
     </tr>
     <tr>
       <td><strong>4. 被动管理</strong></td>
       <td><span class="verdict pass">✅ 完全</span></td>
-      <td>完全复制 STI 指数，无主动管理风险。</td>
+      <td>完全复制 STI，无主动管理风险，R² ≈ 0.99。</td>
     </tr>
     <tr>
       <td><strong>5. 不择时</strong></td>
       <td><span class="verdict pass">✅ 关键</span></td>
-      <td>巴菲特建议"定期定额持续买入"，ES3 完美适用。</td>
+      <td>定投（DCA）是最佳打开方式——但当前高位宜"分批"，不宜一次性。</td>
     </tr>
     <tr>
       <td><strong>6. 股息再投资</strong></td>
-      <td><span class="verdict pass">✅ 3.3%</span></td>
-      <td>每半年派息，可手动再投资，实现复利增长。</td>
+      <td><span class="verdict pass">✅ 3.05%</span></td>
+      <td>每半年派息，8 月单次 0.093 SGD 创新高，可手动再投资。</td>
     </tr>
   </table>
 
-  <div class="highlight-box">
-    <strong>关键在于费用：</strong>即使 0.28% 和 0.10% 之间只差 0.18 个百分点，在 30 年的复利效应下，最终收益差距可达 <strong>8-10%</strong>。巴菲特常说："回报来自你省下的费用。"ES3 的费用率在新加坡 ETF 中处于合理水平，但仍有下降空间（竞品 G3B 已降至 0.25%）。
+  <div class="highlight-box warn">
+    <strong>关键在于费用 + 估值：</strong>费用是长期复利的确定性成本；而"买入价格"决定了起点回报。巴菲特 2014 年说的"低成本指数基金"永远成立，但他在 2026 年 8 月面对 PE 17.6x 的 STI 会说：<strong>"好资产也要等到好价格，分批买入，别一次梭哈。"</strong>
   </div>
 </section>
 
@@ -269,36 +286,35 @@
 <section>
   <h2><span class="icon">🏗️</span> 成份股与行业分析</h2>
 
-  <h3>前十大持仓</h3>
+  <h3>前十大持仓（2026-08-14）</h3>
   <table>
     <tr><th>排名</th><th>成份股</th><th>代码</th><th>权重</th><th>行业</th></tr>
-    <tr><td>1</td><td>星展银行 DBS Group Holdings</td><td>D05</td><td>25.2%</td><td>🏦 金融</td></tr>
-    <tr><td>2</td><td>华侨银行 OCBC Bank</td><td>O39</td><td>15.1%</td><td>🏦 金融</td></tr>
-    <tr><td>3</td><td>大华银行 United Overseas Bank</td><td>U11</td><td>10.1%</td><td>🏦 金融</td></tr>
-    <tr><td>4</td><td>新加坡电信 Singtel</td><td>Z74</td><td>8.1%</td><td>📡 电信</td></tr>
-    <tr><td>5</td><td>怡和控股 Jardine Matheson</td><td>J36</td><td>4.0%</td><td>🏢 综合企业</td></tr>
-    <tr><td>6</td><td>吉宝 Keppel Ltd</td><td>BN4</td><td>3.8%</td><td>⚙️ 工业</td></tr>
-    <tr><td>7</td><td>新科工程 ST Engineering</td><td>S63</td><td>3.7%</td><td>⚙️ 工业</td></tr>
-    <tr><td>8</td><td>新加坡交易所 SGX</td><td>S68</td><td>3.4%</td><td>🏦 金融</td></tr>
-    <tr><td>9</td><td>凯德综合商业信托 CICT</td><td>C38U</td><td>3.1%</td><td>🏠 房地产</td></tr>
-    <tr><td>10</td><td>香港置地 Hongkong Land</td><td>H78</td><td>2.5%</td><td>🏠 房地产</td></tr>
+    <tr><td>1</td><td>星展银行 DBS Group Holdings</td><td>D05</td><td style="color:#fbbf24; font-weight:700;">28.7%</td><td>🏦 金融</td></tr>
+    <tr><td>2</td><td>华侨银行 OCBC Bank</td><td>O39</td><td style="color:#fbbf24; font-weight:700;">19.2%</td><td>🏦 金融</td></tr>
+    <tr><td>3</td><td>大华银行 United Overseas Bank</td><td>U11</td><td style="color:#fbbf24; font-weight:700;">9.4%</td><td>🏦 金融</td></tr>
+    <tr><td>4</td><td>新加坡电信 Singtel</td><td>Z74</td><td>6.2%</td><td>📡 通信</td></tr>
+    <tr><td>5</td><td>新加坡交易所 SGX</td><td>S68</td><td>3.9%</td><td>🏦 金融</td></tr>
+    <tr><td>6</td><td>新科工程 ST Engineering</td><td>S63</td><td>3.1%</td><td>⚙️ 工业</td></tr>
+    <tr><td>7</td><td>吉宝 Keppel Ltd</td><td>BN4</td><td>3.0%</td><td>⚙️ 工业</td></tr>
+    <tr><td>8</td><td>凯德综合商业信托 CICT</td><td>C38U</td><td>2.9%</td><td>🏠 房地产</td></tr>
+    <tr><td>9</td><td>怡和控股 Jardine Matheson</td><td>J36</td><td>2.8%</td><td>🏢 综合企业</td></tr>
+    <tr><td>10</td><td>新加坡航空 Singapore Airlines</td><td>C6L</td><td>2.3%</td><td>✈️ 交通</td></tr>
   </table>
-  <p style="font-size:0.85rem; color:#94a3b8;">来源：SSGA/FTSE Russell，数据截至 2026 年 3 月</p>
+  <p style="font-size:0.85rem; color:#94a3b8;">来源：FSMOne / Yahoo Finance，权重截至 2026-08-14~17。前十持仓合计约 81%（Yahoo：80.99%）。</p>
 
-  <h3>行业分布</h3>
+  <h3>行业分布（2026-08-17，Yahoo）</h3>
   <table>
-    <tr><th>行业</th><th>占比</th><th>说明</th></tr>
-    <tr><td>金融（银行 + 金融服务）</td><td style="color:#fbbf24; font-weight:700;">~55%</td><td>DBS, OCBC, UOB, SGX 为主</td></tr>
-    <tr><td>房地产（REITs + 开发商）</td><td>~15%</td><td>CICT, Mapletree, Frasers 等</td></tr>
-    <tr><td>工业与工程</td><td>~12%</td><td>Keppel, ST Engineering, Seatrium 等</td></tr>
-    <tr><td>电信</td><td>~8%</td><td>Singtel</td></tr>
-    <tr><td>消费与零售</td><td>~6%</td><td>DFI Retail, Jardine, ThaiBev, Wilmar</td></tr>
-    <tr><td>交通与酒店</td><td>~2%</td><td>新加坡航空, 云顶新加坡</td></tr>
-    <tr><td>科技</td><td style="color:#fca5a5;">&lt; 1%</td><td>Venture Corp</td></tr>
+    <tr><th>行业</th><th>占比</th><th>变化 vs v1（2026-03）</th></tr>
+    <tr><td>金融（Financial Services）</td><td style="color:#fbbf24; font-weight:700;">60.5%</td><td>↑（v1 为 ~55%）</td></tr>
+    <tr><td>工业（Industrials）</td><td>14.0%</td><td>~持平</td></tr>
+    <tr><td>房地产（Property / REITs）</td><td>13.7%</td><td>~持平</td></tr>
+    <tr><td>通信服务（Communication）</td><td>6.3%</td><td>↓</td></tr>
+    <tr><td>消费防御 / 其他</td><td>5.5%</td><td>~持平</td></tr>
+    <tr><td>科技（Technology）</td><td style="color:#fca5a5;">0.8%</td><td>~持平</td></tr>
   </table>
 
-  <div class="highlight-box">
-    <strong>巴菲特视角：</strong>三大银行累计占比超过 <strong>50%</strong>——这既是新加坡作为全球金融中心的结构性特征，也是 ES3 最大的集中度风险。如果新加坡银行业遭遇系统性冲击，ES3 将承受巨大压力。但换个角度看：这三家银行都有超过 50 年的历史，资本充足率远超国际标准，是亚太地区最稳健的银行之一。巴菲特本人也是银行股的长期持有者（如 Wells Fargo、Bank of America）。
+  <div class="highlight-box warn">
+    <strong>巴菲特视角（更新）：</strong>三大银行合计权重从 v1 的约 50% 升至 <strong>57.4%</strong>（DBS 29.1% + OCBC 19.0% + UOB 9.3%；2020 年 7 月仅 38%）。这既是新加坡全球金融中心地位的结构性映射，也是 ES3 最大的集中度风险——你买的"海峡时报指数"，实质上越来越像"新加坡三大银行指数"。银行是巴菲特长期偏爱的行业（他重仓过 Wells Fargo / Bank of America），三家新加坡银行资本充足率远高于 Basel 要求、财富管理收入增长，基本面扎实；但若利率转向或银行业绩不及预期，ES3 将不成比例地承压。
   </div>
 </section>
 
@@ -306,42 +322,51 @@
 <section>
   <h2><span class="icon">📈</span> 长期表现分析</h2>
 
-  <h3>各期回报（截至 2026-05-31）</h3>
+  <h3>基金回报（含股息再投资，SSGA 官方，截至 2026-07-31）</h3>
   <table>
-    <tr><th>周期</th><th>ES3 基金</th><th>STI 指数</th><th>追踪误差</th></tr>
-    <tr><td>YTD 2026</td><td class="num-green">+10.46%</td><td class="num-green">+10.85%</td><td>-0.39%</td></tr>
-    <tr><td>1 年</td><td class="num-green">+34.01%</td><td class="num-green">+35.26%</td><td>-1.25%</td></tr>
-    <tr><td>3 年（年化）</td><td class="num-green">+21.86%</td><td class="num-green">+22.76%</td><td>-0.90%</td></tr>
-    <tr><td>5 年（年化）</td><td class="num-green">+14.26%</td><td class="num-green">+14.96%</td><td>-0.70%</td></tr>
-    <tr><td>10 年（年化）</td><td class="num-green">+10.05%</td><td class="num-green">+10.64%</td><td>-0.59%</td></tr>
-    <tr><td>成立以来（年化）</td><td class="num-green">+8.12%</td><td class="num-green">+8.31%</td><td>-0.19%</td></tr>
+    <tr><th>周期</th><th>ES3 基金</th><th>说明</th></tr>
+    <tr><td>YTD 2026</td><td class="num-green">+23.49%</td><td>STI 年内 +22.4%（8-24）</td></tr>
+    <tr><td>1 年</td><td class="num-green">+39.73%</td><td>STI 1 年 +33.6%（价格）</td></tr>
+    <tr><td>3 年（年化）</td><td class="num-green">+23.81%</td><td>银行股盈利驱动的重估行情</td></tr>
+    <tr><td>5 年（年化）</td><td class="num-green">+16.82%</td><td>STI 5 年 +83.1%</td></tr>
+    <tr><td>10 年（年化）</td><td class="num-green">+10.98%</td><td>10 年总回报约 +183%</td></tr>
+    <tr><td>成立以来（年化）</td><td class="num-green">+8.56%</td><td>24 年（2002-04 起）</td></tr>
+  </table>
+
+  <h3>纯价格回报（不含股息，Yahoo 月线实算，截至 2026-08-26）</h3>
+  <table>
+    <tr><th>周期</th><th>价格回报</th><th>年化</th></tr>
+    <tr><td>1 年</td><td class="num-green">+33.4%</td><td>—</td></tr>
+    <tr><td>3 年</td><td class="num-green">+77.4%</td><td class="num-green">+21.2%</td></tr>
+    <tr><td>5 年</td><td class="num-green">+86.4%</td><td class="num-green">+13.3%</td></tr>
+    <tr><td>10 年</td><td class="num-green">+99.8%</td><td class="num-green">+7.2%</td></tr>
   </table>
 
   <div class="card-grid">
     <div class="card">
-      <h4>10 年总回报（含股息再投资）</h4>
-      <div class="big-num green">+162%</div>
-      <div class="desc">S$10,000 → ~S$26,200</div>
+      <h4>近 5 年最大回撤（MDD）</h4>
+      <div class="big-num green">-9.2%</div>
+      <div class="desc">月线实算 · 远小于全球股指（科技权重低）</div>
     </div>
     <div class="card">
-      <h4>月定投效果（S$500/月×10年）</h4>
-      <div class="big-num green">S$115,000</div>
-      <div class="desc">投入 S$60,000，收益 S$55,000</div>
+      <h4>Beta（5Y 月度）</h4>
+      <div class="big-num green">0.67</div>
+      <div class="desc">相对市场组合 · 低波动特征（Yahoo）</div>
     </div>
     <div class="card">
-      <h4>追踪误差（10年）</h4>
-      <div class="big-num" style="color:#facc15;">1.27%</div>
-      <div class="desc">与指数高度一致</div>
+      <h4>52 周价格区间</h4>
+      <div class="big-num" style="color:#facc15;">4.29 – 5.90</div>
+      <div class="desc">现价接近区间上沿</div>
     </div>
     <div class="card">
-      <h4>相关性（R²）</h4>
-      <div class="big-num green">0.99</div>
-      <div class="desc">近乎完美追踪</div>
+      <h4>YTD 总回报（Yahoo）</h4>
+      <div class="big-num green">+27.6%</div>
+      <div class="desc">含股息 · 截至 08-19</div>
     </div>
   </div>
 
   <div class="highlight-box">
-    <strong>复利的力量：</strong>S$10,000 在 10 年前买入 ES3（含股息再投资），今日价值 S$26,200——年化回报约 <strong>10.1%</strong>。这正是巴菲特所说的"时间的玫瑰"。如果你每月定投 S$500，10 年后资产可达 S$115,000，其中近一半是收益。不需要选股、不需要择时，只需要坚持。
+    <strong>复利的力量：</strong>S$10,000 在 10 年前买入 ES3（含股息再投资），今日价值约 <strong>S$28,300</strong>（年化 10.98%）。这正是巴菲特所说的"时间的玫瑰"。但注意：过去一年的 +39.7% 中，很大一部分来自估值扩张（PE 从 13x → 17.6x），而非盈利增长——<strong>未来的回报起点已被抬高</strong>。
   </div>
 </section>
 
@@ -350,19 +375,21 @@
   <h2><span class="icon">💵</span> 股息分析</h2>
 
   <table>
-    <tr><th>除息日</th><th>每股派息（SGD）</th><th>年化股息率</th></tr>
-    <tr><td>2026-02-11</td><td>0.085</td><td rowspan="2" style="vertical-align:middle; color:#22c55e; font-weight:700;">~3.3%</td></tr>
-    <tr><td>2025-08-12</td><td>0.089</td></tr>
-    <tr><td>2025-02-12</td><td>0.085</td><td rowspan="2" style="vertical-align:middle; color:#22c55e; font-weight:700;">~3.4%</td></tr>
-    <tr><td>2024-08-13</td><td>0.089</td></tr>
-    <tr><td>2024-02-13</td><td>0.069</td><td rowspan="2" style="vertical-align:middle; color:#facc15; font-weight:700;">~2.8%</td></tr>
-    <tr><td>2023-08-11</td><td>0.073</td></tr>
+    <tr><th>除息日</th><th>每股派息（SGD）</th><th>年度合计</th></tr>
+    <tr><td>2026-08-13</td><td style="color:#22c55e; font-weight:700;">0.093（新高）</td><td rowspan="2" style="vertical-align:middle; color:#22c55e; font-weight:700;">0.178</td></tr>
+    <tr><td>2026-02-11</td><td>0.085</td></tr>
+    <tr><td>2025-08-12</td><td>0.089</td><td rowspan="2" style="vertical-align:middle; color:#22c55e; font-weight:700;">0.180</td></tr>
+    <tr><td>2025-02-12</td><td>0.091</td></tr>
+    <tr><td>2024-08-13</td><td>0.086</td><td rowspan="2" style="vertical-align:middle; color:#facc15; font-weight:700;">0.159</td></tr>
+    <tr><td>2024-02-13</td><td>0.073</td></tr>
+    <tr><td>2023-08-11</td><td>0.073</td><td rowspan="2" style="vertical-align:middle; color:#facc15; font-weight:700;">0.133</td></tr>
+    <tr><td>2023-02-10</td><td>0.060</td></tr>
   </table>
 
-  <p>ES3 每年分两次派息（通常在 2 月和 8 月），近年的年化股息率稳定在 <strong>3.0-3.5%</strong> 区间，主要来源于成份股的分红（尤其是三大银行的高股息贡献）。</p>
+  <p>ES3 每年派息两次（2 月与 8 月）。近 12 个月累计派息 0.178 SGD（0.085 + 0.093），对应现价股息率约 <strong>3.06%</strong>（SSGA 口径 3.05%）。2026 年 8 月单次 0.093 创历史新高，同比 +4.5%，反映银行股提高派息。年度派息额连续 3 年增长：0.133 → 0.159 → 0.180（2023 → 2024 → 2025 年口径）。</p>
 
-  <div class="highlight-box">
-    <strong>巴菲特视角：</strong>股息是长期投资回报的重要组成部分。ES3 超过 3% 的股息率加上约 7% 的资本增值（10 年年化约 10%），构成了巴菲特所说的"合理回报组合"。股息再投资是复利的关键引擎。
+  <div class="highlight-box warn">
+    <strong>巴菲特视角（更新）：</strong>股息是长期回报的重要组成部分，但股息率本身是"估值温度计"——当股息率从 2023 年的 ~5% 压缩至当前的 3.05%，说明价格已经跑在了基本面前面。股息率下降 ≠ 公司分红能力下降，而是 <strong>你为同样的分红支付了更高的价格</strong>。
   </div>
 </section>
 
@@ -374,46 +401,60 @@
 
   <table>
     <tr><th>指标</th><th>ES3（道富）</th><th>G3B（Amova）</th></tr>
-    <tr><td>基金管理人</td><td>State Street Global Advisors</td><td>Amova Asset Management</td></tr>
+    <tr><td>基金管理人</td><td>State Street Global Advisors</td><td>Amova Asset Management（三井住友信托集团旗下）</td></tr>
     <tr><td>成立时间</td><td>2002 年</td><td>2009 年</td></tr>
-    <tr><td>AUM</td><td>SGD ~35.5 亿</td><td>SGD ~13 亿</td></tr>
-    <tr><td>管理费</td><td>最高 0.30%</td><td>0.09%</td></tr>
-    <tr><td>总费用率（TER）</td><td>0.28%</td><td>0.25%（上限）</td></tr>
-    <tr><td>流动性</td><td>⭐ 最优</td><td>⭐ 良好</td></tr>
-    <tr><td>买卖价差</td><td>最窄</td><td>略宽</td></tr>
+    <tr><td>AUM（2026-08）</td><td>SGD 39.5 亿</td><td>SGD ~17.4 亿</td></tr>
+    <tr><td>管理费</td><td>—</td><td>0.09%（2025-10 起）</td></tr>
+    <tr><td>总费用率（TER）</td><td>0.28%（FY2025）</td><td>0.25% 上限（FY2025 审计 0.24%）</td></tr>
+    <tr><td>股息率</td><td>~3.05%</td><td>~3.56%</td></tr>
+    <tr><td>派息月份</td><td>2 月 / 8 月</td><td>1 月 / 7 月</td></tr>
+    <tr><td>累积份额</td><td>无（需手动再投资）</td><td>有 GAB（2025-09 上市，自动复投）</td></tr>
+    <tr><td>流动性</td><td>⭐ 最优（日均量最大）</td><td>⭐ 良好</td></tr>
   </table>
 
   <div class="highlight-box">
-    <strong>选择建议：</strong>如果投资金额较大（> S$50,000），G3B 更低的 TER（0.25% vs 0.28%）在长期能节省可观的费用。如果追求最佳流动性和最小的买卖价差（尤其小额定投），ES3 的深度流动性更优。巴菲特会建议选费用最低的那只。
+    <strong>选择建议（更新）：</strong>G3B 在费率上优势扩大（TER 0.25% vs 0.28%，且有 0.09% 管理费 + GAB 累积份额自动复投）。ES3 的优势在流动性与市场深度——对小额定投、频繁交易者更友好。巴菲特会选费用最低、结构最简单的——对长期大额配置者，<strong>G3B/GAB 的费率与自动复投优势值得正视</strong>；对重视交易体验与流动性者，ES3 仍是首选。
   </div>
 </section>
 
-<!-- ESG / QUALITY -->
+<!-- VALUATION & SAFETY MARGIN -->
 <section>
-  <h2><span class="icon">🛡️</span> 成份股质量评估</h2>
+  <h2><span class="icon">⚖️</span> 估值分位与安全边际（v2 核心新增）</h2>
 
-  <h3>成份股加权估值指标</h3>
+  <p>格雷厄姆定义安全边际为"内在价值与价格之间的缓冲"。巴菲特把这条原则带进了指数投资。当前 STI 的安全边际处于什么位置？</p>
+
+  <h3>STI 估值十年轨迹</h3>
+  <table>
+    <tr><th>时点</th><th>指数点位</th><th>PE（TTM）</th><th>PB</th><th>股息率</th></tr>
+    <tr><td>2023 年底</td><td>~3,240</td><td>~11x</td><td>~1.0-1.1x</td><td>~5%</td></tr>
+    <tr><td>2024 年底</td><td>~3,787</td><td>~12x</td><td>~1.2x</td><td>~4.5%</td></tr>
+    <tr><td>2025-08</td><td>~4,200</td><td>~13x</td><td>~1.2-1.3x</td><td>~4-5%</td></tr>
+    <tr><td>2026-02（破 5,000）</td><td>5,000+</td><td>~15x</td><td>~1.5x</td><td>~3.5%</td></tr>
+    <tr><td><strong>2026-08（当前）</strong></td><td style="color:#fbbf24; font-weight:700;">5,700+（历史新高）</td><td style="color:#fbbf24; font-weight:700;">17.56x</td><td style="color:#fbbf24; font-weight:700;">1.83x</td><td style="color:#fcd34d;">3.05%</td></tr>
+  </table>
+  <p style="font-size:0.85rem; color:#94a3b8;">来源：TheDividendUncle（2026-08-18）、SSGA、Trading Economics。STI 一年内上涨约 35%，而估值倍数同步扩张约 35%——这轮上涨大部分来自"重定价"而非盈利。</p>
+
   <div class="card-3">
     <div class="card">
-      <h4>市盈率（PE）</h4>
-      <div class="big-num">16.71x</div>
-      <div class="desc">合理水平</div>
+      <h4>PE 相对 10 年均值</h4>
+      <div class="big-num yellow">+2σ 以上</div>
+      <div class="desc">市场分析普遍认为当前 PE 已高于 10 年均值约两个标准差</div>
     </div>
     <div class="card">
-      <h4>市净率（PB）</h4>
-      <div class="big-num">1.66x</div>
-      <div class="desc">合理偏低</div>
+      <h4>PB 1.83x</h4>
+      <div class="big-num yellow">一年翻倍</div>
+      <div class="desc">2025-08 为 1.2-1.3x → 2026-08 为 1.83x</div>
     </div>
     <div class="card">
-      <h4>价格/现金流</h4>
-      <div class="big-num">11.60x</div>
-      <div class="desc">良好</div>
+      <h4>股息率 3.05%</h4>
+      <div class="big-num red">压缩 40%</div>
+      <div class="desc">2023 年 ~5% → 当前 3.05%，收入垫变薄</div>
     </div>
   </div>
 
-  <p>STI 的 30 只成份股以大盘蓝筹为主，加权平均市值约 <strong>SGD 882 亿</strong>。成份股多为新加坡各行业的龙头企业，基本面扎实。三大银行（DBS、OCBC、UOB）的资本充足率均超过 14%，远高于国际监管要求（Basel III 要求的 10.5%），不良贷款率持续保持在较低水平。</p>
-
-  <p style="margin-top:12px;"><strong>STI 的独特优势：科技含量低（&lt;1%）</strong>——在 2022 年科技股大跌时，STI 仅下跌约 8%，远好于纳斯达克（-33%）和标普 500（-19%）。这使 ES3 成为科技重仓投资者的极佳分散化工具。</p>
+  <div class="highlight-box warn">
+    <strong>巴菲特式的判断：</strong>"在别人贪婪时恐惧"。STI 创历史新高 + 估值高于十年均值两个标准差 + 集中度 57.4%——三个信号叠加，<strong>安全边际从"充足"变为"稀薄"</strong>。这不是说 ES3 不值得持有，而是说：<strong>当下的新买入者支付的起点价格，决定了未来 5-10 年的潜在回报大概率低于过去十年（10.98% 年化）</strong>。格雷厄姆会建议：要么分批定投摊薄成本，要么等待回撤再重仓。摩根大通目标价 6,500 点（+13% 上行）与富达削减持仓（估值超盈利）同时存在——多空分歧正是"高位"的典型特征。
+  </div>
 </section>
 
 <!-- RISKS -->
@@ -425,136 +466,148 @@
       <h4 style="color:#6ee7b7;">✅ 优势</h4>
       <ul style="margin:0; padding-left:18px;">
         <li>24 年历史，穿越多个市场周期</li>
-        <li>AUM 最高，流动性最好</li>
+        <li>AUM 39.5 亿，流动性同类最佳</li>
         <li>费用合理（0.28% TER）</li>
-        <li>追踪误差极小（1.27%）</li>
-        <li>稳定派息（3.0-3.5%）</li>
-        <li>低科技含量，天然分散化</li>
+        <li>追踪质量优异（R² ≈ 0.99）</li>
+        <li>连续派息 20 年+，8 月单次创新高</li>
+        <li>低科技含量（0.8%），天然防御属性</li>
+        <li>低波动（Beta 0.67，5Y MDD -9.2%）</li>
         <li>CPF OA / SRS 可用</li>
       </ul>
     </div>
     <div class="box cons">
-      <h4 style="color:#fca5a5;">⚠️ 风险</h4>
+      <h4 style="color:#fca5a5;">⚠️ 风险（较 v1 上升）</h4>
       <ul style="margin:0; padding-left:18px;">
-        <li>银行集中度 >50%</li>
-        <li>新加坡市场规模较小</li>
-        <li>利率敏感度高</li>
-        <li>科技仓位不足 1%，错失增长</li>
-        <li>费用率仍有下降空间</li>
-        <li>流动性受限于 SGX 规模</li>
-        <li>无积累份额（需手动再投）</li>
+        <li><strong>估值高位：</strong>PE 17.6x / PB 1.83x，高于十年均值 2σ</li>
+        <li><strong>银行集中度 57.4%</strong>（2020 年仅 38%）</li>
+        <li>利率下行压缩净息差（已部分被费用收入对冲）</li>
+        <li>涨势集中在大盘蓝筹，广度不足</li>
+        <li>费用率低于 G3B 的差距在拉大</li>
+        <li>无累积份额，需手动再投资</li>
+        <li>新加坡市场体量小，增长天花板明显</li>
       </ul>
     </div>
+  </div>
+
+  <div class="score-section">
+    <h4 style="color:#fbbf24;">四维风险矩阵</h4>
+    <div class="score-row"><span class="label">系统性（利率 / 宏观 / 周期）</span><span style="color:#fcd34d;">中 · 新加坡"金发姑娘"经济（2Q26 GDP +5.9%、通胀 1.9%），但估值已计入乐观预期</span></div>
+    <div class="score-row"><span class="label">信用（成份股基本面）</span><span style="color:#6ee7b7;">低 · 三大行资本充足率远高于 Basel 要求，不良率低位</span></div>
+    <div class="score-row"><span class="label">流动性</span><span style="color:#6ee7b7;">低 · SGX 旗舰 ETF，日均成交充足</span></div>
+    <div class="score-row"><span class="label">汇率 / 地缘</span><span style="color:#6ee7b7;">低 · SGD 近三年兑 USD 升值近 6%，避险属性强</span></div>
   </div>
 </section>
 
 <!-- BUFFETT CHECKLIST -->
 <section>
-  <h2><span class="icon">✅</span> 巴菲特指数基金投资原则评估</h2>
+  <h2><span class="icon">✅</span> 巴菲特指数基金投资原则评估（v2 更新）</h2>
 
   <table>
     <tr><th style="width:35%;">原则</th><th style="width:15%;">评分</th><th>说明</th></tr>
     <tr>
       <td><strong>1. 极低成本</strong></td>
-      <td><span class="verdict warn">⚠️ 7/10</span></td>
-      <td>0.28% 在新加坡 ETF 中属于合理水平，但与巴菲特推崇的 Vanguard S&P 500（0.03%）相比仍有差距。竞品 G3B 的 0.25% 更优。</td>
+      <td><span class="verdict warn">⚠️ 6/10</span></td>
+      <td>0.28% 合理但不再领先——G3B 已降至 0.25% 上限 / 0.09% 管理费，并有 GAB 累积份额。</td>
     </tr>
     <tr>
       <td><strong>2. 广泛分散</strong></td>
-      <td><span class="verdict warn">⚠️ 6/10</span></td>
-      <td>30 只成份股在"数量"上不算多，且行业集中于金融（55%+）。但也正是这种集中让它成为科技股投资者的有效分散工具。</td>
+      <td><span class="verdict warn">⚠️ 5/10</span></td>
+      <td>金融占 60.5%、三大银行 57.4%——"指数"越来越像"银行股"。</td>
     </tr>
     <tr>
-      <td><strong>3. 长期持���</strong></td>
+      <td><strong>3. 长期持有</strong></td>
       <td><span class="verdict pass">✅ 9/10</span></td>
-      <td>完美契合"买入并持有"哲学。10 年年化 10% 的回报证明了长期持有的价值。</td>
+      <td>10 年年化 10.98%（含息），完美契合买入持有。</td>
     </tr>
     <tr>
       <td><strong>4. 被动管理</strong></td>
       <td><span class="verdict pass">✅ 10/10</span></td>
-      <td>完全被动，完全复制 STI 指数，无主动管理风险，R² = 0.99。</td>
+      <td>完全复制 STI，无主动风险，R² ≈ 0.99。</td>
     </tr>
     <tr>
       <td><strong>5. 不择时</strong></td>
       <td><span class="verdict pass">✅ 9/10</span></td>
-      <td>适合 DCA（定期定额），月投 S$500 在 10 年间可产生约 S$55,000 收益。</td>
+      <td>定投长期有效；但当前高位应"分批"而非一次性建仓。</td>
     </tr>
     <tr>
       <td><strong>6. 股息再投资</strong></td>
-      <td><span class="verdict neutral">➡️ 7/10</span></td>
-      <td>分派份额（ES3）需手动再投资；G3B 有积累份额（GAB）可实现自动复投。</td>
+      <td><span class="verdict neutral">➡️ 6/10</span></td>
+      <td>股息率 3.05% 仍佳，但收入垫较 2023 年压缩；ES3 无自动复投，G3B 有 GAB。</td>
     </tr>
     <tr>
       <td><strong>7. 可理解的业务</strong></td>
       <td><span class="verdict pass">✅ 10/10</span></td>
-      <td>指数基金是所有投资品种中最容易理解的——买新加坡前 30 大蓝筹。</td>
+      <td>指数基金是最容易理解的投资品种——买新加坡前 30 大蓝筹。</td>
+    </tr>
+    <tr>
+      <td><strong>8. 安全边际（v2 新增）</strong></td>
+      <td><span class="verdict fail">⚠️ 4/10</span></td>
+      <td>估值处于十年高位（PE 17.6x / PB 1.83x / 股息 3.05%），当前买入的安全边际显著收窄。</td>
     </tr>
   </table>
 
   <div class="total-score">
-    <div class="score-circle high">8.2 / 10</div>
-    <div class="verdict-text">综合结论：<strong style="color:#6ee7b7;">符合巴菲特指数基金投资哲学</strong></div>
+    <div class="score-circle medium">6.7 / 10</div>
+    <div class="verdict-text">综合结论：<strong style="color:#fcd34d;">看多 · 分批定投，不追高（由 v1 的 8.2 下调）</strong></div>
     <p style="color:#94a3b8; margin-top:8px; font-size:0.9rem;">
-      ES3 完美反映了巴菲特"低成本指数基金是最好的投资"这一理念。
-      对于希望获得新加坡市场 Beta 收益、重视稳定股息、偏好蓝筹股的长期投资者而言，这是一个优秀的核心配置工具。
-      建议通过定期定额方式持续投入，将股息再投资，长期持有。
+      工具本身没有变差——变的只是价格。巴菲特会说：最好的生意，买贵了也是坏投资。
+      ES3 依然是对新加坡市场最省心的 Beta 工具，但当前时点的正确打开方式是<strong>分批 / 定投摊薄成本、股息再投资、长期持有</strong>，而非一次性追高。
     </p>
   </div>
 </section>
 
 <!-- BUFFETT VS STI ETF -->
 <section>
-  <h2><span class="icon">🎯</span> 如果巴菲特投资 ES3</h2>
+  <h2><span class="icon">🎯</span> 如果巴菲特在 2026 年 8 月投资 ES3</h2>
 
   <div style="background: linear-gradient(135deg, #1e293b, #0f172a); border: 1px solid #334155; border-radius: 12px; padding: 28px; margin: 20px 0;">
     <h3 style="color:#fbbf24; margin-top:0;">巴迪·巴菲特式诊断 🐾</h3>
 
-    <p><strong>他会买吗？会的，但有前提。</strong></p>
+    <p><strong>他会买吗？会，但不会像 2023 年那样一次性重仓。</strong></p>
 
-    <p>巴菲特多次公开表示，对于没有时间或能力做个股研究的普通投资者，"低成本的指数基金是最好的选择"。他一再强调："不要试图在股市里找圣杯，买指数基金，然后继续你的人生。"</p>
-
-    <p>对于居住在新加坡的投资者而言，ES3 提供了一个简单、透明、低成本的方式来参与新加坡经济增长。如果巴菲特住在新加坡，他大概率会说：</p>
+    <p>巴菲特多次表示"低成本的指数基金是最好的选择"。这句话在 2023 年（PE 11x、股息 5%）与 2026 年（PE 17.6x、股息 3.05%）都成立——但买入的价格起点完全不同。以他 2007 年的赌约精神：<strong>他会承认 ES3 是新加坡市场最理性的工具，同时保持对"买得便宜"的执念。</strong></p>
 
     <div class="buffett-quote" style="margin:16px 0;">
-      "Put 90% of your Singapore equity allocation in a low-cost STI ETF and 10% in Singapore government bonds. Then go back to work and forget about it."
+      "If you are buying the market, be patient, buy on weakness, and never let price dictate your discipline. Dollar-cost average into it over time."
     </div>
 
-    <p><strong>投资策略建议：</strong></p>
+    <p><strong>投资策略建议（2026-08 时点）：</strong></p>
     <ul>
-      <li><strong>核心仓位：</strong> ES3 作为新加坡股票仓位的核心配置，占比 50-70%</li>
-      <li><strong>定投方式：</strong> 每月固定金额买入，无视市场波动</li>
-      <li><strong>股息处理：</strong> 将每半年的股息手动再投资（或选择 G3B 的分派份额或 GAB 积累份额）</li>
-      <li><strong>全球分散：</strong> 搭配全球指数基金（如 S&P 500 ETF）以分散单一市场风险</li>
-      <li><strong>持有期限：</strong> 至少 10 年以上</li>
+      <li><strong>核心仓位：</strong> ES3 作为新加坡股票仓位核心配置（占比 40-60%），而非全部</li>
+      <li><strong>建仓方式：</strong> 当前高位 <strong>分批 / 按月定投</strong>，避免一次性梭哈；若回撤 8-10%（至 ~5.3-5.4 SGD）可加码</li>
+      <li><strong>股息处理：</strong> 每半年股息再投资（或选用 GAB 累积份额实现自动复投）</li>
+      <li><strong>全球分散：</strong> 搭配全球指数基金（VWRA / S&P 500 ETF），STI 仅作区域配置而非全部身家</li>
+      <li><strong>持有期限：</strong> 至少 10 年以上；把当前高估值视为"未来回报率起点被抬高"，管理预期</li>
     </ul>
 
     <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
-      <span class="verdict pass">✅ 建议买入</span>
-      <span class="verdict pass">✅ 适合定投</span>
+      <span class="verdict pass">✅ 适合长期定投</span>
+      <span class="verdict warn">⚠️ 高位分批建仓</span>
       <span class="verdict neutral">➡️ 搭配全球指数更佳</span>
-      <span class="verdict warn">⚠️ 注意银行集中度</span>
+      <span class="verdict fail">⚠️ 注意估值分位</span>
     </div>
   </div>
 </section>
 
 <!-- COMPARISON -->
 <section>
-  <h2><span class="icon">🌏</span> STI ETF vs S&P 500 ETF</h2>
+  <h2><span class="icon">🌏</span> STI ETF vs S&P 500 ETF（2026-08 估值对比）</h2>
 
   <table>
-    <tr><th>指标</th><th>ES3 (STI)</th><th>VOO (S&P 500)</th></tr>
+    <tr><th>指标</th><th>ES3 (STI)</th><th>IVV / VOO (S&P 500)</th></tr>
     <tr><td>市场</td><td>新加坡（30 只大盘股）</td><td>美国（500 只大盘股）</td></tr>
     <tr><td>费用率</td><td>0.28%</td><td>0.03%</td></tr>
-    <tr><td>10 年年化回报</td><td>~10.1%</td><td>~13%</td></tr>
-    <tr><td>行业集中度</td><td>金融 55%+</td><td>科技 30%+</td></tr>
-    <tr><td>股息率</td><td>~3.3%</td><td>~1.3%</td></tr>
-    <tr><td>PE 估值</td><td>16.7x</td><td>~22x</td></tr>
+    <tr><td>PE（TTM，2026-08）</td><td>17.6x</td><td>~30x</td></tr>
+    <tr><td>PB</td><td>1.83x</td><td>~5.6x</td></tr>
+    <tr><td>股息率</td><td>3.05%</td><td>~1.1%</td></tr>
+    <tr><td>行业集中度</td><td>金融 60.5%</td><td>科技 30%+</td></tr>
+    <tr><td>10 年年化回报</td><td>10.98%（含息）</td><td>~13%（历史，含息）</td></tr>
     <tr><td>货币</td><td>SGD</td><td>USD</td></tr>
-    <tr><td>分散化程度</td><td>行业集中，市场小</td><td>行业分散，全球影响力</td></tr>
+    <tr><td>分散化程度</td><td>行业集中、市场小</td><td>行业分散、全球影响力</td></tr>
   </table>
 
   <div class="highlight-box">
-    <strong>巴菲特视角：</strong>他推荐 S&P 500 指数基金给美国投资者。对于新加坡投资者，ES3 是对本地市场的合理补充。最理性的做法是：<strong>建立"全球指数（如 VWRA）+ 本地指数（ES3）"的双核心组合</strong>。巴菲特曾说过："多元化是对无知的保护。如果你知道自己在做什么，你不需要多元化。"但对于绝大部分投资者，全球多元配置才是最稳妥的选择。
+    <strong>巴菲特视角：</strong>横向看，STI 的 PE 17.6x / PB 1.83x 仍显著低于美股（30x / 5.6x），股息率 3.05% 是美股的三倍——估值谈不上"泡沫级"。但纵向看，STI 自身已处十年高位。理性配置：<strong>"全球指数 + 本地指数"双核心</strong>，STI 作为高股息、低波动的防守性区域配置，而非进攻主力。
   </div>
 </section>
 
@@ -563,11 +616,11 @@
   <h2><span class="icon">🎯</span> 最终结论</h2>
 
   <div style="background: linear-gradient(135deg, #1e293b, #0f172a); border: 1px solid #334155; border-radius: 12px; padding: 28px; margin: 20px 0;">
-    <p><strong>ES3 是一款高质量的指数投资工具，完全符合巴菲特的投资哲学。</strong></p>
+    <p><strong>ES3 仍是一款高质量的指数投资工具，符合巴菲特的投资哲学——但买入时点需要纪律。</strong></p>
 
-    <p>它的核心优势——<strong>低费用、高透明度、稳定派息、长期增长</strong>——正是巴菲特反复向普通投资者推荐指数基金的原因。STI 在 2026 年 2 月历史性突破 5,000 点，反映了新加坡市场的基本面改善和投资者信心恢复。</p>
+    <p>它不变的优点——<strong>低费用、高透明度、稳定派息、长期增长</strong>——是巴菲特反复推荐指数基金的原因。它变化的环境——<strong>STI 历史新高、PE 高于十年均值两倍标准差、三大银行集中度 57.4%</strong>——要求理性投资者控制节奏。</p>
 
-    <p>但 ES3 并非银弹。其约 50% 的银行集中度意味着它不是"广泛分散"的指数。对于已经持有大量科技股的投资者来说，ES3 的低科技含量反而成为分散化的优点。对于希望获取全球增长敞口的投资者，ES3 应作为组合的一部分而非全部。</p>
+    <p>格雷厄姆的教诲在此刻尤其适用："价格是你付出的，价值是你得到的。" 2023 年买入 ES3 的人享有 5% 股息 + 11x PE 的起点；2026 年 8 月买入的人起点是 3.05% 股息 + 17.6x PE。<strong>同一个工具，两种不同的回报预期。</strong></p>
 
     <div class="buffett-quote" style="margin:16px 0;">
       "The best way to own common stocks is through an index fund that charges minimal fees. That is the most nearly foolproof investment."
@@ -576,24 +629,25 @@
 
     <p><strong>操作建议：</strong></p>
     <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
-      <span class="verdict pass">✅ 适合长期定投</span>
-      <span class="verdict pass">✅ 适合作为核心配置</span>
-      <span class="verdict warn">⚠️ 搭配全球指数基金</span>
-      <span class="verdict neutral">➡️ G3B 费率略优（0.25%）</span>
+      <span class="verdict pass">✅ 长期定投 / 分批建仓</span>
+      <span class="verdict pass">✅ 作为新加坡区域核心配置</span>
+      <span class="verdict warn">⚠️ 当前高位避免一次性追高</span>
+      <span class="verdict warn">⚠️ 关注银行集中度与估值分位</span>
+      <span class="verdict neutral">➡️ G3B/GAB 费率与自动复投更优</span>
     </div>
 
     <p style="margin-top:16px; color:#cbd5e1;">
-      简而言之：<strong>ES3 是巴菲���理念在新加坡的最佳实践案例之一。</strong>买入、持有、股息再投资、继续生活——这正是"奥马哈先知"推崇的投资之道。
+      简而言之：<strong>ES3 是巴菲特理念在新加坡的最佳实践工具之一。买入要有耐心，持有要有信心，再投资要坚持。</strong>"定投、不追高、股息复利、长期持有"——这就是当下最接近"奥马哈先知"的选择。
     </p>
   </div>
 </section>
 
 <div class="disclaimer">
-  <strong>免责声明：</strong>本报告仅供信息参考和教育用途，不构成任何投资建议。所有数据来源于公开市场信息，可能存在延迟。投资有风险，决策需谨慎。巴菲特价值投资框架是长期投资理念，不保证在任何市场条件下都能获得正回报。
+  <strong>免责声明：</strong>本报告仅供信息参考和教育用途，不构成任何投资建议。数据来源：SSGA 官网（2026-08-17/18）、Yahoo Finance（2026-08-19/26）、FSMOne（2026-08-14/16）、TradingView、TheSmartInvestor（2026-08-24）、TheDividendUncle（2026-08-18）、Trading Economics。基金回报为 SSGA 官方数据（含股息再投资，截至 2026-07-31），价格回报为 Yahoo 月线实算（不含股息，截至 2026-08-26）。所有公开数据可能存在延迟或口径差异，关键结论请人工复核。投资有风险，决策需谨慎。
 </div>
 
 <div class="footer">
-  报告由 巴迪（🐾 WorkBuddy）自动生成 · 数据来源：SSGA / SGX / FTSE Russell / FSMOne · 基于巴菲特价值投资框架 · 2026-07-26
+  报告由 巴迪（🐾 WorkBuddy）自动生成 · v2（2026-08-26 更新）· 基准货币 SGD · 基于巴菲特价值投资框架 · v1 生成于 2026-07-26
 </div>
 
 </div><!-- /container -->
