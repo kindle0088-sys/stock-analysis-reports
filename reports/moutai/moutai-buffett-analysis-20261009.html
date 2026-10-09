@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>贵州茅台 · 巴菲特价值投资分析 v3 | 2026-10-09</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0b1120; color: #e2e8f0; font-family: -apple-system, 'Segoe UI', 'PingFang SC', 'Noto Sans SC', 'Microsoft YaHei', sans-serif; line-height: 1.8; padding: 0; }
+
+  /* 颜色约定：涨红跌绿（中国习惯）—— .up = 上涨/改善 → 红；.down = 下跌/恶化 → 绿 */
+  .up { color: #ef4444; }
+  .down { color: #22c55e; }
+  .flat { color: #facc15; }
+
+  .hero { background: linear-gradient(135deg, #0b1120 0%, #7c1d1d 50%, #0b1120 100%); padding: 60px 20px 50px; text-align: center; border-bottom: 1px solid #5c1a1a; }
+  .hero h1 { font-size: 2.4rem; color: #fbbf24; letter-spacing: 2px; margin-bottom: 8px; }
+  .hero .ticker { display: inline-block; background: #b91c1c; color: #fff; padding: 4px 16px; border-radius: 20px; font-size: 0.95rem; font-weight: 600; letter-spacing: 1px; margin-bottom: 12px; }
+  .hero .sub { color: #94a3b8; font-size: 1rem; margin-top: 6px; }
+  .hero .v-tag { display: inline-block; background: #fbbf24; color: #1a1a2e; font-weight: 700; padding: 2px 12px; border-radius: 6px; font-size: 0.85px; margin-left: 8px; letter-spacing: 0; font-size: 0.85rem; }
+  .hero .quote-box { display: flex; justify-content: center; gap: 36px; margin-top: 24px; flex-wrap: wrap; }
+  .hero .q-item { text-align: center; }
+  .hero .q-item .num { font-size: 1.9rem; font-weight: 700; color: #fbbf24; }
+  .hero .q-item .label { font-size: 0.82rem; color: #94a3b8; margin-top: 2px; }
+  .hero .ccy { margin-top: 16px; font-size: 0.85rem; color: #94a3b8; }
+  .hero .ccy b { color: #fbbf24; }
+
+  .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+
+  .buffett-quote { background: linear-gradient(135deg, #1e293b, #0f172a); border-left: 4px solid #fbbf24; padding: 20px 24px; margin: 30px 0; border-radius: 0 8px 8px 0; font-style: italic; color: #cbd5e1; font-size: 1.05rem; }
+  .buffett-quote .attr { display: block; text-align: right; color: #fbbf24; font-style: normal; font-size: 0.88rem; margin-top: 8px; }
+
+  section { padding: 40px 0; border-bottom: 1px solid #1e293b; }
+  section:last-child { border-bottom: none; }
+
+  h2 { font-size: 1.6rem; color: #fbbf24; margin-bottom: 24px; padding-bottom: 10px; border-bottom: 2px solid #b91c1c; display: flex; align-items: center; gap: 10px; }
+  h3 { font-size: 1.2rem; color: #93c5fd; margin-top: 24px; margin-bottom: 12px; }
+  h4 { color: #a5b4fc; margin-top: 16px; margin-bottom: 8px; font-size: 1.02rem; }
+
+  p { margin-bottom: 14px; color: #cbd5e1; }
+  ul, ol { padding-left: 24px; margin-bottom: 16px; }
+  li { margin-bottom: 8px; color: #cbd5e1; }
+
+  .verdict { display: inline-block; padding: 3px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; margin-right: 6px; margin-bottom: 4px; }
+  .verdict.pass { background: #064e3b; color: #6ee7b7; }
+  .verdict.fail { background: #450a0a; color: #fca5a5; }
+  .verdict.warn { background: #422006; color: #fcd34d; }
+  .verdict.neutral { background: #1e3a5f; color: #93c5fd; }
+
+  .card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 16px 0; }
+  .card { background: #1e293b; border-radius: 10px; padding: 18px; border: 1px solid #334155; }
+  .card h4 { color: #fbbf24; margin-top: 0; font-size: 0.92rem; margin-bottom: 4px; }
+  .card .big-num { font-size: 1.6rem; font-weight: 700; color: #fbbf24; margin: 4px 0 2px; }
+  .card .desc { font-size: 0.8rem; color: #94a3b8; }
+
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.9rem; }
+  th, td { border: 1px solid #334155; padding: 10px 14px; text-align: right; }
+  th { background: #1e293b; color: #fbbf24; font-weight: 600; text-align: center; }
+  td:first-child, th:first-child { text-align: left; }
+  td { background: #0f172a; }
+  tr:hover td { background: #1a2744; }
+
+  .score-section { background: #1e293b; border-radius: 12px; padding: 24px; margin: 20px 0; }
+  .score-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #334155; gap: 12px; }
+  .score-row:last-child { border-bottom: none; }
+  .score-row .label { color: #cbd5e1; font-weight: 500; }
+  .score-row .stars { color: #fbbf24; letter-spacing: 2px; white-space: nowrap; }
+  .score-row .stars.empty { color: #334155; }
+
+  .total-score { text-align: center; padding: 30px; margin: 24px 0; }
+  .total-score .score-circle { width: 130px; height: 130px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 2.6rem; font-weight: 800; margin-bottom: 12px; background: linear-gradient(135deg, #422006, #713f12); color: #fcd34d; border: 3px solid #f59e0b; }
+  .total-score .verdict-text { font-size: 1.2rem; font-weight: 600; color: #e2e8f0; }
+
+  .highlight-box { background: #0f172a; border-left: 4px solid #60a5fa; padding: 14px 18px; border-radius: 6px; margin: 16px 0; font-size: 0.95rem; }
+  .highlight-box strong { color: #fbbf24; }
+  .highlight-box.gold { border-left-color: #fbbf24; }
+  .highlight-box.red { border-left-color: #ef4444; }
+  .highlight-box.green { border-left-color: #22c55e; }
+
+  .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+  .pros-cons .box { padding: 16px; border-radius: 8px; }
+  .pros-cons .pros { background: #2a0f0f; border: 1px solid #b91c1c; }
+  .pros-cons .cons { background: #06281c; border: 1px solid #10b981; }
+  .pros-cons .box h4 { margin-top: 0; margin-bottom: 8px; }
+
+  .change-block { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 20px; margin: 20px 0; }
+  .change-block h4 { color: #fbbf24; margin-top: 0; }
+  .change-item { display: flex; align-items: baseline; gap: 12px; padding: 8px 0; border-bottom: 1px dashed #334155; font-size: 0.9rem; }
+  .change-item:last-child { border-bottom: none; }
+  .change-item .metric { color: #94a3b8; width: 130px; flex-shrink: 0; }
+  .change-item .from { color: #64748b; }
+  .change-item .arrow { color: #64748b; }
+  .change-item .to { color: #e2e8f0; font-weight: 600; }
+
+  .disclaimer { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.82rem; color: #94a3b8; }
+  .footer { text-align: center; padding: 30px 20px; color: #64748b; font-size: 0.82rem; }
+
+  .version-switcher { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 10px 16px; margin: 20px auto; font-size: 13px; max-width: 1000px; }
+  .version-switcher .vs-label { color: #94a3b8; font-weight: 600; }
+  .vs-tab { text-decoration: none; color: #cbd5e1; font-weight: 600; padding: 6px 16px; border-radius: 20px; background: #0f172a; border: 1px solid #334155; transition: background 0.15s; }
+  .vs-tab:hover { background: #1a2744; }
+  .vs-tab.active { background: #b91c1c; color: #fff; border-color: #b91c1c; }
+  .vs-note { margin-left: auto; font-size: 11px; color: #64748b; }
+
+  @media (max-width: 760px) { .card-grid { grid-template-columns: 1fr 1fr; } .pros-cons { grid-template-columns: 1fr; } .hero .quote-box { gap: 20px; } .change-item { flex-wrap: wrap; } }
+</style>
+</head>
+<body>
+<div class="hero">
+  <span class="ticker">SH: 600519</span>
+  <h1>贵州茅台 · 巴菲特价值投资分析 <span class="v-tag">v3</span></h1>
+  <p class="sub">Kweichow Moutai — 中国白酒绝对龙头 · 三季报前的估值窗口 · 数据截至 2026-10-09</p>
+  <div class="quote-box">
+    <div class="q-item"><div class="num down">¥1,263.00</div><div class="label">最新收盘（较 v2 −5.9%）</div></div>
+    <div class="q-item"><div class="num">¥1.58万亿</div><div class="label">总市值</div></div>
+    <div class="q-item"><div class="num">19.39x</div><div class="label">PE (TTM)</div></div>
+    <div class="q-item"><div class="num">18.7x</div><div class="label">PE (2026E)</div></div>
+    <div class="q-item"><div class="num up">4.12%</div><div class="label">股息率 (TTM)</div></div>
+  </div>
+  <div class="ccy">💱 基准货币：<b>CNY（人民币）</b> —— 财报记账货币与交易货币一致，全文数字均为人民币</div>
+</div>
+
+<div class="version-switcher">
+  <span class="vs-label">📑 版本切换</span>
+  <a class="vs-tab" href="moutai-buffett-analysis-20260726.html">v1 · 2026-07-26</a>
+  <a class="vs-tab" href="moutai-buffett-analysis-20260816.html">v2 · 2026-08-16</a>
+  <a class="vs-tab active" href="moutai-buffett-analysis-20261009.html">v3 · 2026-10-09 · 当前</a>
+  <span class="vs-note">v3 迭代：估值进入 5 年 4% 分位，但领先指标仍在恶化</span>
+</div>
+
+<div class="container">
+
+<section>
+  <h2><span>📋</span> 执行摘要</h2>
+
+  <div class="buffett-quote">
+    "Price is what you pay. Value is what you get."
+    <span class="attr">— Warren Buffett</span>
+  </div>
+
+  <p>v2（2026-08-16）的结论是「<b>增长神话破裂</b>」：茅台从永续成长股必须被重估为成熟价值股，而当时 20.28x 的 PE 还没反映这一点。</p>
+
+  <p>v3 的结论是「<b>估值开始买单，但还没买够</b>」。过去两个月发生了两件事，方向相反：</p>
+
+  <div class="highlight-box gold">
+    <strong>① 估值侧的改善是真的。</strong>股价再跌 5.89% 至 ¥1,263.00，PE(TTM) 从 20.28x 降到 <b>19.39x</b> —— 落在近五年 PE 区间的 <b>4% 分位</b>（5% 分位 = 19.6x）。股息率从 3.88% 升到 <b>4.12%</b>，DCF 溢价从 v2 的 +19% 收窄到 <b>+3.5%</b>。
+  </div>
+
+  <div class="highlight-box green">
+    <strong>② 基本面侧的领先指标仍在恶化。</strong>合同负债（渠道预收款，白酒最硬的先行指标）2026 年中报仅 <b>31.78 亿元</b>，同比 <b>−42.3%</b>，连续两年腰斩（2024H1 99.93 亿 → 2025H1 55.07 亿 → 2026H1 31.78 亿，两年 −68%）。
+  </div>
+
+  <div class="highlight-box">
+    <strong>③ 但终端出现矛盾信号。</strong>2026 年 9 月初，茅台对<b>线下自营店再度提价</b>；飞天茅台零售均价升至 <b>1,868.05 元/瓶</b>，线下渠道长期缺货。→ 典型的<b>「量缩价升」</b>：公司在用价格手段保住利润表。
+  </div>
+
+  <h3>内在价值与安全边际</h3>
+  <table>
+    <thead><tr><th>估值方法</th><th>关键参数</th><th>隐含价值（元/股）</th></tr></thead>
+    <tbody>
+      <tr><td>两阶段 DCF（保守）</td><td>g₁ = 0%，r = 9%，g₂ = 2.5%</td><td>921</td></tr>
+      <tr><td>两阶段 DCF（中枢）</td><td>g₁ = 2.5%，r = 8.5%，g₂ = 2.5%</td><td>1,120</td></tr>
+      <tr><td>两阶段 DCF（乐观）</td><td>g₁ = 5%，r = 8%，g₂ = 2.5%</td><td>1,354</td></tr>
+      <tr><td>股息率锚</td><td>要求股息率 4.5% / 4.0%</td><td>1,155 / 1,300</td></tr>
+      <tr><td>PE 锚</td><td>18x / 20x × EPS2026E 67.62</td><td>1,217 / 1,352</td></tr>
+    </tbody>
+  </table>
+
+  <div class="highlight-box red">
+    <strong>内在价值区间 ¥1,100 – 1,350，中枢 ≈ ¥1,220。</strong>现价 ¥1,263 较中枢<b>高约 3.5%</b> —— 既无显著高估，也<b>没有安全边际</b>。<br>
+    按巴菲特标准的<b>击球区</b>（要求 20% 安全边际）＝ <b>≤ ¥976</b>；要求 10% 安全边际＝ <b>≤ ¥1,098</b>。当前价格<b>尚未进入</b>。
+  </div>
+</section>
+
+<section>
+  <h2><span>🔁</span> v2 → v3 迭代变化</h2>
+  <div class="change-block">
+    <h4>关键指标对比（v2 数据截至 2026-08-14 → v3 数据截至 2026-10-09）</h4>
+    <div class="change-item"><span class="metric">股价</span><span class="from">¥1,341.99</span><span class="arrow">→</span><span class="to down">¥1,263.00（−5.89%）</span></div>
+    <div class="change-item"><span class="metric">总市值</span><span class="from">¥1.68 万亿</span><span class="arrow">→</span><span class="to down">¥1.58 万亿</span></div>
+    <div class="change-item"><span class="metric">PE (TTM)</span><span class="from">20.28x</span><span class="arrow">→</span><span class="to down">19.39x</span></div>
+    <div class="change-item"><span class="metric">PE 五年分位</span><span class="from">—</span><span class="arrow">→</span><span class="to down">4%（近五年最低区间）</span></div>
+    <div class="change-item"><span class="metric">股息率 (TTM)</span><span class="from">3.88%</span><span class="arrow">→</span><span class="to up">4.12%</span></div>
+    <div class="change-item"><span class="metric">TTM 归母净利</span><span class="from">—</span><span class="arrow">→</span><span class="to">814.34 亿</span></div>
+    <div class="change-item"><span class="metric">合同负债</span><span class="from">55.07 亿（2025H1）</span><span class="arrow">→</span><span class="to down">31.78 亿（−42.3% YoY）</span></div>
+    <div class="change-item"><span class="metric">DCF 溢价 / 折价</span><span class="from">高估 +19%</span><span class="arrow">→</span><span class="to down">高估 +3.5%</span></div>
+    <div class="change-item"><span class="metric">综合评分</span><span class="from">7.0 / 10</span><span class="arrow">→</span><span class="to up">7.3 / 10</span></div>
+  </div>
+
+  <p><b>巴菲特视角的迭代：</b>v2 的估值判断（「20.28x 面对负增长不便宜」）在两个月后被市场部分兑现——股价跌了 5.9%，PE 落到五年 4% 分位。<b>估值问题正在被时间解决。</b></p>
+  <p>但 v2 没有覆盖的一个变量浮出水面：<b>合同负债的持续塌陷</b>。它意味着渠道不再愿意为未来的货提前付钱——这是护城河「护城河外的水位」最灵敏的刻度。Δ 估值改善（+0.5 分）与 Δ 护城河论据走弱（−0.5 分）大致抵消，故综合评分仅微升。</p>
+</section>
+
+<section>
+  <h2><span>🏢</span> 公司概况</h2>
+  <table>
+    <tbody>
+      <tr><td>公司名称</td><td>贵州茅台酒股份有限公司（Kweichow Moutai Co., Ltd.）</td></tr>
+      <tr><td>上市信息</td><td>2001-08-27 上交所主板上市 · 25 年</td></tr>
+      <tr><td>实际控制人</td><td>贵州省国资委（国企背景，管理层由国资委任命）</td></tr>
+      <tr><td>总股本</td><td>12.50 亿股（全流通）</td></tr>
+      <tr><td>行业</td><td>食品饮料 / 白酒（申万二级：白酒Ⅱ）</td></tr>
+    </tbody>
+  </table>
+  <h3>核心业务</h3>
+  <p>茅台酒及系列酒的生产与销售。酿造工艺为国家机密，核心产区仅限茅台镇 15.03 平方公里，形成天然地理壁垒。2026 上半年收入结构：茅台酒 <b>777.24 亿元</b>（+2.82%）、系列酒 <b>129.34 亿元</b>（−6.02%）。</p>
+  <div class="highlight-box">
+    <strong>渠道结构的关键变化：</strong>数字营销平台「i 茅台」2026 上半年实现酒类不含税收入 <b>402.6 亿元</b>，占当期营业收入约 <b>43.63%</b>，占直销渠道收入约 <b>77.49%</b>。直营化是理解「合同负债下降」的关键——直营渠道先款后货、即时确认，不像传统经销商需要提前打款形成预收。
+  </div>
+</section>
+
+<section>
+  <h2><span>📊</span> 财务深度分析</h2>
+  <div class="buffett-quote">
+    "In the business world, the rearview mirror is always clearer than the windshield."
+    <span class="attr">— Warren Buffett</span>
+  </div>
+
+  <h3>六年业绩一览（年度 + 最新中报）</h3>
+  <table>
+    <thead><tr><th>年份</th><th>营业总收入（亿）</th><th>同比</th><th>归母净利润（亿）</th><th>同比</th><th>毛利率</th><th>净利率</th></tr></thead>
+    <tbody>
+      <tr><td>2021</td><td>1,094.64</td><td class="up">+11.7%</td><td>524.60</td><td class="up">+12.3%</td><td>91.5%</td><td>49.4%</td></tr>
+      <tr><td>2022</td><td>1,275.54</td><td class="up">+16.5%</td><td>627.17</td><td class="up">+19.6%</td><td>91.9%</td><td>50.5%</td></tr>
+      <tr><td>2023</td><td>1,505.60</td><td class="up">+18.0%</td><td>747.34</td><td class="up">+19.2%</td><td>92.0%</td><td>50.6%</td></tr>
+      <tr><td>2024</td><td>1,741.44</td><td class="up">+15.7%</td><td>862.28</td><td class="up">+15.4%</td><td>91.9%</td><td>50.5%</td></tr>
+      <tr><td>2025</td><td>1,720.54</td><td class="down">−1.2%</td><td>823.20</td><td class="down">−4.5%</td><td>91.2%</td><td>48.8%</td></tr>
+      <tr><td><b>2026 H1</b></td><td>922.78</td><td class="up">+1.3%</td><td>445.17</td><td class="down">−1.95%</td><td>89.6%</td><td>50.75%</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:0.85rem;color:#94a3b8">※ 2021–2025 为年报（累计）数据，2026 H1 为半年报数据（非全年）。毛利率按营业收入口径（剔除财务公司利息收入）。</p>
+
+  <h3>单季归母净利润趋势（近 8 季 · 亿元）</h3>
+  <table>
+    <thead><tr><th>季度</th><th>2024Q3</th><th>2024Q4</th><th>2025Q1</th><th>2025Q2</th><th>2025Q3</th><th>2025Q4</th><th>2026Q1</th><th>2026Q2</th></tr></thead>
+    <tbody>
+      <tr><td>归母净利</td><td>191.32</td><td>254.00</td><td>268.48</td><td>185.55</td><td>192.24</td><td>176.93</td><td class="up">272.43</td><td class="down">172.74</td></tr>
+      <tr><td>同比</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="up">+0.5%</td><td class="down">−30.3%</td><td class="up">+1.5%</td><td class="down">−6.9%</td></tr>
+    </tbody>
+  </table>
+  <p><b>读数：</b>2026Q2 的 172.74 亿元是近 8 个季度的<b>最低单季</b>，同比 −6.9%。Q1 尚有 +1.5% 的正增长，Q2 转负。另外需注意 2025Q4 单季同比 <b>−30.3%</b>（176.93 亿 vs 254.00 亿）—— 去年四季度已经是低基数，这意味着 <b>2026Q4 的同比基数较低</b>，是一个潜在的对冲因素。</p>
+
+  <h3>🔑 合同负债 — 白酒最硬的先行指标</h3>
+  <table>
+    <thead><tr><th>报告期</th><th>合同负债（亿元）</th><th>同比</th><th>读数</th></tr></thead>
+    <tbody>
+      <tr><td>2024-06-30</td><td>99.93</td><td>—</td><td>渠道蓄水池充裕</td></tr>
+      <tr><td>2025-06-30</td><td>55.07</td><td class="down">−44.9%</td><td>开始去库存</td></tr>
+      <tr><td><b>2026-06-30</b></td><td><b>31.78</b></td><td class="down"><b>−42.3%</b></td><td>连续第二年腰斩</td></tr>
+    </tbody>
+  </table>
+  <div class="highlight-box green">
+    <strong>两年累计 −68%。</strong>合同负债是经销商为未来提货而预付的款项。它连续两年以 40%+ 的速度下滑，含义是：<b>经销商不再愿意为未来的货提前付钱</b>。<br>
+    <b>客观解读（两面）：</b>① 负面 —— 这是渠道信心与需求的直接刻度，比营收更能反映真实的终端温度；② 结构性 —— 直营化（i 茅台占营收 43.63%）本身会压低合同负债，因为直营是先款后货、即时确认收入，不形成预收。<b>两个因素同时存在，无法完全拆分——这正是 v3 需要把它列为独立监控项的原因。</b>
+  </div>
+
+  <h3>现金流与资产负债表（2026-06-30）</h3>
+  <div class="card-grid">
+    <div class="card"><h4>经营现金流（2026H1）</h4><div class="big-num up">706.91 亿</div><div class="desc">2025 同期 131.19 亿</div></div>
+    <div class="card"><h4>货币资金</h4><div class="big-num">535.19 亿</div><div class="desc">公司披露现金余额 1,848 亿（含定期存款等）</div></div>
+    <div class="card"><h4>应收账款</h4><div class="big-num">0.057 亿</div><div class="desc">近乎为零 —— 先款后货的极致体现</div></div>
+    <div class="card"><h4>资产负债率</h4><div class="big-num">15.2%</div><div class="desc">负债 469.54 亿 / 资产 3,090.51 亿</div></div>
+  </div>
+  <p><b>读数：</b>资产负债表依然是 A 股最干净的一档 —— 应收账款 570.9 万元对比 922.78 亿营收，意味着<b>几乎没有赊销</b>；有息负债极少；存货 613.17 亿元（白酒存货越陈越值钱，是少见的「增值型存货」）。</p>
+  <p style="font-size:0.88rem;color:#94a3b8">⚠️ 现金流说明：2026H1 经营现金流 706.91 亿较 2025 同期的 131.19 亿大幅回升，但<b>不宜线性外推</b> —— 茅台经营现金流含财务公司的客户存款与同业存放净增加额，年度间波动本就巨大（FY2024 924.64 亿 → FY2025 615.22 亿，−33.5%）。判断现金创造力应以「经营现金流 / 归母净利」的中枢为准，而非单期。</p>
+
+  <h3>ROE — 巴菲特最看重的指标</h3>
+  <table>
+    <tbody>
+      <tr><td>TTM 归母净利</td><td>814.34 亿元</td></tr>
+      <tr><td>归母净资产（2026-06-30）</td><td>约 2,514 亿元</td></tr>
+      <tr><td><b>ROE (TTM)</b></td><td><b>≈ 32.4%</b></td></tr>
+      <tr><td>巴菲特门槛</td><td>≥ 15%（连续多年）</td></tr>
+    </tbody>
+  </table>
+  <p>ROE 32.4%、几乎零有息杠杆 —— 这意味着茅台的高 ROE 完全来自<b>经营质量</b>而非财务杠杆。这是巴菲特框架下最不易被复制的能力。</p>
+</section>
+
+<section>
+  <h2><span>🏰</span> 护城河分析 — 城堡未变，但护城河的水位要盯紧</h2>
+
+  <h3>四重防护（未变）</h3>
+  <table>
+    <thead><tr><th>护城河</th><th>状态</th><th>证据</th></tr></thead>
+    <tbody>
+      <tr><td>品牌与文化符号</td><td><span class="verdict pass">强</span></td><td>「国酒」地位、社交货币属性、送礼刚需</td></tr>
+      <tr><td>地理稀缺性</td><td><span class="verdict pass">强</span></td><td>核心产区限茅台镇 15.03 km²，不可复制</td></tr>
+      <tr><td>工艺与时间壁垒</td><td><span class="verdict pass">强</span></td><td>国家机密工艺 + 5 年基酒周期，新进入者无法追赶</td></tr>
+      <tr><td><b>定价权</b></td><td><span class="verdict pass">仍然有效</span></td><td><b>2026 年 9 月初对线下自营店再度提价</b>；飞天零售均价升至 1,868.05 元/瓶，线下长期缺货</td></tr>
+    </tbody>
+  </table>
+
+  <div class="highlight-box gold">
+    <strong>定价权是护城河最硬的证据。</strong>在营收微增、净利下滑的背景下，公司仍能<b>逆势提价</b>并维持终端缺货 —— 说明终端需求（至少是高端飞天）并未崩塌，公司在主动做「控量保价」。这与「需求崩塌」是不同的图景。
+  </div>
+
+  <div class="highlight-box green">
+    <strong>需要盯紧的一处裂缝：合同负债连续两年 −43% / −45%。</strong>护城河保护的是「公司能不能赚钱」，但不保护「渠道愿不愿意囤货」。当经销商从「抢着打款」变成「边卖边看」，公司的<b>经营节奏主导权</b>就开始从厂家向渠道倾斜。<br>
+    这一项在 v2 中没有出现（v2 的护城河仍是 10/10），v3 因此下调至 <b>9/10</b>。
+  </div>
+
+  <h3>行业背景</h3>
+  <ul>
+    <li><b>存量博弈：</b>2026 中秋旺季白酒行业整体平淡，行业从「向渠道压货」转向「促进终端开瓶动销」</li>
+    <li><b>分化加剧：</b>双节后白酒价格再分化 —— 茅台逆势上涨，次高端成为降价重灾区；一线酒企中「茅台依然最为稳健」</li>
+    <li><b>需求端长期逆风：</b>商务宴请与礼品需求萎缩、人口结构变化、消费降级</li>
+  </ul>
+</section>
+
+<section>
+  <h2><span>💰</span> 估值分析</h2>
+
+  <h3>核心估值指标（2026-10-09）</h3>
+  <table>
+    <thead><tr><th>指标</th><th>数值</th><th>v2（08-16）</th><th>读数</th></tr></thead>
+    <tbody>
+      <tr><td>收盘价</td><td>¥1,263.00</td><td>¥1,341.99</td><td class="down">−5.89%</td></tr>
+      <tr><td>总市值</td><td>¥15,788.53 亿</td><td>¥16,800 亿</td><td class="down">−6.0%</td></tr>
+      <tr><td>PE (TTM)</td><td>19.39x</td><td>20.28x</td><td class="down">−0.89x</td></tr>
+      <tr><td>PE (静态)</td><td>17.73x</td><td>—</td><td>—</td></tr>
+      <tr><td>PB</td><td>6.28x</td><td>—</td><td>—</td></tr>
+      <tr><td>PE (2026E, 券商一致预期)</td><td>18.7x</td><td>15.4x（当时口径）</td><td>—</td></tr>
+      <tr><td>股息率 (TTM)</td><td class="up">4.12%</td><td>3.88%</td><td class="up">+0.24pp</td></tr>
+    </tbody>
+  </table>
+
+  <h3>历史 PE(TTM) 分位 —— 已到五年最低区间</h3>
+  <table>
+    <thead><tr><th>分位</th><th>5%</th><th>10%</th><th>25%</th><th>50%</th><th>75%</th><th>90%</th></tr></thead>
+    <tbody>
+      <tr><td>PE(TTM)</td><td>19.6x</td><td>19.9x</td><td>21.3x</td><td>27.3x</td><td>35.7x</td><td>42.4x</td></tr>
+    </tbody>
+  </table>
+  <p><b>当前 19.39x → 处于 4% 分位</b>（区间 2021-09 ~ 2026-10，n=1,214 个交易日）。<b>这是 v3 最重要的估值事实</b>：过去五年里，只有 4% 的时间比现在更便宜。</p>
+
+  <h3>两阶段 DCF 敏感性（基准 TTM 归母 814.34 亿，永续 g₂ = 2.5%）</h3>
+  <table>
+    <thead><tr><th>第 1–5 年增速 g₁</th><th>r = 7%</th><th>r = 8%</th><th>r = 8.5%</th><th>r = 9%</th><th>r = 10%</th></tr></thead>
+    <tbody>
+      <tr><td>g₁ = 0%</td><td>1,325</td><td>1,086</td><td>997</td><td>921</td><td>800</td></tr>
+      <tr><td>g₁ = 2%</td><td>1,451</td><td>1,188</td><td>1,089</td><td>1,005</td><td>872</td></tr>
+      <tr><td><b>g₁ = 3%</b></td><td>1,517</td><td>1,241</td><td><b>1,137</b></td><td>1,050</td><td>909</td></tr>
+      <tr><td>g₁ = 5%</td><td>1,658</td><td>1,354</td><td>1,240</td><td>1,144</td><td>989</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:0.85rem;color:#94a3b8">单位：元/股。自由现金流以归母净利近似（茅台资本开支极小）。β 取 0.8、无风险利率取中国 10 年国债 ≈ 2.0%、股权风险溢价 ≈ 7.5% → 对应 r ≈ 8.0%；保守情形额外加 1–2pp 反映「增长确定性下降」。</p>
+
+  <h3>交叉验证：三种方法指向同一个区间</h3>
+  <table>
+    <thead><tr><th>方法</th><th>假设</th><th>隐含价值</th></tr></thead>
+    <tbody>
+      <tr><td>DCF 中枢</td><td>g₁ = 3%，r = 8.5%</td><td>¥1,137</td></tr>
+      <tr><td>股息率锚</td><td>要求 4.0% → 4.5%</td><td>¥1,300 → ¥1,155</td></tr>
+      <tr><td>PE 锚</td><td>18x → 20x × EPS2026E 67.62</td><td>¥1,217 → ¥1,352</td></tr>
+      <tr><td><b>综合区间</b></td><td>—</td><td><b>¥1,100 – 1,350（中枢 ≈ ¥1,220）</b></td></tr>
+    </tbody>
+  </table>
+
+  <div class="highlight-box red">
+    <strong>安全边际测算：</strong><br>
+    · 现价 ¥1,263 相对中枢 ¥1,220 → <b>溢价 +3.5%</b>，安全边际为<b>零甚至微负</b><br>
+    · 巴菲特标准的击球区（20% 安全边际）→ <b>≤ ¥976</b>，距现价还需下跌 <b>22.7%</b><br>
+    · 10% 安全边际 → <b>≤ ¥1,098</b>，距现价还需下跌 <b>13.1%</b><br>
+    <b>结论：当前价格是「合理」，不是「便宜」。</b>v2 说的「还差一点」变成了「还差 13%–23%」。
+  </div>
+</section>
+
+<section>
+  <h2><span>📈</span> 技术面与量化风险</h2>
+  <div class="buffett-quote">
+    "In the short run, the market is a voting machine. In the long run, it is a weighing machine."
+    <span class="attr">— Benjamin Graham</span>
+  </div>
+
+  <h3>均线结构与位置（前复权，2026-10-09）</h3>
+  <table>
+    <thead><tr><th>均线</th><th>MA5</th><th>MA10</th><th>MA20</th><th>MA60</th><th>MA120</th><th>MA250</th></tr></thead>
+    <tbody>
+      <tr><td>数值</td><td>1,251.37</td><td>1,250.86</td><td>1,269.54</td><td>1,291.08</td><td>1,287.20</td><td>1,343.60</td></tr>
+      <tr><td>价格相对位置</td><td class="up">+0.9%</td><td class="up">+1.0%</td><td class="down">−0.5%</td><td class="down">−2.2%</td><td class="down">−1.9%</td><td class="down">−6.0%</td></tr>
+    </tbody>
+  </table>
+  <p><b>读数：</b>股价刚刚站上短均线（MA5/MA10），但 <b>MA20/60/120/250 四线全部在上方</b>，形成层层压力。年线（MA250）在 1,343.60，距现价 −6.0% —— 这是中期趋势仍偏弱的技术证据。<b>短期企稳、中期未转势</b>是当前最准确的技术描述。</p>
+
+  <div class="card-grid">
+    <div class="card"><h4>区间位置</h4><div class="big-num">−17.3%</div><div class="desc">距 52 周高点 1,526.98</div></div>
+    <div class="card"><h4>距 52 周低点</h4><div class="big-num up">+8.1%</div><div class="desc">低点 1,168.63（关键支撑）</div></div>
+    <div class="card"><h4>2026 年内</h4><div class="big-num down">−9.7%</div><div class="desc">年初 1,397.98 → 现在</div></div>
+    <div class="card"><h4>近 60 日年化波动</h4><div class="big-num">23.6%</div><div class="desc">日成交额 44.53 亿</div></div>
+  </div>
+
+  <h3>筹码与情绪</h3>
+  <table>
+    <thead><tr><th>观察项</th><th>数据</th><th>含义</th></tr></thead>
+    <tbody>
+      <tr><td>股东户数（2026-06-30）</td><td>296,404 户，环比 <b>+21.9%</b></td><td class="down">股东数大幅增加 = 筹码分散，机构减持 / 散户接盘</td></tr>
+      <tr><td>换手率</td><td>0.28%</td><td>极低，无恐慌性抛售，也无资金抢筹</td></tr>
+      <tr><td>知名价值投资者动向</td><td><b>段永平 2026-09-28/29 买入 3 万股（约 3,700 万元）</b></td><td class="up">「越跌越买」—— 长期资金开始左侧布局的信号</td></tr>
+    </tbody>
+  </table>
+  <div class="highlight-box green">
+    <strong>矛盾信号需并列看待：</strong>一方面股东户数激增（散户化、筹码分散），另一方面段永平这类长期资金在下跌中增持。<b>前者是短期筹码结构，后者是长期价值判断</b> —— 对本报告的巴菲特框架而言，后者的参考权重更高，但不足以构成买入理由。
+  </div>
+
+  <h3>量化风险</h3>
+  <table>
+    <thead><tr><th>指标</th><th>读数</th><th>评价</th></tr></thead>
+    <tbody>
+      <tr><td>年化波动率（60日）</td><td>23.6%</td><td>处于历史中位，无异常</td></tr>
+      <tr><td>最大回撤（自 52 周高点）</td><td>−17.3%</td><td>温和，未出现趋势性崩塌</td></tr>
+      <tr><td>方向性风险</td><td>下行</td><td>中期均线全在上方，反弹需先破 1,270–1,290 压力带</td></tr>
+      <tr><td>关键支撑</td><td>¥1,168.63</td><td>52 周低点；跌破则需重新评估趋势</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2><span>✅</span> 巴菲特七项核心原则评估（v3）</h2>
+  <div class="score-section">
+    <table>
+      <thead><tr><th>原则</th><th>v2</th><th>v3</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td>1. 可理解的业务</td><td>10/10</td><td>10/10</td><td>卖白酒，商业模式极简，无技术风险</td></tr>
+        <tr><td>2. 持久竞争优势</td><td>10/10</td><td class="down"><b>9/10</b></td><td>品牌/地理/工艺/定价权未变（9 月仍能提价）；<b>但合同负债连续两年 −43%/−45%，渠道蓄水池枯竭</b></td></tr>
+        <tr><td>3. 长期可持续盈利能力</td><td>6/10</td><td>6/10</td><td>毛利率 89.6%、净利率 50.75% 仍顶级；但盈利增速仍为负</td></tr>
+        <tr><td>4. 高 ROE</td><td>10/10</td><td>10/10</td><td>ROE 32.4%，几乎零杠杆，远超 15% 门槛</td></tr>
+        <tr><td>5. 保守的财务结构</td><td>10/10</td><td>10/10</td><td>现金余额 1,848 亿、资产负债率 15.2%、应收账款近乎为零</td></tr>
+        <tr><td>6. 优秀的管理层</td><td>7/10</td><td class="up"><b>8/10</b></td><td>FY2025 派息率升至 <b>78.9%</b>（FY2024 为 74.7%）；9 月提价稳价显示经营主动性；但改革阵痛仍在</td></tr>
+        <tr><td>7. 合理的买入价格</td><td>4/10</td><td class="up"><b>6/10</b></td><td>PE 20.28→19.39x、股息率 3.88%→4.12%、PE 五年 4% 分位、DCF 溢价 +19%→+3.5%；<b>但安全边际仍为零</b></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="total-score">
+    <div class="score-circle">7.3</div>
+    <div class="verdict-text">综合评分 7.3 / 10（v2 为 7.0）</div>
+    <p style="margin-top:10px;color:#94a3b8;font-size:0.9rem">公司质地 9/10（护城河 −1，管理层 +1，净持平）— 增长 4/10（未变）— 估值 5/10 → <b style="color:#fbbf24">6/10</b></p>
+    <p style="color:#64748b;font-size:0.82rem;margin-top:6px">权重：质地 55% + 增长 20% + 估值 25% ＝ 0.55×9 + 0.20×4 + 0.25×6 = 7.25 → 7.3（v2 同式：0.55×9 + 0.20×4 + 0.25×5 = 7.0，与 v2 报告口径一致）</p>
+  </div>
+
+  <div class="buffett-quote">
+    "Whether the market is cheap or expensive, we look for businesses where we can be pretty sure that they'll be making a lot of money 10 years from now."
+    <span class="attr">— Warren Buffett</span>
+  </div>
+  <p><b>关键判断：</b>茅台「10 年后还能赚很多钱」这一点，v3 依然认。护城河没塌，ROE 没降，现金流没坏。<b>变的是「增长」这一项 —— 它从估值溢价的来源，变成了估值折价的理由。</b></p>
+</section>
+
+<section>
+  <h2><span>⚠️</span> 风险因素</h2>
+  <div class="pros-cons">
+    <div class="box pros">
+      <h4>✅ 核心优势（未变）</h4>
+      <ul>
+        <li>毛利率 89.6%、净利率 50.75%、ROE 32.4%</li>
+        <li>现金余额 1,848 亿，有息负债极少</li>
+        <li>应收账款近乎为零，先款后货</li>
+        <li>品牌 + 地理 + 工艺三重不可复制</li>
+        <li>存货越陈越值钱（增值型资产）</li>
+        <li><b>9 月仍能对自营店提价</b>，终端缺货</li>
+        <li>股息率 4.12%，派息率升至 78.9%</li>
+      </ul>
+    </div>
+    <div class="box cons">
+      <h4>⚠️ 主要风险（v3 更新）</h4>
+      <ul>
+        <li><b>合同负债连续两年 −43%/−45%</b>（新增，v2 未列）</li>
+        <li>增长拐点已确认，2026Q2 净利 −6.9%</li>
+        <li>行业存量博弈、次高端批量降价</li>
+        <li>渠道改革（直营化）阵痛持续</li>
+        <li>股东户数 2026-06-30 环比 <b>+21.9%</b> → 筹码分散</li>
+        <li>系列酒 −6.02%，第二曲线承压</li>
+        <li>消费降级 + 人口结构长期利空</li>
+        <li>安全边际为零，价格无缓冲</li>
+      </ul>
+    </div>
+  </div>
+  <h3>四维风险矩阵</h3>
+  <table>
+    <thead><tr><th>风险维度</th><th>当前评级</th><th>关键观察</th></tr></thead>
+    <tbody>
+      <tr><td>系统性风险</td><td><span class="verdict warn">中</span></td><td>A 股「脱钩的牛市」——市值扩张与基本面背离；食饮板块资金轮动至科技</td></tr>
+      <tr><td>信用风险</td><td><span class="verdict pass">极低</span></td><td>无有息负债压力，现金充裕，无应收账款风险</td></tr>
+      <tr><td>流动性风险</td><td><span class="verdict pass">极低</span></td><td>日成交额 44.53 亿，换手 0.28%，流动性极佳</td></tr>
+      <tr><td>汇率 / 地缘风险</td><td><span class="verdict pass">低</span></td><td>收入几乎全部来自境内，无汇率敞口；但内需政策与消费税政策是变量</td></tr>
+      <tr><td colspan="3"><b>本标的特有风险：需求结构性下行</b> —— 白酒消费与商务活动、人口结构强相关，这是长期（10 年维度）最值得警惕的变量，也是「永续增长率」假设的最大不确定性来源</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2><span>🎯</span> 最终结论（v3）</h2>
+
+  <h3>巴迪·巴菲特式诊断 🐾</h3>
+  <p>两个月前 v2 说：<i>「茅台是 wonderful company，但 1,342 元不是 fair price —— 还差一点。」</i></p>
+  <p>现在 v3 说：<b>价格跌到 1,263 元，fair 的部分补上了大半，但「一点」还差 13%–23%。</b></p>
+
+  <p>这两周最重要的三个事实是：</p>
+  <ol>
+    <li><b>估值真的到了低位。</b>PE 19.39x 是近五年 4% 分位，股息率 4.12% 是近年来最高 —— 这是「价格」在向「价值」靠拢的硬证据。</li>
+    <li><b>但领先指标还在恶化。</b>合同负债 31.78 亿、同比 −42.3%，连续两年腰斩 —— 这是「价值」本身在向下修正的信号。两个方向同时发生，所以综合评分只微升 0.3。</li>
+    <li><b>公司仍有定价权。</b>9 月自营店提价 + 终端 1,868 元/瓶 + 缺货 —— 说明茅台还可以用「价」补「量」。这是它比其他白酒强的地方。</li>
+  </ol>
+
+  <div class="highlight-box gold">
+    <strong>一句话总结：</strong>茅台从「永续成长股」→「成熟价值股」的重新分类，v3 阶段已经完成；市场用两个月时间把 PE 从 20.3x 压到 19.4x。但<b>「成熟价值股」的合理定价 ≈ ¥1,220，现价 ¥1,263 只是「不贵」，不是「便宜」</b>。真正的击球区在 ¥976–1,098。在那之前，这是一个<b>「可以拿、不必抢」</b>的标的。
+  </div>
+
+  <h3>操作建议（v3）</h3>
+  <table>
+    <thead><tr><th>对象</th><th>建议</th><th>理由</th></tr></thead>
+    <tbody>
+      <tr><td>已持有者</td><td><span class="verdict pass">底仓保留</span></td><td>4.12% 股息率 + 五年 4% 估值分位，持有成本已大幅降低；分红提供正现金流</td></tr>
+      <tr><td>未持有者</td><td><span class="verdict warn">可小仓试探 1/3</span></td><td>估值已进合理区间，可先建底仓；但安全边际为零，<b>不建议一次到位</b></td></tr>
+      <tr><td>重仓 / 加仓</td><td><span class="verdict fail">等信号</span></td><td>见下方两个加仓触发条件，未满足前不加</td></tr>
+      <tr><td>减仓 / 离场</td><td><span class="verdict neutral">暂无必要</span></td><td>除非出现「合同负债继续两位数下滑 + 批价倒挂」的组合</td></tr>
+    </tbody>
+  </table>
+
+  <h3>监控指标与再评估触发点</h3>
+  <table>
+    <thead><tr><th>方向</th><th>触发条件</th><th>含义</th></tr></thead>
+    <tbody>
+      <tr><td class="up">加仓信号</td><td>三季报（10 月底前）Q3 单季归母净利同比转正</td><td>H2 改善逻辑兑现</td></tr>
+      <tr><td class="up">加仓信号</td><td>合同负债环比企稳或同比降幅收窄至 −20% 以内</td><td>渠道信心修复</td></tr>
+      <tr><td class="up">加仓信号</td><td>股价回落至 ¥1,100 以下（10% 安全边际）</td><td>进入击球区</td></tr>
+      <tr><td class="down">减仓信号</td><td>合同负债同比降幅扩大至 −50% 以上</td><td>渠道进一步收缩</td></tr>
+      <tr><td class="down">减仓信号</td><td>飞天批价跌破出厂价（批价倒挂）</td><td>价格体系失守，提价能力受损</td></tr>
+      <tr><td class="down">减仓信号</td><td>派息率被下调或分红政策转向</td><td>股东回报逻辑动摇</td></tr>
+    </tbody>
+  </table>
+
+  <div class="highlight-box">
+    <strong>近期日历：</strong>① <b>10 月底前</b> —— 2026 三季报（最重要的验证点）；② <b>10-15</b> 第 115 届全国糖酒会（南京）—— 渠道信心观察窗口；③ <b>12 月前后</b> —— 2026 中期分红方案（按 FY2025 节奏）。
+  </div>
+</section>
+
+<div class="disclaimer">
+  <b>免责声明</b><br>
+  本报告基于公开数据与量化模型自动生成，<b>仅供参考，不构成投资建议</b>。市场有风险，投资需谨慎。任何投资决策应结合个人风险承受能力、资金状况与投资目标独立判断，必要时咨询持牌专业机构。过往表现不预示未来收益。<br><br>
+  <b>数据来源与口径：</b>行情与估值 —— 腾讯财经（2026-10-09 收盘）；财报三表 —— 新浪财经（2026 年半年报，累计口径）；分红历史 —— 东方财富数据中心；券商一致预期 —— 东方财富研报库（近 3 个月 14 篇，EPS2026E 均值 67.62 / 中位 67.82，EPS2027E 均值 71.65）；新闻与事件 —— 东方财富资讯（含 2026-09-28 段永平增持、2026-09-30 i 茅台维护公告、2026-10-09 飞天零售价监测）。<br>
+  DCF 敏感性表与历史 PE 分位由本地脚本复算，参数已在文中披露。所有数字均为人民币（CNY）口径。
+</div>
+
+</div>
+
+<div class="footer">
+  报告由 巴迪（🐾 WorkBuddy）生成 · 基于巴菲特价值投资框架 · v3 · 2026-10-09<br>
+  历史版本：<a href="moutai-buffett-analysis-20260726.html" style="color:#94a3b8">v1（2026-07-26）</a> · <a href="moutai-buffett-analysis-20260816.html" style="color:#94a3b8">v2（2026-08-16）</a><br>
+  <span style="color:#475569;font-size:0.78rem">颜色约定：涨红跌绿（中国习惯）</span>
+</div>
+
+</body>
+</html>
